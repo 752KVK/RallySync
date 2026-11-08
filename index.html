@@ -118,6 +118,10 @@ li.player.ghost-src{opacity:.35}
 .menu{position:fixed;z-index:110;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:6px;display:flex;flex-direction:column;gap:4px;min-width:170px;max-height:70vh;overflow:auto}
 .menu .mt{color:var(--muted);font-size:12px;padding:2px 6px}
 .menu button{text-align:left;display:flex;gap:8px;align-items:center}
+.langbtn{font-weight:700;white-space:nowrap}
+.langmenu{z-index:800;min-width:160px}
+.langmenu button.on{border-color:var(--accent);color:var(--accent)}
+.langmenu button .lc{margin-left:auto;color:var(--muted);font-size:12px}
 .menu .sepm{height:1px;background:var(--line);margin:2px 0}
 .menu .dot{width:10px;height:10px;border-radius:50%;background:var(--c)}
 .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:8px 14px;border-radius:8px;z-index:200;font-weight:600;opacity:0;transition:opacity .2s;pointer-events:none}
@@ -130,6 +134,7 @@ dialog{background:var(--panel);color:var(--text);border:1px solid var(--line);bo
 dialog::backdrop{background:#0008}
 dialog .row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:10px 0}
 dialog h3{margin:0 0 6px}
+.vol{width:140px;accent-color:var(--accent);padding:0}
 .about{color:var(--muted);font-size:12px;margin:10px 0 0;line-height:1.4}
 .sep{width:1px;align-self:stretch;background:var(--line)}
 .jump{display:none}
@@ -139,7 +144,7 @@ dialog h3{margin:0 0 6px}
   .brand{margin-right:0;font-size:18px}
   .utcclock{margin-right:auto;font-size:13px;padding:8px 7px}
   header>button{padding:8px 9px;min-height:38px;font-size:13px}
-  #addTeam,#undo,#settingsBtn{min-width:38px;padding:8px 6px}
+  #addTeam,#undo,#settingsBtn,#lockTop{min-width:36px;padding:8px 5px}
   main{grid-template-columns:1fr;gap:10px;padding:8px 8px calc(60vh + env(safe-area-inset-bottom))}
   .card{scroll-margin-top:calc(var(--hh,110px) + 8px)}
   /* team quick-jump bar with live next-launch countdown */
@@ -173,21 +178,182 @@ dialog h3{margin:0 0 6px}
   .menu button{padding:10px 12px;font-size:16px}
   .toast{bottom:calc(18px + env(safe-area-inset-bottom))}
 }
+
+/* ================= casino door ================= */
+#gate{display:none}
+html.locked{overflow:hidden}
+html.locked body>*:not(#gate):not(.toast):not(dialog):not(.langmenu){visibility:hidden}
+html.picking{overflow:hidden}
+html.picking body>*:not(#gate):not(#sessions):not(.toast):not(dialog):not(.langmenu){visibility:hidden}
+html.locked #sessions{visibility:hidden}
+#sessions{display:none}
+html.picking #sessions{display:flex}
+#sessions{position:fixed;inset:0;z-index:450;flex-direction:column;align-items:center;overflow:auto;padding:70px 14px 40px;color:#fff;
+  background:radial-gradient(ellipse at 50% 20%, #1f7a4a 0%, #0f4f2e 45%, #062417 80%, #03130c 100%)}
+.ss-top{position:fixed;top:max(12px,env(safe-area-inset-top));right:12px;display:flex;gap:6px;z-index:2}
+.ss-btn{background:#0006 !important;border:1px solid #d4af3766 !important;color:#f6e7b0 !important;border-radius:8px;padding:6px 10px;font-size:14px;font-weight:700}
+.ss-box{width:min(560px,100%)}
+.ss-box h2{margin:0;text-align:center;font-size:clamp(28px,7vw,40px);font-weight:900;letter-spacing:2px;color:#fff6d6;text-shadow:0 0 6px #fff,0 0 16px #ffcc33,0 0 32px #ff9900}
+.ss-sub{text-align:center;color:#f6d77a;font-size:13px;letter-spacing:2px;margin:8px 0 14px}
+.ss-mode{margin:0 auto 16px;padding:8px 12px;border-radius:10px;font-size:13px;line-height:1.4;background:#0005;border:1px solid #ffffff22;color:#e6f2ea}
+.ss-mode.on{border-color:#2ecc71aa}
+.ss-mode.warn{border-color:#f39c12aa;color:#ffe2b0}
+#ssNew{display:flex;gap:8px;padding:10px;border-radius:14px;background:linear-gradient(180deg,#b3121f,#7d0a14);box-shadow:0 0 0 3px #d4af37,0 12px 30px #0009}
+#ssName{flex:1;min-width:0;font-size:16px;padding:11px 12px;border-radius:10px;border:0;background:#1a0004;color:#ffe9a8;box-shadow:inset 0 0 0 2px #d4af37}
+#ssName::placeholder{color:#ffe9a873}
+#ssNew button{font-size:16px;padding:10px 16px;border-radius:10px;border:0;font-weight:900;color:#2a1a00;background:linear-gradient(180deg,#fff1a8,#f2c94c 45%,#c9971c);box-shadow:0 3px 0 #7a5800}
+.ss-list{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.ss-row{display:flex;align-items:center;gap:6px;padding:6px 6px 6px 8px;border-radius:14px;background:#0b2a1c;border:1px solid #d4af3755;box-shadow:0 6px 16px #0006}
+.ss-row:hover{border-color:#d4af37}
+.ss-open{flex:1;min-width:0;display:flex;align-items:center;gap:12px;text-align:left;background:transparent !important;border:0 !important;color:#fff;padding:8px 6px;cursor:pointer}
+.ss-chip{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:18px;
+  background:radial-gradient(circle,#b3121f 0 45%,#fff 46% 52%,#b3121f 53% 100%);box-shadow:0 0 0 3px #fff3,0 3px 6px #0008}
+.ss-txt{min-width:0}
+.ss-txt b{display:block;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ss-txt small{color:#cfe3d6b0;font-size:12px}
+.ss-row .icon{color:#f6e7b0;min-width:36px;min-height:36px;font-size:16px}
+.ss-empty{text-align:center;color:#cfe3d6b0;padding:24px;border:1px dashed #ffffff33;border-radius:14px}
+.ss-live{display:inline-block;min-width:8px;height:8px;border-radius:50%;background:#2ecc71;margin-right:4px;box-shadow:0 0 6px #2ecc71}
+#sessBtn{display:flex;align-items:center;gap:6px;font-weight:800;max-width:300px;margin-right:auto}
+#sessBtn .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#sessBtn small{color:var(--muted);font-weight:600}
+.cdot2{width:8px;height:8px;border-radius:50%;background:var(--go);flex:none}
+.cdot2.off{background:var(--danger)}
+.chip.sess{max-width:60vw}
+.chip.sess span.nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:699px){ #sessBtn{display:none !important} #sessions{padding-top:64px} }
+html.locked #gate{display:flex}
+#gate{position:fixed;inset:0;z-index:500;align-items:center;justify-content:center;flex-direction:column;gap:18px;padding:16px;
+  color:#fff;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;overflow:auto;
+  background:
+    radial-gradient(ellipse at 50% 35%, #1f7a4a 0%, #0f4f2e 45%, #062417 80%, #03130c 100%)}
+#gate::before{content:"♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣ ♠ ♥ ♦ ♣";
+  position:absolute;inset:-20px;font-size:34px;line-height:64px;letter-spacing:28px;color:#ffffff08;word-break:break-all;pointer-events:none;transform:rotate(-12deg) scale(1.3)}
+#gate{overflow-x:hidden}
+#sessions{overflow-x:hidden}
+#gate.flash{animation:gflash .18s 6 alternate}
+@keyframes gflash{to{background:radial-gradient(ellipse at 50% 35%,#ffe27a 0%,#d4a017 40%,#5a3b00 100%)}}
+.g-lang{position:absolute;top:max(12px,env(safe-area-inset-top));right:12px;display:flex;gap:4px;z-index:2}
+.g-vol{position:absolute;top:max(12px,env(safe-area-inset-top));left:12px;display:flex;align-items:center;gap:6px;z-index:2;background:#0006;border:1px solid #d4af3766;border-radius:8px;padding:3px 8px 3px 4px}
+.g-vol button{background:transparent;border:0;font-size:18px;padding:2px 4px;cursor:pointer}
+.g-vol input{width:90px;accent-color:#d4af37;padding:0;background:transparent;border:0}
+.g-langbtn{background:#0006 !important;border:1px solid #d4af3766 !important;color:#f6e7b0 !important;border-radius:8px;padding:6px 10px;font-size:14px;font-weight:700}
+.g-sign{position:relative;text-align:center;line-height:1}
+.g-sign h1{margin:0;font-size:clamp(34px,9vw,58px);font-weight:900;letter-spacing:3px;color:#fff6d6;
+  text-shadow:0 0 4px #fff,0 0 12px #ffcc33,0 0 24px #ff9900,0 0 44px #ff3d00;animation:neon 4s infinite}
+.g-sign small{display:block;margin-top:8px;font-size:13px;letter-spacing:6px;color:#f6d77a;text-transform:uppercase}
+@keyframes neon{0%,18%,22%,25%,53%,57%,100%{opacity:1}20%,24%,55%{opacity:.55}}
+.g-wrap{position:relative;display:flex;align-items:center;gap:6px}
+.g-cab{position:relative;width:min(84vw,380px);padding:16px 16px 18px;border-radius:26px 26px 18px 18px;
+  background:linear-gradient(180deg,#b3121f 0%,#7d0a14 55%,#4a050b 100%);
+  box-shadow:0 0 0 4px #d4af37,0 0 0 8px #6b4e00,0 24px 60px #000c,inset 0 2px 0 #ffffff40}
+.g-lights{display:flex;justify-content:space-between;padding:0 6px 12px}
+.g-lights i{width:10px;height:10px;border-radius:50%;background:#ffd34d;box-shadow:0 0 8px #ffbf00;animation:bulb 1s infinite}
+.g-lights i:nth-child(even){animation-delay:.5s}
+@keyframes bulb{50%{background:#5a4100;box-shadow:none}}
+#gate.win .g-lights i{animation-duration:.18s}
+.g-top{text-align:center;font-weight:900;color:#ffe9a8;font-size:15px;letter-spacing:4px;margin-bottom:10px;text-shadow:0 2px 0 #0008}
+.g-reels{--ch:84px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:10px;border-radius:14px;
+  background:linear-gradient(#2a0006,#120003);box-shadow:inset 0 0 0 3px #d4af37,inset 0 8px 18px #000}
+.g-reel{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px}
+.g-win{position:relative;width:100%;height:var(--ch);overflow:hidden;border-radius:10px;cursor:pointer;outline:none;
+  background:linear-gradient(180deg,#bdbdbd 0%,#fff 22%,#fff 78%,#bdbdbd 100%);box-shadow:inset 0 0 0 2px #0003}
+.g-win::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0007,transparent 30%,transparent 70%,#0007);pointer-events:none}
+.g-reel.active .g-win{box-shadow:0 0 0 3px #ffd34d,0 0 18px #ffbf00}
+.g-strip{will-change:transform}
+.g-strip div{height:var(--ch);display:flex;align-items:center;justify-content:center;font-size:calc(var(--ch)*.62);font-weight:900;color:#1b1b1b;font-variant-numeric:tabular-nums;
+  text-shadow:0 2px 0 #0002}
+.g-strip.blur{filter:blur(1.5px)}
+.g-pass{display:flex;align-items:center;gap:8px;margin-top:12px;padding:6px 8px 6px 12px;border-radius:12px;
+  background:linear-gradient(#1a0004,#0b0002);box-shadow:inset 0 0 0 2px #d4af37,inset 0 6px 14px #000}
+.g-key{font-size:18px}
+#gPass{flex:1;min-width:0;background:transparent;border:0;outline:none;color:#ffe9a8;font-size:20px;font-weight:800;letter-spacing:3px;padding:8px 0;
+  font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;text-shadow:0 0 8px #ffbf0080}
+#gPass::placeholder{color:#ffe9a873;letter-spacing:1px;font-weight:600;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;text-shadow:none}
+.g-pass:focus-within{box-shadow:inset 0 0 0 2px #ffd34d,0 0 16px #ffbf0066,inset 0 6px 14px #000}
+.g-eye{background:transparent;border:0;font-size:18px;padding:4px 6px;opacity:.7;cursor:pointer}
+.g-eye.on{opacity:1}
+.g-strip .s7{color:#d40000;font-style:italic;text-shadow:0 2px 0 #7a0000,0 0 6px #ff000040}
+.g-strip .sbar{font-size:calc(var(--ch)*.3);font-style:normal;color:#fff;background:#111;padding:2px 8px;border-radius:6px;height:auto;margin:auto;line-height:1.4;letter-spacing:1px}
+.g-strip .sl{color:#d4a017;font-weight:900;text-shadow:0 2px 0 #7a5800,0 0 8px #ffbf0066;-webkit-text-stroke:1px #7a5800}
+.g-strip .snoob{display:inline-block;transform:rotate(-8deg);font-size:calc(var(--ch)*.26);font-weight:900;letter-spacing:1px;line-height:1;color:#fff;
+  background:linear-gradient(180deg,#9b59ff,#5b1fbf);padding:6px 7px;border-radius:9px;border:2px dashed #ffffffb0;box-shadow:0 3px 0 #2e0d66,0 0 0 2px #2e0d66}
+.g-strip .sem{font-size:calc(var(--ch)*.5)}
+.g-arrow{width:100%;background:#0005;border:1px solid #d4af3780;color:#ffe9a8;border-radius:8px;padding:2px 0;font-size:14px;line-height:1.3}
+.g-arrow:active{background:#d4af37;color:#2a1a00}
+.g-msg{min-height:26px;margin-top:12px;text-align:center;font-weight:900;font-size:18px;letter-spacing:1px;color:#ffe9a8}
+.g-msg.lose{color:#ffb3b3}
+.g-msg.win{color:#fff36b;text-shadow:0 0 12px #ffbf00;font-size:24px}
+.g-spin{display:block;width:100%;margin-top:10px;padding:13px;border-radius:12px;border:0;font-size:20px;font-weight:900;letter-spacing:3px;color:#2a1a00;
+  background:linear-gradient(180deg,#fff1a8,#f2c94c 45%,#c9971c);box-shadow:0 5px 0 #7a5800,0 10px 20px #0008;cursor:pointer}
+.g-spin:active{transform:translateY(4px);box-shadow:0 1px 0 #7a5800}
+.g-spin:disabled{filter:grayscale(.6);opacity:.7}
+.g-lever{position:relative;width:34px;height:190px;cursor:grab;touch-action:none;flex:none}
+.g-lever .rod{position:absolute;left:13px;top:22px;width:8px;height:150px;border-radius:4px;background:linear-gradient(90deg,#999,#eee,#888);transform-origin:50% 100%;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.g-lever .ball{position:absolute;left:0;top:0;width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8a8a,#d00 55%,#600);box-shadow:0 4px 10px #0009;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.g-lever .base{position:absolute;left:5px;bottom:0;width:24px;height:30px;border-radius:6px;background:linear-gradient(#d4af37,#7a5800)}
+.g-lever.pulled .rod{transform:scaleY(-.55)}
+.g-lever.pulled .ball{transform:translateY(118px)}
+.g-hint{font-size:12px;color:#d9f2e2b0;text-align:center;max-width:380px}
+.g-cab.shake{animation:shake .45s}
+@keyframes shake{20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
+.g-coin{position:fixed;top:-50px;z-index:600;font-size:30px;pointer-events:none;animation:coinfall linear forwards}
+@keyframes coinfall{to{transform:translateY(115vh) rotate(720deg)}}
+#gate.out{animation:gout .6s ease forwards}
+@keyframes gout{to{opacity:0;transform:scale(1.06)}}
+@media (max-width:480px){ .g-sign small{letter-spacing:2px;font-size:12px} .g-reels{--ch:66px} .g-lever{height:160px} .g-lever .rod{height:120px} .g-lever.pulled .ball{transform:translateY(92px)} }
+@media (prefers-reduced-motion:reduce){ .g-sign h1,.g-lights i{animation:none} }
 </style>
+<script>
+/* decide before first paint whether the casino door is shown (avoids a flash of the app) */
+(function(){ try{ localStorage.removeItem("rallysync.gate");   /* old 12h memory: no longer used */
+  const g = JSON.parse(sessionStorage.getItem("rallysync.gate")||"null");
+  document.documentElement.classList.add("picking");   // the session screen shows until a session is opened
+  if(!(g && g.h === "poc0lvc0vl" && g.until > Date.now())) document.documentElement.classList.add("locked");
+}catch(e){ document.documentElement.classList.add("locked"); } })();
+</script>
 </head>
 <body>
+<div id="sessions" role="dialog" aria-modal="true" aria-label="Sessions">
+  <div class="ss-top"><button type="button" class="langbtn ss-btn" data-langmenu></button><button type="button" class="ss-btn" id="ssLock" title="Lock">🔒</button></div>
+  <div class="ss-box">
+    <h2>🎲 <span data-i="sessTitle"></span></h2>
+    <div class="ss-sub" data-i="sessSub"></div>
+    <div class="ss-mode" id="ssMode"></div>
+    <form id="ssNew" autocomplete="off"><input id="ssName" maxlength="40" enterkeyhint="go"><button type="submit" data-i="sessCreate"></button></form>
+    <div class="ss-list" id="ssList"></div>
+  </div>
+</div>
+<div id="gate" role="dialog" aria-modal="true" aria-label="Rally Sync">
+  <div class="g-vol"><button type="button" id="gMute" aria-label="sound">🔊</button><input id="gVol" type="range" min="0" max="100" step="5" aria-label="volume"></div>
+  <div class="g-lang"><button type="button" class="langbtn g-langbtn" data-langmenu></button></div>
+  <div class="g-sign"><h1>RALLY SYNC</h1><small>♠ ♥ casino ♦ ♣</small></div>
+  <div class="g-wrap">
+    <div class="g-cab" id="gCab">
+      <div class="g-lights"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="g-top">★ 7 ★ JACKPOT ★ 7 ★</div>
+      <div class="g-reels" id="gReels"></div>
+      <label class="g-pass"><span class="g-key">🔑</span>
+        <input id="gPass" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go">
+        <button type="button" class="g-eye" id="gEye" aria-label="show">👁</button></label>
+      <div class="g-msg" id="gMsg"></div>
+      <button class="g-spin" id="gSpin"></button>
+    </div>
+    <div class="g-lever" id="gLever" title="Pull"><div class="rod"></div><div class="ball"></div><div class="base"></div></div>
+  </div>
+  <div class="g-hint" id="gHint"></div>
+</div>
 <header>
-  <div class="brand hide-xs">⚔️ <span>Rally Sync</span> <small class="hide-sm" data-i="subtitle"></small></div>
+  <button id="sessBtn" title="Sessions">⇦ <span class="cdot2" id="connDot"></span><span class="nm" id="sessName"></span><small id="sessOnline"></small></button>
   <span class="utcclock" id="clock" title="UTC"></span>
   <button class="btn-go" id="goAll" data-i="goAll"></button>
-  <button class="btn-stop" id="stopAll" data-i="stopAll" hidden></button>
+  <button class="btn-stop" id="stopAll" hidden>■ <span class="hide-xs" data-i="stopAllTxt"></span></button>
   <button id="addTeam">+ <span class="hide-xs" data-i="team"></span></button>
   <button id="alignBtn" class="hide-sm" title="Align">⊞ <span data-i="align"></span></button>
   <button id="undo" title="Ctrl+Z">↶ <span class="hide-xs" data-i="undo"></span></button>
-  <div class="seg hide-xs" id="langSeg">
-    <button data-lang="en">EN</button><button data-lang="fr">FR</button><button data-lang="ko">한</button><button data-lang="tr">TR</button>
-  </div>
+  <button type="button" class="langbtn hide-xs" data-langmenu></button>
   <button id="theme" class="hide-xs" title="Theme">🌓</button>
+  <button id="lockTop">🔒</button>
   <button id="settingsBtn" title="Settings">⚙️</button>
   <nav id="jump" class="jump"></nav>
 </header>
@@ -196,16 +362,19 @@ dialog h3{margin:0 0 6px}
 
 <dialog id="settings">
   <h3 data-i="settings"></h3>
-  <div class="row"><span>🌐</span><div class="seg" id="langSeg2"><button data-lang="en">EN</button><button data-lang="fr">FR</button><button data-lang="ko">한국어</button><button data-lang="tr">TR</button></div></div>
+  <div class="row"><span>🌐</span><button type="button" class="langbtn" data-langmenu></button></div>
   <div class="row"><span>🌓</span><button id="theme2">☀️ / 🌙</button></div>
   <div class="row"><span data-i="lead"></span><input id="leadIn" type="number" min="0" max="120" style="width:70px"></div>
   <div class="row"><span data-i="sound"></span><input id="soundIn" type="checkbox"></div>
+  <div class="row"><span>🔔 <span data-i="volBeep"></span></span><input id="volBeepIn" class="vol" type="range" min="0" max="100" step="5"></div>
+  <div class="row"><span>🎰 <span data-i="volFx"></span></span><input id="volFxIn" class="vol" type="range" min="0" max="100" step="5"></div>
   <div class="row">
     <button id="exportBtn" data-i="export"></button>
     <button id="importBtn" data-i="import"></button>
     <input type="file" id="importFile" accept=".json,application/json" hidden>
   </div>
   <div class="row"><button id="resetBtn" class="btn-stop" data-i="reset"></button><button id="closeSettings">OK</button></div>
+  <div class="row"><button id="lockBtn">🔒 <span data-i="lock"></span></button></div>
   <p class="about" data-i="about"></p>
 </dialog>
 <dialog id="ask"><form method="dialog" id="askForm">
@@ -220,7 +389,7 @@ dialog h3{margin:0 0 6px}
 "use strict";
 /* ---------- i18n ---------- */
 const I18N = {
-  en:{about:"Unofficial fan-made tool, not affiliated with or endorsed by Kingshot or its publisher. Your data stays in this browser only: no account, no server, no tracking.",alliance:"Alliance",color:"Block color",planAll:"Schedule (UTC)",plan:"Schedule this team at a UTC time",planPrompt:"First launch at (UTC) — e.g. 21:30 or 21:30:15",planAllPrompt:"All teams land together. First launch at (UTC) — e.g. 21:30",badClock:"Invalid time — e.g. 21:30 or 21:30:15",startAt:"start",landAt:"land",resizeTip:"Drag to resize · double-click = default size",align:"Align",deleted:"Team deleted",march:"March",subtitle:"castle rally launch coordinator",goAll:"▶ GO ALL",stopAll:"■ Stop all",addTeam:"+ Team",undo:"Undo",team:"Team",bench:"Bench",
+  en:{sessTitle:"SESSIONS",sessSub:"Pick a table or open a new one",sessNamePh:"Session name (e.g. Castle 11/07)",sessCreate:"Create",sessEmpty:"No session yet — create the first one above",sessDel:"Delete this session for everyone?",sessRen:"Session name:",sessGone:"This session was deleted",sessNotFound:"Session not found",linkCopied:"Link copied — share it with your team",modeOnline:"☁️ Online — every change is shared live with everyone in the same session",modeLocal:"💾 Local only — sessions are saved on this device. Online sharing is not set up yet.",modeFail:"⚠️ The online database could not be reached — working on this device only",offline:"Offline — your changes will be sent when the connection is back",sessUpdated:"updated",sessOnlineN:"online",sessions:"Sessions",stopAllTxt:"Stop all",volBeep:"Countdown volume",volFx:"Casino animation volume",gSub:"Enter the password, then pull the lever",gSpin:"SPIN",gLose:"No luck — try again",gWin:"JACKPOT!",gHint:"Press Enter, tap SPIN or pull the lever to play",gPass:"Password",gEmpty:"Enter the password first",lock:"Lock (casino door)",about:"Unofficial fan-made tool, not affiliated with or endorsed by Kingshot or its publisher. No account and no tracking. With online sharing on, sessions are stored in the alliance’s own free Firebase database; your personal settings stay in this browser.",alliance:"Alliance",color:"Block color",planAll:"Schedule (UTC)",plan:"Schedule this team at a UTC time",planPrompt:"First launch at (UTC) — e.g. 21:30 or 21:30:15",planAllPrompt:"All teams land together. First launch at (UTC) — e.g. 21:30",badClock:"Invalid time — e.g. 21:30 or 21:30:15",startAt:"start",landAt:"land",resizeTip:"Drag to resize · double-click = default size",align:"Align",deleted:"Team deleted",march:"March",subtitle:"castle rally launch coordinator",goAll:"▶ GO ALL",stopAll:"■ Stop all",addTeam:"+ Team",undo:"Undo",team:"Team",bench:"Bench",
     rally:"Rally",go:"▶ GO",stop:"■",launch:"LAUNCH!",firstIn:"1st launch in",landsIn:"Lands in",landed:"LANDED",
     empty:"Drop players here",moveTo:"Move to",copy:"Copy launch order for chat",copied:"Copied!",settings:"Settings",
     lead:"Countdown before 1st launch (s)",sound:"Sound",export:"Export JSON",import:"Import JSON",reset:"Reset everything",
@@ -228,7 +397,7 @@ const I18N = {
     del:"Delete",addPh:"Name 1m46, Name 54s…",badTime:"Invalid time — use 54s, 1m46 or 1:46",first:"starts first",
     hint:"Drag a block by its header to place it anywhere, ⊞ Align to tidy up · Drag ⠿ to move players · hover a player + 1–9 = move to team, B = bench · Ctrl+Z = undo · double-click a name to rename · resize a block from its bottom-right corner",
     renamePrompt:"New name:",imported:"Imported!",players:"players",rallyCustom:"Rally time (e.g. 2m30):",sync:"Synced landing"},
-  fr:{about:"Outil non officiel fait par des fans, sans lien avec Kingshot ni son éditeur. Tes données restent uniquement dans ce navigateur : pas de compte, pas de serveur, pas de suivi.",alliance:"Alliance",color:"Couleur du bloc",planAll:"Planifier (UTC)",plan:"Planifier cette équipe à une heure UTC",planPrompt:"1er lancement à (UTC) — ex. 21:30 ou 21:30:15",planAllPrompt:"Toutes les équipes arrivent ensemble. 1er lancement à (UTC) — ex. 21:30",badClock:"Heure invalide — ex. 21:30 ou 21:30:15",startAt:"départ",landAt:"arrivée",resizeTip:"Glisse pour redimensionner · double-clic = taille par défaut",align:"Aligner",deleted:"Équipe supprimée",march:"marche",subtitle:"coordination des rallyes château",goAll:"▶ GO TOUS",stopAll:"■ Tout arrêter",addTeam:"+ Équipe",undo:"Annuler",team:"Équipe",bench:"Réserve",
+  fr:{sessTitle:"SESSIONS",sessSub:"Choisis une table ou ouvre-en une nouvelle",sessNamePh:"Nom de la session (ex. Castle 11/07)",sessCreate:"Créer",sessEmpty:"Aucune session pour l'instant — crée la première ci-dessus",sessDel:"Supprimer cette session pour tout le monde ?",sessRen:"Nom de la session :",sessGone:"Cette session a été supprimée",sessNotFound:"Session introuvable",linkCopied:"Lien copié — partage-le à ton équipe",modeOnline:"☁️ En ligne — chaque modification est partagée en direct avec tous ceux qui sont dans la même session",modeLocal:"💾 Local uniquement — les sessions sont enregistrées sur cet appareil. Le partage en ligne n'est pas encore configuré.",modeFail:"⚠️ Impossible de joindre la base en ligne — tu travailles uniquement sur cet appareil",offline:"Hors ligne — tes modifications seront envoyées au retour de la connexion",sessUpdated:"modifiée",sessOnlineN:"en ligne",sessions:"Sessions",stopAllTxt:"Tout arrêter",volBeep:"Volume des bips du décompte",volFx:"Volume des animations casino",gSub:"Entre le mot de passe, puis tire le levier",gSpin:"JOUER",gLose:"Perdu — retente ta chance",gWin:"JACKPOT !",gHint:"Appuie sur Entrée, sur JOUER ou tire le levier pour jouer",gPass:"Mot de passe",gEmpty:"Entre d'abord le mot de passe",lock:"Verrouiller (porte du casino)",about:"Outil non officiel fait par des fans, sans lien avec Kingshot ni son éditeur. Pas de compte, pas de suivi. Avec le partage en ligne, les sessions sont stockées dans la base Firebase gratuite de l’alliance ; tes réglages personnels restent dans ce navigateur.",alliance:"Alliance",color:"Couleur du bloc",planAll:"Planifier (UTC)",plan:"Planifier cette équipe à une heure UTC",planPrompt:"1er lancement à (UTC) — ex. 21:30 ou 21:30:15",planAllPrompt:"Toutes les équipes arrivent ensemble. 1er lancement à (UTC) — ex. 21:30",badClock:"Heure invalide — ex. 21:30 ou 21:30:15",startAt:"départ",landAt:"arrivée",resizeTip:"Glisse pour redimensionner · double-clic = taille par défaut",align:"Aligner",deleted:"Équipe supprimée",march:"marche",subtitle:"coordination des rallyes château",goAll:"▶ GO TOUS",stopAll:"■ Tout arrêter",addTeam:"+ Équipe",undo:"Annuler",team:"Équipe",bench:"Réserve",
     rally:"Rallye",go:"▶ GO",stop:"■",launch:"LANCE !",firstIn:"1er lancement dans",landsIn:"Arrivée dans",landed:"ARRIVÉ",
     empty:"Dépose des joueurs ici",moveTo:"Déplacer vers",copy:"Copier l'ordre de lancement",copied:"Copié !",settings:"Paramètres",
     lead:"Compte à rebours avant le 1er lancement (s)",sound:"Son",export:"Exporter JSON",import:"Importer JSON",reset:"Tout réinitialiser",
@@ -236,7 +405,7 @@ const I18N = {
     del:"Supprimer",addPh:"Nom 1m46, Nom 54s…",badTime:"Temps invalide — utilise 54s, 1m46 ou 1:46",first:"lance en 1er",
     hint:"Attrape un bloc par son en-tête pour le placer où tu veux, ⊞ Aligner pour ranger · Glisse ⠿ pour déplacer · survole un joueur + 1–9 = vers l'équipe, B = réserve · Ctrl+Z = annuler · double-clic sur un nom pour le renommer · redimensionne un bloc par son coin en bas à droite",
     renamePrompt:"Nouveau nom :",imported:"Importé !",players:"joueurs",rallyCustom:"Durée du rallye (ex. 2m30) :",sync:"Arrivée synchronisée"},
-  ko:{about:"팬이 만든 비공식 도구이며 Kingshot 또는 퍼블리셔와 관련이 없습니다. 데이터는 이 브라우저에만 저장됩니다: 계정, 서버, 추적 없음.",alliance:"연맹",color:"블록 색상",planAll:"예약 (UTC)",plan:"이 팀을 UTC 시간에 예약",planPrompt:"첫 출발 시간 (UTC) — 예: 21:30 또는 21:30:15",planAllPrompt:"모든 팀 동시 도착. 첫 출발 시간 (UTC) — 예: 21:30",badClock:"잘못된 시간 — 예: 21:30 또는 21:30:15",startAt:"출발",landAt:"도착",resizeTip:"드래그로 크기 조절 · 더블클릭 = 기본 크기",align:"정렬",deleted:"팀 삭제됨",march:"행군",subtitle:"성 집결 출발 조정기",goAll:"▶ 전체 출발",stopAll:"■ 전체 정지",addTeam:"+ 팀",undo:"실행 취소",team:"팀",bench:"대기",
+  ko:{sessTitle:"세션",sessSub:"테이블을 고르거나 새로 여세요",sessNamePh:"세션 이름 (예: Castle 11/07)",sessCreate:"만들기",sessEmpty:"아직 세션이 없습니다 — 위에서 첫 세션을 만드세요",sessDel:"모든 사람에게서 이 세션을 삭제할까요?",sessRen:"세션 이름:",sessGone:"이 세션은 삭제되었습니다",sessNotFound:"세션을 찾을 수 없습니다",linkCopied:"링크 복사됨 — 팀과 공유하세요",modeOnline:"☁️ 온라인 — 같은 세션의 모든 사람과 변경 사항이 실시간 공유됩니다",modeLocal:"💾 로컬 전용 — 세션이 이 기기에 저장됩니다. 온라인 공유가 아직 설정되지 않았습니다.",modeFail:"⚠️ 온라인 데이터베이스에 연결할 수 없습니다 — 이 기기에서만 작업합니다",offline:"오프라인 — 연결되면 변경 사항이 전송됩니다",sessUpdated:"수정",sessOnlineN:"접속 중",sessions:"세션",stopAllTxt:"전체 정지",volBeep:"카운트다운 음량",volFx:"카지노 애니메이션 음량",gSub:"비밀번호를 입력하고 레버를 당기세요",gSpin:"스핀",gLose:"꽝 — 다시 도전하세요",gWin:"잭팟!",gHint:"Enter를 누르거나 스핀을 누르거나 레버를 당기세요",gPass:"비밀번호",gEmpty:"먼저 비밀번호를 입력하세요",lock:"잠금 (카지노 문)",about:"팬이 만든 비공식 도구이며 Kingshot 또는 퍼블리셔와 관련이 없습니다. 계정과 추적이 없습니다. 온라인 공유를 켜면 세션은 연맹의 무료 Firebase 데이터베이스에 저장되며, 개인 설정은 이 브라우저에 남습니다.",alliance:"연맹",color:"블록 색상",planAll:"예약 (UTC)",plan:"이 팀을 UTC 시간에 예약",planPrompt:"첫 출발 시간 (UTC) — 예: 21:30 또는 21:30:15",planAllPrompt:"모든 팀 동시 도착. 첫 출발 시간 (UTC) — 예: 21:30",badClock:"잘못된 시간 — 예: 21:30 또는 21:30:15",startAt:"출발",landAt:"도착",resizeTip:"드래그로 크기 조절 · 더블클릭 = 기본 크기",align:"정렬",deleted:"팀 삭제됨",march:"행군",subtitle:"성 집결 출발 조정기",goAll:"▶ 전체 출발",stopAll:"■ 전체 정지",addTeam:"+ 팀",undo:"실행 취소",team:"팀",bench:"대기",
     rally:"집결",go:"▶ 출발",stop:"■",launch:"출발!",firstIn:"첫 출발까지",landsIn:"도착까지",landed:"도착",
     empty:"여기에 플레이어를 놓으세요",moveTo:"이동",copy:"출발 순서 복사 (채팅용)",copied:"복사됨!",settings:"설정",
     lead:"첫 출발 전 카운트다운 (초)",sound:"소리",export:"JSON 내보내기",import:"JSON 가져오기",reset:"전체 초기화",
@@ -244,7 +413,7 @@ const I18N = {
     del:"삭제",addPh:"이름 1m46, 이름 54s…",badTime:"잘못된 시간 — 54s, 1m46, 1:46 형식",first:"먼저 출발",
     hint:"블록 머리글을 드래그해 자유 배치, ⊞ 정렬로 정리 · ⠿ 를 드래그해 이동 · 플레이어 위에서 1–9 = 팀 이동, B = 대기 · Ctrl+Z = 실행 취소 · 이름 더블클릭 = 이름 변경 · 오른쪽 아래 모서리로 블록 크기 조절",
     renamePrompt:"새 이름:",imported:"가져옴!",players:"명",rallyCustom:"집결 시간 (예: 2m30):",sync:"동시 도착"},
-  tr:{about:"Hayranlar tarafından yapılmış resmi olmayan bir araçtır; Kingshot veya yayıncısıyla bağlantılı değildir. Verilerin yalnızca bu tarayıcıda kalır: hesap, sunucu veya izleme yok.",alliance:"İttifak",color:"Blok rengi",planAll:"Planla (UTC)",plan:"Bu takımı bir UTC saatine planla",planPrompt:"İlk başlatma saati (UTC) — örn. 21:30 veya 21:30:15",planAllPrompt:"Tüm takımlar aynı anda varır. İlk başlatma saati (UTC) — örn. 21:30",badClock:"Geçersiz saat — örn. 21:30 veya 21:30:15",startAt:"başlangıç",landAt:"varış",resizeTip:"Boyutlandırmak için sürükle · çift tık = varsayılan boyut",align:"Hizala",deleted:"Takım silindi",march:"yürüyüş",subtitle:"kale ralli başlatma koordinatörü",goAll:"▶ HEPSİ BAŞLA",stopAll:"■ Hepsini durdur",addTeam:"+ Takım",undo:"Geri al",team:"Takım",bench:"Yedek",
+  tr:{sessTitle:"OTURUMLAR",sessSub:"Bir masa seç veya yenisini aç",sessNamePh:"Oturum adı (örn. Castle 11/07)",sessCreate:"Oluştur",sessEmpty:"Henüz oturum yok — ilkini yukarıdan oluştur",sessDel:"Bu oturum herkes için silinsin mi?",sessRen:"Oturum adı:",sessGone:"Bu oturum silindi",sessNotFound:"Oturum bulunamadı",linkCopied:"Bağlantı kopyalandı — ekibinle paylaş",modeOnline:"☁️ Çevrimiçi — her değişiklik aynı oturumdaki herkesle anında paylaşılır",modeLocal:"💾 Yalnızca yerel — oturumlar bu cihazda kaydedilir. Çevrimiçi paylaşım henüz kurulmadı.",modeFail:"⚠️ Çevrimiçi veritabanına ulaşılamadı — yalnızca bu cihazda çalışıyorsun",offline:"Çevrimdışı — bağlantı gelince değişikliklerin gönderilecek",sessUpdated:"güncellendi",sessOnlineN:"çevrimiçi",sessions:"Oturumlar",stopAllTxt:"Hepsini durdur",volBeep:"Geri sayım ses seviyesi",volFx:"Kumarhane animasyon sesi",gSub:"Şifreyi gir, sonra kolu çek",gSpin:"ÇEVİR",gLose:"Şans yok — tekrar dene",gWin:"JACKPOT!",gHint:"Oynamak için Enter'a bas, ÇEVİR'e dokun veya kolu çek",gPass:"Şifre",gEmpty:"Önce şifreyi gir",lock:"Kilitle (kumarhane kapısı)",about:"Hayranlar tarafından yapılmış resmi olmayan bir araçtır; Kingshot veya yayıncısıyla bağlantılı değildir. Hesap ve izleme yok. Çevrimiçi paylaşım açıkken oturumlar ittifakın ücretsiz Firebase veritabanında saklanır; kişisel ayarların bu tarayıcıda kalır.",alliance:"İttifak",color:"Blok rengi",planAll:"Planla (UTC)",plan:"Bu takımı bir UTC saatine planla",planPrompt:"İlk başlatma saati (UTC) — örn. 21:30 veya 21:30:15",planAllPrompt:"Tüm takımlar aynı anda varır. İlk başlatma saati (UTC) — örn. 21:30",badClock:"Geçersiz saat — örn. 21:30 veya 21:30:15",startAt:"başlangıç",landAt:"varış",resizeTip:"Boyutlandırmak için sürükle · çift tık = varsayılan boyut",align:"Hizala",deleted:"Takım silindi",march:"yürüyüş",subtitle:"kale ralli başlatma koordinatörü",goAll:"▶ HEPSİ BAŞLA",stopAll:"■ Hepsini durdur",addTeam:"+ Takım",undo:"Geri al",team:"Takım",bench:"Yedek",
     rally:"Ralli",go:"▶ BAŞLA",stop:"■",launch:"BAŞLAT!",firstIn:"İlk başlatmaya",landsIn:"Varışa",landed:"VARDI",
     empty:"Oyuncuları buraya bırak",moveTo:"Taşı",copy:"Başlatma sırasını kopyala",copied:"Kopyalandı!",settings:"Ayarlar",
     lead:"İlk başlatmadan önce geri sayım (sn)",sound:"Ses",export:"JSON dışa aktar",import:"JSON içe aktar",reset:"Her şeyi sıfırla",
@@ -254,30 +423,61 @@ const I18N = {
     renamePrompt:"Yeni isim:",imported:"İçe aktarıldı!",players:"oyuncu",rallyCustom:"Ralli süresi (örn. 2m30):",sync:"Senkron varış"}
 };
 const COLORS = ["#f5b83d","#4aa3ff","#ff6b6b","#2ecc71","#b57bff","#ff9f43","#1dd1a1","#ff6bcb","#a3cb38","#48dbfb"];
-const KEY = "rallysync.v1";
+const KEY = "rallysync.v1", PREFS_KEY = "rallysync.prefs", LAYOUT_KEY = "rallysync.layout.";
+/* =====================================================================================
+   ONLINE SHARING — paste the Firebase web config of your project here (see README).
+   Leave null to work on this device only.
+   ===================================================================================== */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyButTPJ74DlFm2Drdz2ROyxQAJO_ZnA-M8",
+  authDomain: "rallysync-749b6.firebaseapp.com",
+  databaseURL: "https://rallysync-749b6-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "rallysync-749b6",
+  storageBucket: "rallysync-749b6.firebasestorage.app",
+  messagingSenderId: "136803970365",
+  appId: "1:136803970365:web:ffaea4a90dcb53796d2954"
+};
+/* ===================================================================================== */
 
-/* ---------- state ---------- */
-let S = load() || defaultState();
-S.pos = S.pos || {}; S.ztop = S.ztop || 1; S.allyColors = S.allyColors || {};
-try{ for(const k in S.pos){ const p = S.pos[k]; if(p.w || p.h){ if(p.w && !p.s) p.s = Math.round(p.w/340*100)/100; delete p.w; delete p.h; } } }catch(e){ S.pos = {}; }
-function defaultState(){
-  const lang = (navigator.language||"en").slice(0,2);
-  return { lang: I18N[lang] ? lang : "en", theme:"dark", sound:true, lead:5, seq:10, pos:{}, ztop:1, allyColors:{},
-    bench:[],
-    teams:[
-      {id:"t1", name:"", rally:300, start:null, players:[{id:"p1",name:"Yordan",march:30},{id:"p2",name:"Jimmy",march:106},{id:"p3",name:"Bloom",march:54}]},
-      {id:"t2", name:"", rally:60,  start:null, players:[{id:"p4",name:"Slay",march:40},{id:"p5",name:"R4ppi",march:54},{id:"p6",name:"Mojo",march:32}]}
-    ]};
+/* ---------- state ----------
+   personal settings  -> this browser (PREFS_KEY)
+   block layout       -> this browser, per session (LAYOUT_KEY + id)
+   teams / players    -> the session store (online or local), shared */
+const PREF_FIELDS = ["lang","langV","theme","sound","lead","volBeep","volFx","_fxPrev"];
+let S = initialState();
+function loadJSON(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } }
+function saveJSON(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+function initialState(){
+  const old = loadJSON(KEY) || {}, prefs = loadJSON(PREFS_KEY) || {};
+  const st = { lang:"en", langV:2, theme:"dark", sound:true, lead:5, pos:{}, ztop:1, allyColors:{}, bench:[], teams:[] };
+  PREF_FIELDS.forEach(k=>{ if(old[k] !== undefined) st[k] = old[k]; });
+  PREF_FIELDS.forEach(k=>{ if(prefs[k] !== undefined) st[k] = prefs[k]; });
+  if(st.langV !== 2){ st.lang = "en"; st.langV = 2; }   // English by default
+  return st;
 }
-function load(){ try{ const s = JSON.parse(localStorage.getItem(KEY)); return s && Array.isArray(s.teams) ? s : null; }catch(e){ return null; } }
+function loadLayout(id){
+  const l = loadJSON(LAYOUT_KEY + id) || {};
+  S.pos = l.pos || {}; S.ztop = l.ztop || 1;
+  try{ for(const k in S.pos){ const p = S.pos[k]; if(p.w || p.h){ if(p.w && !p.s) p.s = Math.round(p.w/340*100)/100; delete p.w; delete p.h; } } }catch(e){ S.pos = {}; }
+}
 let saveT = 0;
-function save(){ clearTimeout(saveT); saveT = setTimeout(()=>{ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }, 150); }
-const uid = p => p + (++S.seq);
+function save(){
+  syncRoster();
+  clearTimeout(saveT); saveT = setTimeout(()=>{
+    const p = {}; PREF_FIELDS.forEach(k=>{ if(S[k] !== undefined) p[k] = S[k]; }); saveJSON(PREFS_KEY, p);
+    if(SESSION) saveJSON(LAYOUT_KEY + SESSION.id, {pos:S.pos, ztop:S.ztop});
+  }, 150);
+}
+/* collision-free ids (several people create teams/players at the same time) */
+const uid = p => p + Date.now().toString(36).slice(-5) + Math.random().toString(36).slice(2,6);
+/* shared clock: corrected with the online database's server time so every device counts down together */
+const clock = { offset:0 };
+const serverNow = () => Date.now() + clock.offset;
 const t = k => (I18N[S.lang]||I18N.en)[k] ?? I18N.en[k] ?? k;
 
 /* undo: snapshot of roster only (not language/theme) */
 const undoStack = [];
-function snap(){ undoStack.push(JSON.stringify({bench:S.bench,teams:S.teams,seq:S.seq,pos:S.pos,allyColors:S.allyColors})); if(undoStack.length>80) undoStack.shift(); }
+function snap(){ undoStack.push(JSON.stringify({bench:S.bench,teams:S.teams,pos:S.pos,allyColors:S.allyColors})); if(undoStack.length>80) undoStack.shift(); }
 function undo(){ const s = undoStack.pop(); if(!s) return; Object.assign(S, JSON.parse(s)); commit(false); }
 function commit(withSnap){ save(); render(); }
 function mutate(fn){ snap(); fn(); commit(); }
@@ -301,7 +501,7 @@ function fmtUTC(ms){ return new Date(ms).toISOString().slice(11,19); }
 function parseUTC(str){
   const m = String(str||"").trim().toLowerCase().match(/^(\d{1,2})\s*[:h. ]?\s*(\d{2})(?:\s*[:m.]?\s*(\d{2}))?\s*(?:s|utc)?$/);
   if(!m || +m[1] > 23 || +m[2] > 59 || (m[3] && +m[3] > 59)) return null;
-  const now = new Date();
+  const now = new Date(serverNow());
   let tms = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), +m[1], +m[2], +(m[3]||0));
   if(tms < now.getTime() - 5000) tms += 86400000;   // already passed today -> tomorrow
   return tms;
@@ -347,7 +547,7 @@ function schedule(tm){
 
 /* ---------- render ---------- */
 const board = document.getElementById("board"), jump = document.getElementById("jump");
-jump.addEventListener("click", e=>{ const b = e.target.closest("[data-jump]"); if(!b) return;
+jump.addEventListener("click", e=>{ if(e.target.closest("[data-sessions]")){ showSessions(); return; } const b = e.target.closest("[data-jump]"); if(!b) return;
   const c = board.querySelector(`[data-card="${b.dataset.jump}"]`); if(c) c.scrollIntoView({behavior:"smooth", block:"start"}); });
 /* keep the header height in a CSS variable so jumps land just under it */
 const hdr = document.querySelector("header");
@@ -390,7 +590,7 @@ function render(){
   document.documentElement.lang = S.lang;
   document.querySelector('meta[name=theme-color]').content = S.theme==="light" ? "#ffffff" : "#0f1115";
   document.querySelectorAll("[data-i]").forEach(el=>{ el.textContent = t(el.dataset.i); });
-  document.querySelectorAll("#langSeg button, #langSeg2 button").forEach(b=>b.classList.toggle("on", b.dataset.lang===S.lang));
+  langLabels();
   undoBtn.disabled = !undoStack.length;
   const anyRun = S.teams.some(x=>x.start);
   document.getElementById("goAll").hidden = anyRun;
@@ -437,9 +637,10 @@ function render(){
     </section>`;
   });
   board.innerHTML = html;
-  jump.innerHTML = `<button class="chip" data-jump="bench" style="--c:var(--muted)"><span class="dot"></span>${esc(t("bench"))} ${S.bench.length}</button>` +
+  jump.innerHTML = `<button class="chip sess" data-sessions>⇦ <span class="nm">${esc(SESSION ? SESSION.name : "")}</span></button>` + `<button class="chip" data-jump="bench" style="--c:var(--muted)"><span class="dot"></span>${esc(t("bench"))} ${S.bench.length}</button>` +
     S.teams.map((tm,i)=>`<button class="chip" data-jump="${tm.id}" style="--c:${teamColor(tm,i)}"><span class="dot"></span>${i+1}${tm.alliance?" "+esc(tm.alliance):""} <small data-chip="${tm.id}"></small></button>`).join("");
   layout();
+  if(STORE){ renderSessions(); updateSessUI(); }
   if(keepAdd){ const el = board.querySelector(`[data-add="${keepAdd.id}"]`); if(el){ el.value = keepAdd.v; el.focus({preventScroll:true}); } }
   tick(true);
 }
@@ -620,7 +821,8 @@ addEventListener("resize", ()=>layout());
 /* ---------- live countdown ---------- */
 const beeped = new Set();
 function tick(force){
-  const now = Date.now();
+  if(pendingRemote && !isBusy()){ const d = pendingRemote; pendingRemote = null; applyRemote(d); }
+  const now = serverNow();
   const utc = fmtUTC(now); document.getElementById("clock").textContent = "UTC " + utc;
   board.querySelectorAll("[data-utc]").forEach(el=>{ if(el.textContent!==utc) el.textContent = utc; });
   let anyRun = false;
@@ -676,13 +878,16 @@ setInterval(tick, 100);
 
 /* ---------- audio & wake lock ---------- */
 let actx = null;
-function beep(freq, dur){
+/* kind: "fx" = casino door animations, anything else = countdown beeps */
+function beep(freq, dur, kind){
   if(!S.sound) return;
+  const vol = kind === "fx" ? (S.volFx ?? .4) : (S.volBeep ?? 1);
+  if(vol <= 0) return;
   try{
     actx = actx || new (window.AudioContext||window.webkitAudioContext)();
     const o = actx.createOscillator(), g = actx.createGain();
     o.frequency.value = freq; o.type = "square";
-    g.gain.setValueAtTime(.12, actx.currentTime); g.gain.exponentialRampToValueAtTime(.0001, actx.currentTime+dur);
+    g.gain.setValueAtTime(.15 * vol, actx.currentTime); g.gain.exponentialRampToValueAtTime(.0001, actx.currentTime+dur);
     o.connect(g).connect(actx.destination); o.start(); o.stop(actx.currentTime+dur+.02);
   }catch(e){}
 }
@@ -697,11 +902,11 @@ async function wake(on){
 }
 
 /* ---------- actions ---------- */
-function goTeam(tm, extraDelay){ tm.start = Date.now() + (S.lead + (extraDelay||0))*1000; }
+function goTeam(tm, extraDelay){ tm.start = serverNow() + (S.lead + (extraDelay||0))*1000; }
 function goAll(baseMs){
   const teams = S.teams.filter(x=>x.players.length); if(!teams.length) return;
   const maxTotal = Math.max(...teams.map(x=>schedule(x).total));
-  const base = typeof baseMs === "number" ? baseMs : Date.now() + S.lead*1000;
+  const base = typeof baseMs === "number" ? baseMs : serverNow() + S.lead*1000;
   // every team lands at the same instant; the slowest team launches first, at "base"
   teams.forEach(x=>{ x.start = base + (maxTotal - schedule(x).total)*1000; });
   actx && actx.resume && actx.resume(); beep(880,.05);
@@ -736,7 +941,7 @@ board.addEventListener("click", e=>{
     case "add": addPlayers(b.dataset.team, board.querySelector(`[data-add="${b.dataset.team}"]`)); break;
     case "rally": mutate(()=>{ tm.rally = +b.dataset.v; }); break;
     case "rallyc": ask(t("rallyCustom"), fmt(tm.rally)).then(r=>{ const v = parseTime(r); if(v) mutate(()=>{ tm.rally=v; }); else if(r!=null) toast(t("badTime")); }); break;
-    case "plan": ask(t("planPrompt"), tm.start ? fmtUTC(tm.start).slice(0,5) : fmtUTC(Date.now()+120000).slice(0,5)).then(v=>{
+    case "plan": ask(t("planPrompt"), tm.start ? fmtUTC(tm.start).slice(0,5) : fmtUTC(serverNow()+120000).slice(0,5)).then(v=>{
       if(v==null) return; const ms = parseUTC(v); if(ms==null){ toast(t("badClock")); return; }
       tm.start = ms; actx && actx.resume && actx.resume(); save(); render(); }); break;
     case "go": goTeam(tm); actx && actx.resume && actx.resume(); beep(880,.05); save(); render(); break;
@@ -875,14 +1080,39 @@ document.getElementById("goAll").onclick = ()=>goAll();
 document.getElementById("stopAll").onclick = stopAll;
 document.getElementById("alignBtn").onclick = align;
 document.getElementById("addTeam").onclick = ()=>mutate(()=>{ S.teams.push({id:uid("t"), name:"", rally:300, start:null, players:[]}); });
-document.getElementById("langSeg").onclick = document.getElementById("langSeg2").onclick = e=>{ const b = e.target.closest("[data-lang]"); if(b){ S.lang = b.dataset.lang; save(); render(); } };
+/* ---------- language: one button -> list ---------- */
+const LANGS = {en:["English","EN"], fr:["Français","FR"], ko:["한국어","KO"], tr:["Türkçe","TR"]};
+function langLabels(){ document.querySelectorAll("[data-langmenu]").forEach(b=>{ b.textContent = `🌐 ${LANGS[S.lang] ? LANGS[S.lang][1] : "EN"} ▾`; b.title = "Language"; }); }
+let langMenuEl = null;
+function closeLangMenu(){ if(langMenuEl){ langMenuEl.remove(); langMenuEl = null; } }
+function openLangMenu(btn){
+  closeLangMenu(); closeMenu();
+  const m = document.createElement("div"); m.className = "menu langmenu";
+  m.innerHTML = Object.entries(LANGS).map(([k,[name,code]])=>`<button type="button" data-setlang="${k}" class="${k===S.lang?"on":""}">${name}<span class="lc">${code}</span></button>`).join("");
+  (btn.closest("dialog") || document.body).appendChild(m); langMenuEl = m;
+  const r = btn.getBoundingClientRect(), mw = m.offsetWidth, mh = m.offsetHeight;
+  m.style.left = Math.max(6, Math.min(innerWidth - mw - 6, r.right - mw)) + "px";
+  m.style.top = (r.bottom + mh + 6 > innerHeight ? Math.max(6, r.top - mh - 4) : r.bottom + 4) + "px";
+  m.addEventListener("click", e=>{ const b = e.target.closest("[data-setlang]"); if(!b) return; S.lang = b.dataset.setlang; closeLangMenu(); save(); render(); });
+}
+document.addEventListener("click", e=>{
+  const b = e.target.closest("[data-langmenu]");
+  if(b){ e.stopPropagation(); langMenuEl ? closeLangMenu() : openLangMenu(b); return; }
+  if(langMenuEl && !langMenuEl.contains(e.target)) closeLangMenu();
+});
+addEventListener("keydown", e=>{ if(e.key==="Escape") closeLangMenu(); });
+addEventListener("resize", closeLangMenu);
 document.getElementById("theme").onclick = document.getElementById("theme2").onclick = ()=>{ S.theme = S.theme==="light" ? "dark" : "light"; save(); render(); };
 const dlg = document.getElementById("settings");
-document.getElementById("settingsBtn").onclick = ()=>{ leadIn.value = S.lead; soundIn.checked = S.sound; dlg.showModal(); };
+document.getElementById("settingsBtn").onclick = ()=>{ leadIn.value = S.lead; soundIn.checked = S.sound;
+  volBeepIn.value = Math.round((S.volBeep ?? 1)*100); volFxIn.value = Math.round((S.volFx ?? .4)*100); dlg.showModal(); };
+const volBeepIn = document.getElementById("volBeepIn"), volFxIn = document.getElementById("volFxIn");
+volBeepIn.onchange = ()=>{ S.volBeep = volBeepIn.value/100; save(); beep(660,.09); };
+volFxIn.onchange = ()=>{ S.volFx = volFxIn.value/100; save(); beep(784,.12,"fx"); };
 document.getElementById("closeSettings").onclick = ()=>dlg.close();
 leadIn.onchange = ()=>{ S.lead = Math.max(0, Math.min(120, +leadIn.value||0)); save(); };
 soundIn.onchange = ()=>{ S.sound = soundIn.checked; save(); if(S.sound) beep(880,.08); };
-document.getElementById("resetBtn").onclick = async ()=>{ dlg.close(); if(await ask(t("confirmReset"), null, "confirm")){ snap(); const keep = {lang:S.lang, theme:S.theme, sound:S.sound, lead:S.lead}; S = Object.assign(defaultState(), keep, {pos:{}, bench:[], teams:[{id:"t1",name:"",rally:300,start:null,players:[]}]}); commit(); } };
+document.getElementById("resetBtn").onclick = async ()=>{ dlg.close(); if(await ask(t("confirmReset"), null, "confirm")) mutate(()=>{ S.bench = []; S.teams = [{id:uid("t"), name:"", rally:300, start:null, players:[]}]; S.allyColors = {}; S.pos = {}; }); };
 document.getElementById("exportBtn").onclick = ()=>{
   const blob = new Blob([JSON.stringify({bench:S.bench, teams:S.teams.map(x=>({...x,start:null}))}, null, 2)], {type:"application/json"});
   const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "rally-teams.json"; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
@@ -926,10 +1156,337 @@ document.getElementById("askCancel").onclick = ()=>askDone(false);
 askDlg.addEventListener("cancel", e=>{ e.preventDefault(); askDone(false); });
 
 /* sync across tabs (e.g. second screen) */
-addEventListener("storage", e=>{ if(e.key===KEY){ const s = load(); if(s){ S = s; render(); } } });
 document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="visible"){ lock=null; wantLock=false; } });
 
 render();
+
+/* ================= sessions & live sharing ================= */
+var SESSION = null, STORE = null, pendingRemote = null, synced = {}, metaCache = {}, presenceCache = {}, unsubData = null, leavePresence = null;
+const ROOT = "rallysync";
+const html = document.documentElement;
+const clean = v => JSON.parse(JSON.stringify(v ?? null));
+const encK = k => encodeURIComponent(k).replace(/\./g, "%2E");
+const decK = k => { try{ return decodeURIComponent(k); }catch(e){ return k; } };
+const vals = o => Array.isArray(o) ? o : Object.values(o || {});
+
+/* what is shared, split into small paths so two people editing different teams never overwrite each other */
+function rosterParts(){
+  const p = { bench: S.bench, order: S.teams.map(x=>x.id),
+    allyColors: Object.fromEntries(Object.entries(S.allyColors || {}).map(([k,v])=>[encK(k), v])) };
+  S.teams.forEach(x=>{ p["teams/" + x.id] = x; });
+  return p;
+}
+function markSynced(){ synced = {}; const p = rosterParts(); for(const k in p) synced[k] = JSON.stringify(p[k]); }
+function syncRoster(){
+  if(!SESSION || !STORE) return;
+  const p = rosterParts(), upd = {};
+  for(const k in p){ const j = JSON.stringify(p[k]); if(synced[k] !== j){ upd[k] = clean(p[k]); synced[k] = j; } }
+  for(const k in synced) if(!(k in p)){ upd[k] = null; delete synced[k]; }
+  if(Object.keys(upd).length) STORE.write(SESSION.id, upd);
+}
+const normPlayer = p => ({ id:String(p.id), name:String(p.name || ""), march:+p.march || 0 });
+function normTeam(x, id){
+  const tm = { id, name:String(x.name || ""), rally:+x.rally || 300, start:x.start || null, players: vals(x.players).filter(Boolean).map(normPlayer) };
+  if(x.alliance) tm.alliance = String(x.alliance);
+  if(x.color) tm.color = String(x.color);
+  return tm;
+}
+function isBusy(){
+  const ae = document.activeElement;
+  return !!((drag && drag.on) || (cdrag && cdrag.on) || rdrag || menuEl ||
+    (ae && board.contains(ae) && ae.tagName === "INPUT" && !ae.dataset.add));
+}
+function applyRemote(d){
+  const order = vals(d.order).filter(Boolean), map = d.teams || {};
+  const ids = order.filter(id=>map[id]).concat(Object.keys(map).filter(id=>!order.includes(id)));
+  const next = { bench: vals(d.bench).filter(Boolean).map(normPlayer), teams: ids.map(id=>normTeam(map[id], id)),
+    allyColors: Object.fromEntries(Object.entries(d.allyColors || {}).map(([k,v])=>[decK(k), v])) };
+  if(isBusy()){ pendingRemote = d; return; }
+  const same = JSON.stringify(next) === JSON.stringify({bench:S.bench, teams:S.teams.map(x=>normTeam(x, x.id)), allyColors:S.allyColors});
+  S.bench = next.bench; S.teams = next.teams; S.allyColors = next.allyColors;
+  markSynced();
+  if(!same) render();
+}
+
+/* ---------- store on this device (no setup needed; also the fallback) ---------- */
+function LocalStore(){
+  const K = "rallysync.store", subs = new Set();
+  const read = ()=>{ const d = loadJSON(K) || {}; d.meta = d.meta || {}; d.sessions = d.sessions || {}; return d; };
+  const emit = ()=>subs.forEach(f=>{ try{ f(); }catch(e){ console.error(e); } });
+  const put = d=>{ saveJSON(K, d); setTimeout(emit, 0); };
+  addEventListener("storage", e=>{ if(e.key === K) emit(); });
+  const setPath = (obj, path, v)=>{ const ks = path.split("/"); let o = obj;
+    ks.slice(0,-1).forEach(k=>{ o = o[k] = (o[k] && typeof o[k] === "object") ? o[k] : {}; });
+    const last = ks[ks.length-1]; if(v === null) delete o[last]; else o[last] = v; };
+  return {
+    mode:"local",
+    listSessions(cb){ const f = ()=>cb(read().meta); subs.add(f); f(); return ()=>subs.delete(f); },
+    presence(cb){ cb({}); return ()=>{}; },
+    async create(name, data){ const d = read(), id = uid("s"), ts = Date.now(); d.meta[id] = {name, created:ts, updated:ts}; d.sessions[id] = clean(data); put(d); return id; },
+    rename(id, name){ const d = read(); if(d.meta[id]){ d.meta[id].name = name; d.meta[id].updated = Date.now(); put(d); } },
+    remove(id){ const d = read(); delete d.meta[id]; delete d.sessions[id]; put(d); },
+    open(id, cb){ let last; const f = ()=>{ const v = read().sessions[id] ?? null, j = JSON.stringify(v); if(j !== last){ last = j; cb(v); } }; subs.add(f); f(); return ()=>subs.delete(f); },
+    write(id, upd){ const d = read(); if(!d.sessions[id]) return; for(const k in upd) setPath(d.sessions[id], k, clean(upd[k])); if(d.meta[id]) d.meta[id].updated = Date.now(); put(d); },
+    join(){ return ()=>{}; }
+  };
+}
+
+/* ---------- shared online store: Firebase Realtime Database (free Spark plan) ---------- */
+async function FirebaseStore(cfg){
+  const base = "https://www.gstatic.com/firebasejs/13.2.0/";
+  const [A, D] = await Promise.all([import(base + "firebase-app.js"), import(base + "firebase-database.js")]);
+  const db = D.getDatabase(A.initializeApp(cfg));
+  const R = p => D.ref(db, ROOT + (p ? "/" + p : ""));
+  const TS = () => D.serverTimestamp();
+  const fail = e => { console.error(e); toast("⚠️ " + (e && e.code || e)); };
+  D.onValue(D.ref(db, ".info/serverTimeOffset"), sn=>{ clock.offset = +sn.val() || 0; });
+  const st = { mode:"online", connected:true };
+  D.onValue(D.ref(db, ".info/connected"), sn=>{ const c = !!sn.val(); if(st.connected && !c && SESSION) toast(t("offline")); st.connected = c; updateSessUI(); });
+  // first read proves the database is reachable
+  await new Promise((res, rej)=>{ const timer = setTimeout(()=>rej(new Error("timeout")), 9000);
+    const off = D.onValue(R("meta"), ()=>{ clearTimeout(timer); setTimeout(()=>off(), 0); res(); }, e=>{ clearTimeout(timer); rej(e); }); });
+  st.listSessions = cb => D.onValue(R("meta"), sn=>cb(sn.val() || {}), fail);
+  st.presence = cb => D.onValue(R("presence"), sn=>cb(sn.val() || {}), ()=>{});
+  st.create = async (name, data)=>{ const id = D.push(R("meta")).key;
+    await D.update(R(), {[`meta/${id}`]:{name, created:TS(), updated:TS()}, [`sessions/${id}`]:clean(data)}); return id; };
+  st.rename = (id, name)=>D.update(R(), {[`meta/${id}/name`]:name, [`meta/${id}/updated`]:TS()}).catch(fail);
+  st.remove = id=>D.update(R(), {[`meta/${id}`]:null, [`sessions/${id}`]:null, [`presence/${id}`]:null}).catch(fail);
+  st.open = (id, cb)=>D.onValue(R(`sessions/${id}`), sn=>cb(sn.val()), fail);
+  st.write = (id, upd)=>{ const u = {}; for(const k in upd) u[`sessions/${id}/${k}`] = upd[k]; u[`meta/${id}/updated`] = TS(); return D.update(R(), u).catch(fail); };
+  st.join = id=>{ const me = D.push(R(`presence/${id}`)); D.onDisconnect(me).remove(); D.set(me, TS()); return ()=>{ D.remove(me); }; };
+  return st;
+}
+
+const ssList = document.getElementById("ssList"), ssName = document.getElementById("ssName");
+const storeReady = (async ()=>{
+  await 0;   // let the rest of this script finish defining things first
+  if(FIREBASE_CONFIG){
+    try{ STORE = await FirebaseStore(FIREBASE_CONFIG); }
+    catch(e){ console.error(e); STORE = LocalStore(); STORE.mode = "fail"; }
+  } else STORE = LocalStore();
+  // teams from older versions of this page become a first local session
+  try{ const old = loadJSON(KEY);
+    if(STORE.mode !== "online" && old && Array.isArray(old.teams) && !old.migrated){
+      const teams = old.teams.map(x=>({...x, id:uid("t"), start:null}));
+      await STORE.create("My teams", {v:1, bench:old.bench || [], order:teams.map(x=>x.id), teams:Object.fromEntries(teams.map(x=>[x.id, x])), allyColors:{}});
+      old.migrated = true; saveJSON(KEY, {migrated:true});
+    } }catch(e){ console.error(e); }
+  STORE.listSessions(m=>{ metaCache = m || {}; renderSessions();
+    if(SESSION && metaCache[SESSION.id] && metaCache[SESSION.id].name !== SESSION.name){ SESSION.name = metaCache[SESSION.id].name; updateSessUI(); render(); } });
+  STORE.presence(p=>{ presenceCache = p || {}; renderSessions(); updateSessUI(); });
+  renderSessions();
+})();
+
+function ago(ts){
+  if(!ts) return "";
+  const s = (serverNow() - ts)/1000, rtf = new Intl.RelativeTimeFormat(S.lang, {numeric:"auto"});
+  if(s < 45) return rtf.format(0, "second");
+  if(s < 3600) return rtf.format(-Math.round(s/60), "minute");
+  if(s < 86400) return rtf.format(-Math.round(s/3600), "hour");
+  return rtf.format(-Math.round(s/86400), "day");
+}
+const onlineCount = id => Object.keys(presenceCache[id] || {}).length;
+function renderSessions(){
+  ssName.placeholder = t("sessNamePh");
+  const mode = document.getElementById("ssMode");
+  if(STORE){ mode.textContent = t(STORE.mode === "online" ? "modeOnline" : STORE.mode === "fail" ? "modeFail" : "modeLocal");
+    mode.className = "ss-mode " + (STORE.mode === "online" ? "on" : STORE.mode === "fail" ? "warn" : ""); }
+  const list = Object.entries(metaCache).filter(([,m])=>m && m.name).sort((a,b)=>(b[1].updated||0) - (a[1].updated||0));
+  ssList.innerHTML = list.length ? list.map(([id,m])=>{ const n = onlineCount(id);
+    return `<div class="ss-row" data-sid="${esc(id)}">
+      <button type="button" class="ss-open" data-open="${esc(id)}"><span class="ss-chip">🎲</span><span class="ss-txt"><b>${esc(m.name)}</b>
+        <small>${n ? `<span class="ss-live"></span>${n} ${esc(t("sessOnlineN"))} · ` : ""}${esc(t("sessUpdated"))} ${esc(ago(m.updated))}</small></span></button>
+      ${STORE && STORE.mode === "online" ? `<button type="button" class="icon" data-link="${esc(id)}" title="Link">🔗</button>` : ""}
+      <button type="button" class="icon" data-ren="${esc(id)}" title="${esc(t("rename"))}">✎</button>
+      <button type="button" class="icon" data-del="${esc(id)}" title="${esc(t("del"))}">🗑</button></div>`; }).join("")
+    : `<div class="ss-empty">${esc(t("sessEmpty"))}</div>`;
+}
+setInterval(()=>{ if(html.classList.contains("picking")) renderSessions(); }, 30000);
+
+function updateSessUI(){
+  const nm = SESSION ? SESSION.name : "";
+  document.getElementById("sessName").textContent = nm;
+  const n = SESSION ? onlineCount(SESSION.id) : 0;
+  document.getElementById("sessOnline").textContent = SESSION && STORE && STORE.mode === "online" ? `👥 ${n}` : "";
+  const dot = document.getElementById("connDot");
+  dot.style.display = STORE && STORE.mode === "online" ? "" : "none";
+  dot.classList.toggle("off", !!(STORE && STORE.connected === false));
+  document.getElementById("sessBtn").title = t("sessions");
+  const chip = jump.querySelector("[data-sessions] .nm"); if(chip) chip.textContent = nm;
+}
+function setHash(id){ try{ history.replaceState(null, "", id ? "#s=" + id : location.pathname + location.search); }catch(e){} }
+function leaveSession(){
+  if(unsubData){ unsubData(); unsubData = null; }
+  if(leavePresence){ leavePresence(); leavePresence = null; }
+  SESSION = null; pendingRemote = null; synced = {}; undoStack.length = 0;
+  S.bench = []; S.teams = []; S.allyColors = {};
+  setHash(null);
+}
+function showSessions(){
+  leaveSession(); closeMenu(); closeLangMenu();
+  html.classList.add("picking"); renderSessions(); render();
+  if(matchMedia("(pointer:fine)").matches && !html.classList.contains("locked")) setTimeout(()=>ssName.focus(), 50);
+}
+async function openSession(id){
+  await storeReady;
+  leaveSession();
+  const m = metaCache[id];
+  SESSION = { id, name: m ? m.name : "…" };
+  loadLayout(id);
+  let first = true;
+  unsubData = STORE.open(id, d=>{
+    if(!d){ const wasFirst = first; first = false; toast(t(wasFirst ? "sessNotFound" : "sessGone")); showSessions(); return; }
+    first = false; applyRemote(d);
+  });
+  leavePresence = STORE.join(id);
+  setHash(id);
+  html.classList.remove("picking");
+  updateSessUI(); render();
+}
+async function createSession(name){
+  await storeReady;
+  const tid = uid("t");
+  try{
+    const id = await STORE.create(name, {v:1, order:[tid], teams:{[tid]:{id:tid, name:"", rally:300, players:[]}}});
+    ssName.value = ""; openSession(id);
+  }catch(e){ console.error(e); toast("⚠️ " + (e && e.code || e)); }
+}
+document.getElementById("ssNew").addEventListener("submit", e=>{
+  e.preventDefault(); const name = ssName.value.trim().slice(0,40);
+  if(!name){ ssName.focus(); return; } createSession(name);
+});
+ssList.addEventListener("click", async e=>{
+  const o = e.target.closest("[data-open]"); if(o){ openSession(o.dataset.open); return; }
+  const r = e.target.closest("[data-ren]");
+  if(r){ const id = r.dataset.ren, v = await ask(t("sessRen"), (metaCache[id]||{}).name || ""); if(v && v.trim()) STORE.rename(id, v.trim().slice(0,40)); return; }
+  const dl = e.target.closest("[data-del]");
+  if(dl){ const id = dl.dataset.del; if(await ask(`${t("sessDel")}\n\n“${(metaCache[id]||{}).name || ""}”`, null, "confirm")) STORE.remove(id); return; }
+  const ln = e.target.closest("[data-link]");
+  if(ln){ const url = location.href.split("#")[0] + "#s=" + ln.dataset.link;
+    (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(()=>toast(t("linkCopied")), ()=>ask("🔗", url, "text")); }
+});
+document.getElementById("sessBtn").addEventListener("click", showSessions);
+document.getElementById("ssLock").addEventListener("click", ()=>document.getElementById("lockTop").click());
+
+/* called when the password door opens (and on load if it is already open) */
+function afterUnlock(){
+  if(SESSION){ html.classList.remove("picking"); return; }
+  const id = (location.hash.match(/s=([\w-]+)/) || [])[1];
+  if(id) openSession(id); else showSessions();
+}
+addEventListener("hashchange", ()=>{ const id = (location.hash.match(/s=([\w-]+)/) || [])[1]; if(id && (!SESSION || SESSION.id !== id) && !html.classList.contains("locked")) openSession(id); });
+
+/* ================= casino door =================
+   NOTE: on a static site the password can never be truly secret (anyone can read the page source).
+   Only a hash is stored here; it keeps casual visitors out, nothing more. */
+(function(){
+  const GATE_KEY = "rallysync.gate", HASH = "poc0lvc0vl", REMEMBER_MS = 12*3600*1000, N = 3, REP = 6;
+  const cyrb53 = (str,seed=0)=>{let h1=0xdeadbeef^seed,h2=0x41c6ce57^seed;for(let i=0,ch;i<str.length;i++){ch=str.charCodeAt(i);h1=Math.imul(h1^ch,2654435761);h2=Math.imul(h2^ch,1597334677);}h1=Math.imul(h1^(h1>>>16),2246822507);h1^=Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507);h2^=Math.imul(h1^(h1>>>13),3266489909);return (4294967296*(2097151&h2)+(h1>>>0)).toString(36);};
+  const SYM = ["7","🍒","S","🔔","BAR","NOOB","💎","H","🍋","⭐","0","🍀"], L = SYM.length;
+  const WIN = ["S","H","0"].map(x=>SYM.indexOf(x)), NOOB = SYM.indexOf("NOOB");
+  const symHTML = x => x==="7" ? `<div class="s7">7</div>`
+    : x==="BAR" ? `<div><span class="sbar">BAR</span></div>`
+    : x==="NOOB" ? `<div><span class="snoob">NOOB</span></div>`
+    : /^[SH0]$/.test(x) ? `<div class="sl">${x}</div>`
+    : `<div class="sem">${x}</div>`;
+  const gate = document.getElementById("gate"), reelsEl = document.getElementById("gReels"), msg = document.getElementById("gMsg"),
+        spinBtn = document.getElementById("gSpin"), lever = document.getElementById("gLever"), cab = document.getElementById("gCab"),
+        pass = document.getElementById("gPass"), eye = document.getElementById("gEye");
+  const pos = [1, 3, 6];   // symbols shown at rest (cherry, bell, diamond)
+  let busy = false;
+
+  reelsEl.innerHTML = Array.from({length:N}, ()=>`<div class="g-reel"><div class="g-win"><div class="g-strip">${Array.from({length:L*REP},(_,k)=>symHTML(SYM[k%L])).join("")}</div></div></div>`).join("");
+  const strips = [...reelsEl.querySelectorAll(".g-strip")];
+  const ch = ()=>reelsEl.querySelector(".g-win").offsetHeight;
+  function show(i){ const s = strips[i]; s.style.transition = "none"; s.style.transform = `translateY(${-(L+pos[i])*ch()}px)`; }
+  function tickSound(f, d){ try{ beep(f||520, d||.03, "fx"); }catch(e){} }
+  const isLocked = ()=>document.documentElement.classList.contains("locked");
+
+  function texts(){
+    try{ volUI(); }catch(e){}
+    document.getElementById("lockTop").title = t("lock");
+    gate.querySelector(".g-sign small").textContent = "♠ ♥ " + t("gSub") + " ♦ ♣";
+    spinBtn.textContent = "🎰 " + t("gSpin");
+    pass.placeholder = t("gPass");
+    document.getElementById("gHint").textContent = t("gHint");
+    langLabels();
+  }
+  eye.addEventListener("click", ()=>{ const v = pass.type === "password"; pass.type = v ? "text" : "password"; eye.classList.toggle("on", v); pass.focus(); });
+  pass.addEventListener("keydown", e=>{ if(e.key === "Enter"){ e.preventDefault(); spin(); } });
+  pass.addEventListener("input", ()=>{ msg.textContent = ""; msg.className = "g-msg"; });
+
+  function spin(){
+    if(busy) return;
+    const code = pass.value.trim();
+    msg.className = "g-msg";
+    if(!code){ msg.textContent = t("gEmpty"); msg.className = "g-msg lose"; cab.classList.remove("shake"); void cab.offsetWidth; cab.classList.add("shake"); pass.focus(); return; }
+    busy = true; spinBtn.disabled = true; pass.disabled = true; msg.textContent = "";
+    try{ actx = actx || new (window.AudioContext||window.webkitAudioContext)(); actx.resume && actx.resume(); }catch(e){}
+    lever.classList.add("pulled"); setTimeout(()=>lever.classList.remove("pulled"), 450);
+    const ok = cyrb53("rallysync:" + code, 7) === HASH;
+    // where the reels stop: S-H-0 on a win, NOOB-NOOB-NOOB on a loss
+    const target = ok ? WIN.slice() : [NOOB, NOOB, NOOB];
+    const h = ch(), ticking = setInterval(()=>tickSound(300 + Math.random()*400, .02), 90);
+    strips.forEach((s,i)=>{
+      s.style.transition = "none"; s.style.transform = `translateY(${-pos[i]*h}px)`; s.classList.add("blur");
+      void s.offsetHeight;
+      const dur = 900 + i*450, end = L*(REP-2) + target[i];
+      s.style.transition = `transform ${dur}ms cubic-bezier(.12,.6,.2,1)`;
+      s.style.transform = `translateY(${-end*h}px)`;
+      setTimeout(()=>{ s.classList.remove("blur"); pos[i] = target[i]; show(i); tickSound(880,.06);
+        if(i === N-1){ clearInterval(ticking); setTimeout(()=>result(ok), 150); } }, dur + 20);
+    });
+  }
+  function result(ok){
+    if(ok){
+      msg.textContent = "🎉 " + t("gWin") + " 🎉"; msg.className = "g-msg win"; gate.classList.add("win","flash");
+      [523,659,784,1046].forEach((f,k)=>setTimeout(()=>tickSound(f,.18), k*120));
+      coins();
+      try{ sessionStorage.setItem(GATE_KEY, JSON.stringify({h:HASH, until:Date.now()+REMEMBER_MS})); }catch(e){}   // only while this tab stays open
+      setTimeout(()=>gate.classList.add("out"), 1300);
+      setTimeout(()=>{ document.documentElement.classList.remove("locked"); afterUnlock(); gate.classList.remove("out","win","flash");
+        busy = false; spinBtn.disabled = false; pass.disabled = false; pass.value = ""; layout(); }, 1900);
+    } else {
+      msg.textContent = t("gLose"); msg.className = "g-msg lose";
+      cab.classList.remove("shake"); void cab.offsetWidth; cab.classList.add("shake"); tickSound(160,.25);
+      busy = false; spinBtn.disabled = false; pass.disabled = false; pass.select(); pass.focus();
+    }
+  }
+  function coins(){
+    const icons = ["🪙","💰","💎","🪙","🍀","7️⃣"];
+    for(let k=0;k<46;k++){ const c = document.createElement("span"); c.className = "g-coin"; c.textContent = icons[k%icons.length];
+      c.style.left = Math.random()*100 + "vw"; c.style.animationDuration = (1.2 + Math.random()*1.4) + "s"; c.style.animationDelay = (Math.random()*.6) + "s";
+      document.body.appendChild(c); setTimeout(()=>c.remove(), 3200); }
+  }
+  spinBtn.addEventListener("click", spin);
+  /* lever: tap or drag it down */
+  let ly = null;
+  lever.addEventListener("pointerdown", e=>{ ly = e.clientY; lever.setPointerCapture && lever.setPointerCapture(e.pointerId); e.preventDefault(); });
+  lever.addEventListener("pointermove", e=>{ if(ly!=null && e.clientY - ly > 40){ ly = null; spin(); } });
+  lever.addEventListener("pointerup", ()=>{ if(ly!=null){ ly = null; spin(); } });
+  function lockNow(){
+    try{ sessionStorage.removeItem(GATE_KEY); }catch(e){}
+    document.getElementById("settings").open && document.getElementById("settings").close();
+    pass.value = ""; msg.textContent = ""; msg.className = "g-msg"; document.documentElement.classList.add("locked"); focusPass();
+  }
+  document.getElementById("lockBtn").addEventListener("click", lockNow);
+  document.getElementById("lockTop").addEventListener("click", lockNow);
+  // focus the field on computers (on phones, wait for a tap so the keyboard does not pop up by itself)
+  function focusPass(){ if(matchMedia("(pointer:fine)").matches) setTimeout(()=>pass.focus(), 50); }
+  // casino sounds start muted on every visit (countdown beeps are not affected); 🔇 brings them back
+  if((S.volFx ?? .4) > 0) S._fxPrev = S.volFx ?? .4;
+  S.volFx = 0;
+  const gVol = document.getElementById("gVol"), gMute = document.getElementById("gMute");
+  function volUI(){ const v = S.sound ? Math.round((S.volFx ?? .4)*100) : 0; gVol.value = v; gMute.textContent = v === 0 ? "🔇" : v < 50 ? "🔉" : "🔊"; }
+  gVol.addEventListener("input", ()=>{ S.volFx = gVol.value/100; if(+gVol.value > 0) S.sound = true; save(); volUI(); });
+  gVol.addEventListener("change", ()=>tickSound(784,.12));
+  gMute.addEventListener("click", ()=>{ if((S.volFx ?? .4) > 0 && S.sound){ S._fxPrev = S.volFx ?? .4; S.volFx = 0; } else { S.volFx = S._fxPrev || .4; S.sound = true; } save(); volUI(); tickSound(784,.08); });
+  volUI();
+  texts(); requestAnimationFrame(()=>strips.forEach((_,i)=>show(i)));
+  addEventListener("resize", ()=>strips.forEach((_,i)=>show(i)));
+  if(isLocked()) focusPass(); else afterUnlock();
+  const _render = render; render = function(){ _render.apply(this, arguments); texts(); };
+})();
 </script>
 </body>
 </html>
