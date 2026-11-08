@@ -1,0 +1,935 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rally Sync — rally timer for Kingshot (fan-made)</title>
+<meta name="description" content="Unofficial fan-made rally launch coordinator. Not affiliated with Kingshot or its publisher. Data stays in your browser.">
+<meta name="theme-color" content="#0f1115">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Rally Sync">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<style>
+:root{
+  --bg:#0f1115; --panel:#181b22; --panel2:#20242d; --line:#2c313c; --text:#e8eaf0; --muted:#8b93a5;
+  --accent:#f5b83d; --go:#2ecc71; --warn:#f39c12; --danger:#e74c3c; --drop:#f5b83d33; --shadow:0 8px 30px #0008;
+  color-scheme: dark;
+}
+:root[data-theme="light"]{
+  --bg:#f3f4f7; --panel:#ffffff; --panel2:#f0f2f6; --line:#dde1e8; --text:#161922; --muted:#646c7c;
+  --accent:#c98a00; --go:#1e9e55; --warn:#d07b00; --danger:#d0362a; --drop:#c98a0022; --shadow:0 8px 30px #0002;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,body{margin:0;-webkit-tap-highlight-color:transparent;background:var(--bg);color:var(--text);font:15px/1.35 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans KR",sans-serif}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:var(--panel2);border-radius:8px;padding:6px 10px}
+button:hover{border-color:var(--muted)}
+button:disabled{opacity:.4;cursor:default}
+input{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 8px;min-width:0}
+input:focus{outline:2px solid var(--accent);outline-offset:-1px}
+
+header{position:sticky;top:0;z-index:20;background:var(--panel);border-bottom:1px solid var(--line);padding:8px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.brand{font-weight:800;letter-spacing:.3px;margin-right:auto;display:flex;align-items:baseline;gap:8px}
+.brand small{color:var(--muted);font-weight:500}
+.clock{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+.btn-go{background:var(--go);border-color:var(--go);color:#fff;font-weight:800}
+.btn-stop{background:var(--danger);border-color:var(--danger);color:#fff;font-weight:700}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{border:0;border-radius:0;padding:5px 8px;background:transparent}
+.seg button.on{background:var(--accent);color:#111;font-weight:700}
+
+.hint{color:var(--muted);font-size:12px;padding:6px 12px}
+main.free{display:block;position:relative;z-index:0;padding:0;margin:0 12px;min-height:calc(100vh - 110px)}
+main.free .card{position:absolute;width:340px;left:0;top:0;display:flex;flex-direction:column}
+main.free .card{overflow:hidden}
+main.free .card .inner{transform-origin:0 0}
+main.free.anim .card .inner{transition:transform .25s ease}
+.resizer{display:none}
+main.free .resizer{display:block;position:absolute;right:0;bottom:0;width:20px;height:20px;cursor:nwse-resize;touch-action:none;border-bottom-right-radius:12px;
+  background:linear-gradient(135deg,transparent 0 55%,var(--muted) 55% 60%,transparent 60% 70%,var(--muted) 70% 75%,transparent 75%);opacity:.6}
+main.free .resizer:hover{opacity:1}
+main.free .thead{cursor:move;touch-action:none;user-select:none}
+main.free .thead .tname{cursor:move}
+main.free.anim .card{transition:left .25s ease,top .25s ease,width .25s ease}
+.card.lifted{box-shadow:var(--shadow),0 0 0 2px var(--c);opacity:.97}
+.grip{color:var(--muted);font-size:13px;letter-spacing:-2px;margin-right:2px}
+main:not(.free) .grip{display:none}
+main{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px;padding:0 12px 120px;align-items:start}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;border-top:4px solid var(--c,var(--muted));transition:box-shadow .12s,border-color .12s}
+.card.drop-on{box-shadow:0 0 0 3px var(--accent) inset;background:linear-gradient(var(--drop),var(--drop)),var(--panel)}
+.card.bench{--c:var(--muted)}
+.card.running{box-shadow:0 0 0 1px var(--c)}
+.thead{display:flex;gap:6px;align-items:center;padding:8px 10px 4px}
+.tname{font-weight:800;font-size:16px;flex:0 1 auto;margin-right:auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:text}
+.tname[data-act=rename]{margin-right:0}
+.ally{margin-right:auto;width:64px;min-width:44px;max-width:120px;padding:1px 6px;font-size:12px;font-weight:700;border-radius:6px;border:1px solid transparent;background:transparent;color:var(--c);text-transform:none}
+.ally:hover{border-color:var(--line)}
+.ally:placeholder-shown{border:1px dashed var(--line);color:var(--muted)}
+.ally::placeholder{color:var(--muted);font-weight:500}
+.cdot{position:relative;width:14px;height:14px;border-radius:50%;background:var(--c);flex:none;cursor:pointer;box-shadow:0 0 0 2px var(--panel),0 0 0 3px var(--line)}
+.cdot input{position:absolute;inset:0;opacity:0;width:100%;height:100%;padding:0;border:0;cursor:pointer}
+.tnum{background:var(--c);color:#111;font-weight:800;border-radius:6px;padding:0 6px;font-size:12px}
+.icon{padding:4px 7px;background:transparent;border-color:transparent;color:var(--muted)}
+.icon:hover{color:var(--text);border-color:var(--line)}
+.trow{display:flex;gap:6px;align-items:center;padding:2px 10px 8px;flex-wrap:wrap}
+.trow label{color:var(--muted);font-size:12px}
+.rally-in{width:58px;text-align:center}
+.status{margin:0 10px 8px;padding:6px 10px;border-radius:8px;background:var(--panel2);font-variant-numeric:tabular-nums;display:flex;justify-content:space-between;gap:8px;font-size:14px}
+.status b{font-size:18px}
+.status.landed{background:var(--go);color:#fff}
+
+ul.players{list-style:none;margin:0;padding:0 6px 6px;min-height:44px}
+.empty{color:var(--muted);text-align:center;font-size:13px;padding:12px;border:1px dashed var(--line);border-radius:8px;margin:4px}
+li.player{display:grid;grid-template-columns:18px minmax(50px,1fr) 58px 72px 26px 22px;gap:4px;align-items:center;padding:4px;border-radius:8px}
+li.player.next{background:var(--panel2);box-shadow:inset 3px 0 0 var(--c)}
+li.player.gone{opacity:.45}
+.march.unset{border-color:var(--warn);color:var(--warn)}
+li.player:hover{background:var(--panel2)}
+li.player.ghost-src{opacity:.35}
+.handle{cursor:grab;color:var(--muted);text-align:center;touch-action:none;user-select:none;font-size:18px;line-height:1}
+.pname{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600;touch-action:none;user-select:none;cursor:grab}
+.pname .star{color:var(--accent);margin-left:4px;font-size:12px}
+.march{width:100%;text-align:center;font-variant-numeric:tabular-nums;padding:4px}
+.march.bad{border-color:var(--danger)}
+.cd{text-align:right;width:100%;font-variant-numeric:tabular-nums;font-weight:700;border-radius:6px;padding:3px 6px;white-space:nowrap}
+.cd.idle{color:var(--muted);font-weight:600}
+.cd.soon{color:var(--warn)}
+.cd.hot{background:var(--danger);color:#fff;animation:pulse .5s infinite alternate}
+.cd.now{background:var(--go);color:#fff;text-align:center}
+.cd.done{color:var(--go)}
+@keyframes pulse{to{opacity:.65}}
+.addrow{display:flex;gap:6px;padding:4px 10px 10px}
+.when{display:flex;flex-direction:column;align-items:flex-end;line-height:1.15}
+.abs{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;padding-right:6px}
+.utcrow{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0 10px 6px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.utcrow>span{white-space:nowrap}
+.utcrow b{color:var(--text);font-size:15px}
+.planbtn{padding:4px 9px;font-size:13px;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.planbtn.on{color:var(--accent);border-color:var(--accent)}
+.utcclock{font-variant-numeric:tabular-nums;font-weight:700;padding:5px 9px;border:1px solid var(--line);border-radius:8px;background:var(--panel2)}
+.addrow input{flex:1}
+
+.ghost{position:fixed;left:0;top:0;pointer-events:none;z-index:100;background:var(--panel);border:1px solid var(--accent);box-shadow:var(--shadow);opacity:.95;border-radius:8px}
+.menu{position:fixed;z-index:110;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:6px;display:flex;flex-direction:column;gap:4px;min-width:170px;max-height:70vh;overflow:auto}
+.menu .mt{color:var(--muted);font-size:12px;padding:2px 6px}
+.menu button{text-align:left;display:flex;gap:8px;align-items:center}
+.menu .sepm{height:1px;background:var(--line);margin:2px 0}
+.menu .dot{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:8px 14px;border-radius:8px;z-index:200;font-weight:600;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1;pointer-events:auto}
+.toast button{margin-left:10px;background:var(--accent);border-color:var(--accent);color:#111;font-weight:700;padding:3px 10px}
+#ask p{margin:0 0 10px}
+#ask input,#ask textarea{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px}
+#ask .row{justify-content:flex-end}
+dialog{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:12px;max-width:420px;width:92vw}
+dialog::backdrop{background:#0008}
+dialog .row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:10px 0}
+dialog h3{margin:0 0 6px}
+.about{color:var(--muted);font-size:12px;margin:10px 0 0;line-height:1.4}
+.sep{width:1px;align-self:stretch;background:var(--line)}
+.jump{display:none}
+@media (max-width:699px){
+  header{gap:5px;padding:6px;padding-top:max(6px,env(safe-area-inset-top));padding-left:max(6px,env(safe-area-inset-left));padding-right:max(6px,env(safe-area-inset-right))}
+  .hide-sm,.hide-xs,.hint{display:none !important}
+  .brand{margin-right:0;font-size:18px}
+  .utcclock{margin-right:auto;font-size:13px;padding:8px 7px}
+  header>button{padding:8px 9px;min-height:38px;font-size:13px}
+  #addTeam,#undo,#settingsBtn{min-width:38px;padding:8px 6px}
+  main{grid-template-columns:1fr;gap:10px;padding:8px 8px calc(60vh + env(safe-area-inset-bottom))}
+  .card{scroll-margin-top:calc(var(--hh,110px) + 8px)}
+  /* team quick-jump bar with live next-launch countdown */
+  .jump{display:flex;gap:6px;overflow-x:auto;width:100%;scrollbar-width:none;padding:2px 0 0}
+  .jump::-webkit-scrollbar{display:none}
+  .chip{flex:none;display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-weight:700;font-size:14px;min-height:34px}
+  .chip .dot{width:10px;height:10px;border-radius:50%;background:var(--c)}
+  .chip small{font-variant-numeric:tabular-nums;font-weight:800}
+  .chip.soon small{color:var(--warn)}
+  .chip.hot{background:var(--danger);border-color:var(--danger);color:#fff;animation:pulse .5s infinite alternate}
+  .chip.hot small{color:#fff}
+  /* bigger touch targets, 16px inputs (stops iOS auto-zoom) */
+  input,.march,.ally,#ask input,#ask textarea{font-size:16px}
+  .addrow input{padding:9px 10px}
+  .addrow button{min-width:44px}
+  .seg button{padding:7px 9px}
+  .trow{gap:8px}
+  .btn-go,.btn-stop{min-height:38px;padding:7px 14px}
+  .icon{min-width:34px;min-height:34px;font-size:16px}
+  .tname{font-size:17px}
+  .ally{font-size:16px}
+  .cdot{width:22px;height:22px}
+  li.player{grid-template-columns:26px minmax(0,1fr) 64px 76px 36px 32px;gap:3px;padding:6px 2px;min-height:48px}
+  .handle{font-size:24px;padding:6px 0}
+  .pname{touch-action:pan-y;cursor:default;font-size:16px}
+  .march{padding:7px 2px}
+  .cd{font-size:17px}
+  .cd.now{font-size:14px}
+  .status{font-size:15px}
+  .status b{font-size:22px}
+  .menu button{padding:10px 12px;font-size:16px}
+  .toast{bottom:calc(18px + env(safe-area-inset-bottom))}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand hide-xs">⚔️ <span>Rally Sync</span> <small class="hide-sm" data-i="subtitle"></small></div>
+  <span class="utcclock" id="clock" title="UTC"></span>
+  <button class="btn-go" id="goAll" data-i="goAll"></button>
+  <button class="btn-stop" id="stopAll" data-i="stopAll" hidden></button>
+  <button id="addTeam">+ <span class="hide-xs" data-i="team"></span></button>
+  <button id="alignBtn" class="hide-sm" title="Align">⊞ <span data-i="align"></span></button>
+  <button id="undo" title="Ctrl+Z">↶ <span class="hide-xs" data-i="undo"></span></button>
+  <div class="seg hide-xs" id="langSeg">
+    <button data-lang="en">EN</button><button data-lang="fr">FR</button><button data-lang="ko">한</button><button data-lang="tr">TR</button>
+  </div>
+  <button id="theme" class="hide-xs" title="Theme">🌓</button>
+  <button id="settingsBtn" title="Settings">⚙️</button>
+  <nav id="jump" class="jump"></nav>
+</header>
+<div class="hint" data-i="hint"></div>
+<main id="board"></main>
+
+<dialog id="settings">
+  <h3 data-i="settings"></h3>
+  <div class="row"><span>🌐</span><div class="seg" id="langSeg2"><button data-lang="en">EN</button><button data-lang="fr">FR</button><button data-lang="ko">한국어</button><button data-lang="tr">TR</button></div></div>
+  <div class="row"><span>🌓</span><button id="theme2">☀️ / 🌙</button></div>
+  <div class="row"><span data-i="lead"></span><input id="leadIn" type="number" min="0" max="120" style="width:70px"></div>
+  <div class="row"><span data-i="sound"></span><input id="soundIn" type="checkbox"></div>
+  <div class="row">
+    <button id="exportBtn" data-i="export"></button>
+    <button id="importBtn" data-i="import"></button>
+    <input type="file" id="importFile" accept=".json,application/json" hidden>
+  </div>
+  <div class="row"><button id="resetBtn" class="btn-stop" data-i="reset"></button><button id="closeSettings">OK</button></div>
+  <p class="about" data-i="about"></p>
+</dialog>
+<dialog id="ask"><form method="dialog" id="askForm">
+  <p id="askMsg"></p>
+  <input id="askIn" autocomplete="off">
+  <textarea id="askTa" rows="6" readonly></textarea>
+  <div class="row"><button value="cancel" type="button" id="askCancel">✕</button><button value="ok" id="askOk" class="btn-go">OK</button></div>
+</form></dialog>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+/* ---------- i18n ---------- */
+const I18N = {
+  en:{about:"Unofficial fan-made tool, not affiliated with or endorsed by Kingshot or its publisher. Your data stays in this browser only: no account, no server, no tracking.",alliance:"Alliance",color:"Block color",planAll:"Schedule (UTC)",plan:"Schedule this team at a UTC time",planPrompt:"First launch at (UTC) — e.g. 21:30 or 21:30:15",planAllPrompt:"All teams land together. First launch at (UTC) — e.g. 21:30",badClock:"Invalid time — e.g. 21:30 or 21:30:15",startAt:"start",landAt:"land",resizeTip:"Drag to resize · double-click = default size",align:"Align",deleted:"Team deleted",march:"March",subtitle:"castle rally launch coordinator",goAll:"▶ GO ALL",stopAll:"■ Stop all",addTeam:"+ Team",undo:"Undo",team:"Team",bench:"Bench",
+    rally:"Rally",go:"▶ GO",stop:"■",launch:"LAUNCH!",firstIn:"1st launch in",landsIn:"Lands in",landed:"LANDED",
+    empty:"Drop players here",moveTo:"Move to",copy:"Copy launch order for chat",copied:"Copied!",settings:"Settings",
+    lead:"Countdown before 1st launch (s)",sound:"Sound",export:"Export JSON",import:"Import JSON",reset:"Reset everything",
+    confirmReset:"Erase all teams and players?",confirmDel:"Delete this team? Its players go to the bench.",rename:"Rename",
+    del:"Delete",addPh:"Name 1m46, Name 54s…",badTime:"Invalid time — use 54s, 1m46 or 1:46",first:"starts first",
+    hint:"Drag a block by its header to place it anywhere, ⊞ Align to tidy up · Drag ⠿ to move players · hover a player + 1–9 = move to team, B = bench · Ctrl+Z = undo · double-click a name to rename · resize a block from its bottom-right corner",
+    renamePrompt:"New name:",imported:"Imported!",players:"players",rallyCustom:"Rally time (e.g. 2m30):",sync:"Synced landing"},
+  fr:{about:"Outil non officiel fait par des fans, sans lien avec Kingshot ni son éditeur. Tes données restent uniquement dans ce navigateur : pas de compte, pas de serveur, pas de suivi.",alliance:"Alliance",color:"Couleur du bloc",planAll:"Planifier (UTC)",plan:"Planifier cette équipe à une heure UTC",planPrompt:"1er lancement à (UTC) — ex. 21:30 ou 21:30:15",planAllPrompt:"Toutes les équipes arrivent ensemble. 1er lancement à (UTC) — ex. 21:30",badClock:"Heure invalide — ex. 21:30 ou 21:30:15",startAt:"départ",landAt:"arrivée",resizeTip:"Glisse pour redimensionner · double-clic = taille par défaut",align:"Aligner",deleted:"Équipe supprimée",march:"marche",subtitle:"coordination des rallyes château",goAll:"▶ GO TOUS",stopAll:"■ Tout arrêter",addTeam:"+ Équipe",undo:"Annuler",team:"Équipe",bench:"Réserve",
+    rally:"Rallye",go:"▶ GO",stop:"■",launch:"LANCE !",firstIn:"1er lancement dans",landsIn:"Arrivée dans",landed:"ARRIVÉ",
+    empty:"Dépose des joueurs ici",moveTo:"Déplacer vers",copy:"Copier l'ordre de lancement",copied:"Copié !",settings:"Paramètres",
+    lead:"Compte à rebours avant le 1er lancement (s)",sound:"Son",export:"Exporter JSON",import:"Importer JSON",reset:"Tout réinitialiser",
+    confirmReset:"Effacer toutes les équipes et joueurs ?",confirmDel:"Supprimer cette équipe ? Ses joueurs vont en réserve.",rename:"Renommer",
+    del:"Supprimer",addPh:"Nom 1m46, Nom 54s…",badTime:"Temps invalide — utilise 54s, 1m46 ou 1:46",first:"lance en 1er",
+    hint:"Attrape un bloc par son en-tête pour le placer où tu veux, ⊞ Aligner pour ranger · Glisse ⠿ pour déplacer · survole un joueur + 1–9 = vers l'équipe, B = réserve · Ctrl+Z = annuler · double-clic sur un nom pour le renommer · redimensionne un bloc par son coin en bas à droite",
+    renamePrompt:"Nouveau nom :",imported:"Importé !",players:"joueurs",rallyCustom:"Durée du rallye (ex. 2m30) :",sync:"Arrivée synchronisée"},
+  ko:{about:"팬이 만든 비공식 도구이며 Kingshot 또는 퍼블리셔와 관련이 없습니다. 데이터는 이 브라우저에만 저장됩니다: 계정, 서버, 추적 없음.",alliance:"연맹",color:"블록 색상",planAll:"예약 (UTC)",plan:"이 팀을 UTC 시간에 예약",planPrompt:"첫 출발 시간 (UTC) — 예: 21:30 또는 21:30:15",planAllPrompt:"모든 팀 동시 도착. 첫 출발 시간 (UTC) — 예: 21:30",badClock:"잘못된 시간 — 예: 21:30 또는 21:30:15",startAt:"출발",landAt:"도착",resizeTip:"드래그로 크기 조절 · 더블클릭 = 기본 크기",align:"정렬",deleted:"팀 삭제됨",march:"행군",subtitle:"성 집결 출발 조정기",goAll:"▶ 전체 출발",stopAll:"■ 전체 정지",addTeam:"+ 팀",undo:"실행 취소",team:"팀",bench:"대기",
+    rally:"집결",go:"▶ 출발",stop:"■",launch:"출발!",firstIn:"첫 출발까지",landsIn:"도착까지",landed:"도착",
+    empty:"여기에 플레이어를 놓으세요",moveTo:"이동",copy:"출발 순서 복사 (채팅용)",copied:"복사됨!",settings:"설정",
+    lead:"첫 출발 전 카운트다운 (초)",sound:"소리",export:"JSON 내보내기",import:"JSON 가져오기",reset:"전체 초기화",
+    confirmReset:"모든 팀과 플레이어를 삭제할까요?",confirmDel:"이 팀을 삭제할까요? 플레이어는 대기로 이동합니다.",rename:"이름 변경",
+    del:"삭제",addPh:"이름 1m46, 이름 54s…",badTime:"잘못된 시간 — 54s, 1m46, 1:46 형식",first:"먼저 출발",
+    hint:"블록 머리글을 드래그해 자유 배치, ⊞ 정렬로 정리 · ⠿ 를 드래그해 이동 · 플레이어 위에서 1–9 = 팀 이동, B = 대기 · Ctrl+Z = 실행 취소 · 이름 더블클릭 = 이름 변경 · 오른쪽 아래 모서리로 블록 크기 조절",
+    renamePrompt:"새 이름:",imported:"가져옴!",players:"명",rallyCustom:"집결 시간 (예: 2m30):",sync:"동시 도착"},
+  tr:{about:"Hayranlar tarafından yapılmış resmi olmayan bir araçtır; Kingshot veya yayıncısıyla bağlantılı değildir. Verilerin yalnızca bu tarayıcıda kalır: hesap, sunucu veya izleme yok.",alliance:"İttifak",color:"Blok rengi",planAll:"Planla (UTC)",plan:"Bu takımı bir UTC saatine planla",planPrompt:"İlk başlatma saati (UTC) — örn. 21:30 veya 21:30:15",planAllPrompt:"Tüm takımlar aynı anda varır. İlk başlatma saati (UTC) — örn. 21:30",badClock:"Geçersiz saat — örn. 21:30 veya 21:30:15",startAt:"başlangıç",landAt:"varış",resizeTip:"Boyutlandırmak için sürükle · çift tık = varsayılan boyut",align:"Hizala",deleted:"Takım silindi",march:"yürüyüş",subtitle:"kale ralli başlatma koordinatörü",goAll:"▶ HEPSİ BAŞLA",stopAll:"■ Hepsini durdur",addTeam:"+ Takım",undo:"Geri al",team:"Takım",bench:"Yedek",
+    rally:"Ralli",go:"▶ BAŞLA",stop:"■",launch:"BAŞLAT!",firstIn:"İlk başlatmaya",landsIn:"Varışa",landed:"VARDI",
+    empty:"Oyuncuları buraya bırak",moveTo:"Taşı",copy:"Başlatma sırasını kopyala",copied:"Kopyalandı!",settings:"Ayarlar",
+    lead:"İlk başlatmadan önce geri sayım (sn)",sound:"Ses",export:"JSON dışa aktar",import:"JSON içe aktar",reset:"Her şeyi sıfırla",
+    confirmReset:"Tüm takımlar ve oyuncular silinsin mi?",confirmDel:"Bu takım silinsin mi? Oyuncular yedeğe gider.",rename:"Yeniden adlandır",
+    del:"Sil",addPh:"İsim 1m46, İsim 54s…",badTime:"Geçersiz süre — 54s, 1m46 veya 1:46 kullan",first:"ilk başlar",
+    hint:"Blokları başlığından sürükleyip istediğin yere koy, ⊞ Hizala ile düzenle · Oyuncuları taşımak için ⠿ sürükle · oyuncu üzerinde 1–9 = takıma taşı, B = yedek · Ctrl+Z = geri al · yeniden adlandırmak için isme çift tıkla · bloğu sağ alt köşesinden boyutlandır",
+    renamePrompt:"Yeni isim:",imported:"İçe aktarıldı!",players:"oyuncu",rallyCustom:"Ralli süresi (örn. 2m30):",sync:"Senkron varış"}
+};
+const COLORS = ["#f5b83d","#4aa3ff","#ff6b6b","#2ecc71","#b57bff","#ff9f43","#1dd1a1","#ff6bcb","#a3cb38","#48dbfb"];
+const KEY = "rallysync.v1";
+
+/* ---------- state ---------- */
+let S = load() || defaultState();
+S.pos = S.pos || {}; S.ztop = S.ztop || 1; S.allyColors = S.allyColors || {};
+try{ for(const k in S.pos){ const p = S.pos[k]; if(p.w || p.h){ if(p.w && !p.s) p.s = Math.round(p.w/340*100)/100; delete p.w; delete p.h; } } }catch(e){ S.pos = {}; }
+function defaultState(){
+  const lang = (navigator.language||"en").slice(0,2);
+  return { lang: I18N[lang] ? lang : "en", theme:"dark", sound:true, lead:5, seq:10, pos:{}, ztop:1, allyColors:{},
+    bench:[],
+    teams:[
+      {id:"t1", name:"", rally:300, start:null, players:[{id:"p1",name:"Yordan",march:30},{id:"p2",name:"Jimmy",march:106},{id:"p3",name:"Bloom",march:54}]},
+      {id:"t2", name:"", rally:60,  start:null, players:[{id:"p4",name:"Slay",march:40},{id:"p5",name:"R4ppi",march:54},{id:"p6",name:"Mojo",march:32}]}
+    ]};
+}
+function load(){ try{ const s = JSON.parse(localStorage.getItem(KEY)); return s && Array.isArray(s.teams) ? s : null; }catch(e){ return null; } }
+let saveT = 0;
+function save(){ clearTimeout(saveT); saveT = setTimeout(()=>{ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }, 150); }
+const uid = p => p + (++S.seq);
+const t = k => (I18N[S.lang]||I18N.en)[k] ?? I18N.en[k] ?? k;
+
+/* undo: snapshot of roster only (not language/theme) */
+const undoStack = [];
+function snap(){ undoStack.push(JSON.stringify({bench:S.bench,teams:S.teams,seq:S.seq,pos:S.pos,allyColors:S.allyColors})); if(undoStack.length>80) undoStack.shift(); }
+function undo(){ const s = undoStack.pop(); if(!s) return; Object.assign(S, JSON.parse(s)); commit(false); }
+function commit(withSnap){ save(); render(); }
+function mutate(fn){ snap(); fn(); commit(); }
+
+/* ---------- time helpers ---------- */
+function parseTime(str){
+  if(str==null) return null;
+  const s = String(str).trim().toLowerCase().replace(/\s+/g,"");
+  if(!s) return null;
+  let m;
+  if((m = s.match(/^(\d{1,3}):(\d{1,2})$/))) return +m[1]*60 + +m[2];
+  if((m = s.match(/^(?:(\d{1,3})(?:m|min|mn|분|dk))?(?:(\d{1,4})(?:s|sec|sn|초)?)?$/)) && (m[1]||m[2])) return (+m[1]||0)*60 + (+m[2]||0);
+  return null;
+}
+function fmt(sec){ sec = Math.max(0, Math.round(sec)); const m = Math.floor(sec/60), s = sec%60; return m ? `${m}m${String(s).padStart(2,"0")}` : `${s}s`; }
+function fmtClock(sec){ const neg = sec<0; sec = Math.abs(Math.ceil(sec)); const h = Math.floor(sec/3600), m = Math.floor(sec/60)%60, s = sec%60, p2 = n=>String(n).padStart(2,"0");
+  return (neg?"-":"") + (h ? `${h}:${p2(m)}:${p2(s)}` : m ? `${m}:${p2(s)}` : `${s}`); }
+/* UTC wall clock "21:30:52" */
+function fmtUTC(ms){ return new Date(ms).toISOString().slice(11,19); }
+/* "21:30", "21:30:15", "2130", "21h30" -> next occurrence of that UTC time (ms) */
+function parseUTC(str){
+  const m = String(str||"").trim().toLowerCase().match(/^(\d{1,2})\s*[:h. ]?\s*(\d{2})(?:\s*[:m.]?\s*(\d{2}))?\s*(?:s|utc)?$/);
+  if(!m || +m[1] > 23 || +m[2] > 59 || (m[3] && +m[3] > 59)) return null;
+  const now = new Date();
+  let tms = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), +m[1], +m[2], +(m[3]||0));
+  if(tms < now.getTime() - 5000) tms += 86400000;   // already passed today -> tomorrow
+  return tms;
+}
+
+/* parse "Yordan 30s, Jimmy 1m46; Bloom 54s" (also newlines) */
+function parseRoster(text){
+  const out = [], bad = [];
+  text.split(/[,;\n]+/).map(x=>x.trim()).filter(Boolean).forEach(chunk=>{
+    // split name / time: time = last token(s) that parse; allow "Jimmy 1m 46s" and "Jimmy marching time 1m46"
+    const toks = chunk.split(/\s+/);
+    for(let k=Math.min(2,toks.length-1); k>=1; k--){
+      const time = parseTime(toks.slice(-k).join(""));
+      if(time!=null){
+        const name = toks.slice(0,-k).join(" ").replace(/\b(marching|march|time|temps|de|marche)\b/gi,"").replace(/[:\-–]+$/,"").trim();
+        if(name){ out.push({name, march:time}); return; }
+      }
+    }
+    if(toks.length===1 || parseTime(toks[toks.length-1])==null){ out.push({name:chunk, march:0}); return; }
+    bad.push(chunk);
+  });
+  return {out,bad};
+}
+
+/* ---------- model helpers ---------- */
+function findPlayer(pid){
+  for(const tm of S.teams){ const i = tm.players.findIndex(p=>p.id===pid); if(i>=0) return {list:tm.players,i,team:tm}; }
+  const i = S.bench.findIndex(p=>p.id===pid); if(i>=0) return {list:S.bench,i,team:null};
+  return null;
+}
+function listOf(dest){ return dest==="bench" ? S.bench : (S.teams.find(x=>x.id===dest)||{}).players; }
+function movePlayer(pid, dest){
+  const f = findPlayer(pid), to = listOf(dest);
+  if(!f || !to || f.list===to) return;
+  mutate(()=>{ const [p] = f.list.splice(f.i,1); to.push(p); });
+}
+/* launch schedule for a team: offset (s) after first launch */
+function schedule(tm){
+  const max = tm.players.reduce((a,p)=>Math.max(a,p.march||0),0);
+  const rows = tm.players.map(p=>({p, off:max-(p.march||0)})).sort((a,b)=>a.off-b.off || a.p.name.localeCompare(b.p.name));
+  return {max, rows, total: max + tm.rally};
+}
+
+/* ---------- render ---------- */
+const board = document.getElementById("board"), jump = document.getElementById("jump");
+jump.addEventListener("click", e=>{ const b = e.target.closest("[data-jump]"); if(!b) return;
+  const c = board.querySelector(`[data-card="${b.dataset.jump}"]`); if(c) c.scrollIntoView({behavior:"smooth", block:"start"}); });
+/* keep the header height in a CSS variable so jumps land just under it */
+const hdr = document.querySelector("header");
+const setHH = ()=>document.documentElement.style.setProperty("--hh", hdr.offsetHeight + "px");
+(window.ResizeObserver ? new ResizeObserver(setHH).observe(hdr) : addEventListener("resize", setHH)); setHH();
+const esc = s => String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function teamName(tm,i){ return tm.name || `${t("team")} ${i+1}`; }
+const allyKey = a => String(a||"").trim().toLowerCase();
+/* a color picked on the block wins; otherwise same alliance => same color; otherwise default palette */
+function teamColor(tm,i){
+  const k = allyKey(tm.alliance);
+  return tm.color || (k && S.allyColors[k]) || COLORS[i%COLORS.length];
+}
+function setAlliance(tm, name){
+  const before = teamColor(tm, S.teams.indexOf(tm));
+  tm.alliance = String(name||"").trim().slice(0,16);
+  delete tm.color;   // joining an alliance takes the alliance color
+  const k = allyKey(tm.alliance); if(!k || S.allyColors[k]) return;
+  // new alliance: keep this block's color unless another alliance already uses it
+  const used = new Set(Object.entries(S.allyColors).filter(([a])=>S.teams.some(x=>allyKey(x.alliance)===a && x!==tm)).map(([,c])=>c));
+  const mine = before;
+  S.allyColors[k] = !used.has(mine) ? mine : (COLORS.find(c=>!used.has(c)) || mine);
+}
+function setColor(tm, color){ tm.color = color; }   // only this block
+
+function playerLi(p, off, isFirst, tm){
+  const offTxt = tm ? (off===0 ? "GO" : "+"+fmt(off)) : "";
+  return `<li class="player" data-pid="${p.id}">
+    <span class="handle" title="drag">⠿</span>
+    <span class="pname" title="${esc(p.name)}">${esc(p.name)}${isFirst?'<span class="star">★</span>':""}</span>
+    <input class="march${p.march?"":" unset"}" value="${fmt(p.march||0)}" inputmode="text" aria-label="march" data-act="march">
+    <span class="when"><span class="cd idle" data-off="${off}">${offTxt}</span>${tm && tm.start ? `<small class="abs">${fmtUTC(tm.start + off*1000)}</small>` : ""}</span>
+    <button class="icon" data-act="move" title="${esc(t("moveTo"))}">⇄</button>
+    <button class="icon" data-act="delp" title="${esc(t("del"))}">✕</button>
+  </li>`;
+}
+
+function render(){
+  document.documentElement.dataset.theme = S.theme;
+  document.documentElement.lang = S.lang;
+  document.querySelector('meta[name=theme-color]').content = S.theme==="light" ? "#ffffff" : "#0f1115";
+  document.querySelectorAll("[data-i]").forEach(el=>{ el.textContent = t(el.dataset.i); });
+  document.querySelectorAll("#langSeg button, #langSeg2 button").forEach(b=>b.classList.toggle("on", b.dataset.lang===S.lang));
+  undoBtn.disabled = !undoStack.length;
+  const anyRun = S.teams.some(x=>x.start);
+  document.getElementById("goAll").hidden = anyRun;
+  document.getElementById("stopAll").hidden = !anyRun;
+
+  // keep focus/caret if user is typing in an add-input
+  const ae = document.activeElement, keepAdd = ae && ae.dataset && ae.dataset.add ? {id:ae.dataset.add, v:ae.value} : null;
+
+  let html = `<section class="card bench" data-drop="bench" data-card="bench"><div class="inner">
+    <div class="thead"><span class="grip">⋮⋮</span><span class="tname">${esc(t("bench"))}</span><span class="clock">${S.bench.length} ${esc(t("players"))}</span></div>
+    <ul class="players">${S.bench.length ? S.bench.map(p=>playerLi(p,0,false,null)).join("") : `<li class="empty">${esc(t("empty"))}</li>`}</ul>
+    <div class="addrow"><input data-add="bench" placeholder="${esc(t("addPh"))}"><button data-act="add" data-team="bench">+</button></div>
+    </div><div class="resizer" title="${esc(t("resizeTip"))}"></div>
+  </section>`;
+
+  S.teams.forEach((tm,i)=>{
+    const sc = schedule(tm), c = teamColor(tm,i);
+    const presets = [60,180,300,600].map(v=>`<button data-act="rally" data-v="${v}" class="${tm.rally===v?"on":""}">${v/60}m</button>`).join("");
+    const custom = ![60,180,300,600].includes(tm.rally);
+    html += `<section class="card ${tm.start?"running":""}" style="--c:${c}" data-drop="${tm.id}" data-tid="${tm.id}" data-card="${tm.id}"><div class="inner">
+      <div class="thead">
+        <span class="grip">⋮⋮</span><span class="tnum">${i+1}</span>
+        <span class="tname" data-act="rename" title="${esc(t("rename"))}">${esc(teamName(tm,i))}</span>
+        <input class="ally" data-act="ally" value="${esc(tm.alliance||"")}" placeholder="${esc(t("alliance"))}" maxlength="16" spellcheck="false" style="width:${Math.max(6,(tm.alliance||t("alliance")).length+2)}ch" title="${esc(t("alliance"))}">
+        <label class="cdot" title="${esc(t("color"))}"><input type="color" data-act="color" value="${c}"></label>
+        <button class="icon" data-act="copy" title="${esc(t("copy"))}">📋</button>
+        <button class="icon" data-act="delteam" title="${esc(t("del"))}">🗑</button>
+      </div>
+      <div class="trow">
+        <label>${esc(t("rally"))}</label>
+        <div class="seg">${presets}<button data-act="rallyc" class="${custom?"on":""}">${custom?fmt(tm.rally):"…"}</button></div>
+        <span style="flex:1"></span>
+        ${tm.start
+          ? `<button class="btn-stop" data-act="stop">${esc(t("stop"))}</button>`
+          : `<button class="btn-go" data-act="go" ${tm.players.length?"":"disabled"}>${esc(t("go"))}</button>`}
+      </div>
+      <div class="utcrow"><span>UTC <b data-utc></b></span>${tm.start
+          ? `<button class="planbtn on" data-act="plan" title="${esc(t("plan"))}">▶ ${fmtUTC(tm.start)} · 🏰 ${fmtUTC(tm.start + sc.total*1000)}</button>`
+          : `<button class="planbtn" data-act="plan" title="${esc(t("plan"))}" ${tm.players.length?"":"disabled"}>🕐 ${esc(t("planAll"))}</button>`}</div>
+      <div class="status" data-status="${tm.id}"><span>${esc(t("landsIn"))}</span><b>${fmtClock(sc.total)}</b></div>
+      <ul class="players">${tm.players.length ? sc.rows.map((r,k)=>playerLi(r.p,r.off,k===0&&tm.players.length>1,tm)).join("") : `<li class="empty">${esc(t("empty"))}</li>`}</ul>
+      <div class="addrow"><input data-add="${tm.id}" placeholder="${esc(t("addPh"))}"><button data-act="add" data-team="${tm.id}">+</button></div>
+      </div><div class="resizer" title="${esc(t("resizeTip"))}"></div>
+    </section>`;
+  });
+  board.innerHTML = html;
+  jump.innerHTML = `<button class="chip" data-jump="bench" style="--c:var(--muted)"><span class="dot"></span>${esc(t("bench"))} ${S.bench.length}</button>` +
+    S.teams.map((tm,i)=>`<button class="chip" data-jump="${tm.id}" style="--c:${teamColor(tm,i)}"><span class="dot"></span>${i+1}${tm.alliance?" "+esc(tm.alliance):""} <small data-chip="${tm.id}"></small></button>`).join("");
+  layout();
+  if(keepAdd){ const el = board.querySelector(`[data-add="${keepAdd.id}"]`); if(el){ el.value = keepAdd.v; el.focus({preventScroll:true}); } }
+  tick(true);
+}
+
+/* ---------- free layout (desktop/tablet) ---------- */
+const CW = 340, SMIN = .4, SMAX = 3, GAP = 12, prevH = {};
+const freeMQ = matchMedia("(min-width:700px)");
+function isFree(){ return freeMQ.matches; }
+function colCount(){ return Math.max(1, Math.floor((board.clientWidth + GAP) / (CW + GAP))); }
+function cards(){ return [...board.querySelectorAll("[data-card]")]; }
+const sOf = p => (p && p.s) || 1;
+const wOf = p => Math.round(CW * sOf(p));
+/* resizing scales the whole block like a zoom (same proportions): the grey box always hugs its content */
+function applySize(c, p){
+  const inner = c.querySelector(".inner"), sc = sOf(p);
+  c.style.width = wOf(p) + "px";
+  if(sc === 1){ inner.style.transform = inner.style.width = ""; c.style.height = ""; return; }
+  inner.style.width = (CW - 2) + "px";
+  inner.style.transform = `scale(${sc})`;
+  c.style.height = Math.ceil(inner.offsetHeight * sc + 5) + "px";   // + top/bottom borders
+}
+function layout(){
+  const free = isFree();
+  board.classList.toggle("free", free);
+  document.getElementById("alignBtn").hidden = !free;
+  if(!free){ cards().forEach(c=>{ c.style.left = c.style.top = c.style.zIndex = c.style.width = c.style.height = ""; const i = c.querySelector(".inner"); i.style.transform = i.style.width = ""; }); board.style.height = ""; return; }
+  const ids = new Set(cards().map(c=>c.dataset.card));
+  for(const k in S.pos) if(!ids.has(k)) delete S.pos[k];
+  cards().forEach(c=>applySize(c, S.pos[c.dataset.card]));
+  // place cards that have no position yet in the shortest column
+  const nCols = colCount(), bottoms = Array(nCols).fill(0);
+  cards().filter(c=>S.pos[c.dataset.card]).forEach(c=>{
+    const p = S.pos[c.dataset.card], h = c.offsetHeight, w = wOf(p);
+    for(let k=0;k<nCols;k++){ const cx = k*(CW+GAP); if(p.x < cx+CW && p.x+w > cx) bottoms[k] = Math.max(bottoms[k], p.y + h + GAP); }
+  });
+  let changed = false;
+  cards().forEach(c=>{
+    const id = c.dataset.card;
+    if(!S.pos[id]){
+      let k = 0; for(let j=1;j<nCols;j++) if(bottoms[j] < bottoms[k]) k = j;
+      S.pos[id] = {x:k*(CW+GAP), y:bottoms[k], z:++S.ztop};
+      applySize(c, S.pos[id]);
+      bottoms[k] += c.offsetHeight + GAP; changed = true;
+    }
+  });
+  // a block that grew (players added / resized taller) pushes down the blocks just below it instead of covering them
+  const items = cards().map(c=>({id:c.dataset.card, c, h:c.offsetHeight, p:S.pos[c.dataset.card]}));
+  const overlapX = (a,b)=> a.p.x < b.p.x + wOf(b.p) && b.p.x < a.p.x + wOf(a.p);
+  const push = (a, oldBottom, depth)=>{
+    if(depth > 40) return;
+    const need = a.p.y + a.h + GAP;
+    items.forEach(b=>{
+      if(b===a || !overlapX(a,b)) return;
+      if(b.p.y >= oldBottom - 2 && b.p.y < need){ const ob = b.p.y + b.h + GAP; b.p.y = need; changed = true; push(b, ob, depth+1); }
+    });
+  };
+  if(!(cdrag && cdrag.on) && !rdrag) items.slice().sort((a,b)=>a.p.y-b.p.y).forEach(a=>{
+    const old = prevH[a.id];
+    if(old != null && a.h > old) push(a, a.p.y + old + GAP, 0);
+  });
+  items.forEach(a=>{ prevH[a.id] = a.h; });
+  if(changed) save();
+  let maxB = 0;
+  cards().forEach(c=>{
+    const p = S.pos[c.dataset.card];
+    c.style.left = Math.max(0, Math.min(p.x, board.clientWidth - wOf(p))) + "px"; c.style.top = p.y + "px"; c.style.zIndex = p.z || 1;
+    maxB = Math.max(maxB, p.y + c.offsetHeight);
+  });
+  board.style.height = (maxB + 160) + "px";
+}
+/* Align: each block snaps to its nearest column, then stacks cleanly by vertical order.
+   Columns take the width of their widest block, so resized blocks line up too. */
+function align(){
+  if(!isFree()) return;
+  snap();
+  const nCols = Math.max(colCount(), 1), cols = Array.from({length:nCols}, ()=>[]);
+  cards().forEach(c=>{
+    const p = S.pos[c.dataset.card] || {x:0,y:0};
+    const k = Math.max(0, Math.min(nCols-1, Math.round(p.x / (CW+GAP))));
+    cols[k].push({c, p});
+  });
+  let x = 0;
+  cols.forEach(list=>{
+    if(!list.length) return;
+    list.sort((a,b)=>a.p.y-b.p.y || a.p.x-b.p.x);
+    let y = 0, colW = 0;
+    list.forEach(({c})=>{ const id = c.dataset.card; S.pos[id] = Object.assign({}, S.pos[id], {x, y}); y += c.offsetHeight + GAP; colW = Math.max(colW, wOf(S.pos[id])); });
+    x += colW + GAP;
+  });
+  board.classList.add("anim"); layout(); save(); undoBtn.disabled = false;
+  setTimeout(()=>board.classList.remove("anim"), 300);
+}
+/* resize a block from its bottom-right corner (double-click the corner = default size) */
+let rdrag = null;
+board.addEventListener("pointerdown", e=>{
+  const r = e.target.closest(".resizer"); if(!r || !isFree() || e.button > 0) return;
+  e.preventDefault(); e.stopPropagation();
+  const card = r.closest("[data-card]");
+  rdrag = {card, id:card.dataset.card, x0:e.clientX, y0:e.clientY, s0:sOf(S.pos[card.dataset.card]), nat:card.querySelector('.inner').offsetHeight + 5, on:false, pid:e.pointerId};
+});
+addEventListener("pointermove", e=>{
+  if(!rdrag || e.pointerId!==rdrag.pid) return;
+  const dx = e.clientX-rdrag.x0, dy = e.clientY-rdrag.y0;
+  if(!rdrag.on){
+    if(Math.hypot(dx,dy) < 3) return;
+    rdrag.on = true; snap(); undoBtn.disabled = false; closeMenu();
+    const p = S.pos[rdrag.id]; p.z = ++S.ztop; rdrag.card.style.zIndex = S.ztop; rdrag.card.classList.add("lifted");
+    document.body.style.userSelect = "none";
+  }
+  e.preventDefault();
+  const p = S.pos[rdrag.id];
+  // follow whichever direction the mouse moved the most (proportional zoom)
+  const sw = (CW*rdrag.s0 + dx) / CW, sh = (rdrag.nat*rdrag.s0 + dy) / rdrag.nat;
+  let sc = Math.abs(sw - rdrag.s0) >= Math.abs(sh - rdrag.s0) ? sw : sh;
+  sc = Math.max(SMIN, Math.min(SMAX, (board.clientWidth - p.x) / CW, sc));
+  p.s = Math.round(sc * 100) / 100; if(p.s === 1) delete p.s;
+  applySize(rdrag.card, p);
+  const need = p.y + rdrag.card.offsetHeight + 160; if(need > board.offsetHeight) board.style.height = need + "px";
+}, {passive:false});
+function endResize(e){
+  if(!rdrag || (e && e.pointerId!==rdrag.pid)) return;
+  const d = rdrag; rdrag = null;
+  if(!d.on) return;
+  d.card.classList.remove("lifted"); document.body.style.userSelect = "";
+  save(); layout();
+}
+addEventListener("pointerup", endResize);
+addEventListener("pointercancel", endResize);
+board.addEventListener("dblclick", e=>{
+  const r = e.target.closest(".resizer"); if(!r) return;
+  const p = S.pos[r.closest("[data-card]").dataset.card]; if(!p) return;
+  snap(); delete p.s; save(); layout(); undoBtn.disabled = false;
+});
+/* drag a block by its header */
+let cdrag = null;
+board.addEventListener("pointerdown", e=>{
+  if(!isFree() || e.button > 0) return;
+  const head = e.target.closest(".thead");
+  if(!head || e.target.closest("button,input,label")) return;
+  const card = head.closest("[data-card]"), p = S.pos[card.dataset.card];
+  cdrag = {card, id:card.dataset.card, x0:e.clientX, y0:e.clientY, px:p.x, py:p.y, sy:scrollY, on:false, pid:e.pointerId};
+});
+addEventListener("pointermove", e=>{
+  if(!cdrag || e.pointerId!==cdrag.pid) return;
+  const dx = e.clientX-cdrag.x0, dy = e.clientY-cdrag.y0;
+  if(!cdrag.on){
+    if(Math.hypot(dx,dy) < 5) return;
+    cdrag.on = true; closeMenu(); snap(); undoBtn.disabled = false;
+    S.pos[cdrag.id].z = ++S.ztop; cdrag.card.style.zIndex = S.ztop; cdrag.card.classList.add("lifted");
+    document.body.style.userSelect = "none";
+  }
+  e.preventDefault();
+  cdrag.cx = e.clientX; cdrag.cy = e.clientY;
+  moveCard();
+  cdrag.scroll = e.clientY > innerHeight-50 ? 14 : e.clientY < 110 && scrollY > 0 ? -14 : 0;
+  if(cdrag.scroll && !cdrag.raf){ const step = ()=>{ if(!cdrag || !cdrag.scroll){ if(cdrag) cdrag.raf = 0; return; } scrollBy(0, cdrag.scroll); moveCard(); cdrag.raf = requestAnimationFrame(step); }; cdrag.raf = requestAnimationFrame(step); }
+}, {passive:false});
+function moveCard(){
+  const d = cdrag, p = S.pos[d.id];
+  p.x = Math.round(Math.max(0, Math.min(board.clientWidth - wOf(p), d.px + d.cx - d.x0)));
+  p.y = Math.round(Math.max(0, d.py + d.cy - d.y0 + scrollY - d.sy));
+  d.card.style.left = p.x + "px"; d.card.style.top = p.y + "px";
+  const need = p.y + d.card.offsetHeight + 160; if(need > board.offsetHeight) board.style.height = need + "px";
+}
+function endCardDrag(e){
+  if(!cdrag || (e && e.pointerId!==cdrag.pid)) return;
+  const d = cdrag; cdrag = null;
+  if(d.raf) cancelAnimationFrame(d.raf);
+  if(!d.on) return;
+  d.card.classList.remove("lifted"); document.body.style.userSelect = "";
+  save(); layout();
+}
+addEventListener("pointerup", endCardDrag);
+addEventListener("pointercancel", endCardDrag);
+freeMQ.addEventListener ? freeMQ.addEventListener("change", ()=>layout()) : freeMQ.addListener(()=>layout());
+addEventListener("resize", ()=>layout());
+
+/* ---------- live countdown ---------- */
+const beeped = new Set();
+function tick(force){
+  const now = Date.now();
+  const utc = fmtUTC(now); document.getElementById("clock").textContent = "UTC " + utc;
+  board.querySelectorAll("[data-utc]").forEach(el=>{ if(el.textContent!==utc) el.textContent = utc; });
+  let anyRun = false;
+  S.teams.forEach(tm=>{
+    const card = board.querySelector(`[data-tid="${tm.id}"]`); if(!card) return;
+    const st = card.querySelector(".status");
+    const sc = schedule(tm);
+    if(!tm.start){
+      if(force){ const ch = jump.querySelector(`[data-chip="${tm.id}"]`); if(ch){ ch.textContent = ""; ch.parentNode.classList.remove("hot","soon"); } }
+      if(force){ st.className="status"; st.innerHTML = `<span>${esc(t("rally"))} ${fmt(tm.rally)} + ${esc(t("march"))} ${fmt(sc.max)}</span><b>= ${fmt(sc.total)}</b>`; }
+      return;
+    }
+    anyRun = true;
+    const land = tm.start + sc.total*1000, toLand = (land-now)/1000, toFirst = (tm.start-now)/1000;
+    if(toLand < -20){ tm.start = null; save(); render(); return; }
+    if(toLand <= 0){ st.className="status landed"; st.innerHTML = `<span>🏰</span><b>${esc(t("landed"))}</b>`; }
+    else if(toFirst > 0){ st.className="status"; st.innerHTML = `<span>${esc(t("firstIn"))}</span><b>${fmtClock(toFirst)}</b>`; }
+    else { st.className="status"; st.innerHTML = `<span>${esc(t("landsIn"))}</span><b>${fmtClock(toLand)}</b>`; }
+    let nextLi = null, nextRem = Infinity;
+    card.querySelectorAll(".cd").forEach(el=>{
+      const off = +el.dataset.off, rem = (tm.start + off*1000 - now)/1000;
+      const pid = el.closest("li").dataset.pid;
+      let cls, txt;
+      if(rem > 10){ cls="cd"; txt=fmtClock(rem); }
+      else if(rem > 5){ cls="cd soon"; txt=fmtClock(rem); }
+      else if(rem > 0){ cls="cd hot"; txt=fmtClock(rem); }
+      else if(rem > -3){ cls="cd now"; txt=t("launch"); }
+      else { cls="cd done"; txt="✓"; }
+      const li = el.closest("li");
+      if(rem > -0.5 && rem < nextRem){ nextRem = rem; nextLi = li; }
+      li.classList.toggle("gone", rem <= -3);
+      if(el.className!==cls) el.className = cls;
+      if(el.textContent!==txt) el.textContent = txt;
+      // beeps: 3,2,1 then launch
+      const sec = Math.ceil(rem);
+      if(rem > -0.5 && sec <= 5 && sec >= 0){
+        const k = `${tm.id}:${tm.start}:${pid}:${sec}`;
+        if(!beeped.has(k)){ beeped.add(k); beep(sec===0 ? 1046 : 660, sec===0 ? .35 : .09); if(S.sound && navigator.vibrate) try{ navigator.vibrate(sec===0 ? [250,80,250] : 60); }catch(e){} }
+      }
+    });
+    card.querySelectorAll("li.player").forEach(li=>li.classList.toggle("next", li===nextLi));
+    const chip = jump.querySelector(`[data-chip="${tm.id}"]`);
+    if(chip){
+      const txt = nextRem < Infinity ? (nextRem > 0 ? fmtClock(nextRem) : "GO!") : toLand > 0 ? "🏰 " + fmtClock(toLand) : "✓";
+      if(chip.textContent !== txt) chip.textContent = txt;
+      const cl = chip.parentNode.classList; cl.toggle("hot", nextRem <= 5 && nextRem < Infinity); cl.toggle("soon", nextRem > 5 && nextRem <= 10);
+    }
+  });
+  if(beeped.size > 2000) beeped.clear();
+  wake(anyRun);
+}
+setInterval(tick, 100);
+
+/* ---------- audio & wake lock ---------- */
+let actx = null;
+function beep(freq, dur){
+  if(!S.sound) return;
+  try{
+    actx = actx || new (window.AudioContext||window.webkitAudioContext)();
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.frequency.value = freq; o.type = "square";
+    g.gain.setValueAtTime(.12, actx.currentTime); g.gain.exponentialRampToValueAtTime(.0001, actx.currentTime+dur);
+    o.connect(g).connect(actx.destination); o.start(); o.stop(actx.currentTime+dur+.02);
+  }catch(e){}
+}
+let lock = null, wantLock = false;
+async function wake(on){
+  if(on===wantLock && (!on || lock)) return;
+  wantLock = on;
+  try{
+    if(on && !lock && navigator.wakeLock && document.visibilityState==="visible"){ lock = await navigator.wakeLock.request("screen"); lock.addEventListener("release",()=>{lock=null;}); }
+    if(!on && lock){ await lock.release(); lock=null; }
+  }catch(e){}
+}
+
+/* ---------- actions ---------- */
+function goTeam(tm, extraDelay){ tm.start = Date.now() + (S.lead + (extraDelay||0))*1000; }
+function goAll(baseMs){
+  const teams = S.teams.filter(x=>x.players.length); if(!teams.length) return;
+  const maxTotal = Math.max(...teams.map(x=>schedule(x).total));
+  const base = typeof baseMs === "number" ? baseMs : Date.now() + S.lead*1000;
+  // every team lands at the same instant; the slowest team launches first, at "base"
+  teams.forEach(x=>{ x.start = base + (maxTotal - schedule(x).total)*1000; });
+  actx && actx.resume && actx.resume(); beep(880,.05);
+  save(); render();
+}
+function stopAll(){ S.teams.forEach(x=>x.start=null); save(); render(); }
+
+function addPlayers(dest, input){
+  const {out,bad} = parseRoster(input.value);
+  if(!out.length){ if(bad.length) toast(t("badTime")); return; }
+  mutate(()=>{ const list = listOf(dest); out.forEach(o=>list.push({id:uid("p"), name:o.name, march:o.march})); });
+  const el = board.querySelector(`[data-add="${dest}"]`); if(el){ el.value = bad.join(", "); el.focus(); }
+  if(bad.length) toast(t("badTime"));
+}
+function copyTeam(tm, i){
+  const sc = schedule(tm);
+  const lines = [`⚔️ ${tm.alliance?`[${tm.alliance}] `:""}${teamName(tm,i)} — ${t("rally")} ${fmt(tm.rally)}`];
+  if(tm.start){
+    lines[0] += ` — ${t("landAt")} ${fmtUTC(tm.start + sc.total*1000)} UTC`;
+    sc.rows.forEach((r,k)=>lines.push(`${k+1}. ${r.p.name} — ${fmtUTC(tm.start + r.off*1000)} UTC`));
+  } else sc.rows.forEach((r,k)=>lines.push(`${k+1}. ${r.p.name} — ${r.off===0?"GO":"+"+fmt(r.off)}`));
+  const txt = lines.join("\n");
+  (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(()=>toast(t("copied")), ()=>{ ask("📋", txt, "text"); });
+}
+
+board.addEventListener("click", e=>{
+  const b = e.target.closest("[data-act]"); if(!b) return;
+  const act = b.dataset.act, card = b.closest("[data-drop]"), tid = card && card.dataset.drop;
+  const tm = S.teams.find(x=>x.id===tid), ti = S.teams.indexOf(tm);
+  const li = b.closest("li.player"), pid = li && li.dataset.pid;
+  switch(act){
+    case "add": addPlayers(b.dataset.team, board.querySelector(`[data-add="${b.dataset.team}"]`)); break;
+    case "rally": mutate(()=>{ tm.rally = +b.dataset.v; }); break;
+    case "rallyc": ask(t("rallyCustom"), fmt(tm.rally)).then(r=>{ const v = parseTime(r); if(v) mutate(()=>{ tm.rally=v; }); else if(r!=null) toast(t("badTime")); }); break;
+    case "plan": ask(t("planPrompt"), tm.start ? fmtUTC(tm.start).slice(0,5) : fmtUTC(Date.now()+120000).slice(0,5)).then(v=>{
+      if(v==null) return; const ms = parseUTC(v); if(ms==null){ toast(t("badClock")); return; }
+      tm.start = ms; actx && actx.resume && actx.resume(); save(); render(); }); break;
+    case "go": goTeam(tm); actx && actx.resume && actx.resume(); beep(880,.05); save(); render(); break;
+    case "stop": tm.start = null; save(); render(); break;
+    case "copy": copyTeam(tm, ti); break;
+    case "delteam": mutate(()=>{ S.bench.push(...tm.players); S.teams.splice(ti,1); }); toast(t("deleted"), true); break;
+    case "delp": mutate(()=>{ const f = findPlayer(pid); f && f.list.splice(f.i,1); }); break;
+    case "move": openMoveMenu(pid, b); break;
+    case "rename": if(!isFree()) renameTeam(tm, b.textContent); break;
+  }
+});
+board.addEventListener("dblclick", e=>{
+  const tn = e.target.closest(".tname[data-act=rename]");
+  if(tn){ const tm = S.teams.find(x=>x.id===tn.closest("[data-tid]").dataset.tid); ask(t("renamePrompt"), tn.textContent).then(v=>{ if(v!=null) mutate(()=>{ tm.name = v.trim(); }); }); return; }
+  const pn = e.target.closest(".pname");
+  if(pn){ const f = findPlayer(pn.closest("li").dataset.pid); const pid = f.list[f.i].id; ask(t("renamePrompt"), f.list[f.i].name).then(v=>{ const g = findPlayer(pid); if(g && v && v.trim()) mutate(()=>{ g.list[g.i].name = v.trim(); }); }); }
+});
+board.addEventListener("keydown", e=>{
+  if(e.key==="Enter" && e.target.dataset.add){ e.preventDefault(); addPlayers(e.target.dataset.add, e.target); }
+  if(e.key==="Enter" && (e.target.dataset.act==="march" || e.target.dataset.act==="ally")){ e.target.blur(); }
+  if(e.key==="Escape" && e.target.dataset.act==="march"){ e.target.dataset.cancel="1"; e.target.blur(); }
+});
+board.addEventListener("focusin", e=>{ if(e.target.dataset.act==="march") setTimeout(()=>e.target.select(),0); });
+board.addEventListener("input", e=>{
+  const el = e.target;
+  if(el.dataset.act==="ally") el.style.width = Math.max(6, (el.value||el.placeholder).length+2) + "ch";
+  if(el.dataset.act==="color") el.closest(".card").style.setProperty("--c", el.value);   // live preview
+});
+board.addEventListener("change", e=>{
+  const el = e.target, card = el.closest("[data-tid]"); if(!card) return;
+  const tm = S.teams.find(x=>x.id===card.dataset.tid); if(!tm) return;
+  if(el.dataset.act==="ally" && el.value.trim() !== (tm.alliance||"")) mutate(()=>setAlliance(tm, el.value));
+  if(el.dataset.act==="color") mutate(()=>setColor(tm, el.value));
+});
+board.addEventListener("focusout", e=>{
+  const el = e.target; if(el.dataset.act!=="march") return;
+  const f = findPlayer(el.closest("li").dataset.pid); if(!f) return;
+  if(el.dataset.cancel){ delete el.dataset.cancel; el.value = fmt(f.list[f.i].march); return; }
+  const v = parseTime(el.value);
+  if(v==null){ el.classList.add("bad"); toast(t("badTime")); el.value = fmt(f.list[f.i].march); setTimeout(()=>el.classList.remove("bad"),1200); return; }
+  if(v!==f.list[f.i].march) mutate(()=>{ f.list[f.i].march = v; });
+});
+
+/* move menu (tap-friendly) */
+let menuEl = null;
+function closeMenu(){ if(menuEl){ menuEl.remove(); menuEl=null; } }
+function renamePlayer(pid){
+  const f = findPlayer(pid); if(!f) return;
+  ask(t("renamePrompt"), f.list[f.i].name).then(v=>{ const g = findPlayer(pid); if(g && v && v.trim()) mutate(()=>{ g.list[g.i].name = v.trim(); }); });
+}
+function renameTeam(tm, cur){ ask(t("renamePrompt"), cur).then(v=>{ if(v!=null) mutate(()=>{ tm.name = v.trim(); }); }); }
+function openMoveMenu(pid, anchor){
+  closeMenu();
+  const f = findPlayer(pid); if(!f) return;
+  const m = document.createElement("div"); m.className = "menu";
+  let h = `<div class="mt">${esc(t("moveTo"))}</div>`;
+  S.teams.forEach((tm,i)=>{ if(tm!==f.team) h += `<button data-to="${tm.id}" style="--c:${teamColor(tm,i)}"><span class="dot"></span>${i+1}. ${tm.alliance?`[${esc(tm.alliance)}] `:""}${esc(teamName(tm,i))}</button>`; });
+  if(f.team) h += `<button data-to="bench" style="--c:var(--muted)"><span class="dot"></span>${esc(t("bench"))}</button>`;
+  h += `<div class="sepm"></div><button data-ren="1">✎ ${esc(t("rename"))}</button>`;
+  m.innerHTML = h; document.body.appendChild(m); menuEl = m; m._w = innerWidth; m._y = scrollY;
+  const r = anchor.getBoundingClientRect(), mw = m.offsetWidth, mh = m.offsetHeight;
+  m.style.left = Math.max(6, Math.min(innerWidth - mw - 6, r.right - mw)) + "px";
+  m.style.top = (r.bottom + mh + 6 > innerHeight ? Math.max(6, r.top - mh - 4) : r.bottom + 4) + "px";
+  m.addEventListener("click", ev=>{
+    const b = ev.target.closest("[data-to]"); if(b){ closeMenu(); movePlayer(pid, b.dataset.to); return; }
+    if(ev.target.closest("[data-ren]")){ closeMenu(); renamePlayer(pid); }
+  });
+}
+document.addEventListener("pointerdown", e=>{ if(menuEl && !menuEl.contains(e.target) && !e.target.closest('[data-act="move"]')) closeMenu(); }, true);
+/* phones fire scroll/resize when the address bar hides: only close the menu on a real move */
+addEventListener("resize", ()=>{ if(menuEl && innerWidth !== menuEl._w) closeMenu(); });
+addEventListener("scroll", ()=>{ if(menuEl && Math.abs(scrollY - menuEl._y) > 40) closeMenu(); }, true);
+
+/* ---------- pointer drag & drop (mouse + touch) ---------- */
+let drag = null;
+board.addEventListener("pointerdown", e=>{
+  if(e.button > 0) return;
+  const h = e.target.closest(".handle, .pname"); if(!h) return;
+  if(h.classList.contains("pname") && e.pointerType !== "mouse") return;
+  const li = h.closest("li.player");
+  drag = {pid: li.dataset.pid, li, x0:e.clientX, y0:e.clientY, on:false, ghost:null, over:null, dx:0, dy:0, id:e.pointerId};
+  if(h.classList.contains("handle")) e.preventDefault();
+});
+addEventListener("pointermove", e=>{
+  if(!drag || e.pointerId!==drag.id) return;
+  if(!drag.on){
+    if(Math.hypot(e.clientX-drag.x0, e.clientY-drag.y0) < 6) return;
+    drag.on = true; closeMenu();
+    const r = drag.li.getBoundingClientRect();
+    drag.dx = drag.x0 - r.left; drag.dy = drag.y0 - r.top;
+    const card = drag.li.closest("[data-card]"); drag.sc = isFree() ? sOf(S.pos[card.dataset.card]) : 1;
+    const g = drag.li.cloneNode(true); g.className = "player ghost"; g.style.width = drag.li.offsetWidth + "px"; g.style.display="grid"; g.style.transformOrigin = "0 0"; g.style.setProperty("--c", getComputedStyle(card).getPropertyValue("--c"));
+    document.body.appendChild(g); drag.ghost = g; drag.li.classList.add("ghost-src");
+    document.body.style.userSelect = "none";
+  }
+  e.preventDefault();
+  drag.ghost.style.transform = `translate(${e.clientX-drag.dx}px,${e.clientY-drag.dy}px) scale(${drag.sc})`;
+  const el = document.elementFromPoint(e.clientX, e.clientY), card = el && el.closest("[data-drop]");
+  if(card!==drag.over){ drag.over && drag.over.classList.remove("drop-on"); card && card.classList.add("drop-on"); drag.over = card; }
+  // auto-scroll near edges
+  const edge = 60;
+  drag.scroll = e.clientY < edge+50 ? -12 : e.clientY > innerHeight-edge ? 12 : 0;
+  if(drag.scroll && !drag.raf){ const step = ()=>{ if(!drag || !drag.scroll){ if(drag) drag.raf=0; return; } scrollBy(0, drag.scroll); drag.raf = requestAnimationFrame(step); }; drag.raf = requestAnimationFrame(step); }
+}, {passive:false});
+function endDrag(e, cancel){
+  if(!drag || (e && e.pointerId!==drag.id)) return;
+  const d = drag; drag = null;
+  if(d.raf) cancelAnimationFrame(d.raf);
+  document.body.style.userSelect = "";
+  if(!d.on) return;
+  d.ghost.remove(); d.li.classList.remove("ghost-src"); d.over && d.over.classList.remove("drop-on");
+  if(!cancel && d.over) movePlayer(d.pid, d.over.dataset.drop);
+}
+addEventListener("pointerup", e=>endDrag(e,false));
+addEventListener("pointercancel", e=>endDrag(e,true));
+addEventListener("keydown", e=>{ if(e.key==="Escape"){ if(drag){ endDrag(null,true); } closeMenu(); } });
+
+/* ---------- keyboard: hover + 1-9 / B, Ctrl+Z ---------- */
+let hoverPid = null;
+board.addEventListener("pointerover", e=>{ const li = e.target.closest("li.player"); hoverPid = li ? li.dataset.pid : null; });
+board.addEventListener("pointerleave", ()=>{ hoverPid = null; });
+addEventListener("keydown", e=>{
+  const typing = /INPUT|TEXTAREA|SELECT/.test((document.activeElement||{}).tagName||"");
+  if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==="z" && !typing){ e.preventDefault(); undo(); return; }
+  if(typing || e.ctrlKey || e.metaKey || e.altKey || !hoverPid) return;
+  if(/^[1-9]$/.test(e.key)){ const tm = S.teams[+e.key-1]; if(tm){ movePlayer(hoverPid, tm.id); } }
+  else if(e.key.toLowerCase()==="b"){ movePlayer(hoverPid, "bench"); }
+  else if(e.key==="Delete"){ const f = findPlayer(hoverPid); if(f) mutate(()=>f.list.splice(f.i,1)); }
+});
+
+/* ---------- header / settings ---------- */
+const leadIn = document.getElementById("leadIn"), soundIn = document.getElementById("soundIn"), importFile = document.getElementById("importFile");
+const undoBtn = document.getElementById("undo");
+undoBtn.onclick = undo;
+document.getElementById("goAll").onclick = ()=>goAll();
+document.getElementById("stopAll").onclick = stopAll;
+document.getElementById("alignBtn").onclick = align;
+document.getElementById("addTeam").onclick = ()=>mutate(()=>{ S.teams.push({id:uid("t"), name:"", rally:300, start:null, players:[]}); });
+document.getElementById("langSeg").onclick = document.getElementById("langSeg2").onclick = e=>{ const b = e.target.closest("[data-lang]"); if(b){ S.lang = b.dataset.lang; save(); render(); } };
+document.getElementById("theme").onclick = document.getElementById("theme2").onclick = ()=>{ S.theme = S.theme==="light" ? "dark" : "light"; save(); render(); };
+const dlg = document.getElementById("settings");
+document.getElementById("settingsBtn").onclick = ()=>{ leadIn.value = S.lead; soundIn.checked = S.sound; dlg.showModal(); };
+document.getElementById("closeSettings").onclick = ()=>dlg.close();
+leadIn.onchange = ()=>{ S.lead = Math.max(0, Math.min(120, +leadIn.value||0)); save(); };
+soundIn.onchange = ()=>{ S.sound = soundIn.checked; save(); if(S.sound) beep(880,.08); };
+document.getElementById("resetBtn").onclick = async ()=>{ dlg.close(); if(await ask(t("confirmReset"), null, "confirm")){ snap(); const keep = {lang:S.lang, theme:S.theme, sound:S.sound, lead:S.lead}; S = Object.assign(defaultState(), keep, {pos:{}, bench:[], teams:[{id:"t1",name:"",rally:300,start:null,players:[]}]}); commit(); } };
+document.getElementById("exportBtn").onclick = ()=>{
+  const blob = new Blob([JSON.stringify({bench:S.bench, teams:S.teams.map(x=>({...x,start:null}))}, null, 2)], {type:"application/json"});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "rally-teams.json"; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+};
+document.getElementById("importBtn").onclick = ()=>importFile.click();
+importFile.onchange = async ()=>{
+  try{
+    const d = JSON.parse(await importFile.files[0].text());
+    if(!Array.isArray(d.teams)) throw 0;
+    mutate(()=>{ S.teams = d.teams.map(x=>({id:uid("t"), name:String(x.name||""), alliance:String(x.alliance||""), color:x.color||undefined, rally:+x.rally||300, start:null, players:(x.players||[]).map(p=>({id:uid("p"), name:String(p.name), march:+p.march||0}))}));
+      S.bench = (d.bench||[]).map(p=>({id:uid("p"), name:String(p.name), march:+p.march||0})); });
+    toast(t("imported")); dlg.close();
+  }catch(e){ toast("JSON ✕"); }
+  importFile.value = "";
+};
+let toastT = 0;
+function toast(msg, withUndo){
+  const el = document.getElementById("toast"); el.textContent = msg;
+  if(withUndo){ const b = document.createElement("button"); b.textContent = "↶ " + t("undo"); b.onclick = ()=>{ undo(); el.classList.remove("show"); }; el.appendChild(b); }
+  el.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(()=>el.classList.remove("show"), withUndo ? 5000 : 1800);
+}
+/* in-page replacement for prompt()/confirm() — native dialogs are blocked in some browsers/previews */
+const askDlg = document.getElementById("ask"), askIn = document.getElementById("askIn"), askTa = document.getElementById("askTa");
+let askResolve = null;
+function ask(msg, value, mode){
+  if(askResolve) askResolve(null);
+  document.getElementById("askMsg").textContent = msg;
+  askIn.hidden = mode==="confirm" || mode==="text"; askTa.hidden = mode!=="text";
+  askIn.value = value ?? ""; askTa.value = mode==="text" ? value : "";
+  document.getElementById("askCancel").hidden = mode==="text";
+  askDlg.showModal();
+  setTimeout(()=>{ const f = mode==="text" ? askTa : askIn.hidden ? document.getElementById("askOk") : askIn; f.focus(); f.select && f.select(); }, 0);
+  return new Promise(res=>{ askResolve = res; });
+}
+function askDone(ok){
+  const r = askResolve; askResolve = null; if(askDlg.open) askDlg.close();
+  if(r) r(ok ? (askIn.hidden ? true : askIn.value) : null);
+}
+document.getElementById("askForm").addEventListener("submit", e=>{ e.preventDefault(); askDone(true); });
+document.getElementById("askCancel").onclick = ()=>askDone(false);
+askDlg.addEventListener("cancel", e=>{ e.preventDefault(); askDone(false); });
+
+/* sync across tabs (e.g. second screen) */
+addEventListener("storage", e=>{ if(e.key===KEY){ const s = load(); if(s){ S = s; render(); } } });
+document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="visible"){ lock=null; wantLock=false; } });
+
+render();
+</script>
+</body>
+</html>
