@@ -303,6 +303,252 @@ html.locked #gate{display:flex}
 @keyframes gout{to{opacity:0;transform:scale(1.06)}}
 @media (max-width:480px){ .g-sign small{letter-spacing:2px;font-size:12px} .g-reels{--ch:66px} .g-lever{height:160px} .g-lever .rod{height:120px} .g-lever.pulled .ball{transform:translateY(92px)} }
 @media (prefers-reduced-motion:reduce){ .g-sign h1,.g-lights i{animation:none} }
+
+/* ================= KvK plan (code-protected area) ================= */
+#plan{display:none}
+html.planning{overflow:hidden}
+html.planning body>*:not(#gate):not(#plan):not(.toast):not(dialog):not(.langmenu):not(.kp-menu):not(.kp-ghost){visibility:hidden}
+html.locked #plan{visibility:hidden}
+html.planning #plan{display:flex}
+#plan{position:fixed;inset:0;z-index:440;flex-direction:column;background:var(--bg);color:var(--text)}
+#ask p{white-space:pre-line}
+.ss-plan{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin:0 0 16px;padding:12px 14px;border-radius:14px;border:0;cursor:pointer;
+  font-size:17px;font-weight:900;letter-spacing:1px;color:#2a1a00;background:linear-gradient(180deg,#fff1a8,#f2c94c 45%,#c9971c);box-shadow:0 4px 0 #7a5800,0 10px 22px #0007}
+.ss-plan:active{transform:translateY(3px);box-shadow:0 1px 0 #7a5800}
+.ss-plan small{font-size:13px;font-weight:700;opacity:.75;letter-spacing:0}
+.kp-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px;background:var(--panel);border-bottom:1px solid var(--line)}
+.kp-bar2{gap:10px;padding:8px 12px}
+.kp-title{font-size:16px;white-space:nowrap}
+.kp-tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin;padding:2px}
+.kp-tab{white-space:nowrap;font-weight:700;padding:5px 10px;border-radius:8px 8px 3px 3px}
+.kp-tab.on{background:var(--accent);border-color:var(--accent);color:#111}
+#kpSearch{width:150px;padding:6px 8px}
+.kp-clanlbl{background:#2b447f;color:#fff;font-weight:800;font-family:Arial,sans-serif;padding:6px 12px;border-radius:3px;letter-spacing:.5px;white-space:nowrap}
+.kp-clans{display:flex;flex-wrap:wrap;gap:8px}
+.kp-clan{display:inline-flex;align-items:center;gap:6px;background:#edf2fc;color:#000;border:2px solid #2b447f;border-radius:3px;padding:3px 8px 3px 6px;font-family:Arial,sans-serif;cursor:pointer;user-select:none}
+.kp-clan{color-scheme:light}
+#plan .kp-clan input{all:revert;width:16px;height:16px;margin:0;accent-color:#2b447f;cursor:pointer}
+.kp-clan b{font-size:15px}
+.kp-clan small{font-size:11px;font-weight:700;color:#fff;background:var(--cc);border-radius:9px;padding:1px 6px;min-width:18px;text-align:center}
+.kp-clan button{border:0;background:transparent;color:#2b447f;padding:0 2px;font-size:13px;opacity:.45}
+.kp-clan:hover button,.kp-clan button:focus{opacity:1}
+.kp-colors{display:flex;gap:5px;align-items:center}
+.kp-sw{width:24px;height:24px;border-radius:5px;border:2px solid #0003;padding:0;background:var(--f)}
+.kp-sw:hover{border-color:var(--text)}
+#kpCC.on{background:var(--accent);border-color:var(--accent);color:#111}
+.kp-hint{color:var(--muted);font-size:12px;margin-left:auto}
+@media (max-width:1650px){ .kp-hint{display:none} }
+.kp-warn{font-size:12px;padding:2px 8px;border-radius:10px;border:1px solid var(--line);color:var(--muted);white-space:nowrap;cursor:help}
+.kp-warn[hidden]{display:none}
+.kp-view{flex:1;overflow:auto;padding:14px;-webkit-overflow-scrolling:touch}
+.kp-wrap{--z:1;font-size:calc(16px*var(--z));position:relative;display:block;width:121.5625em;height:101.5625em;margin:0 auto;font-family:Arial,Helvetica,sans-serif}
+.kp-wrap.loading{opacity:.35;pointer-events:none}
+.kp-board{position:relative;display:grid;grid-template-columns:repeat(14,6.25em);grid-auto-rows:6.25em;gap:.9375em;padding:.9375em;background:#d9ead3;color:#000;user-select:none;-webkit-user-select:none}
+.pt{position:relative;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1.5625em 1fr;background:#fff;border:.125em solid #b6b6b6;color:#000;overflow:hidden;cursor:pointer}
+.pt.c-p{background:#f4cccc}.pt.c-y{background:#ffd966}.pt.c-b{background:#9ec3e7}.pt.c-g{background:#b6d7a8}.pt.c-o{background:#f9cb9c}.pt.c-v{background:#d9c2e9}.pt.c-k{background:#cccccc}
+.kp-board .pt.dim{background:#d8d8d8;color:#a5a5a5}
+#plan .pt-g{all:unset;box-sizing:border-box;align-self:center;font:inherit;font-size:.75em;font-weight:700;text-align:left;padding:0 0 0 .35em;line-height:1.3;white-space:nowrap;overflow:hidden;cursor:pointer;min-width:0;color:inherit}
+#plan .pt-g:empty::before{content:"▾";opacity:0;font-weight:400}
+.pt:hover .pt-g:empty::before{opacity:.35}
+#plan .pt-t{all:unset;box-sizing:border-box;align-self:center;line-height:1.3;font:inherit;font-size:.83em;font-weight:700;text-align:right;padding:0 .35em 0 0;width:100%;min-width:0;color:inherit;cursor:text}
+#plan .pt-n{grid-column:1/3;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:700;font-size:1em;line-height:1.12;padding:0 .15em .2em;overflow:hidden;overflow-wrap:anywhere;outline:none;cursor:text;min-height:0;user-select:text;-webkit-user-select:text}
+.pt.sm .pt-n{font-size:.82em}.pt.xs .pt-n{font-size:.68em}
+.pt.sel{outline:.14em solid #1a73e8;outline-offset:-.06em;z-index:2}
+.pt.cur{outline-width:.2em;box-shadow:0 0 0 .22em #1a73e833}
+.pt.hit{box-shadow:0 0 0 .25em #ff6d00;z-index:3}
+.pt.mv{outline:.2em dashed #d81b60;outline-offset:-.06em}
+.pt[data-drop]{outline:.2em dashed #1a73e8;outline-offset:.1em;z-index:4}
+.kp-board.cc .pt[data-clan]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:.4em;background:var(--cc);pointer-events:none}
+.kp-board.cc .pt.dim::after{opacity:.25}
+.kp-red{position:absolute;inset:7.65625em;border:.125em solid #ff0000;pointer-events:none;z-index:1}
+.kp-castle{position:relative;grid-row:5/11;grid-column:5/11;background:#fff;border:.125em solid #bf9000;z-index:2}
+.kp-tur{position:absolute;width:6.25em;height:6.25em;box-sizing:border-box;background:#ffd966;border:.125em solid #bf9000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.15em;margin:-.125em}
+.kp-tur.n{left:0;top:0}.kp-tur.e{right:0;top:0}.kp-tur.w{left:0;bottom:0}.kp-tur.s{right:0;bottom:0}
+.kp-tur b{color:#0000ff;font-size:1.05em}
+#plan .kp-tur input{all:unset;box-sizing:border-box;width:92%;text-align:center;font:inherit;font-weight:700;font-size:.8em;color:#000;border-bottom:.08em dashed #0003;cursor:text}
+.kp-side{position:absolute;display:flex;align-items:center;gap:.5em}
+.kp-side i{flex:1;height:0;border-top:.0625em solid #555}
+.kp-side.top{left:7em;right:7em;top:.1em}
+.kp-side.bottom{left:7em;right:7em;bottom:.1em}
+.kp-side.right,.kp-side.left{top:7em;bottom:7em;flex-direction:column;width:1.9em}
+.kp-side.right{right:.1em}.kp-side.left{left:.1em}
+.kp-side.right i,.kp-side.left i{width:0;height:auto;border-top:0;border-left:.0625em solid #555}
+#plan .kp-side input{all:unset;box-sizing:border-box;font:inherit;font-size:1.1em;color:#000;text-align:center;width:6em;cursor:text}
+#plan .kp-side.right input,#plan .kp-side.left input{writing-mode:vertical-rl;width:1.6em;height:6em}
+#plan .kp-side.right input{transform:rotate(180deg)}
+#plan .kp-side input::placeholder,#plan .kp-tur input::placeholder{color:#0003}
+.kp-keep{position:absolute;inset:9.6em;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.kp-keep svg{width:100%;height:100%}
+.kp-notes{width:17em;margin-top:8.125em;border:.0625em solid #333d4c;background:#f7f7f2;color:#191919;flex:none}
+.kp-notes h4{margin:0;background:#333d4c;color:#fff;text-align:center;font-size:.8em;line-height:1.95;letter-spacing:.05em}
+#plan .kp-notes input{all:unset;box-sizing:border-box;display:block;width:100%;height:1.88em;font:inherit;font-size:.83em;color:#191919;padding:0 .5em;cursor:text}
+#plan .kp-notes input:focus,#plan .kp-side input:focus,#plan .kp-tur input:focus{background:#fff;box-shadow:inset 0 0 0 .12em #1a73e8}
+#plan .pt-t:focus,#plan .pt-n:focus{background:#fff;color:#000;box-shadow:inset 0 0 0 .12em #1a73e8}
+.kp-ghost{position:fixed;left:0;top:0;z-index:700;pointer-events:none;background:#fff;color:#000;border:2px solid #1a73e8;border-radius:6px;padding:6px 10px;font:700 14px Arial,sans-serif;box-shadow:0 8px 24px #0006;white-space:nowrap}
+.kp-menu{z-index:800}
+.kp-menu button.on{border-color:var(--accent);color:var(--accent)}
+/* phone / touch editor */
+.kp-sheet{position:absolute;left:0;right:0;bottom:0;z-index:5;background:var(--panel);border-top:2px solid var(--accent);box-shadow:0 -10px 30px #0008;padding:10px 12px calc(12px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:10px}
+.kp-sheet[hidden]{display:none}
+.kp-sh-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.kp-sh-clans{display:flex;flex-wrap:wrap;gap:6px}
+.kp-sh-clans button{font-weight:800;padding:8px 12px;min-height:38px}
+.kp-sh-clans button.on{background:var(--cc,var(--accent));border-color:var(--cc,var(--accent));color:#fff}
+.kp-sh-row{display:flex;gap:8px}
+#plan .kp-sh-row input{flex:1;min-width:0;font-size:16px;padding:10px}
+#plan #kpShTime{flex:0 0 90px;text-align:center}
+.kp-sh-row button{flex:1;min-height:40px;font-weight:700}
+.kp-sheet .kp-sw{width:34px;height:34px}
+/* font size + bold */
+.kp-fs #kpFsV{min-width:52px;font-weight:800}
+#kpBold{min-width:34px;font-size:16px;padding:4px 8px}
+#kpBold.on{background:var(--accent);border-color:var(--accent);color:#111}
+/* NOTES: one free text block filling the whole rectangle */
+.kp-notes{display:flex;flex-direction:column;height:53.1em;box-sizing:border-box}
+.kp-notes h4{flex:none}
+#plan #kpMemo{all:unset;box-sizing:border-box;display:block;flex:1;min-height:0;width:100%;font-family:Arial,Helvetica,sans-serif;font-size:.83em;line-height:1.45;color:#191919;padding:.5em .6em;white-space:pre-wrap;overflow-wrap:anywhere;overflow:auto;cursor:text}
+#plan #kpMemo:focus{background:#fff;box-shadow:inset 0 0 0 .12em #1a73e8}
+/* PDF: landscape page with the map and the notes only */
+@media print{
+  @page{size:A4 landscape;margin:7mm}
+  html.planning,html.planning body{background:#fff!important;overflow:visible!important;height:auto!important;min-height:0!important}
+  html.planning body>*:not(#plan){display:none!important}
+  html.planning #plan{position:static!important;display:block!important;background:#fff!important;visibility:visible!important}
+  html.planning #plan .kp-bar,html.planning #plan .kp-sheet,html.planning #kpClanAdd,html.planning #plan .kp-clan button{display:none!important}
+  html.planning #plan .kp-view{overflow:visible!important;padding:0!important;background:#fff!important}
+  html.planning #plan .kp-wrap{--z:.44!important;margin:0 auto!important}
+  html.planning #plan .pt{outline:0!important;box-shadow:none!important}
+  html.planning #plan *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  html.planning #plan .pt-g:empty::before,html.planning #plan .pt-g:not(:empty)::after{content:""!important}
+  html.planning #plan .ko-txt{overflow:hidden!important}
+  html.planning #plan .ko-col,html.planning #plan .ko-del,html.planning #plan .ko-rs,html.planning #plan .ko-grip{display:none!important}
+  html.planning #plan .kp-obj{outline:0!important}
+  html.planning #plan .ko-txt:empty::before{content:""!important}
+  html.planning #plan .kp-clan small,html.planning #plan .kp-side input::placeholder{display:none!important;color:transparent!important}
+}
+@media (max-width:699px){
+  .kp-bar{padding:6px 8px;gap:6px}
+  .kp-title,.kp-hint,#kpBack span,.kp-bar>span[style]{display:none}
+  .kp-bar>button{min-height:36px;min-width:38px}
+  #kpDot{order:1}#kpWarn{display:none}#kpLock{order:4}
+  #kpSearch{order:5;flex:1 1 90px;min-width:0;width:auto;font-size:16px;padding:6px 8px}
+  .kp-objs{order:9}.kp-objs span{display:none}#kpUndo{order:6}#kpRedo{order:7}.kp-bar .seg{order:8}#kpPdf{order:4}#kpPdf span{display:none}
+  .kp-bar2{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .kp-bar2::-webkit-scrollbar{display:none}
+  .kp-bar2>*{flex:none}
+  .kp-clans{flex-wrap:nowrap}
+  #kpCC span{display:none}
+  .kp-view{padding:8px}
+  .kp-bar2 .kp-colors,#kpClear{display:none}
+}
+
+/* ---- same look as the spreadsheet: white page, CLAN row on top of the grid, tabs at the bottom ---- */
+.kp-view{background:#fff}
+.kp-col{display:flex;flex-direction:column;flex:none}
+.kp-head{display:grid;grid-template-columns:repeat(14,6.25em);gap:.9375em;padding:0 .9375em;background:#fff;height:2.3em;align-items:stretch}
+.kp-head .kp-clans{display:contents}
+.kp-head .kp-clanlbl{display:flex;align-items:center;justify-content:center;font-size:1.25em;padding:0;border-radius:0;font-weight:800}
+.kp-head .kp-clan{box-sizing:border-box;min-width:0;gap:.35em;padding:0 .3em;border-width:.125em;border-radius:0;border-top:0;overflow:hidden}
+.kp-head .kp-clan b{font-size:1.3em;white-space:nowrap}
+#plan .kp-head .kp-clan input{width:1.05em;height:1.05em;font-size:1em;flex:none}
+.kp-head .kp-clan small{font-size:.62em;padding:.05em .45em;margin-left:auto}
+.kp-head .kp-clan button{font-size:.8em;padding:0}
+#plan .kp-head #kpClanAdd{all:unset;box-sizing:border-box;cursor:pointer;width:2.3em;text-align:center;font-size:1em;color:#2b447f;border:.0625em dashed #2b447f88;opacity:.55}
+#plan .kp-head #kpClanAdd:hover{opacity:1}
+#plan .pt-g:empty::before{opacity:.55;display:inline-block;padding-left:2.2em}
+#plan .pt.c-p .pt-g:empty::before{opacity:0}
+#plan .pt:hover .pt-g:empty::before{opacity:.9}
+#plan .pt-g:not(:empty)::after{content:" ▾";font-weight:400;opacity:.55;font-size:.9em}
+.kp-bottom{display:flex;align-items:center;gap:6px;padding:0 10px;height:38px;flex:none;background:#f9fbfd;border-top:1px solid #dadce0;color-scheme:light}
+#plan .kp-bottom #kpAdd{all:unset;cursor:pointer;font-size:20px;color:#444746;padding:0 10px;line-height:36px}
+.kp-bottom .kp-tabs{max-width:none;flex:1;min-width:0;padding:0;gap:0;align-self:stretch}
+#plan .kp-bottom .kp-tab{all:unset;box-sizing:border-box;cursor:pointer;white-space:nowrap;font:500 14px Arial,sans-serif;color:#444746;padding:0 16px;line-height:38px}
+#plan .kp-bottom .kp-tab:hover{background:#eef1f5}
+#plan .kp-bottom .kp-tab.on{color:#0b57d0;background:#e1e9f7;font-weight:700}
+
+.kp-board{width:max-content;box-sizing:content-box}
+/* whole-city text size / not bold */
+#plan .pt.nb .pt-g,#plan .pt.nb .pt-t,#plan .pt.nb .pt-n{font-weight:400}
+/* objects placed on the map */
+.kp-layer{position:absolute;inset:0;pointer-events:none;z-index:6;color-scheme:light}
+.kp-obj{position:absolute;box-sizing:border-box;--oc:#333d4c}
+.kp-obj.on{outline:.14em dashed #1a73e8;outline-offset:.25em}
+.kp-obj.k-note{pointer-events:auto;display:flex;flex-direction:column;background:#f7f7f2;border:.0625em solid var(--oc);color:#191919;box-shadow:0 .2em .6em #0002}
+.ko-head{flex:none;background:var(--oc);cursor:move;touch-action:none;padding:.15em 2.6em}
+#plan .ko-title{all:unset;box-sizing:border-box;display:block;width:100%;text-align:center;color:#fff;font:700 .8em/1.95 Arial,Helvetica,sans-serif;letter-spacing:.05em;cursor:move}
+#plan .ko-title:focus{cursor:text;background:#ffffff22}
+#plan .ko-title::placeholder{color:#fff}
+#plan .k-note .ko-txt{all:unset;box-sizing:border-box;display:block;flex:1;min-height:0;width:100%;font-family:Arial,Helvetica,sans-serif;font-size:.83em;line-height:1.45;color:#191919;padding:.5em .6em;white-space:pre-wrap;overflow-wrap:anywhere;overflow:auto;cursor:text}
+#plan .k-note .ko-txt:focus{background:#fff;box-shadow:inset 0 0 0 .12em #1a73e8}
+.kp-obj.k-rect,.kp-obj.k-circle{border:.22em solid var(--oc);pointer-events:none}
+.kp-obj.k-circle{border-radius:50%}
+.ko-e{position:absolute;pointer-events:auto;cursor:move;touch-action:none}
+.ko-e.t{left:0;right:0;top:-.6em;height:1em}.ko-e.b{left:0;right:0;bottom:-.6em;height:1em}
+.ko-e.l{top:0;bottom:0;left:-.6em;width:1em}.ko-e.r{top:0;bottom:0;right:-.6em;width:1em}
+.k-circle .ko-e.t{left:25%;right:25%}.k-circle .ko-e.b{left:25%;right:25%}.k-circle .ko-e.l{top:25%;bottom:25%}.k-circle .ko-e.r{top:25%;bottom:25%}
+#plan .kp-obj:not(.k-note) .ko-txt{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);max-width:88%;max-height:88%;min-width:2em;min-height:1.2em;overflow:hidden;pointer-events:auto;
+  font-family:Arial,Helvetica,sans-serif;font-size:1em;font-weight:700;line-height:1.2;text-align:center;color:var(--oc);white-space:pre-wrap;overflow-wrap:anywhere;outline:none;cursor:text;padding:.1em .3em;border-radius:.2em}
+#plan .kp-obj:not(.k-note) .ko-txt:focus{background:#ffffffcc;box-shadow:0 0 0 .1em #1a73e8}
+.kp-obj:not(.k-note) .ko-txt:empty::before{content:attr(data-ph);opacity:0}
+.kp-obj.on:not(.k-note) .ko-txt:empty::before,.kp-obj:hover:not(.k-note) .ko-txt:empty::before{opacity:.45}
+.ko-grip,.ko-del,.ko-col,.ko-rs{position:absolute;pointer-events:auto;opacity:0;transition:opacity .12s;z-index:2}
+.kp-obj:hover .ko-grip,.kp-obj:hover .ko-del,.kp-obj:hover .ko-col,.kp-obj:hover .ko-rs,.kp-obj.on .ko-grip,.kp-obj.on .ko-del,.kp-obj.on .ko-col,.kp-obj.on .ko-rs{opacity:1}
+.ko-grip{left:-.2em;top:-1.9em;font-size:1em;line-height:1.5em;width:1.5em;text-align:center;background:#1a73e8;color:#fff;border-radius:.3em;cursor:move;touch-action:none}
+#plan .ko-del,#plan .ko-col{all:unset;position:absolute;pointer-events:auto;cursor:pointer;width:1.5em;height:1.5em;line-height:1.5em;text-align:center;border-radius:50%;font:700 .85em/1.5em Arial,sans-serif;opacity:0;z-index:2}
+#plan .ko-del{background:#d32f2f;color:#fff}
+#plan .ko-col{background:#fff;color:var(--oc);box-shadow:0 0 0 .08em #0004;font-size:1em}
+#plan .k-note .ko-del{right:.3em;top:.25em}#plan .k-note .ko-col{left:.3em;top:.25em}
+#plan .kp-obj:not(.k-note) .ko-del{right:-.2em;top:-1.9em}#plan .kp-obj:not(.k-note) .ko-col{left:1.6em;top:-1.9em}
+#plan .kp-obj:hover .ko-del,#plan .kp-obj:hover .ko-col,#plan .kp-obj.on .ko-del,#plan .kp-obj.on .ko-col{opacity:1}
+.ko-rs{right:-.5em;bottom:-.5em;width:1.1em;height:1.1em;background:#fff;border:.15em solid #1a73e8;border-radius:.2em;cursor:nwse-resize;touch-action:none;box-sizing:border-box}
+@media (pointer:coarse){ .kp-obj.on .ko-rs{width:1.8em;height:1.8em;right:-.9em;bottom:-.9em} }
+
+/* map tabs at the bottom, like Google Sheets */
+.kp-bottom{display:flex;align-items:stretch;gap:2px;padding:0 6px;height:40px;flex:none;background:#f9fbfd;border-top:1px solid #dadce0;color-scheme:light;padding-bottom:env(safe-area-inset-bottom)}
+#plan .kp-bottom #kpAdd{all:unset;cursor:pointer;font-size:22px;color:#444746;padding:0 12px;display:flex;align-items:center;border-radius:6px}
+#plan .kp-bottom #kpAdd:hover{background:#eef1f5}
+.kp-bottom .kp-tabs{flex:1;min-width:0;padding:0;gap:2px;align-items:stretch;overflow-x:auto;overflow-y:hidden}
+#plan .kp-bottom .kp-tab{all:unset;box-sizing:border-box;cursor:pointer;white-space:nowrap;font:500 14px Arial,sans-serif;color:#444746;padding:0 16px;display:flex;align-items:center;user-select:none;-webkit-user-select:none}
+#plan .kp-bottom .kp-tab:hover{background:#eef1f5}
+#plan .kp-bottom .kp-tab.on{color:#0b57d0;background:#e1e9f7;font-weight:700;border-top:2px solid #0b57d0}
+@media print{ html.planning #plan .kp-bottom{display:none!important} }
+
+/* players panel */
+.kp-mid{flex:1;display:flex;min-height:0;position:relative}
+.kp-mid .kp-view{flex:1;min-width:0}
+.kp-panel{width:290px;flex:none;display:flex;flex-direction:column;background:var(--panel);border-left:1px solid var(--line);min-height:0}
+.kp-panel[hidden]{display:none}
+.kp-pn-head{display:flex;align-items:center;gap:6px;padding:8px 10px;border-bottom:1px solid var(--line)}
+.kp-pn-head b{flex:1;white-space:nowrap;font-size:14px}
+.kp-pn-head button{padding:4px 8px;font-size:12px}
+.kp-pn-body{flex:1;overflow:auto;padding:4px 10px 14px}
+.kp-pn-body h5{margin:12px 0 4px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.kp-pl{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;text-align:left;padding:4px 8px;margin:2px 0;border-radius:6px;border:1px solid transparent;border-left:4px solid var(--cc,var(--line));background:transparent;font-size:13px}
+.kp-pl:hover{border-color:var(--line);background:var(--bg)}
+.kp-pl span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}
+.kp-pl small{color:var(--muted);white-space:nowrap}
+.kp-pl.dup{background:#ff6d0022;border-color:#ff6d00}
+.kp-pl.dup span{color:#ff6d00}
+.kp-chips{display:flex;flex-wrap:wrap;gap:5px}
+.kp-chips button{padding:3px 9px;font-size:12px;font-weight:700;border-radius:12px}
+.kp-pn-empty{margin:4px 0;color:var(--muted);font-size:12px}
+#plan #kpRoster{width:100%;box-sizing:border-box;min-height:150px;font-size:13px;resize:vertical}
+#plan #kpTxtOut{width:100%;box-sizing:border-box;min-height:120px;font-size:12px;margin-top:8px}
+#kpPl.on{background:var(--accent);border-color:var(--accent);color:#111}
+@media (max-width:699px){ .kp-panel{position:absolute;inset:0;width:auto;z-index:6;border-left:0} #kpPl span{display:none} #kpPl{order:5} }
+/* duplicates */
+.kp-board .pt.dup{box-shadow:inset 0 0 0 .22em #ff6d00}
+.kp-board .pt.dup .pt-n{color:#d84315}
+.kp-board .pt.flash{animation:kpflash 1.2s ease-out}
+@keyframes kpflash{0%,40%{box-shadow:0 0 0 .5em #1a73e8}100%{box-shadow:0 0 0 0 #1a73e800}}
+/* locked map */
+.kp-ropill{font-size:12px;font-weight:800;padding:2px 9px;border-radius:10px;background:#d32f2f;color:#fff;white-space:nowrap}
+.kp-ropill[hidden]{display:none}
+#plan.kp-ro .kp-fs,#plan.kp-ro #kpBold,#plan.kp-ro .kp-colors,#plan.kp-ro #kpClear,#plan.kp-ro #kpClanAdd,#plan.kp-ro .kp-clan button,#plan.kp-ro .kp-objs,#plan.kp-ro #kpUndo,#plan.kp-ro #kpRedo{opacity:.35;pointer-events:none}
+#plan.kp-ro .pt,#plan.kp-ro .pt-t,#plan.kp-ro .pt-n,#plan.kp-ro .pt-g{cursor:default}
+#plan.kp-ro .kp-board input,#plan.kp-ro .kp-layer input,#plan.kp-ro .kp-layer textarea,#plan.kp-ro .kp-layer .ko-txt{pointer-events:none}
+#plan.kp-ro .ko-del,#plan.kp-ro .ko-col,#plan.kp-ro .ko-rs,#plan.kp-ro .ko-grip,#plan.kp-ro .ko-e{display:none!important}
+#plan.kp-ro .ko-head{cursor:default}
 </style>
 <script>
 /* decide before first paint whether the casino door is shown (avoids a flash of the app) */
@@ -319,9 +565,60 @@ html.locked #gate{display:flex}
   <div class="ss-box">
     <h2>🎲 <span data-i="sessTitle"></span></h2>
     <div class="ss-sub" data-i="sessSub"></div>
+    <button type="button" class="ss-plan" id="ssPlan">🗺️ <span data-i="kpTitle"></span> <small>🔒</small></button>
     <div class="ss-mode" id="ssMode"></div>
     <form id="ssNew" autocomplete="off"><input id="ssName" maxlength="40" enterkeyhint="go"><button type="submit" data-i="sessCreate"></button></form>
     <div class="ss-list" id="ssList"></div>
+  </div>
+</div>
+<div id="plan" aria-label="KvK plan">
+  <div class="kp-bar">
+    <button type="button" id="kpBack">⇦ <span data-i="sessions"></span></button>
+    <b class="kp-title">🗺️ <span data-i="kpTitle"></span></b>
+    <span class="cdot2" id="kpDot"></span>
+    <span class="kp-warn" id="kpWarn" hidden></span>
+    <span class="kp-ropill" id="kpRo" hidden></span>
+    <span style="flex:1"></span>
+    <div class="seg kp-objs"><button type="button" id="kpAddNote">🗒️ <span data-i="kpNoteBtn"></span></button><button type="button" id="kpAddRect">▭</button><button type="button" id="kpAddCirc">◯</button></div>
+    <button type="button" id="kpPl">👥 <span data-i="kpPlayers"></span></button>
+    <input id="kpSearch" type="search" autocomplete="off" spellcheck="false">
+    <button type="button" id="kpUndo">↶</button>
+    <button type="button" id="kpRedo">↷</button>
+    <div class="seg"><button type="button" id="kpZoomOut">−</button><button type="button" id="kpZoomFit">100%</button><button type="button" id="kpZoomIn">+</button></div>
+    <button type="button" id="kpPdf">📄 <span>PDF</span></button>
+    <button type="button" id="kpLock">🔒</button>
+  </div>
+  <div class="kp-bar kp-bar2">
+    <span class="kp-clanlbl">CLAN ▸</span>
+    <div class="kp-clans" id="kpClans"></div>
+    <button type="button" id="kpClanAdd">＋</button>
+    <span class="sep"></span>
+    <div class="seg kp-fs"><button type="button" id="kpFsDn">−</button><button type="button" id="kpFsV">Auto</button><button type="button" id="kpFsUp">+</button></div>
+    <button type="button" id="kpBold"><b>B</b></button>
+    <div class="kp-colors" id="kpColors"></div>
+    <button type="button" id="kpClear">⌫ <span data-i="kpClear"></span></button>
+    <button type="button" id="kpCC">🎨 <span data-i="kpCC"></span></button>
+    <span class="kp-hint" data-i="kpHint"></span>
+  </div>
+  <div class="kp-mid">
+  <div class="kp-view" id="kpView"><div class="kp-wrap loading" id="kpWrap"><div class="kp-board" id="kpBoard"></div><div class="kp-layer" id="kpLayer"></div></div></div>
+  <aside class="kp-panel" id="kpPanel" hidden>
+    <div class="kp-pn-head"><b>👥 <span data-i="kpPlayers"></span> <span id="kpPnCount"></span></b><button type="button" id="kpCopyTxt">📋 <span data-i="kpCopyTxt"></span></button><button type="button" id="kpPnClose">✕</button></div>
+    <div class="kp-pn-body">
+      <textarea id="kpTxtOut" readonly hidden></textarea>
+      <div id="kpPnList"></div>
+      <h5 data-i="kpUnplaced"></h5><div id="kpPnMissing" class="kp-chips"></div>
+      <h5 data-i="kpRoster"></h5><textarea id="kpRoster" spellcheck="false" autocomplete="off" maxlength="6000"></textarea>
+    </div>
+  </aside>
+  </div>
+  <div class="kp-bottom"><button type="button" id="kpAdd">＋</button><div class="kp-tabs" id="kpTabs"></div></div>
+  <div class="kp-sheet" id="kpSheet" hidden>
+    <div class="kp-sh-head"><b id="kpShTitle"></b><button type="button" id="kpShClose">✕</button></div>
+    <div class="kp-sh-clans" id="kpShClans"></div>
+    <div class="kp-sh-row"><input id="kpShName" maxlength="40" enterkeyhint="done" autocomplete="off" spellcheck="false"><input id="kpShTime" maxlength="8" enterkeyhint="done" autocomplete="off"></div>
+    <div class="kp-colors" id="kpShColors"></div>
+    <div class="kp-sh-row"><button type="button" id="kpShMove">↔ <span data-i="kpMove"></span></button><button type="button" id="kpShClear">⌫ <span data-i="kpClear"></span></button></div>
   </div>
 </div>
 <div id="gate" role="dialog" aria-modal="true" aria-label="Rally Sync">
@@ -389,7 +686,7 @@ html.locked #gate{display:flex}
 "use strict";
 /* ---------- i18n ---------- */
 const I18N = {
-  en:{sessTitle:"SESSIONS",sessSub:"Pick a table or open a new one",sessNamePh:"Session name (e.g. Castle 11/07)",sessCreate:"Create",sessEmpty:"No session yet — create the first one above",sessDel:"Delete this session for everyone?",sessRen:"Session name:",sessGone:"This session was deleted",sessNotFound:"Session not found",linkCopied:"Link copied — share it with your team",modeOnline:"☁️ Online — every change is shared live with everyone in the same session",modeLocal:"💾 Local only — sessions are saved on this device. Online sharing is not set up yet.",modeFail:"⚠️ The online database could not be reached — working on this device only",offline:"Offline — your changes will be sent when the connection is back",sessUpdated:"updated",sessOnlineN:"online",sessions:"Sessions",stopAllTxt:"Stop all",volBeep:"Countdown volume",volFx:"Casino animation volume",gSub:"Enter the password, then pull the lever",gSpin:"SPIN",gLose:"No luck — try again",gWin:"JACKPOT!",gHint:"Press Enter, tap SPIN or pull the lever to play",gPass:"Password",gEmpty:"Enter the password first",lock:"Lock (casino door)",about:"Unofficial fan-made tool, not affiliated with or endorsed by Kingshot or its publisher. No account and no tracking. With online sharing on, sessions are stored in the alliance’s own free Firebase database; your personal settings stay in this browser.",alliance:"Alliance",color:"Block color",planAll:"Schedule (UTC)",plan:"Schedule this team at a UTC time",planPrompt:"First launch at (UTC) — e.g. 21:30 or 21:30:15",planAllPrompt:"All teams land together. First launch at (UTC) — e.g. 21:30",badClock:"Invalid time — e.g. 21:30 or 21:30:15",startAt:"start",landAt:"land",resizeTip:"Drag to resize · double-click = default size",align:"Align",deleted:"Team deleted",march:"March",subtitle:"castle rally launch coordinator",goAll:"▶ GO ALL",stopAll:"■ Stop all",addTeam:"+ Team",undo:"Undo",team:"Team",bench:"Bench",
+  en:{kpPlayers:"Players",kpCopyTxt:"Copy as text",kpCopied:"Plan copied, ready to paste",kpCopyFail:"Copy blocked: select the text in the panel and copy it",kpUnplaced:"Not placed yet",kpRoster:"Alliance members (one per line)",kpRosterPh:"Paste the alliance member list here, one name per line",kpPickEmpty:"First click an empty city on the map, then the name",kpAllPlaced:"Everyone is placed 👍",kpNoClan:"No clan",kpDupT:"is placed twice",kpHist:"History",kpHistNone:"No saved version yet (a copy is kept automatically before changes)",kpRestoreQ:"Go back to this version? The current version is saved first.",kpRestored:"Version restored",kpPlayersCount:"players",kpLockMap:"Lock the map",kpUnlockMap:"Unlock the map",kpLocked:"This map is locked: unlock it from its tab menu to change it",kpLockedPill:"Locked",kpPdfDone:"PDF downloaded",kpPdfFrame:"Nothing downloaded? Open the site directly in your browser.",kpNoteBtn:"Note",kpAddNote:"Add a note block",kpAddRect:"Add a rectangle",kpAddCirc:"Add a circle",kpText:"Text",kpPdfT:"Download the map as a PDF",kpBoldT:"Bold (Ctrl+B)",kpSize:"Font size",kpTitle:"KvK PLAN",kpCode:"Enter the plan code:",kpWrong:"Wrong code",kpClear:"Clear",kpCC:"Clan colours",kpHint:"Click = edit · drag = move a city · Shift+click = multi-select · Del = clear · Ctrl+Z = undo",kpNotes:"NOTES",kpSearch:"Find a player",kpName:"Player name",kpNew:"New plan",kpLock:"Lock the plan",kpClanAdd:"New clan name:",kpClanRen:"Clan name (leave empty to remove it):",kpClanDup:"This clan already exists",kpClanMax:"8 clans maximum",kpFit:"Fit to screen",kpDir_n:"North",kpDir_e:"East",kpDir_s:"South",kpDir_w:"West",kpLocal:"Online sharing is not active for the plan yet: changes stay on this device only.",kpSelFirst:"Select a tile first",kpNone:"none",kpPlanName:"Plan name:",kpDup:"Duplicate",kpDupCur:"Duplicate this plan",kpDel:"Delete this plan for everyone?",kpTpl:"New plan (template)",kpMove:"Move / swap",kpMoveHint:"Now tap the destination tile",sessTitle:"SESSIONS",sessSub:"Pick a table or open a new one",sessNamePh:"Session name (e.g. Castle 11/07)",sessCreate:"Create",sessEmpty:"No session yet — create the first one above",sessDel:"Delete this session for everyone?",sessRen:"Session name:",sessGone:"This session was deleted",sessNotFound:"Session not found",linkCopied:"Link copied — share it with your team",modeOnline:"☁️ Online — every change is shared live with everyone in the same session",modeLocal:"💾 Local only — sessions are saved on this device. Online sharing is not set up yet.",modeFail:"⚠️ The online database could not be reached — working on this device only",offline:"Offline — your changes will be sent when the connection is back",sessUpdated:"updated",sessOnlineN:"online",sessions:"Sessions",stopAllTxt:"Stop all",volBeep:"Countdown volume",volFx:"Casino animation volume",gSub:"Enter the password, then pull the lever",gSpin:"SPIN",gLose:"No luck — try again",gWin:"JACKPOT!",gHint:"Press Enter, tap SPIN or pull the lever to play",gPass:"Password",gEmpty:"Enter the password first",lock:"Lock (casino door)",about:"Unofficial fan-made tool, not affiliated with or endorsed by Kingshot or its publisher. No account and no tracking. With online sharing on, sessions are stored in the alliance’s own free Firebase database; your personal settings stay in this browser.",alliance:"Alliance",color:"Block color",planAll:"Schedule (UTC)",plan:"Schedule this team at a UTC time",planPrompt:"First launch at (UTC) — e.g. 21:30 or 21:30:15",planAllPrompt:"All teams land together. First launch at (UTC) — e.g. 21:30",badClock:"Invalid time — e.g. 21:30 or 21:30:15",startAt:"start",landAt:"land",resizeTip:"Drag to resize · double-click = default size",align:"Align",deleted:"Team deleted",march:"March",subtitle:"castle rally launch coordinator",goAll:"▶ GO ALL",stopAll:"■ Stop all",addTeam:"+ Team",undo:"Undo",team:"Team",bench:"Bench",
     rally:"Rally",go:"▶ GO",stop:"■",launch:"LAUNCH!",firstIn:"1st launch in",landsIn:"Lands in",landed:"LANDED",
     empty:"Drop players here",moveTo:"Move to",copy:"Copy launch order for chat",copied:"Copied!",settings:"Settings",
     lead:"Countdown before 1st launch (s)",sound:"Sound",export:"Export JSON",import:"Import JSON",reset:"Reset everything",
@@ -397,7 +694,7 @@ const I18N = {
     del:"Delete",addPh:"Name 1m46, Name 54s…",badTime:"Invalid time — use 54s, 1m46 or 1:46",first:"starts first",
     hint:"Drag a block by its header to place it anywhere, ⊞ Align to tidy up · Drag ⠿ to move players · hover a player + 1–9 = move to team, B = bench · Ctrl+Z = undo · double-click a name to rename · resize a block from its bottom-right corner",
     renamePrompt:"New name:",imported:"Imported!",players:"players",rallyCustom:"Rally time (e.g. 2m30):",sync:"Synced landing"},
-  fr:{sessTitle:"SESSIONS",sessSub:"Choisis une table ou ouvre-en une nouvelle",sessNamePh:"Nom de la session (ex. Castle 11/07)",sessCreate:"Créer",sessEmpty:"Aucune session pour l'instant — crée la première ci-dessus",sessDel:"Supprimer cette session pour tout le monde ?",sessRen:"Nom de la session :",sessGone:"Cette session a été supprimée",sessNotFound:"Session introuvable",linkCopied:"Lien copié — partage-le à ton équipe",modeOnline:"☁️ En ligne — chaque modification est partagée en direct avec tous ceux qui sont dans la même session",modeLocal:"💾 Local uniquement — les sessions sont enregistrées sur cet appareil. Le partage en ligne n'est pas encore configuré.",modeFail:"⚠️ Impossible de joindre la base en ligne — tu travailles uniquement sur cet appareil",offline:"Hors ligne — tes modifications seront envoyées au retour de la connexion",sessUpdated:"modifiée",sessOnlineN:"en ligne",sessions:"Sessions",stopAllTxt:"Tout arrêter",volBeep:"Volume des bips du décompte",volFx:"Volume des animations casino",gSub:"Entre le mot de passe, puis tire le levier",gSpin:"JOUER",gLose:"Perdu — retente ta chance",gWin:"JACKPOT !",gHint:"Appuie sur Entrée, sur JOUER ou tire le levier pour jouer",gPass:"Mot de passe",gEmpty:"Entre d'abord le mot de passe",lock:"Verrouiller (porte du casino)",about:"Outil non officiel fait par des fans, sans lien avec Kingshot ni son éditeur. Pas de compte, pas de suivi. Avec le partage en ligne, les sessions sont stockées dans la base Firebase gratuite de l’alliance ; tes réglages personnels restent dans ce navigateur.",alliance:"Alliance",color:"Couleur du bloc",planAll:"Planifier (UTC)",plan:"Planifier cette équipe à une heure UTC",planPrompt:"1er lancement à (UTC) — ex. 21:30 ou 21:30:15",planAllPrompt:"Toutes les équipes arrivent ensemble. 1er lancement à (UTC) — ex. 21:30",badClock:"Heure invalide — ex. 21:30 ou 21:30:15",startAt:"départ",landAt:"arrivée",resizeTip:"Glisse pour redimensionner · double-clic = taille par défaut",align:"Aligner",deleted:"Équipe supprimée",march:"marche",subtitle:"coordination des rallyes château",goAll:"▶ GO TOUS",stopAll:"■ Tout arrêter",addTeam:"+ Équipe",undo:"Annuler",team:"Équipe",bench:"Réserve",
+  fr:{kpPlayers:"Joueurs",kpCopyTxt:"Copier en texte",kpCopied:"Plan copié, prêt à coller",kpCopyFail:"Copie bloquée : sélectionne le texte dans le panneau et copie-le",kpUnplaced:"Pas encore placés",kpRoster:"Membres de l'alliance (un par ligne)",kpRosterPh:"Colle ici la liste des membres de l'alliance, un nom par ligne",kpPickEmpty:"Clique d'abord sur une case vide de la carte, puis sur le nom",kpAllPlaced:"Tout le monde est placé 👍",kpNoClan:"Sans clan",kpDupT:"est placé deux fois",kpHist:"Historique",kpHistNone:"Aucune version enregistrée pour l'instant (une copie est gardée automatiquement avant les modifications)",kpRestoreQ:"Revenir à cette version ? La version actuelle est sauvegardée avant.",kpRestored:"Version restaurée",kpPlayersCount:"joueurs",kpLockMap:"Verrouiller la carte",kpUnlockMap:"Déverrouiller la carte",kpLocked:"Cette carte est verrouillée : déverrouille-la depuis le menu de son onglet pour la modifier",kpLockedPill:"Verrouillée",kpPdfDone:"PDF téléchargé",kpPdfFrame:"Rien n'a été téléchargé ? Ouvre le site directement dans ton navigateur.",kpNoteBtn:"Note",kpAddNote:"Ajouter un bloc de notes",kpAddRect:"Ajouter un rectangle",kpAddCirc:"Ajouter un cercle",kpText:"Texte",kpPdfT:"Télécharger la carte en PDF (paysage)",kpBoldT:"Gras (Ctrl+B)",kpSize:"Taille de police",kpTitle:"PLAN KVK",kpCode:"Entre le code du plan :",kpWrong:"Code incorrect",kpClear:"Vider",kpCC:"Couleurs des clans",kpHint:"Clic = modifier · glisser = déplacer une ville · Maj+clic = sélection multiple · Suppr = vider · Ctrl+Z = annuler",kpNotes:"NOTES",kpSearch:"Chercher un joueur",kpName:"Nom du joueur",kpNew:"Nouveau plan",kpLock:"Verrouiller le plan",kpClanAdd:"Nom du nouveau clan :",kpClanRen:"Nom du clan (laisse vide pour le retirer) :",kpClanDup:"Ce clan existe déjà",kpClanMax:"8 clans maximum",kpFit:"Ajuster à l'écran",kpDir_n:"Nord",kpDir_e:"Est",kpDir_s:"Sud",kpDir_w:"Ouest",kpLocal:"Le partage en ligne n'est pas encore actif pour le plan : les modifications restent sur cet appareil.",kpSelFirst:"Sélectionne d'abord une case",kpNone:"aucun",kpPlanName:"Nom du plan :",kpDup:"Dupliquer",kpDupCur:"Dupliquer ce plan",kpDel:"Supprimer ce plan pour tout le monde ?",kpTpl:"Nouveau plan (modèle)",kpMove:"Déplacer / échanger",kpMoveHint:"Touche maintenant la case de destination",sessTitle:"SESSIONS",sessSub:"Choisis une table ou ouvre-en une nouvelle",sessNamePh:"Nom de la session (ex. Castle 11/07)",sessCreate:"Créer",sessEmpty:"Aucune session pour l'instant — crée la première ci-dessus",sessDel:"Supprimer cette session pour tout le monde ?",sessRen:"Nom de la session :",sessGone:"Cette session a été supprimée",sessNotFound:"Session introuvable",linkCopied:"Lien copié — partage-le à ton équipe",modeOnline:"☁️ En ligne — chaque modification est partagée en direct avec tous ceux qui sont dans la même session",modeLocal:"💾 Local uniquement — les sessions sont enregistrées sur cet appareil. Le partage en ligne n'est pas encore configuré.",modeFail:"⚠️ Impossible de joindre la base en ligne — tu travailles uniquement sur cet appareil",offline:"Hors ligne — tes modifications seront envoyées au retour de la connexion",sessUpdated:"modifiée",sessOnlineN:"en ligne",sessions:"Sessions",stopAllTxt:"Tout arrêter",volBeep:"Volume des bips du décompte",volFx:"Volume des animations casino",gSub:"Entre le mot de passe, puis tire le levier",gSpin:"JOUER",gLose:"Perdu — retente ta chance",gWin:"JACKPOT !",gHint:"Appuie sur Entrée, sur JOUER ou tire le levier pour jouer",gPass:"Mot de passe",gEmpty:"Entre d'abord le mot de passe",lock:"Verrouiller (porte du casino)",about:"Outil non officiel fait par des fans, sans lien avec Kingshot ni son éditeur. Pas de compte, pas de suivi. Avec le partage en ligne, les sessions sont stockées dans la base Firebase gratuite de l’alliance ; tes réglages personnels restent dans ce navigateur.",alliance:"Alliance",color:"Couleur du bloc",planAll:"Planifier (UTC)",plan:"Planifier cette équipe à une heure UTC",planPrompt:"1er lancement à (UTC) — ex. 21:30 ou 21:30:15",planAllPrompt:"Toutes les équipes arrivent ensemble. 1er lancement à (UTC) — ex. 21:30",badClock:"Heure invalide — ex. 21:30 ou 21:30:15",startAt:"départ",landAt:"arrivée",resizeTip:"Glisse pour redimensionner · double-clic = taille par défaut",align:"Aligner",deleted:"Équipe supprimée",march:"marche",subtitle:"coordination des rallyes château",goAll:"▶ GO TOUS",stopAll:"■ Tout arrêter",addTeam:"+ Équipe",undo:"Annuler",team:"Équipe",bench:"Réserve",
     rally:"Rallye",go:"▶ GO",stop:"■",launch:"LANCE !",firstIn:"1er lancement dans",landsIn:"Arrivée dans",landed:"ARRIVÉ",
     empty:"Dépose des joueurs ici",moveTo:"Déplacer vers",copy:"Copier l'ordre de lancement",copied:"Copié !",settings:"Paramètres",
     lead:"Compte à rebours avant le 1er lancement (s)",sound:"Son",export:"Exporter JSON",import:"Importer JSON",reset:"Tout réinitialiser",
@@ -405,7 +702,7 @@ const I18N = {
     del:"Supprimer",addPh:"Nom 1m46, Nom 54s…",badTime:"Temps invalide — utilise 54s, 1m46 ou 1:46",first:"lance en 1er",
     hint:"Attrape un bloc par son en-tête pour le placer où tu veux, ⊞ Aligner pour ranger · Glisse ⠿ pour déplacer · survole un joueur + 1–9 = vers l'équipe, B = réserve · Ctrl+Z = annuler · double-clic sur un nom pour le renommer · redimensionne un bloc par son coin en bas à droite",
     renamePrompt:"Nouveau nom :",imported:"Importé !",players:"joueurs",rallyCustom:"Durée du rallye (ex. 2m30) :",sync:"Arrivée synchronisée"},
-  ko:{sessTitle:"세션",sessSub:"테이블을 고르거나 새로 여세요",sessNamePh:"세션 이름 (예: Castle 11/07)",sessCreate:"만들기",sessEmpty:"아직 세션이 없습니다 — 위에서 첫 세션을 만드세요",sessDel:"모든 사람에게서 이 세션을 삭제할까요?",sessRen:"세션 이름:",sessGone:"이 세션은 삭제되었습니다",sessNotFound:"세션을 찾을 수 없습니다",linkCopied:"링크 복사됨 — 팀과 공유하세요",modeOnline:"☁️ 온라인 — 같은 세션의 모든 사람과 변경 사항이 실시간 공유됩니다",modeLocal:"💾 로컬 전용 — 세션이 이 기기에 저장됩니다. 온라인 공유가 아직 설정되지 않았습니다.",modeFail:"⚠️ 온라인 데이터베이스에 연결할 수 없습니다 — 이 기기에서만 작업합니다",offline:"오프라인 — 연결되면 변경 사항이 전송됩니다",sessUpdated:"수정",sessOnlineN:"접속 중",sessions:"세션",stopAllTxt:"전체 정지",volBeep:"카운트다운 음량",volFx:"카지노 애니메이션 음량",gSub:"비밀번호를 입력하고 레버를 당기세요",gSpin:"스핀",gLose:"꽝 — 다시 도전하세요",gWin:"잭팟!",gHint:"Enter를 누르거나 스핀을 누르거나 레버를 당기세요",gPass:"비밀번호",gEmpty:"먼저 비밀번호를 입력하세요",lock:"잠금 (카지노 문)",about:"팬이 만든 비공식 도구이며 Kingshot 또는 퍼블리셔와 관련이 없습니다. 계정과 추적이 없습니다. 온라인 공유를 켜면 세션은 연맹의 무료 Firebase 데이터베이스에 저장되며, 개인 설정은 이 브라우저에 남습니다.",alliance:"연맹",color:"블록 색상",planAll:"예약 (UTC)",plan:"이 팀을 UTC 시간에 예약",planPrompt:"첫 출발 시간 (UTC) — 예: 21:30 또는 21:30:15",planAllPrompt:"모든 팀 동시 도착. 첫 출발 시간 (UTC) — 예: 21:30",badClock:"잘못된 시간 — 예: 21:30 또는 21:30:15",startAt:"출발",landAt:"도착",resizeTip:"드래그로 크기 조절 · 더블클릭 = 기본 크기",align:"정렬",deleted:"팀 삭제됨",march:"행군",subtitle:"성 집결 출발 조정기",goAll:"▶ 전체 출발",stopAll:"■ 전체 정지",addTeam:"+ 팀",undo:"실행 취소",team:"팀",bench:"대기",
+  ko:{kpPlayers:"플레이어",kpCopyTxt:"텍스트로 복사",kpCopied:"계획이 복사되었습니다",kpCopyFail:"복사가 차단됨: 패널의 텍스트를 선택해 복사하세요",kpUnplaced:"아직 배치되지 않음",kpRoster:"연맹원 (한 줄에 한 명)",kpRosterPh:"연맹원 목록을 여기에 붙여넣으세요 (한 줄에 한 명)",kpPickEmpty:"먼저 지도에서 빈 칸을 클릭한 다음 이름을 클릭하세요",kpAllPlaced:"모두 배치됨 👍",kpNoClan:"클랜 없음",kpDupT:"이(가) 두 번 배치됨",kpHist:"기록",kpHistNone:"저장된 버전이 아직 없습니다 (변경 전에 자동으로 저장됨)",kpRestoreQ:"이 버전으로 되돌릴까요? 현재 버전은 먼저 저장됩니다.",kpRestored:"버전이 복원됨",kpPlayersCount:"명",kpLockMap:"지도 잠금",kpUnlockMap:"지도 잠금 해제",kpLocked:"이 지도는 잠겨 있습니다: 탭 메뉴에서 잠금을 해제하세요",kpLockedPill:"잠김",kpPdfDone:"PDF 다운로드됨",kpPdfFrame:"다운로드되지 않았나요? 브라우저에서 사이트를 직접 여세요.",kpNoteBtn:"메모",kpAddNote:"메모 상자 추가",kpAddRect:"사각형 추가",kpAddCirc:"원 추가",kpText:"텍스트",kpPdfT:"지도를 PDF로 다운로드 (가로)",kpBoldT:"굵게 (Ctrl+B)",kpSize:"글꼴 크기",kpTitle:"KvK 플랜",kpCode:"플랜 코드를 입력하세요:",kpWrong:"잘못된 코드",kpClear:"비우기",kpCC:"연맹 색상",kpHint:"클릭 = 편집 · 드래그 = 도시 이동 · Shift+클릭 = 다중 선택 · Del = 비우기 · Ctrl+Z = 실행 취소",kpNotes:"메모",kpSearch:"플레이어 찾기",kpName:"플레이어 이름",kpNew:"새 플랜",kpLock:"플랜 잠금",kpClanAdd:"새 연맹 이름:",kpClanRen:"연맹 이름 (비우면 삭제):",kpClanDup:"이미 있는 연맹입니다",kpClanMax:"연맹은 최대 8개",kpFit:"화면에 맞춤",kpDir_n:"북",kpDir_e:"동",kpDir_s:"남",kpDir_w:"서",kpLocal:"플랜의 온라인 공유가 아직 활성화되지 않았습니다: 변경 사항은 이 기기에만 저장됩니다.",kpSelFirst:"먼저 칸을 선택하세요",kpNone:"없음",kpPlanName:"플랜 이름:",kpDup:"복제",kpDupCur:"이 플랜 복제",kpDel:"모든 사람에게서 이 플랜을 삭제할까요?",kpTpl:"새 플랜 (템플릿)",kpMove:"이동 / 교환",kpMoveHint:"이제 목적지 칸을 누르세요",sessTitle:"세션",sessSub:"테이블을 고르거나 새로 여세요",sessNamePh:"세션 이름 (예: Castle 11/07)",sessCreate:"만들기",sessEmpty:"아직 세션이 없습니다 — 위에서 첫 세션을 만드세요",sessDel:"모든 사람에게서 이 세션을 삭제할까요?",sessRen:"세션 이름:",sessGone:"이 세션은 삭제되었습니다",sessNotFound:"세션을 찾을 수 없습니다",linkCopied:"링크 복사됨 — 팀과 공유하세요",modeOnline:"☁️ 온라인 — 같은 세션의 모든 사람과 변경 사항이 실시간 공유됩니다",modeLocal:"💾 로컬 전용 — 세션이 이 기기에 저장됩니다. 온라인 공유가 아직 설정되지 않았습니다.",modeFail:"⚠️ 온라인 데이터베이스에 연결할 수 없습니다 — 이 기기에서만 작업합니다",offline:"오프라인 — 연결되면 변경 사항이 전송됩니다",sessUpdated:"수정",sessOnlineN:"접속 중",sessions:"세션",stopAllTxt:"전체 정지",volBeep:"카운트다운 음량",volFx:"카지노 애니메이션 음량",gSub:"비밀번호를 입력하고 레버를 당기세요",gSpin:"스핀",gLose:"꽝 — 다시 도전하세요",gWin:"잭팟!",gHint:"Enter를 누르거나 스핀을 누르거나 레버를 당기세요",gPass:"비밀번호",gEmpty:"먼저 비밀번호를 입력하세요",lock:"잠금 (카지노 문)",about:"팬이 만든 비공식 도구이며 Kingshot 또는 퍼블리셔와 관련이 없습니다. 계정과 추적이 없습니다. 온라인 공유를 켜면 세션은 연맹의 무료 Firebase 데이터베이스에 저장되며, 개인 설정은 이 브라우저에 남습니다.",alliance:"연맹",color:"블록 색상",planAll:"예약 (UTC)",plan:"이 팀을 UTC 시간에 예약",planPrompt:"첫 출발 시간 (UTC) — 예: 21:30 또는 21:30:15",planAllPrompt:"모든 팀 동시 도착. 첫 출발 시간 (UTC) — 예: 21:30",badClock:"잘못된 시간 — 예: 21:30 또는 21:30:15",startAt:"출발",landAt:"도착",resizeTip:"드래그로 크기 조절 · 더블클릭 = 기본 크기",align:"정렬",deleted:"팀 삭제됨",march:"행군",subtitle:"성 집결 출발 조정기",goAll:"▶ 전체 출발",stopAll:"■ 전체 정지",addTeam:"+ 팀",undo:"실행 취소",team:"팀",bench:"대기",
     rally:"집결",go:"▶ 출발",stop:"■",launch:"출발!",firstIn:"첫 출발까지",landsIn:"도착까지",landed:"도착",
     empty:"여기에 플레이어를 놓으세요",moveTo:"이동",copy:"출발 순서 복사 (채팅용)",copied:"복사됨!",settings:"설정",
     lead:"첫 출발 전 카운트다운 (초)",sound:"소리",export:"JSON 내보내기",import:"JSON 가져오기",reset:"전체 초기화",
@@ -413,7 +710,7 @@ const I18N = {
     del:"삭제",addPh:"이름 1m46, 이름 54s…",badTime:"잘못된 시간 — 54s, 1m46, 1:46 형식",first:"먼저 출발",
     hint:"블록 머리글을 드래그해 자유 배치, ⊞ 정렬로 정리 · ⠿ 를 드래그해 이동 · 플레이어 위에서 1–9 = 팀 이동, B = 대기 · Ctrl+Z = 실행 취소 · 이름 더블클릭 = 이름 변경 · 오른쪽 아래 모서리로 블록 크기 조절",
     renamePrompt:"새 이름:",imported:"가져옴!",players:"명",rallyCustom:"집결 시간 (예: 2m30):",sync:"동시 도착"},
-  tr:{sessTitle:"OTURUMLAR",sessSub:"Bir masa seç veya yenisini aç",sessNamePh:"Oturum adı (örn. Castle 11/07)",sessCreate:"Oluştur",sessEmpty:"Henüz oturum yok — ilkini yukarıdan oluştur",sessDel:"Bu oturum herkes için silinsin mi?",sessRen:"Oturum adı:",sessGone:"Bu oturum silindi",sessNotFound:"Oturum bulunamadı",linkCopied:"Bağlantı kopyalandı — ekibinle paylaş",modeOnline:"☁️ Çevrimiçi — her değişiklik aynı oturumdaki herkesle anında paylaşılır",modeLocal:"💾 Yalnızca yerel — oturumlar bu cihazda kaydedilir. Çevrimiçi paylaşım henüz kurulmadı.",modeFail:"⚠️ Çevrimiçi veritabanına ulaşılamadı — yalnızca bu cihazda çalışıyorsun",offline:"Çevrimdışı — bağlantı gelince değişikliklerin gönderilecek",sessUpdated:"güncellendi",sessOnlineN:"çevrimiçi",sessions:"Oturumlar",stopAllTxt:"Hepsini durdur",volBeep:"Geri sayım ses seviyesi",volFx:"Kumarhane animasyon sesi",gSub:"Şifreyi gir, sonra kolu çek",gSpin:"ÇEVİR",gLose:"Şans yok — tekrar dene",gWin:"JACKPOT!",gHint:"Oynamak için Enter'a bas, ÇEVİR'e dokun veya kolu çek",gPass:"Şifre",gEmpty:"Önce şifreyi gir",lock:"Kilitle (kumarhane kapısı)",about:"Hayranlar tarafından yapılmış resmi olmayan bir araçtır; Kingshot veya yayıncısıyla bağlantılı değildir. Hesap ve izleme yok. Çevrimiçi paylaşım açıkken oturumlar ittifakın ücretsiz Firebase veritabanında saklanır; kişisel ayarların bu tarayıcıda kalır.",alliance:"İttifak",color:"Blok rengi",planAll:"Planla (UTC)",plan:"Bu takımı bir UTC saatine planla",planPrompt:"İlk başlatma saati (UTC) — örn. 21:30 veya 21:30:15",planAllPrompt:"Tüm takımlar aynı anda varır. İlk başlatma saati (UTC) — örn. 21:30",badClock:"Geçersiz saat — örn. 21:30 veya 21:30:15",startAt:"başlangıç",landAt:"varış",resizeTip:"Boyutlandırmak için sürükle · çift tık = varsayılan boyut",align:"Hizala",deleted:"Takım silindi",march:"yürüyüş",subtitle:"kale ralli başlatma koordinatörü",goAll:"▶ HEPSİ BAŞLA",stopAll:"■ Hepsini durdur",addTeam:"+ Takım",undo:"Geri al",team:"Takım",bench:"Yedek",
+  tr:{kpPlayers:"Oyuncular",kpCopyTxt:"Metin olarak kopyala",kpCopied:"Plan kopyalandı",kpCopyFail:"Kopyalama engellendi: paneldeki metni seçip kopyala",kpUnplaced:"Henüz yerleşmeyenler",kpRoster:"İttifak üyeleri (her satıra bir)",kpRosterPh:"İttifak üye listesini buraya yapıştır, her satıra bir isim",kpPickEmpty:"Önce haritada boş bir şehre, sonra isme tıkla",kpAllPlaced:"Herkes yerleşti 👍",kpNoClan:"Klansız",kpDupT:"iki kez yerleştirildi",kpHist:"Geçmiş",kpHistNone:"Henüz kayıtlı sürüm yok (değişikliklerden önce otomatik kaydedilir)",kpRestoreQ:"Bu sürüme dönülsün mü? Mevcut sürüm önce kaydedilir.",kpRestored:"Sürüm geri yüklendi",kpPlayersCount:"oyuncu",kpLockMap:"Haritayı kilitle",kpUnlockMap:"Haritanın kilidini aç",kpLocked:"Bu harita kilitli: değiştirmek için sekme menüsünden kilidi aç",kpLockedPill:"Kilitli",kpPdfDone:"PDF indirildi",kpPdfFrame:"İndirilmedi mi? Siteyi doğrudan tarayıcında aç.",kpNoteBtn:"Not",kpAddNote:"Not kutusu ekle",kpAddRect:"Dikdörtgen ekle",kpAddCirc:"Daire ekle",kpText:"Metin",kpPdfT:"Haritayı PDF olarak indir (yatay)",kpBoldT:"Kalın (Ctrl+B)",kpSize:"Yazı boyutu",kpTitle:"KvK PLANI",kpCode:"Plan kodunu gir:",kpWrong:"Yanlış kod",kpClear:"Temizle",kpCC:"Klan renkleri",kpHint:"Tık = düzenle · sürükle = şehri taşı · Shift+tık = çoklu seçim · Del = temizle · Ctrl+Z = geri al",kpNotes:"NOTLAR",kpSearch:"Oyuncu ara",kpName:"Oyuncu adı",kpNew:"Yeni plan",kpLock:"Planı kilitle",kpClanAdd:"Yeni klan adı:",kpClanRen:"Klan adı (silmek için boş bırak):",kpClanDup:"Bu klan zaten var",kpClanMax:"En fazla 8 klan",kpFit:"Ekrana sığdır",kpDir_n:"Kuzey",kpDir_e:"Doğu",kpDir_s:"Güney",kpDir_w:"Batı",kpLocal:"Plan için çevrimiçi paylaşım henüz etkin değil: değişiklikler yalnızca bu cihazda kalır.",kpSelFirst:"Önce bir kare seç",kpNone:"yok",kpPlanName:"Plan adı:",kpDup:"Çoğalt",kpDupCur:"Bu planı çoğalt",kpDel:"Bu plan herkes için silinsin mi?",kpTpl:"Yeni plan (şablon)",kpMove:"Taşı / değiştir",kpMoveHint:"Şimdi hedef kareye dokun",sessTitle:"OTURUMLAR",sessSub:"Bir masa seç veya yenisini aç",sessNamePh:"Oturum adı (örn. Castle 11/07)",sessCreate:"Oluştur",sessEmpty:"Henüz oturum yok — ilkini yukarıdan oluştur",sessDel:"Bu oturum herkes için silinsin mi?",sessRen:"Oturum adı:",sessGone:"Bu oturum silindi",sessNotFound:"Oturum bulunamadı",linkCopied:"Bağlantı kopyalandı — ekibinle paylaş",modeOnline:"☁️ Çevrimiçi — her değişiklik aynı oturumdaki herkesle anında paylaşılır",modeLocal:"💾 Yalnızca yerel — oturumlar bu cihazda kaydedilir. Çevrimiçi paylaşım henüz kurulmadı.",modeFail:"⚠️ Çevrimiçi veritabanına ulaşılamadı — yalnızca bu cihazda çalışıyorsun",offline:"Çevrimdışı — bağlantı gelince değişikliklerin gönderilecek",sessUpdated:"güncellendi",sessOnlineN:"çevrimiçi",sessions:"Oturumlar",stopAllTxt:"Hepsini durdur",volBeep:"Geri sayım ses seviyesi",volFx:"Kumarhane animasyon sesi",gSub:"Şifreyi gir, sonra kolu çek",gSpin:"ÇEVİR",gLose:"Şans yok — tekrar dene",gWin:"JACKPOT!",gHint:"Oynamak için Enter'a bas, ÇEVİR'e dokun veya kolu çek",gPass:"Şifre",gEmpty:"Önce şifreyi gir",lock:"Kilitle (kumarhane kapısı)",about:"Hayranlar tarafından yapılmış resmi olmayan bir araçtır; Kingshot veya yayıncısıyla bağlantılı değildir. Hesap ve izleme yok. Çevrimiçi paylaşım açıkken oturumlar ittifakın ücretsiz Firebase veritabanında saklanır; kişisel ayarların bu tarayıcıda kalır.",alliance:"İttifak",color:"Blok rengi",planAll:"Planla (UTC)",plan:"Bu takımı bir UTC saatine planla",planPrompt:"İlk başlatma saati (UTC) — örn. 21:30 veya 21:30:15",planAllPrompt:"Tüm takımlar aynı anda varır. İlk başlatma saati (UTC) — örn. 21:30",badClock:"Geçersiz saat — örn. 21:30 veya 21:30:15",startAt:"başlangıç",landAt:"varış",resizeTip:"Boyutlandırmak için sürükle · çift tık = varsayılan boyut",align:"Hizala",deleted:"Takım silindi",march:"yürüyüş",subtitle:"kale ralli başlatma koordinatörü",goAll:"▶ HEPSİ BAŞLA",stopAll:"■ Hepsini durdur",addTeam:"+ Takım",undo:"Geri al",team:"Takım",bench:"Yedek",
     rally:"Ralli",go:"▶ BAŞLA",stop:"■",launch:"BAŞLAT!",firstIn:"İlk başlatmaya",landsIn:"Varışa",landed:"VARDI",
     empty:"Oyuncuları buraya bırak",moveTo:"Taşı",copy:"Başlatma sırasını kopyala",copied:"Kopyalandı!",settings:"Ayarlar",
     lead:"İlk başlatmadan önce geri sayım (sn)",sound:"Ses",export:"JSON dışa aktar",import:"JSON içe aktar",reset:"Her şeyi sıfırla",
@@ -1064,6 +1361,7 @@ let hoverPid = null;
 board.addEventListener("pointerover", e=>{ const li = e.target.closest("li.player"); hoverPid = li ? li.dataset.pid : null; });
 board.addEventListener("pointerleave", ()=>{ hoverPid = null; });
 addEventListener("keydown", e=>{
+  if(document.documentElement.classList.contains("planning")) return;
   const typing = /INPUT|TEXTAREA|SELECT/.test((document.activeElement||{}).tagName||"");
   if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==="z" && !typing){ e.preventDefault(); undo(); return; }
   if(typing || e.ctrlKey || e.metaKey || e.altKey || !hoverPid) return;
@@ -1141,6 +1439,7 @@ function ask(msg, value, mode){
   if(askResolve) askResolve(null);
   document.getElementById("askMsg").textContent = msg;
   askIn.hidden = mode==="confirm" || mode==="text"; askTa.hidden = mode!=="text";
+  askIn.type = mode==="password" ? "password" : "text";
   askIn.value = value ?? ""; askTa.value = mode==="text" ? value : "";
   document.getElementById("askCancel").hidden = mode==="text";
   askDlg.showModal();
@@ -1254,6 +1553,7 @@ async function FirebaseStore(cfg){
   st.open = (id, cb)=>D.onValue(R(`sessions/${id}`), sn=>cb(sn.val()), fail);
   st.write = (id, upd)=>{ const u = {}; for(const k in upd) u[`sessions/${id}/${k}`] = upd[k]; u[`meta/${id}/updated`] = TS(); return D.update(R(), u).catch(fail); };
   st.join = id=>{ const me = D.push(R(`presence/${id}`)); D.onDisconnect(me).remove(); D.set(me, TS()); return ()=>{ D.remove(me); }; };
+  st.raw = { TS, on:(path, cb, err)=>D.onValue(D.ref(db, path), sn=>cb(sn.val()), err), update:map=>D.update(D.ref(db), map) };
   return st;
 }
 
@@ -1329,6 +1629,7 @@ function showSessions(){
 }
 async function openSession(id){
   await storeReady;
+  if(KP.isActive()) KP.close();   // e.g. a session link opened while the plan is on screen
   leaveSession();
   const m = metaCache[id];
   SESSION = { id, name: m ? m.name : "…" };
@@ -1370,11 +1671,1043 @@ document.getElementById("ssLock").addEventListener("click", ()=>document.getElem
 
 /* called when the password door opens (and on load if it is already open) */
 function afterUnlock(){
+  if(KP.isActive()) return;
   if(SESSION){ html.classList.remove("picking"); return; }
+  if(/^#plan/.test(location.hash)){ showSessions(); KP.enter(); return; }
   const id = (location.hash.match(/s=([\w-]+)/) || [])[1];
   if(id) openSession(id); else showSessions();
 }
 addEventListener("hashchange", ()=>{ const id = (location.hash.match(/s=([\w-]+)/) || [])[1]; if(id && (!SESSION || SESSION.id !== id) && !html.classList.contains("locked")) openSession(id); });
+
+/* ================= KvK plan (code-protected area) =================
+   A shared planning map modelled on the alliance's "PLAN KVK" spreadsheet tab.
+   Storage: kvkplan/<key>/…  where <key> is derived from the plan code. The database rules never
+   allow listing "kvkplan", so the data cannot be found without the code.
+   Only a verification hash of the code is kept in this file (PLAN_CHECK). */
+const KP = (function(){
+  const PLAN_CHECK = "f64e4eec06c5fca2683baa3f328c46291e6b39cacdb14b29c4672f6af624422e";
+  const TPL = {"0_0":{"c":"p"},"0_1":{"c":"p"},"1_0":{"c":"p"},"1_1":{"c":"p"},"1_4":{"t":"58s","g":"i18"},"1_5":{"t":"55s"},"1_6":{"t":"53s","g":"752"},"1_7":{"t":"53s","g":"752"},"1_8":{"t":"55s"},"1_9":{"t":"58s"},"1_10":{"t":"62s"},"1_11":{"t":"67s"},"1_12":{"t":"73s"},"2_0":{"c":"p"},"2_1":{"c":"p"},"2_2":{"c":"p"},"2_3":{"t":"47s","c":"y"},"2_4":{"t":"50s","g":"752","c":"y"},"2_5":{"t":"47s"},"2_6":{"t":"45s","g":"i18"},"2_7":{"t":"45s"},"2_8":{"t":"47s"},"2_9":{"t":"50s"},"2_10":{"t":"55s"},"2_11":{"t":"61s","c":"y"},"2_12":{"t":"67s"},"3_0":{"c":"p"},"3_1":{"c":"p"},"3_2":{"c":"p"},"3_3":{"c":"p"},"3_4":{"t":"43s","g":"PAN","c":"b"},"3_5":{"t":"39s","g":"i18","c":"b"},"3_6":{"t":"36s","c":"b"},"3_7":{"t":"36s","c":"b"},"3_8":{"t":"39s","c":"b"},"3_9":{"t":"43s","c":"b"},"3_10":{"t":"48s","c":"b"},"3_11":{"t":"55s","c":"y"},"3_12":{"t":"62s"},"4_0":{"c":"p"},"4_1":{"c":"p"},"4_2":{"c":"p"},"4_3":{"c":"p"},"4_10":{"t":"43s","c":"b"},"4_11":{"t":"50s","c":"y"},"4_12":{"t":"58s"},"5_0":{"c":"p"},"5_1":{"c":"p"},"5_2":{"c":"p"},"5_3":{"c":"p"},"5_10":{"t":"39s","c":"b"},"5_11":{"t":"47s"},"5_12":{"t":"55s"},"6_0":{"c":"p"},"6_1":{"c":"p"},"6_2":{"c":"p"},"6_3":{"c":"p"},"6_10":{"t":"36s","c":"b"},"6_11":{"t":"45s"},"6_12":{"t":"53s"},"7_0":{"c":"p"},"7_1":{"c":"p"},"7_2":{"c":"p"},"7_3":{"c":"p"},"7_10":{"t":"36s","c":"b"},"7_11":{"t":"45s"},"7_12":{"t":"53s"},"8_0":{"c":"p"},"8_1":{"c":"p"},"8_2":{"c":"p"},"8_3":{"c":"p"},"8_10":{"t":"39s","c":"b"},"8_11":{"t":"47s"},"8_12":{"t":"55s"},"9_0":{"c":"p"},"9_1":{"c":"p"},"9_2":{"c":"p"},"9_3":{"c":"p"},"9_10":{"t":"43s","c":"b"},"9_11":{"t":"50s","c":"y"},"9_12":{"c":"y"},"10_0":{"c":"p"},"10_1":{"c":"p"},"10_2":{"c":"p"},"10_3":{"c":"p"},"10_4":{"c":"p"},"10_5":{"c":"p"},"10_6":{"c":"p"},"10_7":{"c":"p"},"10_8":{"c":"p"},"10_9":{"c":"p"},"10_10":{"t":"48s","c":"b"},"10_11":{"t":"47s","c":"y"},"10_12":{"c":"y"},"11_0":{"c":"p"},"11_1":{"c":"p"},"11_2":{"c":"p"},"11_3":{"c":"p"},"11_4":{"c":"p"},"11_5":{"c":"p"},"11_6":{"c":"p"},"11_7":{"c":"p"},"11_8":{"c":"p"},"11_9":{"c":"p"},"11_10":{"c":"p"},"11_12":{"c":"y"},"12_0":{"c":"p"},"12_1":{"c":"p"},"12_2":{"c":"p"},"12_3":{"c":"p"},"12_4":{"c":"p"},"12_5":{"c":"p"},"12_6":{"c":"p"},"12_7":{"c":"p"},"12_8":{"c":"p"},"12_9":{"c":"p"},"12_10":{"c":"p"},"12_11":{"c":"p"},"13_0":{"c":"p"},"13_1":{"c":"p"},"13_2":{"c":"p"},"13_3":{"c":"p"},"13_4":{"c":"p"},"13_5":{"c":"p"},"13_6":{"c":"p"},"13_7":{"c":"p"},"13_8":{"c":"p"},"13_9":{"c":"p"},"13_10":{"c":"p"},"13_11":{"c":"p"},"13_12":{"c":"p"}};
+  const N = 14, CA = 4, CB = 9, FS = [8, 9, 10, 11, 12, 14, 16, 18, 20, 24];
+  const inCastle = (r, c)=>r >= CA && r <= CB && c >= CA && c <= CB;
+  const FILL = [["", "#ffffff"], ["p", "#f4cccc"], ["y", "#ffd966"], ["b", "#9ec3e7"], ["g", "#b6d7a8"], ["o", "#f9cb9c"], ["v", "#d9c2e9"], ["k", "#cccccc"]];
+  const CLANC = ["#e53935", "#1e88e5", "#43a047", "#fb8c00", "#8e24aa", "#00acc1", "#6d4c41", "#546e7a"];
+  const DEF_CLANS = ["LOR", "PAN", "STR", "i18", "752"], DEF_CASTLE = {top:"752", right:"KOE"};
+  const $ = id=>document.getElementById(id);
+  const root = $("plan"), boardEl = $("kpBoard"), layer = $("kpLayer"), view = $("kpView"), wrap = $("kpWrap"), sheet = $("kpSheet");
+  const coarse = matchMedia("(pointer:coarse)").matches;
+  const PREF = "rallysync.kp", KEYSTORE = "rallysync.kpkey";
+  const prefs = Object.assign({z:0, cc:false, last:""}, loadJSON(PREF) || {});
+  const savePrefs = ()=>saveJSON(PREF, prefs);
+
+  /* ---------- small pure-JS SHA-256 (works everywhere, also without HTTPS) ---------- */
+  function sha256(ascii){
+    const rr = (v, a)=>(v >>> a) | (v << (32 - a)), maxWord = Math.pow(2, 32), words = [], bitLen = ascii.length * 8;
+    let hash = sha256.h = sha256.h || []; const k = sha256.k = sha256.k || []; let pc = k.length, result = "";
+    const comp = {};
+    for(let cand = 2; pc < 64; cand++){
+      if(!comp[cand]){
+        for(let i = 0; i < 313; i += cand) comp[i] = cand;
+        hash[pc] = (Math.pow(cand, .5) * maxWord) | 0;
+        k[pc++] = (Math.pow(cand, 1 / 3) * maxWord) | 0;
+      }
+    }
+    ascii += "\x80";
+    while(ascii.length % 64 - 56) ascii += "\x00";
+    for(let i = 0; i < ascii.length; i++){ const j = ascii.charCodeAt(i); words[i >> 2] |= j << ((3 - i) % 4) * 8; }
+    words[words.length] = (bitLen / maxWord) | 0;
+    words[words.length] = bitLen;
+    for(let j = 0; j < words.length;){
+      const w = words.slice(j, j += 16), old = hash;
+      hash = hash.slice(0, 8);
+      for(let i = 0; i < 64; i++){
+        const w15 = w[i - 15], w2 = w[i - 2], a = hash[0], e = hash[4];
+        const t1 = hash[7] + (rr(e, 6) ^ rr(e, 11) ^ rr(e, 25)) + ((e & hash[5]) ^ ((~e) & hash[6])) + k[i]
+          + (w[i] = (i < 16) ? w[i] : (w[i - 16] + (rr(w15, 7) ^ rr(w15, 18) ^ (w15 >>> 3)) + w[i - 7] + (rr(w2, 17) ^ rr(w2, 19) ^ (w2 >>> 10))) | 0);
+        const t2 = (rr(a, 2) ^ rr(a, 13) ^ rr(a, 22)) + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+        hash = [(t1 + t2) | 0].concat(hash);
+        hash[4] = (hash[4] + t1) | 0;
+      }
+      for(let i = 0; i < 8; i++) hash[i] = (hash[i] + old[i]) | 0;
+    }
+    for(let i = 0; i < 8; i++) for(let j = 3; j + 1; j--){ const b = (hash[i] >> (j * 8)) & 255; result += (b < 16 ? "0" : "") + b.toString(16); }
+    return result;
+  }
+  /* slow-ish derivation: "chk" proves the code is right, "key" is the secret database path */
+  function kdf(label, code){
+    let h = unescape(encodeURIComponent("rallysync-kvk|" + label + "|" + String(code).trim().toLowerCase()));
+    for(let i = 0; i < 3000; i++) h = sha256(h + i);
+    return h;
+  }
+
+  /* ---------- storage on this device (fallback when the online database is not available) ---------- */
+  const localRaw = (function(){
+    const K = "rallysync.kvk", subs = new Set();
+    let mem = null;   // used when the browser refuses to store anything (sandboxed preview, some private windows)
+    const read = ()=>{ if(mem) return mem; try{ const v = localStorage.getItem(K); return v ? JSON.parse(v) : {}; }catch(e){ mem = {}; return mem; } };
+    const write = d=>{ if(mem){ mem = d; return; } try{ localStorage.setItem(K, JSON.stringify(d)); }catch(e){ mem = d; } };
+    const get = (o, p)=>{ for(const k of p.split("/").filter(Boolean)){ if(o == null || typeof o !== "object") return null; o = o[k]; } return o === undefined ? null : o; };
+    const set = (o, p, v)=>{ const ks = p.split("/").filter(Boolean); ks.slice(0, -1).forEach(k=>{ o = o[k] = (o[k] && typeof o[k] === "object") ? o[k] : {}; }); const l = ks[ks.length - 1]; if(v === null || v === undefined) delete o[l]; else o[l] = v; };
+    const emit = ()=>subs.forEach(f=>{ try{ f(); }catch(e){ console.error(e); } });
+    addEventListener("storage", e=>{ if(e.key === K) emit(); });
+    return { mode:"local", TS:()=>Date.now(),
+      on(path, cb){ let last; const f = ()=>{ const v = get(read(), path), j = JSON.stringify(v); if(j !== last){ last = j; cb(v == null ? null : JSON.parse(j)); } }; subs.add(f); setTimeout(f, 0); return ()=>subs.delete(f); },
+      update(map){ const d = read(); for(const k in map) set(d, k, map[k] == null ? null : JSON.parse(JSON.stringify(map[k]))); write(d); setTimeout(emit, 0); return Promise.resolve(); } };
+  })();
+
+  /* ---------- state ---------- */
+  let RAW = null, base = "", index = {}, pid = "", P = null, unsubI = null, unsubP = null, built = false, seeded = false, seeding = false, active = false;
+  const filter = new Set(), sel = new Set();
+  let fmtT = "tiles", actObj = null, od = null, cur = null, lastField = "n", query = "", clip = null, moveFrom = null, hitIdx = -1;
+  const undoS = [], redoS = [];
+  let roster = "", hist = {}, histReady = false, unsubR = null, unsubH = null;
+  const nk = s=>String(s || "").replace(/\s+/g, " ").trim().toLowerCase();
+  const isLocked = ()=>!!(pid && index[pid] && index[pid].lock);
+  const kOf = (r, c)=>r + "_" + c, rc = k=>k.split("_").map(Number);
+  const tileEl = k=>boardEl.querySelector(`.pt[data-k="${k}"]`);
+  const isEmptyObj = o=>!o || (typeof o === "object" && !Object.keys(o).length);
+  const planIds = ()=>Object.keys(index).filter(id=>index[id] && index[id].name).sort((a, b)=>(index[a].created || 0) - (index[b].created || 0) || (a < b ? -1 : 1));
+
+  function norm(d){
+    d = d || {};
+    const clans = d.clans ? Object.keys(d.clans).sort((a, b)=>a - b).map(k=>String(d.clans[k] ?? "")).filter(Boolean) : DEF_CLANS.slice();
+    const tiles = {};
+    for(const k in (d.tiles || {})){ const x = d.tiles[k] || {}; tiles[k] = {g:String(x.g ?? ""), t:String(x.t ?? ""), n:String(x.n ?? ""), c:String(x.c ?? ""), s:String(x.s ?? ""), w:String(x.w ?? "")}; }
+    const shapes = {};
+    for(const id in (d.shapes || {})){ const o = d.shapes[id]; if(o && o.k) shapes[id] = normObj(o); }
+    if(!d.shapes && !d.shapesInit) shapes.main = normObj(Object.assign(defObj("note"), {t:d.memo || "", s:d.memoS || "", b:d.memoB || ""}));
+    const castle = {}; for(const k in (d.castle || {})) castle[k] = String(d.castle[k] ?? "");
+    return {clans, tiles, castle, shapes};
+  }
+  const BW = 121.5625, BH = 101.5625;   // area where objects can be placed (board + room on the right), in em
+  const OCOL = ["#333d4c", "#e53935", "#1e88e5", "#43a047", "#fb8c00", "#8e24aa", "#000000"];
+  function defObj(k){
+    if(k === "note") return {k, x:104.5625, y:8.125, w:17, h:53.1, t:"", ti:"", s:"", b:"", c:""};
+    if(k === "rect") return {k, x:0, y:0, w:20, h:12, t:"", ti:"", s:"", b:"", c:"#e53935"};
+    return {k:"circle", x:0, y:0, w:16, h:16, t:"", ti:"", s:"", b:"", c:"#e53935"};
+  }
+  function normObj(o){
+    const n = v=>Math.round((+v || 0) * 100) / 100;
+    return {k:["note", "rect", "circle"].includes(o.k) ? o.k : "rect", x:n(o.x), y:n(o.y), w:Math.max(3, n(o.w) || 10), h:Math.max(3, n(o.h) || 10),
+      t:String(o.t ?? ""), ti:String(o.ti ?? ""), s:String(o.s ?? ""), b:String(o.b ?? ""), c:String(o.c ?? "")};
+  }
+  const tplData = ()=>({v:1, clans:DEF_CLANS.slice(), tiles:JSON.parse(JSON.stringify(TPL)), castle:Object.assign({}, DEF_CASTLE), shapes:{main:defObj("note")}, shapesInit:1});
+  function exportData(){   // current plan as plain data (for "duplicate")
+    const tiles = {};
+    for(const k in P.tiles){ const x = P.tiles[k], o = {}; for(const f of ["g", "t", "n", "c", "s", "w"]) if(x[f]) o[f] = x[f]; if(Object.keys(o).length) tiles[k] = o; }
+    const castle = {}; for(const k in P.castle) if(P.castle[k]) castle[k] = P.castle[k];
+    const shapes = {}; for(const id in P.shapes) shapes[id] = stripObj(P.shapes[id]);
+    return {v:1, clans:P.clans.slice(), tiles, castle, shapes, shapesInit:1};
+  }
+
+  /* ---------- reading / writing the current plan ---------- */
+  function pget(path){
+    const s = path.split("/");
+    if(s[0] === "tiles") return (P.tiles[s[1]] || {})[s[2]] || "";
+    if(s[0] === "castle") return P.castle[s[1]] || "";
+    if(s[0] === "shapes"){ const o = P.shapes[s[1]]; if(s.length === 2) return o ? JSON.parse(JSON.stringify(o)) : ""; return o ? (o[s[2]] ?? "") : ""; }
+    if(s[0] === "clans") return P.clans.slice();
+    return "";
+  }
+  function pset(path, v){
+    const s = path.split("/");
+    if(s[0] === "tiles"){ const x = P.tiles[s[1]] || (P.tiles[s[1]] = {g:"", t:"", n:"", c:"", s:"", w:""}); x[s[2]] = v || ""; }
+    else if(s[0] === "castle") P.castle[s[1]] = v || "";
+    else if(s[0] === "shapes"){
+      if(s.length === 2){ if(v) P.shapes[s[1]] = normObj(v); else delete P.shapes[s[1]]; }
+      else { const o = P.shapes[s[1]]; if(o) o[s[2]] = (v === "" || v == null) ? (typeof o[s[2]] === "number" ? 0 : "") : v; }
+    }
+    else if(s[0] === "clans") P.clans = v.slice();
+  }
+  const fail = e=>{ console.error(e); toast("⚠️ " + (e && (e.code || e.message) || e)); };
+  function stripObj(o){ const r = {}; for(const k in o) if(o[k] !== "" && o[k] != null) r[k] = o[k]; return r; }
+  function send(list){
+    const u = {}, b = `${base}/plans/${pid}/`;
+    list.forEach(c=>{
+      u[b + c.path] = (c.val === "" || c.val == null) ? null : (typeof c.val === "object" && !Array.isArray(c.val) && c.path.startsWith("shapes/")) ? stripObj(c.val) : c.val;
+      if(c.path.startsWith("shapes")) u[b + "shapesInit"] = 1;
+    });
+    u[`${base}/index/${pid}/updated`] = RAW.TS();
+    RAW.update(u).catch(fail);
+  }
+  function lockedMsg(){ toast("🔒 " + t("kpLocked")); paint(); }
+  function change(list, noUndo){
+    if(!P) return;
+    list = list.filter(c=>JSON.stringify(pget(c.path)) !== JSON.stringify(c.val));
+    if(!list.length) return;
+    if(isLocked()){ lockedMsg(); return; }
+    maybeSnap();
+    list.forEach(c=>{ c.old = pget(c.path); pset(c.path, c.val); });
+    if(!noUndo){ undoS.push(list); if(undoS.length > 100) undoS.shift(); redoS.length = 0; }
+    send(list); paint();
+    const dn = list.find(c=>/^tiles\/[^/]+\/n$/.test(c.path) && c.val && dupMap().has(nk(c.val)));
+    if(dn) toast("⚠ " + c2(dn.val) + " " + t("kpDupT"));
+  }
+  const c2 = s=>"“" + s + "”";
+  function undo(){
+    if(isLocked() && undoS.length){ lockedMsg(); return; }
+    const l = undoS.pop(); if(!l || !P) return;
+    const inv = l.map(c=>({path:c.path, val:c.old})).reverse();
+    inv.forEach(c=>pset(c.path, c.val)); redoS.push(l); send(inv); paint();
+  }
+  function redo(){
+    if(isLocked() && redoS.length){ lockedMsg(); return; }
+    const l = redoS.pop(); if(!l || !P) return;
+    l.forEach(c=>pset(c.path, c.val)); undoS.push(l); send(l); paint();
+  }
+
+  /* ---------- building the board (once) ---------- */
+  const KEEP = `<svg viewBox="0 0 200 180" aria-hidden="true"><ellipse cx="100" cy="168" rx="80" ry="8" fill="#0000001f"/>
+    <rect x="22" y="92" width="38" height="70" rx="4" fill="#d7dde2" stroke="#7b8794" stroke-width="3"/><path d="M15 95 L41 50 L67 95 Z" fill="#c62828" stroke="#7f1d1d" stroke-width="3" stroke-linejoin="round"/>
+    <rect x="140" y="92" width="38" height="70" rx="4" fill="#d7dde2" stroke="#7b8794" stroke-width="3"/><path d="M133 95 L159 50 L185 95 Z" fill="#c62828" stroke="#7f1d1d" stroke-width="3" stroke-linejoin="round"/>
+    <rect x="58" y="70" width="84" height="92" rx="5" fill="#e9eef2" stroke="#7b8794" stroke-width="3"/><path d="M48 76 L100 22 L152 76 Z" fill="#d32f2f" stroke="#7f1d1d" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M80 24 L85 6 L94 17 L100 2 L106 17 L115 6 L120 24 Z" fill="#fbc02d" stroke="#b7791f" stroke-width="2.5" stroke-linejoin="round"/>
+    <circle cx="100" cy="50" r="9" fill="#fbc02d" stroke="#b7791f" stroke-width="2.5"/><rect x="56" y="84" width="88" height="8" fill="#fbc02d" stroke="#b7791f" stroke-width="2"/>
+    <path d="M82 162 V128 a18 18 0 0 1 36 0 V162 Z" fill="#6d4c41" stroke="#3e2723" stroke-width="3"/><path d="M100 111 V162" stroke="#3e2723" stroke-width="2"/>
+    <rect x="35" y="110" width="12" height="20" rx="6" fill="#455a64"/><rect x="153" y="110" width="12" height="20" rx="6" fill="#455a64"/></svg>`;
+  function build(){
+    if(built) return; built = true;
+    let h = "";
+    for(let r = 0; r < N; r++) for(let c = 0; c < N; c++){
+      if(inCastle(r, c)) continue;
+      h += `<div class="pt" data-k="${r}_${c}" style="grid-row:${r + 1};grid-column:${c + 1}"><button type="button" class="pt-g" tabindex="-1"></button><input class="pt-t" tabindex="-1" maxlength="8" spellcheck="false" autocomplete="off"${coarse ? " readonly" : ""}><div class="pt-n" spellcheck="false"></div></div>`;
+    }
+    const tur = d=>`<div class="kp-tur ${d}"><b data-dir="${d}"></b><input data-cf="${d}" maxlength="24" tabindex="-1" spellcheck="false" autocomplete="off"></div>`;
+    const side = d=>`<div class="kp-side ${d}"><i></i><input data-cf="${d}" maxlength="16" tabindex="-1" spellcheck="false" autocomplete="off" placeholder="…"><i></i></div>`;
+    h += `<div class="kp-castle">${tur("n")}${tur("e")}${tur("w")}${tur("s")}${side("top")}${side("right")}${side("bottom")}${side("left")}<div class="kp-keep">${KEEP}</div></div><div class="kp-red"></div>`;
+    boardEl.innerHTML = h;
+    if(!coarse){   // inline editing of names (plain text only)
+      let mode = "plaintext-only";
+      try{ const probe = document.createElement("div"); probe.contentEditable = mode; if(probe.contentEditable !== mode) mode = "true"; }catch(e){ mode = "true"; }
+      boardEl.querySelectorAll(".pt-n").forEach(n=>n.setAttribute("contenteditable", mode));
+    }
+
+    const sw = FILL.map(([k, col])=>`<button type="button" class="kp-sw" data-fill="${k}" style="--f:${col}"></button>`).join("");
+    $("kpColors").innerHTML = sw; $("kpShColors").innerHTML = sw;
+  }
+
+  /* ---------- painting the current plan into the page ---------- */
+  function paint(){
+    if(!built) return;
+    wrap.classList.toggle("loading", !P);
+    if(!P) return;
+    const ae = document.activeElement, q = query.trim().toLowerCase(), counts = {};
+    for(const c of [...filter]) if(!P.clans.includes(c)) filter.delete(c);
+    const fOn = filter.size > 0;
+    boardEl.classList.toggle("cc", !!prefs.cc);
+    const dup = dupMap();
+    setRo(isLocked());
+    boardEl.querySelectorAll(".pt").forEach(el=>{
+      const k = el.dataset.k, d = P.tiles[k] || {g:"", t:"", n:"", c:""}, g = el.children[0], tm = el.children[1], n = el.children[2];
+      if(g.textContent !== d.g) g.textContent = d.g;
+      if(tm !== ae && tm.value !== d.t) tm.value = d.t;
+      if(n !== ae && n.textContent !== d.n) n.textContent = d.n;
+      const fs = d.s ? (+d.s / 12) + "em" : "";
+      if(el.style.fontSize !== fs) el.style.fontSize = fs;
+      const ci = P.clans.indexOf(d.g);
+      const cls = "pt" + (d.c ? " c-" + d.c : "") + (fOn && !filter.has(d.g) ? " dim" : "") + (sel.has(k) ? " sel" : "") + (cur === k ? " cur" : "")
+        + (q && d.n.toLowerCase().includes(q) ? " hit" : "") + (d.n.length > 22 ? " xs" : d.n.length > 11 ? " sm" : "") + (moveFrom === k ? " mv" : "") + (d.w === "n" ? " nb" : "") + (d.n && dup.has(nk(d.n)) ? " dup" : "");
+      if(el.className !== cls) el.className = cls;
+      if(ci >= 0){ el.style.setProperty("--cc", CLANC[ci % CLANC.length]); el.dataset.clan = "1"; counts[d.g] = (counts[d.g] || 0) + 1; }
+      else if(el.dataset.clan){ delete el.dataset.clan; }
+    });
+    boardEl.querySelectorAll("[data-cf]").forEach(x=>{ const v = P.castle[x.dataset.cf] || ""; if(x !== ae && x.value !== v) x.value = v; });
+    paintObjs(ae);
+    { const ro = isLocked();   // locked map: nothing can be typed anywhere on it
+      root.querySelectorAll(".kp-layer textarea,.kp-layer input,.kp-board input").forEach(x=>{ if(x.readOnly !== ro) x.readOnly = ro; });
+      root.querySelectorAll(".kp-layer div.ko-txt").forEach(x=>{ const v = ro ? "false" : ceMode; if(x.getAttribute("contenteditable") !== v) x.setAttribute("contenteditable", v); }); }
+    fmtBar();
+    paintPanel(ae, dup);
+    $("kpClans").innerHTML = P.clans.map((c, i)=>`<label class="kp-clan" style="--cc:${CLANC[i % CLANC.length]}"><input type="checkbox" data-fclan="${esc(c)}"${filter.has(c) ? " checked" : ""}><b>${esc(c)}</b><small>${counts[c] || 0}</small><button type="button" data-ren="${i}" title="${esc(t("rename"))}">✎</button></label>`).join("");
+    $("kpUndo").disabled = !undoS.length; $("kpRedo").disabled = !redoS.length;
+    $("kpCC").classList.toggle("on", !!prefs.cc);
+    paintSheet();
+  }
+  function paintTabs(){
+    $("kpTabs").innerHTML = planIds().map(id=>`<button type="button" class="kp-tab${id === pid ? " on" : ""}" data-pid="${esc(id)}">${index[id].lock ? "🔒 " : ""}${esc(index[id].name)}${id === pid ? " ▾" : ""}</button>`).join("");
+    const on = $("kpTabs").querySelector(".on"); if(on && on.scrollIntoView) on.scrollIntoView({block:"nearest", inline:"nearest"});
+  }
+  function texts(){
+    if(!built) return;
+    $("kpSearch").placeholder = "🔍 " + t("kpSearch");
+    $("kpShName").placeholder = t("kpName"); $("kpShTime").placeholder = "58s";
+    $("kpUndo").title = t("undo") + " (Ctrl+Z)"; $("kpRedo").title = "Redo (Ctrl+Y)"; $("kpAdd").title = t("kpNew"); $("kpLock").title = t("kpLock");
+    $("kpClanAdd").title = t("kpClanAdd"); $("kpPdf").title = t("kpPdfT"); $("kpBold").title = t("kpBoldT"); $("kpFsDn").title = $("kpFsUp").title = $("kpFsV").title = t("kpSize");
+    $("kpRoster").placeholder = t("kpRosterPh"); $("kpRo").textContent = "🔒 " + t("kpLockedPill"); $("kpPl").title = t("kpPlayers");
+    $("kpAddNote").title = t("kpAddNote"); $("kpAddRect").title = t("kpAddRect"); $("kpAddCirc").title = t("kpAddCirc"); $("kpZoomFit").title = t("kpFit");
+    boardEl.querySelectorAll("[data-dir]").forEach(b=>{ b.textContent = t("kpDir_" + b.dataset.dir); });
+    $("kpDot").style.display = RAW && RAW !== localRaw ? "" : "none";
+    $("kpDot").classList.toggle("off", !!(STORE && STORE.connected === false));
+    const w = $("kpWarn"); w.hidden = !(active && RAW === localRaw); w.textContent = "💾 Local"; w.title = t("kpLocal");
+    if(P) paint();
+  }
+
+  /* ---------- selection ---------- */
+  function select(k, mode){
+    if(mode === "range" && cur){
+      const [r0, c0] = rc(cur), [r1, c1] = rc(k); sel.clear();
+      for(let r = Math.min(r0, r1); r <= Math.max(r0, r1); r++) for(let c = Math.min(c0, c1); c <= Math.max(c0, c1); c++) if(!inCastle(r, c)) sel.add(kOf(r, c));
+    } else if(mode === "toggle"){ if(sel.has(k) && sel.size > 1) sel.delete(k); else sel.add(k); cur = k; }
+    else { sel.clear(); sel.add(k); cur = k; }
+    paint();
+  }
+  function deselect(){ sel.clear(); cur = null; moveFrom = null; closeSheet(); paint(); }
+  function step(dr, dc){
+    if(!cur) return;
+    let [r, c] = rc(cur);
+    do { r += dr; c += dc; } while(r >= 0 && r < N && c >= 0 && c < N && inCastle(r, c));
+    if(r < 0 || r >= N || c < 0 || c >= N) return;
+    select(kOf(r, c));
+    const el = tileEl(cur); if(el) el.scrollIntoView({block:"nearest", inline:"nearest"});
+  }
+  function edit(k, f, replace){
+    const el = tileEl(k); if(!el || coarse) return;
+    lastField = f;
+    const x = f === "t" ? el.children[1] : el.children[2];
+    x.focus();
+    if(f === "t"){ if(replace) x.select(); else x.setSelectionRange(x.value.length, x.value.length); }
+    else { const r = document.createRange(); r.selectNodeContents(x); if(!replace) r.collapse(false); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+  }
+  const targets = k=>(sel.has(k) && sel.size > 1) ? [...sel] : [k];
+  function setClan(k, g){ change(targets(k).map(x=>({path:`tiles/${x}/g`, val:g}))); }
+  function setFill(c){ if(!sel.size){ toast(t("kpSelFirst")); return; } change([...sel].map(x=>({path:`tiles/${x}/c`, val:c}))); }
+  function clearSel(){ if(!sel.size){ toast(t("kpSelFirst")); return; } const l = []; sel.forEach(x=>{ l.push({path:`tiles/${x}/g`, val:""}, {path:`tiles/${x}/n`, val:""}); }); change(l); }
+  function swap(a, b){
+    if(a === b || !P) return;
+    const A = P.tiles[a] || {}, B = P.tiles[b] || {};
+    change([{path:`tiles/${a}/g`, val:B.g || ""}, {path:`tiles/${a}/n`, val:B.n || ""}, {path:`tiles/${b}/g`, val:A.g || ""}, {path:`tiles/${b}/n`, val:A.n || ""}]);
+  }
+  const cleanName = s=>String(s || "").replace(/\s+/g, " ").trim().slice(0, 40);
+  const cleanTime = s=>{ let v = String(s || "").trim().slice(0, 8); if(/^\d+$/.test(v)) v += "s"; return v; };
+
+  /* ---------- menus ---------- */
+  let kpMenu = null;
+  function closeKpMenu(){ if(kpMenu){ kpMenu.remove(); kpMenu = null; } }
+  function popMenu(anchor, items){
+    closeKpMenu();
+    const m = document.createElement("div"); m.className = "menu kp-menu";
+    m.innerHTML = items.map((it, i)=>it === "-" ? `<div class="sepm"></div>` : `<button type="button" data-mi="${i}"${it.on ? ' class="on"' : ""}>${it.dot ? `<span class="dot" style="--c:${it.dot}"></span>` : ""}${esc(it.label)}</button>`).join("");
+    document.body.appendChild(m); kpMenu = m;
+    const r = anchor.getBoundingClientRect(), mw = m.offsetWidth, mh = m.offsetHeight;
+    m.style.left = Math.max(6, Math.min(innerWidth - mw - 6, r.left)) + "px";
+    m.style.top = (r.bottom + mh + 6 > innerHeight ? Math.max(6, r.top - mh - 4) : r.bottom + 4) + "px";
+    m.addEventListener("click", e=>{ const b = e.target.closest("[data-mi]"); if(!b) return; closeKpMenu(); items[+b.dataset.mi].act(); });
+  }
+  document.addEventListener("pointerdown", e=>{ if(kpMenu && !kpMenu.contains(e.target)) closeKpMenu(); }, true);
+  function tagMenu(k, anchor){
+    const curTag = pget(`tiles/${k}/g`);
+    const items = P.clans.map((c, i)=>({label:c, dot:CLANC[i % CLANC.length], on:c === curTag, act:()=>setClan(k, c)}));
+    items.push("-", {label:"— " + t("kpNone"), act:()=>setClan(k, "")});
+    popMenu(anchor, items);
+  }
+
+  /* ---------- mouse: select, edit, drag a city onto another tile ---------- */
+  let pd = null, ghost = null, dropEl = null;
+  boardEl.addEventListener("pointerdown", e=>{
+    if(!P || e.button > 0) return;
+    const tile = e.target.closest(".pt"); if(!tile) return;
+    const k = tile.dataset.k, touch = coarse || e.pointerType !== "mouse";
+    if(touch){ pd = {k, x:e.clientX, y:e.clientY, touch:true, id:e.pointerId}; return; }
+    const field = e.target.closest(".pt-g") ? "g" : e.target.closest(".pt-t") ? "t" : "n";
+    if(field !== "g" && document.activeElement === e.target) return;            // already editing this field: normal caret behaviour
+    const ae = document.activeElement; if(ae && ae !== document.body && root.contains(ae)) ae.blur();   // commit any other edit
+    const mod = e.shiftKey ? "range" : (e.ctrlKey || e.metaKey) ? "toggle" : "";
+    select(k, mod);
+    e.preventDefault();
+    pd = {k, field, mod, x:e.clientX, y:e.clientY, drag:false, id:e.pointerId};
+  });
+  boardEl.addEventListener("mousedown", e=>{ if(pd && !pd.touch && e.target.closest(".pt") && document.activeElement !== e.target) e.preventDefault(); });
+  addEventListener("pointermove", e=>{
+    if(!pd || pd.touch || pd.mod || e.pointerId !== pd.id) return;
+    if(!pd.drag){
+      if(Math.hypot(e.clientX - pd.x, e.clientY - pd.y) < 8) return;
+      const d = P.tiles[pd.k] || {}; if(!d.n && !d.g){ pd = null; return; }      // nothing to move
+      pd.drag = true; closeKpMenu();
+      ghost = document.createElement("div"); ghost.className = "kp-ghost"; ghost.textContent = (d.g ? "[" + d.g + "] " : "") + (d.n || "—"); document.body.appendChild(ghost);
+    }
+    ghost.style.transform = `translate(${e.clientX + 12}px,${e.clientY + 12}px)`;
+    const el = document.elementFromPoint(e.clientX, e.clientY), tile = el && el.closest && el.closest(".pt");
+    if(tile !== dropEl){ if(dropEl) delete dropEl.dataset.drop; if(tile && tile.dataset.k !== pd.k) tile.dataset.drop = "1"; dropEl = tile; }
+    const vr = view.getBoundingClientRect(), edge = 40;
+    view.scrollBy((e.clientX > vr.right - edge ? 14 : e.clientX < vr.left + edge ? -14 : 0), (e.clientY > vr.bottom - edge ? 14 : e.clientY < vr.top + edge ? -14 : 0));
+  });
+  function endPointer(e, cancel){
+    if(!pd || (e && e.pointerId !== pd.id)) return;
+    const d = pd; pd = null;
+    if(ghost){ ghost.remove(); ghost = null; }
+    const target = dropEl; if(dropEl){ delete dropEl.dataset.drop; dropEl = null; }
+    if(cancel || !P) return;
+    if(d.touch){
+      if(Math.hypot(e.clientX - d.x, e.clientY - d.y) > 10) return;                // it was a scroll, not a tap
+      if(moveFrom){ const from = moveFrom; moveFrom = null; swap(from, d.k); select(d.k); openSheet(true); return; }
+      select(d.k); openSheet(true); return;
+    }
+    if(d.drag){ if(target && target.dataset.k !== d.k){ swap(d.k, target.dataset.k); select(target.dataset.k); } return; }
+    if(d.mod) return;
+    if(d.field === "g"){ const el = tileEl(d.k); if(el) tagMenu(d.k, el.children[0]); }
+    else edit(d.k, d.field, true);
+  }
+  addEventListener("pointerup", e=>endPointer(e, false));
+  addEventListener("pointercancel", e=>endPointer(e, true));
+  view.addEventListener("pointerdown", e=>{ if(e.target === view || e.target === wrap || e.target === boardEl || e.target === layer){ actObj = null; fmtT = "tiles"; const ae = document.activeElement; if(ae && root.contains(ae) && ae !== document.body) ae.blur(); deselect(); } });
+
+  /* ---------- committing edits ---------- */
+  boardEl.addEventListener("focusin", e=>{ const tile = e.target.closest(".pt"); if(tile){ lastField = e.target.classList.contains("pt-t") ? "t" : "n"; if(!sel.has(tile.dataset.k) || cur !== tile.dataset.k){ sel.clear(); sel.add(tile.dataset.k); cur = tile.dataset.k; paint(); } } });
+  boardEl.addEventListener("focusout", e=>{
+    if(!P) return;
+    const x = e.target, tile = x.closest(".pt");
+    if(tile){
+      const k = tile.dataset.k;
+      if(x.classList.contains("pt-t")){
+        if(x.dataset.cancel){ delete x.dataset.cancel; x.value = pget(`tiles/${k}/t`); return; }
+        const v = cleanTime(x.value); x.value = v; change([{path:`tiles/${k}/t`, val:v}]);
+      } else if(x.classList.contains("pt-n")){
+        if(x.dataset.cancel){ delete x.dataset.cancel; x.textContent = pget(`tiles/${k}/n`); return; }
+        const v = cleanName(x.textContent); x.textContent = v; change([{path:`tiles/${k}/n`, val:v}]);
+      }
+    } else if(x.dataset.cf){
+      if(x.dataset.cancel){ delete x.dataset.cancel; x.value = pget("castle/" + x.dataset.cf); return; }
+      const v = x.value.trim(); x.value = v; change([{path:"castle/" + x.dataset.cf, val:v}]);
+    }
+  });
+  /* ---------- objects on the map: notes, rectangles, circles (move, resize, write in them) ---------- */
+  const emPx = ()=>parseFloat(getComputedStyle(wrap).fontSize) || 16;
+  const clamp = (v, a, b)=>Math.max(a, Math.min(b, v));
+  function mkObj(id, k){
+    const el = document.createElement("div");
+    el.className = "kp-obj k-" + k; el.dataset.id = id; el.dataset.k = k;
+    const ctl = `<button type="button" class="ko-col" tabindex="-1">●</button><button type="button" class="ko-del" tabindex="-1">✕</button><span class="ko-rs"></span>`;
+    el.innerHTML = k === "note"
+      ? `<div class="ko-head"><input class="ko-title" maxlength="30" spellcheck="false" autocomplete="off" tabindex="-1"></div><textarea class="ko-txt" maxlength="5000" spellcheck="false" autocomplete="off"></textarea>${ctl}`
+      : `<i class="ko-e t"></i><i class="ko-e r"></i><i class="ko-e b"></i><i class="ko-e l"></i><span class="ko-grip">✥</span><div class="ko-txt" spellcheck="false"></div>${ctl}`;
+    if(k !== "note"){ const x = el.querySelector(".ko-txt"); x.setAttribute("contenteditable", ceMode); }
+    return el;
+  }
+  let ceMode = "plaintext-only";
+  try{ const probe = document.createElement("div"); probe.contentEditable = ceMode; if(probe.contentEditable !== ceMode) ceMode = "true"; }catch(e){ ceMode = "true"; }
+  const objText = x=>x.tagName === "TEXTAREA" ? x.value : x.innerText.replace(/\n$/, "");
+  function paintObjs(ae){
+    const have = {};
+    layer.querySelectorAll(".kp-obj").forEach(e=>{ have[e.dataset.id] = e; });
+    for(const id in P.shapes){
+      const o = P.shapes[id]; let el = have[id]; delete have[id];
+      if(!el || el.dataset.k !== o.k){ if(el) el.remove(); el = mkObj(id, o.k); layer.appendChild(el); }
+      if(!(od && od.id === id && od.moved)){ el.style.left = o.x + "em"; el.style.top = o.y + "em"; el.style.width = o.w + "em"; el.style.height = o.h + "em"; }
+      const tx = el.querySelector(".ko-txt");
+      if(tx !== ae && objText(tx) !== o.t){ if(tx.tagName === "TEXTAREA") tx.value = o.t; else tx.textContent = o.t; }
+      tx.style.fontSize = o.s ? (+o.s / 12) + "em" : ""; tx.style.fontWeight = o.b === "1" ? "700" : "";
+      tx.dataset.ph = o.k === "note" ? "" : t("kpText");
+      const ti = el.querySelector(".ko-title"); if(ti){ ti.placeholder = t("kpNotes"); if(ti !== ae && ti.value !== o.ti) ti.value = o.ti; }
+      el.style.setProperty("--oc", o.c || (o.k === "note" ? OCOL[0] : OCOL[1]));
+      el.classList.toggle("on", actObj === id);
+    }
+    for(const id in have) have[id].remove();
+    let mw = BW, mh = BH; for(const id in P.shapes){ const o = P.shapes[id]; mw = Math.max(mw, o.x + o.w + 1); mh = Math.max(mh, o.y + o.h + 1); }
+    wrap.style.width = mw + "em"; wrap.style.height = mh + "em";
+    if(actObj && !P.shapes[actObj]){ actObj = null; if(fmtT !== "tiles") fmtT = "tiles"; }
+  }
+  function addObj(k){
+    if(!P) return;
+    const o = defObj(k), em = emPx(), vr = view.getBoundingClientRect(), wr = wrap.getBoundingClientRect();
+    const cx = (vr.left + vr.width / 2 - wr.left) / em, cy = (vr.top + vr.height / 2 - wr.top) / em;
+    if(k === "note"){ o.h = 24; }
+    o.x = Math.round(clamp(cx - o.w / 2, 0, BW - o.w) * 100) / 100; o.y = Math.round(clamp(cy - o.h / 2, 0, BH - o.h) * 100) / 100;
+    for(let i = 0; i < 12; i++){   // do not drop it exactly on top of another one
+      const busy = Object.values(P.shapes).some(q=>Math.abs((q.x + q.w / 2) - (o.x + o.w / 2)) < 3 && Math.abs((q.y + q.h / 2) - (o.y + o.h / 2)) < 3);
+      if(!busy) break; o.x = Math.round((o.x + 5) * 100) / 100; o.y = Math.round((o.y + 4) * 100) / 100;
+    }
+    const id = "o" + Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+    sel.clear(); cur = null; actObj = id; fmtT = "obj:" + id;
+    change([{path:"shapes/" + id, val:o}]);
+    const ae = document.activeElement; if(ae && ae.blur && ae !== document.body) ae.blur();
+    const x = layer.querySelector(`.kp-obj[data-id="${id}"] .ko-txt`); if(x && !coarse) x.focus();
+  }
+  ["kpAddNote", "kpAddRect", "kpAddCirc"].forEach(i=>$(i).addEventListener("mousedown", e=>e.preventDefault()));
+  $("kpAddNote").addEventListener("click", ()=>addObj("note"));
+  $("kpAddRect").addEventListener("click", ()=>addObj("rect"));
+  $("kpAddCirc").addEventListener("click", ()=>addObj("circle"));
+  function delObj(id){ if(actObj === id){ actObj = null; fmtT = "tiles"; } change([{path:"shapes/" + id, val:""}]); }
+  function colMenu(id, anchor){
+    const curC = (P.shapes[id] || {}).c;
+    popMenu(anchor, OCOL.map(c=>({label:"", dot:c, on:c === curC, act:()=>change([{path:`shapes/${id}/c`, val:c}])})));
+  }
+  layer.addEventListener("pointerdown", e=>{
+    const el = e.target.closest(".kp-obj"); if(!el || !P || e.button > 0) return;
+    const id = el.dataset.id;
+    if(actObj !== id || sel.size){ actObj = id; sel.clear(); cur = null; moveFrom = null; closeSheet(); paint(); }
+    fmtT = "obj:" + id; fmtBar();
+    if(e.target.closest(".ko-del")){ e.preventDefault(); delObj(id); return; }
+    if(e.target.closest(".ko-col")){ e.preventDefault(); colMenu(id, e.target); return; }
+    const rs = !!e.target.closest(".ko-rs"), title = e.target.closest(".ko-title");
+    if(e.target.closest(".ko-txt")) return;                                   // writing in it
+    if(title && document.activeElement === title) return;
+    e.preventDefault();
+    const ae = document.activeElement; if(ae && ae !== document.body && root.contains(ae)) ae.blur();
+    const o = P.shapes[id]; if(!o) return;
+    od = {id, el, rs, title, x0:e.clientX, y0:e.clientY, o:{x:o.x, y:o.y, w:o.w, h:o.h}, moved:false, pid:e.pointerId, em:emPx()};
+  });
+  addEventListener("pointermove", e=>{
+    if(!od || e.pointerId !== od.pid) return;
+    if(!od.moved && Math.hypot(e.clientX - od.x0, e.clientY - od.y0) < 4) return;
+    od.moved = true; e.preventDefault();
+    const dx = (e.clientX - od.x0) / od.em, dy = (e.clientY - od.y0) / od.em, o = od.o;
+    if(od.rs){ od.w = clamp(o.w + dx, 3, 200); od.h = clamp(o.h + dy, 3, 200); od.el.style.width = od.w + "em"; od.el.style.height = od.h + "em"; }
+    else { od.x = clamp(o.x + dx, 0, 300); od.y = clamp(o.y + dy, 0, 300); od.el.style.left = od.x + "em"; od.el.style.top = od.y + "em"; }
+  });
+  function endObj(e){
+    if(!od || e.pointerId !== od.pid) return;
+    const d = od; od = null; const r = v=>Math.round(v * 100) / 100;
+    if(d.moved) change(d.rs ? [{path:`shapes/${d.id}/w`, val:r(d.w)}, {path:`shapes/${d.id}/h`, val:r(d.h)}] : [{path:`shapes/${d.id}/x`, val:r(d.x)}, {path:`shapes/${d.id}/y`, val:r(d.y)}]);
+    else if(d.title && !coarse){ d.title.focus(); d.title.select(); }
+    else if(d.title && coarse){ d.title.focus(); }
+    paint();
+  }
+  addEventListener("pointerup", endObj); addEventListener("pointercancel", endObj);
+  let objT = 0;
+  function saveObj(x){
+    clearTimeout(objT); if(!P || !x) return;
+    const el = x.closest(".kp-obj"); if(!el || !P.shapes[el.dataset.id]) return;
+    if(x.classList.contains("ko-title")) change([{path:`shapes/${el.dataset.id}/ti`, val:x.value.trim()}]);
+    else change([{path:`shapes/${el.dataset.id}/t`, val:objText(x).replace(/\s+$/, "")}]);
+  }
+  layer.addEventListener("input", e=>{ const x = e.target; clearTimeout(objT); objT = setTimeout(()=>saveObj(x), 700); });
+  layer.addEventListener("focusout", e=>{ if(e.target.matches(".ko-txt,.ko-title")) saveObj(e.target); });
+  layer.addEventListener("focusin", e=>{ const el = e.target.closest(".kp-obj"); if(el){ fmtT = "obj:" + el.dataset.id; if(actObj !== el.dataset.id){ actObj = el.dataset.id; sel.clear(); cur = null; paint(); } fmtBar(); } });
+
+  /* ---------- font size and bold (selected cities, or the object being written in) ---------- */
+  const objOf = ()=>fmtT.startsWith("obj:") && P && P.shapes[fmtT.slice(4)] ? fmtT.slice(4) : null;
+  function curSize(){
+    const id = objOf();
+    if(id) return P.shapes[id].s || "";
+    const k = cur && sel.has(cur) ? cur : [...sel][0]; return k ? ((P.tiles[k] || {}).s || "") : "";
+  }
+  function fmtBar(){
+    if(!P) return;
+    const id = objOf(); let b;
+    if(id) b = P.shapes[id].b === "1";
+    else { const k = cur && sel.has(cur) ? cur : [...sel][0]; b = k ? (P.tiles[k] || {}).w !== "n" : true; }
+    $("kpFsV").textContent = curSize() || "Auto";
+    $("kpBold").classList.toggle("on", b);
+  }
+  function setSize(v){
+    if(!P) return;
+    const id = objOf();
+    if(id){ change([{path:`shapes/${id}/s`, val:v}]); return; }
+    if(!sel.size){ toast(t("kpSelFirst")); return; }
+    change([...sel].map(x=>({path:`tiles/${x}/s`, val:v})));
+  }
+  function stepSize(dir){
+    const id = objOf(), def = id && P.shapes[id].k === "note" ? 10 : 12, now = +curSize() || def;
+    const list = dir > 0 ? FS.filter(s=>s > now) : FS.filter(s=>s < now).reverse();
+    if(list.length) setSize(String(list[0]));
+  }
+  function toggleBold(){
+    if(!P) return;
+    const id = objOf();
+    if(id){ change([{path:`shapes/${id}/b`, val:P.shapes[id].b === "1" ? "" : "1"}]); return; }
+    if(!sel.size){ toast(t("kpSelFirst")); return; }
+    const allBold = [...sel].every(x=>(P.tiles[x] || {}).w !== "n");
+    change([...sel].map(x=>({path:`tiles/${x}/w`, val:allBold ? "n" : ""})));
+  }
+  ["kpFsDn", "kpFsUp", "kpFsV", "kpBold"].forEach(i=>$(i).addEventListener("mousedown", e=>e.preventDefault()));   // keep the cursor where it is
+  $("kpFsDn").addEventListener("click", ()=>stepSize(-1));
+  $("kpFsUp").addEventListener("click", ()=>stepSize(1));
+  $("kpFsV").addEventListener("click", ()=>setSize(""));
+  $("kpBold").addEventListener("click", toggleBold);
+  boardEl.addEventListener("pointerdown", ()=>{ fmtT = "tiles"; if(actObj){ actObj = null; } }, true);
+
+  /* ---------- PDF: the map is drawn on a canvas, put in a one-page landscape PDF and downloaded ---------- */
+  const FILLC = Object.fromEntries(FILL);
+  function wrapLines(ctx, text, maxW){
+    const out = [];
+    for(const para of String(text).split("\n")){
+      let line = "";
+      for(const word of para.split(" ")){
+        const tryL = line ? line + " " + word : word;
+        if(ctx.measureText(tryL).width <= maxW){ line = tryL; continue; }
+        if(line) out.push(line);
+        let w = word;
+        while(ctx.measureText(w).width > maxW && w.length > 1){ let k = w.length - 1; while(k > 1 && ctx.measureText(w.slice(0, k)).width > maxW) k--; out.push(w.slice(0, k)); w = w.slice(k); }
+        line = w;
+      }
+      out.push(line);
+    }
+    return out;
+  }
+  function textBox(ctx, text, x, y, w, h, o){   // o: {size, bold, color, align:"center"|"left", valign:"middle"|"top", lh}
+    ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
+    ctx.font = `${o.bold ? "700" : "400"} ${o.size}px Arial, Helvetica, sans-serif`; ctx.fillStyle = o.color || "#000"; ctx.textBaseline = "middle";
+    const lines = wrapLines(ctx, text, w), lh = o.size * (o.lh || 1.15);
+    let ty = o.valign === "top" ? y + lh / 2 : y + h / 2 - (lines.length - 1) * lh / 2;
+    ctx.textAlign = o.align === "left" ? "left" : "center";
+    const tx = o.align === "left" ? x : x + w / 2;
+    for(const l of lines){ ctx.fillText(l, tx, ty); ty += lh; }
+    ctx.restore();
+  }
+  async function drawMap(S){
+    let W = BW, H = BH;
+    for(const id in P.shapes){ const o = P.shapes[id]; W = Math.max(W, o.x + o.w + 1); H = Math.max(H, o.y + o.h + 1); }
+    const M = 1.5, TOP = 3.2;   // margins and title, in em
+    const cv = document.createElement("canvas"); cv.width = Math.round((W + 2 * M) * S); cv.height = Math.round((H + TOP + M) * S);
+    const ctx = cv.getContext("2d"), E = v=>v * S;
+    ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, cv.width, cv.height);
+    textBox(ctx, ((index[pid] && index[pid].name) || "KvK plan") + "  ·  " + todayName(), E(M), E(.6), E(W), E(2), {size:E(1.4), bold:true, color:"#222", align:"left"});
+    ctx.translate(E(M), E(TOP));
+    const step = 6.25 + .9375;
+    ctx.fillStyle = "#d9ead3"; ctx.fillRect(0, 0, E(BH), E(BH));
+    ctx.lineWidth = E(.125);
+    for(let r = 0; r < N; r++) for(let c = 0; c < N; c++){
+      if(inCastle(r, c)) continue;
+      const d = P.tiles[kOf(r, c)] || {}, x = E(.9375 + c * step), y = E(.9375 + r * step), s = E(6.25);
+      const f = d.s ? +d.s / 12 : 1, bold = d.w !== "n";
+      ctx.fillStyle = FILLC[d.c || ""] || "#fff"; ctx.fillRect(x, y, s, s);
+      ctx.strokeStyle = "#b6b6b6"; ctx.strokeRect(x + E(.0625), y + E(.0625), s - E(.125), s - E(.125));
+      const hh = E(1.5625 * f);
+      if(d.g) textBox(ctx, d.g, x + E(.35 * f), y, s / 2, hh, {size:E(.75 * f), bold, align:"left"});
+      if(d.t){ ctx.save(); ctx.font = `${bold ? 700 : 400} ${E(.83 * f)}px Arial, Helvetica, sans-serif`; ctx.fillStyle = "#000"; ctx.textAlign = "right"; ctx.textBaseline = "middle"; ctx.fillText(d.t, x + s - E(.35 * f), y + hh / 2); ctx.restore(); }
+      if(d.n){ const nf = d.n.length > 22 ? .68 : d.n.length > 11 ? .82 : 1; textBox(ctx, d.n, x + E(.15), y + hh, s - E(.3), s - hh - E(.2), {size:E(nf * f), bold, lh:1.12}); }
+    }
+    // red frame
+    ctx.strokeStyle = "#ff0000"; ctx.lineWidth = E(.125); ctx.strokeRect(E(7.65625), E(7.65625), E(BH - 2 * 7.65625), E(BH - 2 * 7.65625));
+    // castle
+    const cx = E(.9375 + 4 * step), cs = E(6 * 6.25 + 5 * .9375), ts = E(6.25);
+    ctx.fillStyle = "#fff"; ctx.fillRect(cx, cx, cs, cs); ctx.strokeStyle = "#bf9000"; ctx.strokeRect(cx, cx, cs, cs);
+    try{
+      const img = new Image();
+      img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(KEEP.replace("<svg ", '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="180" '));
+      await img.decode();
+      const box = cs - E(2 * 9.6), iw = box, ih = box * 180 / 200;
+      ctx.drawImage(img, cx + E(9.6), cx + E(9.6) + (box - ih) / 2, iw, ih);
+    }catch(e){ console.warn(e); }
+    const tur = {n:[0, 0], e:[1, 0], w:[0, 1], s:[1, 1]};
+    for(const k in tur){
+      const x = cx + tur[k][0] * (cs - ts), y = cx + tur[k][1] * (cs - ts);
+      ctx.fillStyle = "#ffd966"; ctx.fillRect(x, y, ts, ts); ctx.strokeStyle = "#bf9000"; ctx.strokeRect(x, y, ts, ts);
+      textBox(ctx, t("kpDir_" + k), x, y + E(.6), ts, E(2.2), {size:E(1.05), bold:true, color:"#0000ff"});
+      if(P.castle[k]) textBox(ctx, P.castle[k], x + E(.2), y + E(2.9), ts - E(.4), E(2.6), {size:E(.8), bold:true});
+    }
+    const side = P.castle;
+    if(side.top) textBox(ctx, side.top, cx + ts, cx + E(.1), cs - 2 * ts, E(1.6), {size:E(1.1)});
+    if(side.bottom) textBox(ctx, side.bottom, cx + ts, cx + cs - E(1.7), cs - 2 * ts, E(1.6), {size:E(1.1)});
+    for(const [k, rot, px] of [["right", -Math.PI / 2, cx + cs - E(1)], ["left", Math.PI / 2, cx + E(1)]]){
+      if(!side[k]) continue;
+      ctx.save(); ctx.translate(px, cx + cs / 2); ctx.rotate(rot); textBox(ctx, side[k], -(cs - 2 * ts) / 2, -E(.8), cs - 2 * ts, E(1.6), {size:E(1.1)}); ctx.restore();
+    }
+    // notes, rectangles, circles
+    for(const id in P.shapes){
+      const o = P.shapes[id], x = E(o.x), y = E(o.y), w = E(o.w), hgt = E(o.h), col = o.c || (o.k === "note" ? OCOL[0] : OCOL[1]);
+      if(o.k === "note"){
+        const hh = E(1.86);
+        ctx.fillStyle = "#f7f7f2"; ctx.fillRect(x, y, w, hgt);
+        ctx.fillStyle = col; ctx.fillRect(x, y, w, hh);
+        ctx.lineWidth = E(.0625); ctx.strokeStyle = col; ctx.strokeRect(x, y, w, hgt);
+        textBox(ctx, o.ti || t("kpNotes"), x, y, w, hh, {size:E(.8), bold:true, color:"#fff"});
+        const fs = o.s ? +o.s / 12 : .83;
+        if(o.t) textBox(ctx, o.t, x + E(.6 * fs / .83), y + hh + E(.5 * fs / .83), w - E(1.2 * fs / .83), hgt - hh - E(fs / .83), {size:E(fs), bold:o.b === "1", color:"#191919", align:"left", valign:"top", lh:1.45});
+      } else {
+        ctx.lineWidth = E(.22); ctx.strokeStyle = col;
+        if(o.k === "circle"){ ctx.beginPath(); ctx.ellipse(x + w / 2, y + hgt / 2, Math.max(1, w / 2 - E(.11)), Math.max(1, hgt / 2 - E(.11)), 0, 0, Math.PI * 2); ctx.stroke(); }
+        else ctx.strokeRect(x + E(.11), y + E(.11), w - E(.22), hgt - E(.22));
+        if(o.t) textBox(ctx, o.t, x + w * .06, y + hgt * .06, w * .88, hgt * .88, {size:E(o.s ? +o.s / 12 : 1), bold:true, color:col, lh:1.2});
+      }
+    }
+    return cv;
+  }
+  function pdfFromJpeg(jpg, iw, ih){
+    const PW = 841.89, PH = 595.28, m = 14, sc = Math.min((PW - 2 * m) / iw, (PH - 2 * m) / ih);
+    const dw = +(iw * sc).toFixed(2), dh = +(ih * sc).toFixed(2), dx = +((PW - dw) / 2).toFixed(2), dy = +((PH - dh) / 2).toFixed(2);
+    const enc = s=>new TextEncoder().encode(s), parts = [], offs = []; let len = 0;
+    const push = p=>{ const u = typeof p === "string" ? enc(p) : p; parts.push(u); len += u.length; };
+    const content = `q ${dw} 0 0 ${dh} ${dx} ${dy} cm /Im0 Do Q`;
+    push("%PDF-1.4\n"); push(new Uint8Array([37, 226, 227, 207, 211, 10]));
+    const obj = (n, body)=>{ offs[n] = len; push(`${n} 0 obj\n`); body.forEach(push); push("\nendobj\n"); };
+    obj(1, ["<< /Type /Catalog /Pages 2 0 R >>"]);
+    obj(2, ["<< /Type /Pages /Kids [3 0 R] /Count 1 >>"]);
+    obj(3, [`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PW} ${PH}] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>`]);
+    obj(4, [`<< /Type /XObject /Subtype /Image /Width ${iw} /Height ${ih} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpg.length} >>\nstream\n`, jpg, "\nendstream"]);
+    obj(5, [`<< /Length ${content.length} >>\nstream\n${content}\nendstream`]);
+    const xref = len;
+    push(`xref\n0 6\n0000000000 65535 f \n` + [1, 2, 3, 4, 5].map(n=>String(offs[n]).padStart(10, "0") + " 00000 n \n").join(""));
+    push(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`);
+    return new Blob(parts, {type:"application/pdf"});
+  }
+  let pdfBusy = false;
+  async function makePdf(){
+    if(!P) return null;
+    const ae = document.activeElement; if(ae && root.contains(ae) && ae !== document.body) ae.blur();
+    const cv = await drawMap(22);
+    const blob = await new Promise(res=>cv.toBlob(res, "image/jpeg", .92));
+    const jpg = new Uint8Array(await blob.arrayBuffer());
+    return pdfFromJpeg(jpg, cv.width, cv.height);
+  }
+  async function downloadPdf(){
+    if(!P || pdfBusy) return;
+    pdfBusy = true; $("kpPdf").disabled = true;
+    try{
+      const pdf = await makePdf(); if(!pdf) return;
+      const name = ((index[pid] && index[pid].name) || "KvK plan").replace(/[\\/:*?"<>|]+/g, "-") + ".pdf";
+      const url = URL.createObjectURL(pdf), a = document.createElement("a");
+      a.href = url; a.download = name; a.rel = "noopener"; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url), 60000);
+      let framed = false; try{ framed = window.top !== window.self; }catch(e){ framed = true; }
+      toast("📄 " + t("kpPdfDone") + (framed ? "\n" + t("kpPdfFrame") : ""));
+    }catch(e){ fail(e); }
+    finally{ pdfBusy = false; $("kpPdf").disabled = false; }
+  }
+  $("kpPdf").addEventListener("click", downloadPdf);
+  window.__kpMakePdf = makePdf;   // used by the automatic tests
+
+  /* ---------- keyboard (spreadsheet-like) ---------- */
+  document.addEventListener("keydown", e=>{
+    if(!active || html.classList.contains("locked") || document.querySelector("dialog[open]")) return;
+    const ae = document.activeElement, key = e.key, mod = e.ctrlKey || e.metaKey;
+    const editing = ae && root.contains(ae) && (ae.tagName === "INPUT" || ae.tagName === "TEXTAREA" || ae.isContentEditable);
+    if(editing){
+      const inTile = ae.closest(".pt");
+      if(inTile){
+        if(key === "Enter" && !e.shiftKey){ e.preventDefault(); ae.blur(); step(1, 0); }
+        else if(key === "Tab"){ e.preventDefault(); ae.blur(); step(0, e.shiftKey ? -1 : 1); }
+        else if(key === "Escape"){ e.preventDefault(); ae.dataset.cancel = "1"; ae.blur(); }
+      } else if(ae.closest(".kp-obj")){
+        if(mod && key.toLowerCase() === "b"){ e.preventDefault(); toggleBold(); }
+        else if(key === "Escape" || (key === "Enter" && ae.classList.contains("ko-title"))){ e.preventDefault(); ae.blur(); }
+      } else if(ae.dataset.cf){
+        if(key === "Enter"){ e.preventDefault(); ae.blur(); } else if(key === "Escape"){ ae.dataset.cancel = "1"; ae.blur(); }
+      } else if(ae === $("kpSearch")){
+        if(key === "Enter"){ e.preventDefault(); nextHit(); } else if(key === "Escape"){ ae.value = ""; query = ""; paint(); ae.blur(); }
+      } else if(ae === $("kpShName") || ae === $("kpShTime")){ if(key === "Enter"){ e.preventDefault(); ae.blur(); } }
+      return;
+    }
+    if(ae && ae !== document.body && !root.contains(ae)) return;
+    if(mod && key.toLowerCase() === "z"){ e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
+    if(mod && key.toLowerCase() === "y"){ e.preventDefault(); redo(); return; }
+    if(mod && key.toLowerCase() === "f"){ e.preventDefault(); $("kpSearch").focus(); $("kpSearch").select(); return; }
+    if(actObj && P && !cur){
+      if(key === "Delete" || key === "Backspace"){ e.preventDefault(); delObj(actObj); }
+      else if(key === "Escape"){ actObj = null; fmtT = "tiles"; paint(); }
+      else if(mod && key.toLowerCase() === "b"){ e.preventDefault(); toggleBold(); }
+      return;
+    }
+    if(!cur || !P) return;
+    if(mod){
+      const kk = key.toLowerCase();
+      if(kk === "b"){ e.preventDefault(); fmtT = "tiles"; toggleBold(); return; }
+      if(kk === "c" || kk === "x"){
+        const d = P.tiles[cur] || {}; clip = {g:d.g || "", n:d.n || ""};
+        try{ navigator.clipboard && navigator.clipboard.writeText(clip.n).catch(()=>{}); }catch(err){}
+        if(kk === "x") clearSel();
+        e.preventDefault();
+      } else if(kk === "v" && clip){
+        e.preventDefault(); const l = []; sel.forEach(x=>{ l.push({path:`tiles/${x}/g`, val:clip.g}, {path:`tiles/${x}/n`, val:clip.n}); }); change(l);
+      } else if(kk === "a"){ e.preventDefault(); sel.clear(); for(let r = 0; r < N; r++) for(let c = 0; c < N; c++) if(!inCastle(r, c)) sel.add(kOf(r, c)); paint(); }
+      return;
+    }
+    if(e.altKey) return;
+    if(key === "ArrowUp"){ e.preventDefault(); step(-1, 0); }
+    else if(key === "ArrowDown"){ e.preventDefault(); step(1, 0); }
+    else if(key === "ArrowLeft"){ e.preventDefault(); step(0, -1); }
+    else if(key === "ArrowRight" || key === "Tab"){ e.preventDefault(); step(0, key === "Tab" && e.shiftKey ? -1 : 1); }
+    else if(key === "Enter" || key === "F2"){ e.preventDefault(); edit(cur, lastField, false); }
+    else if(key === "Delete" || key === "Backspace"){ e.preventDefault(); clearSel(); }
+    else if(key === "Escape"){ deselect(); }
+    else if(key.length === 1 && !coarse){ edit(cur, lastField, true); }   // start typing: replaces the content, like a spreadsheet
+  });
+
+  /* ---------- top bars ---------- */
+  $("kpClans").addEventListener("change", e=>{ const c = e.target.dataset.fclan; if(c == null) return; e.target.checked ? filter.add(c) : filter.delete(c); paint(); });
+  $("kpClans").addEventListener("click", async e=>{
+    const b = e.target.closest("[data-ren]"); if(!b || !P) return;
+    e.preventDefault();
+    const i = +b.dataset.ren, old = P.clans[i];
+    const v = await ask(t("kpClanRen"), old); if(v == null) return;
+    const name = v.trim().slice(0, 8), clans = P.clans.slice(), l = [];
+    if(!name){ if(clans.length < 2) return; clans.splice(i, 1); }
+    else { if(name === old) return; if(clans.includes(name)){ toast(t("kpClanDup")); return; } clans[i] = name;
+      for(const k in P.tiles) if(P.tiles[k].g === old) l.push({path:`tiles/${k}/g`, val:name});
+      if(filter.has(old)){ filter.delete(old); filter.add(name); } }
+    l.unshift({path:"clans", val:clans}); change(l);
+  });
+  $("kpClanAdd").addEventListener("click", async ()=>{
+    if(!P) return; if(P.clans.length >= 8){ toast(t("kpClanMax")); return; }
+    const v = await ask(t("kpClanAdd"), ""); if(!v || !v.trim()) return;
+    const name = v.trim().slice(0, 8); if(P.clans.includes(name)){ toast(t("kpClanDup")); return; }
+    change([{path:"clans", val:P.clans.concat(name)}]);
+  });
+  $("kpColors").addEventListener("click", e=>{ const b = e.target.closest("[data-fill]"); if(b) setFill(b.dataset.fill); });
+  $("kpClear").addEventListener("click", clearSel);
+  $("kpCC").addEventListener("click", ()=>{ prefs.cc = !prefs.cc; savePrefs(); paint(); });
+  $("kpUndo").addEventListener("click", undo); $("kpRedo").addEventListener("click", redo);
+  $("kpSearch").addEventListener("input", e=>{ query = e.target.value; hitIdx = -1; paint(); });
+  function nextHit(){
+    const hits = [...boardEl.querySelectorAll(".pt.hit")]; if(!hits.length){ if(query.trim()) toast("0"); return; }
+    hitIdx = (hitIdx + 1) % hits.length; hits[hitIdx].scrollIntoView({block:"center", inline:"center", behavior:"smooth"}); select(hits[hitIdx].dataset.k);
+  }
+  /* zoom */
+  const TOTAL_EM = 101.5625 + 3 + 17;
+  function setZoom(z){ z = Math.max(.3, Math.min(1.8, z)); wrap.style.setProperty("--z", z.toFixed(3)); $("kpZoomFit").textContent = Math.round(z * 100) + "%"; prefs.z = z; savePrefs(); }
+  function fitZoom(){ const w = view.clientWidth - 30; setZoom(Math.max(coarse || innerWidth < 700 ? .5 : .45, Math.min(1.2, w / (TOTAL_EM * 16)))); }
+  $("kpZoomIn").addEventListener("click", ()=>setZoom((prefs.z || 1) + .1));
+  $("kpZoomOut").addEventListener("click", ()=>setZoom((prefs.z || 1) - .1));
+  $("kpZoomFit").addEventListener("click", fitZoom);
+  view.addEventListener("wheel", e=>{ if(e.ctrlKey || e.metaKey){ e.preventDefault(); setZoom((prefs.z || 1) * (e.deltaY < 0 ? 1.08 : .92)); } }, {passive:false});
+
+  /* ---------- plans (like the spreadsheet's tabs) ---------- */
+  function todayName(){ const d = new Date(serverNow()), p = n=>String(n).padStart(2, "0"); return `${p(d.getDate())}/${p(d.getMonth() + 1)}/${d.getFullYear()}`; }
+  function createPlan(name, data, id){
+    id = id || uid("k"); const ts = RAW.TS();
+    prefs.last = id; savePrefs();
+    return RAW.update({[`${base}/index/${id}`]:{name, created:ts, updated:ts}, [`${base}/plans/${id}`]:data}).then(()=>openPlan(id), fail);
+  }
+  function openPlan(id){
+    if(unsubP){ unsubP(); unsubP = null; }
+    pid = id; P = null; sel.clear(); cur = null; moveFrom = null; undoS.length = 0; redoS.length = 0; closeSheet();
+    prefs.last = id; savePrefs(); paintTabs(); paint();
+    if(unsubH){ unsubH(); unsubH = null; } hist = {}; histReady = false;
+    unsubH = RAW.on(`${base}/histIdx/${id}`, m=>{ if(pid !== id) return; hist = m || {}; histReady = true; }, ()=>{ histReady = true; });
+    unsubP = RAW.on(`${base}/plans/${id}`, d=>{ if(pid !== id) return; if(isEmptyObj(d)){ P = null; paint(); return; } P = norm(d); paint(); }, onStoreError);
+  }
+  async function renamePlan(id){
+    const v = await ask(t("kpPlanName"), index[id].name);
+    if(v && v.trim()) RAW.update({[`${base}/index/${id}/name`]:v.trim().slice(0, 30), [`${base}/index/${id}/updated`]:RAW.TS()}).catch(fail);
+  }
+  let tabClickT = 0;
+  $("kpTabs").addEventListener("dblclick", e=>{ const b = e.target.closest("[data-pid]"); clearTimeout(tabClickT); if(b && index[b.dataset.pid]){ closeKpMenu(); renamePlan(b.dataset.pid); } });
+  $("kpTabs").addEventListener("click", e=>{
+    const b = e.target.closest("[data-pid]"); if(!b) return;
+    const id = b.dataset.pid;
+    if(id !== pid){ openPlan(id); return; }
+    if(e.detail > 1){ clearTimeout(tabClickT); return; }   // double-click = rename
+    clearTimeout(tabClickT); tabClickT = setTimeout(()=>popMenu(b, [
+      {label:"✎ " + t("rename"), act:()=>renamePlan(id)},
+      {label:(index[id].lock ? "🔓 " + t("kpUnlockMap") : "🔒 " + t("kpLockMap")), act:()=>toggleLock(id)},
+      {label:"🕘 " + t("kpHist"), act:()=>histMenu(b)},
+      {label:"⧉ " + t("kpDup"), act:async ()=>{ if(!P) return; const v = await ask(t("kpPlanName"), todayName()); if(v && v.trim()) createPlan(v.trim().slice(0, 30), exportData()); }},
+      "-",
+      {label:"🗑 " + t("del"), act:async ()=>{ if(!await ask(`${t("kpDel")}\n\n“${index[id].name}”`, null, "confirm")) return; RAW.update({[`${base}/index/${id}`]:null, [`${base}/plans/${id}`]:null, [`${base}/hist/${id}`]:null, [`${base}/histIdx/${id}`]:null}).catch(fail); }}
+    ]), 260);
+  });
+  $("kpAdd").addEventListener("click", async ()=>{   // like the "+" of Google Sheets: a new map, named right away
+    let n = planIds().length + 1; const names = new Set(planIds().map(i=>index[i].name));
+    while(names.has("PLAN KVK " + n)) n++;
+    const v = await ask(t("kpPlanName"), "PLAN KVK " + n);
+    if(v && v.trim()) createPlan(v.trim().slice(0, 30), tplData());
+  });
+
+  /* ---------- duplicates ---------- */
+  function dupMap(){   // normalized names placed more than once (cities + castle turrets)
+    const seen = new Map(), d = new Set();
+    if(!P) return d;
+    const add = v=>{ const k = nk(v); if(!k) return; if(seen.has(k)) d.add(k); else seen.set(k, 1); };
+    for(const k in P.tiles) add(P.tiles[k].n);
+    ["n", "e", "w", "s"].forEach(x=>add(P.castle[x]));
+    return d;
+  }
+
+  /* ---------- lock a map ---------- */
+  let roState = null;
+  function setRo(ro){
+    if(roState === ro) return; roState = ro;
+    root.classList.toggle("kp-ro", ro); $("kpRo").hidden = !ro;
+    if(!coarse) boardEl.querySelectorAll(".pt-n").forEach(n=>{ if(ro){ n.dataset.ce = n.getAttribute("contenteditable") || ""; n.setAttribute("contenteditable", "false"); } else if(n.dataset.ce){ n.setAttribute("contenteditable", n.dataset.ce); } });
+    if(ro){ const ae = document.activeElement; if(ae && root.contains(ae) && ae !== document.body && ae.id !== "kpSearch" && ae.id !== "kpRoster") ae.blur(); sel.clear(); cur = null; closeSheet(); }
+  }
+  function toggleLock(id){
+    const on = !(index[id] && index[id].lock);
+    RAW.update({[`${base}/index/${id}/lock`]:on ? 1 : null}).then(()=>toast(on ? "🔒 " + t("kpLockMap") : "🔓 " + t("kpUnlockMap")), fail);
+  }
+
+  /* ---------- version history ---------- */
+  const SNAP_EVERY = 10 * 60 * 1000, SNAP_MAX = 30;
+  function snapshot(){
+    if(!P || !pid) return Promise.resolve();
+    const id = "h" + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), now = serverNow();
+    let n = 0; for(const k in P.tiles) if(P.tiles[k].n) n++;
+    const u = {[`${base}/hist/${pid}/${id}`]:exportData(), [`${base}/histIdx/${pid}/${id}`]:{ts:now, n}};
+    const ids = Object.keys(hist).sort((a, b)=>(hist[a].ts || 0) - (hist[b].ts || 0));
+    while(ids.length >= SNAP_MAX){ const o = ids.shift(); u[`${base}/hist/${pid}/${o}`] = null; u[`${base}/histIdx/${pid}/${o}`] = null; }
+    hist[id] = {ts:now, n};
+    return RAW.update(u).catch(e=>console.warn(e));
+  }
+  function maybeSnap(){
+    if(!histReady) return;
+    let last = 0; for(const k in hist) last = Math.max(last, hist[k].ts || 0);
+    if(serverNow() - last > SNAP_EVERY) snapshot();
+  }
+  const fmtTs = ts=>{ const d = new Date(ts), p = n=>String(n).padStart(2, "0"); return `${p(d.getDate())}/${p(d.getMonth() + 1)} ${p(d.getHours())}:${p(d.getMinutes())}`; };
+  function histMenu(anchor){
+    const ids = Object.keys(hist).sort((a, b)=>(hist[b].ts || 0) - (hist[a].ts || 0));
+    if(!ids.length){ toast("🕘 " + t("kpHistNone")); return; }
+    popMenu(anchor, ids.map(h=>({label:`🕘 ${fmtTs(hist[h].ts)}  ·  ${hist[h].n || 0} ${t("kpPlayersCount")}`, act:()=>restore(h)})));
+  }
+  async function restore(h){
+    if(isLocked()){ lockedMsg(); return; }
+    const info = hist[h]; if(!info) return;
+    if(!await ask(`${t("kpRestoreQ")}\n\n🕘 ${fmtTs(info.ts)}`, null, "confirm")) return;
+    const id = pid;
+    let off = null;
+    const data = await new Promise(res=>{ off = RAW.on(`${base}/hist/${id}/${h}`, v=>res(v), e=>res(null)); });
+    try{ off && off(); }catch(e){}
+    if(!data || pid !== id){ toast("❌"); return; }
+    await snapshot();   // the current version can be brought back too
+    undoS.length = 0; redoS.length = 0;
+    RAW.update({[`${base}/plans/${id}`]:data, [`${base}/index/${id}/updated`]:RAW.TS()}).then(()=>toast("✅ " + t("kpRestored")), fail);
+  }
+
+  /* ---------- players panel + copy as text ---------- */
+  const panel = $("kpPanel");
+  function setPanel(on){ panel.hidden = !on; prefs.pl = on ? 1 : 0; savePrefs(); $("kpPl").classList.toggle("on", on); paint(); }
+  $("kpPl").addEventListener("click", ()=>setPanel(panel.hidden));
+  $("kpPnClose").addEventListener("click", ()=>setPanel(false));
+  const secs = s=>{ const m = String(s || "").match(/\d+/); return m ? +m[0] : 9999; };
+  function placedList(){
+    const out = [];
+    if(!P) return out;
+    for(const k in P.tiles){ const d = P.tiles[k]; if(d.n) out.push({k, n:d.n, g:d.g || "", t:d.t || ""}); }
+    ["n", "e", "w", "s"].forEach(x=>{ if(P.castle[x]) out.push({k:"tur:" + x, n:P.castle[x], g:"", t:"", tur:t("kpDir_" + x)}); });
+    const ord = g=>{ const i = P.clans.indexOf(g); return i < 0 ? 99 : i; };
+    return out.sort((a, b)=>(a.tur ? -1 : 0) - (b.tur ? -1 : 0) || ord(a.g) - ord(b.g) || secs(a.t) - secs(b.t) || a.n.localeCompare(b.n));
+  }
+  const rosterNames = ()=>{ const s = new Set(), out = []; String(roster).split(/[\n,;\t]+/).forEach(x=>{ const v = x.replace(/^\s*(?:[-*•]|\d+[.)])\s*/, "").replace(/\s+/g, " ").trim().slice(0, 40); if(v && !s.has(nk(v))){ s.add(nk(v)); out.push(v); } }); return out; };
+  function paintPanel(ae, dup){
+    if(panel.hidden || !P) return;
+    const list = placedList();
+    $("kpPnCount").textContent = `(${list.length})`;
+    let html2 = "", lastG = null;
+    for(const p of list){
+      const g = p.tur ? "🏰" : (p.g || t("kpNoClan"));
+      if(g !== lastG){ html2 += `<h5>${esc(g)}</h5>`; lastG = g; }
+      const ci = P.clans.indexOf(p.g);
+      html2 += `<button type="button" class="kp-pl${dup.has(nk(p.n)) ? " dup" : ""}" data-go="${esc(p.k)}"${ci >= 0 ? ` style="--cc:${CLANC[ci % CLANC.length]}"` : ""}><span>${dup.has(nk(p.n)) ? "⚠ " : ""}${esc(p.n)}</span><small>${esc(p.tur || p.t)}</small></button>`;
+    }
+    $("kpPnList").innerHTML = html2 || `<p class="kp-pn-empty">—</p>`;
+    const placed = new Set(list.map(p=>nk(p.n))), names = rosterNames(), miss = names.filter(n=>!placed.has(nk(n)));
+    $("kpPnMissing").innerHTML = !names.length ? `<p class="kp-pn-empty">${esc(t("kpRosterPh"))}</p>`
+      : miss.length ? miss.map(n=>`<button type="button" data-place="${esc(n)}">${esc(n)}</button>`).join("") : `<p class="kp-pn-empty">${esc(t("kpAllPlaced"))}</p>`;
+    const h5 = panel.querySelector("h5[data-i=kpUnplaced]"); if(h5) h5.textContent = t("kpUnplaced") + (names.length ? ` (${miss.length})` : "");
+    const ro = $("kpRoster"); if(ro !== ae && ro.value !== roster) ro.value = roster;
+  }
+  $("kpPnList").addEventListener("click", e=>{
+    const b = e.target.closest("[data-go]"); if(!b) return;
+    const k = b.dataset.go;
+    if(k.startsWith("tur:")){ const x = boardEl.querySelector(`.kp-tur.${k.slice(4)}`); if(x) x.scrollIntoView({block:"center", inline:"center", behavior:"smooth"}); return; }
+    const el = tileEl(k); if(!el) return;
+    el.scrollIntoView({block:"center", inline:"center", behavior:"smooth"});
+    if(!isLocked()) select(k);
+    el.classList.add("flash"); setTimeout(()=>el.classList.remove("flash"), 1300);
+  });
+  $("kpPnMissing").addEventListener("click", e=>{
+    const b = e.target.closest("[data-place]"); if(!b || !P) return;
+    if(isLocked()){ lockedMsg(); return; }
+    if(!cur || (P.tiles[cur] && P.tiles[cur].n)){ toast(t("kpPickEmpty")); return; }
+    const k = cur; change([{path:`tiles/${k}/n`, val:b.dataset.place}]);
+    // move on to the next empty city in the same row, so a list can be placed quickly
+    let [r, c] = rc(k);
+    for(let i = 0; i < N * N; i++){ c++; if(c >= N){ c = 0; r++; } if(r >= N) break; if(inCastle(r, c)) continue; const nx = kOf(r, c); if(!(P.tiles[nx] && P.tiles[nx].n)){ select(nx); break; } }
+  });
+  let rosterT = 0;
+  const saveRoster = ()=>{ clearTimeout(rosterT); const v = $("kpRoster").value.replace(/\s+$/, ""); if(v === roster) return; roster = v; RAW.update({[`${base}/roster`]:v || null}).catch(fail); paint(); };
+  $("kpRoster").addEventListener("input", ()=>{ clearTimeout(rosterT); rosterT = setTimeout(saveRoster, 800); });
+  $("kpRoster").addEventListener("focusout", saveRoster);
+  function planText(){
+    const name = (index[pid] && index[pid].name) || "KvK plan", lines = [`🗺️ ${name} — ${todayName()}`];
+    const tur = ["n", "e", "w", "s"].filter(x=>P.castle[x]).map(x=>`${t("kpDir_" + x)}: ${P.castle[x]}`);
+    if(tur.length) lines.push("🏰 " + tur.join(" · "));
+    const groups = new Map();
+    for(const p of placedList()) if(!p.tur){ const g = p.g || t("kpNoClan"); if(!groups.has(g)) groups.set(g, []); groups.get(g).push(p); }
+    for(const [g, ps] of groups) lines.push(`${g} (${ps.length}) : ` + ps.map(p=>p.n + (p.t ? " " + p.t : "")).join(", "));
+    return lines.join("\n");
+  }
+  async function copyText(){
+    if(!P) return;
+    const txt = planText(), out = $("kpTxtOut");
+    let ok = false;
+    try{ await navigator.clipboard.writeText(txt); ok = true; }catch(e){}
+    if(!ok){ try{ out.hidden = false; out.value = txt; out.select(); ok = document.execCommand("copy"); }catch(e){} }
+    if(ok){ out.hidden = true; toast("📋 " + t("kpCopied")); }
+    else { if(panel.hidden) setPanel(true); out.hidden = false; out.value = txt; out.focus(); out.select(); toast(t("kpCopyFail")); }
+  }
+  $("kpCopyTxt").addEventListener("click", copyText);
+  if(prefs.pl) { panel.hidden = false; $("kpPl").classList.add("on"); }
+
+  /* ---------- phone / touch editor ---------- */
+  function openSheet(force){ if((!coarse && !force) || !cur) return; sheet.hidden = false; paintSheet(); const el = tileEl(cur); if(el) setTimeout(()=>el.scrollIntoView({block:"center", inline:"center", behavior:"smooth"}), 30); }
+  function closeSheet(){ sheet.hidden = true; }
+  function paintSheet(){
+    if(sheet.hidden || !P || !cur) return;
+    const d = P.tiles[cur] || {g:"", t:"", n:"", c:""}, ae = document.activeElement, [r, c] = rc(cur);
+    $("kpShTitle").textContent = `${String.fromCharCode(65 + c)}${r + 1}` + (sel.size > 1 ? ` (+${sel.size - 1})` : "") + (d.t ? " · " + d.t : "");
+    $("kpShClans").innerHTML = P.clans.map((x, i)=>`<button type="button" data-sg="${esc(x)}" style="--cc:${CLANC[i % CLANC.length]}"${x === d.g ? ' class="on"' : ""}>${esc(x)}</button>`).join("") + `<button type="button" data-sg="">—</button>`;
+    if($("kpShName") !== ae) $("kpShName").value = d.n;
+    if($("kpShTime") !== ae) $("kpShTime").value = d.t;
+  }
+  $("kpShClose").addEventListener("click", deselect);
+  $("kpShClans").addEventListener("click", e=>{ const b = e.target.closest("[data-sg]"); if(b && cur) setClan(cur, b.dataset.sg); });
+  $("kpShName").addEventListener("change", e=>{ if(cur) change([{path:`tiles/${cur}/n`, val:cleanName(e.target.value)}]); });
+  $("kpShTime").addEventListener("change", e=>{ if(cur) change([{path:`tiles/${cur}/t`, val:cleanTime(e.target.value)}]); });
+  $("kpShColors").addEventListener("click", e=>{ const b = e.target.closest("[data-fill]"); if(b) setFill(b.dataset.fill); });
+  $("kpShClear").addEventListener("click", clearSel);
+  $("kpShMove").addEventListener("click", ()=>{ if(!cur) return; moveFrom = cur; closeSheet(); paint(); toast(t("kpMoveHint")); });
+
+  /* ---------- entering / leaving ---------- */
+  function onStoreError(e){
+    console.error(e);
+    if(RAW !== localRaw){ RAW = localRaw; subscribe(); texts(); }   // e.g. database rules not published yet: keep working on this device
+  }
+  function subscribe(){
+    if(unsubI){ unsubI(); unsubI = null; } if(unsubP){ unsubP(); unsubP = null; }
+    index = {}; pid = ""; P = null; seeded = false; seeding = false; paintTabs(); paint();
+    if(unsubR){ unsubR(); unsubR = null; }
+    unsubR = RAW.on(`${base}/roster`, v=>{ roster = typeof v === "string" ? v : ""; paint(); }, ()=>{});
+    unsubI = RAW.on(`${base}/index`, m=>{
+      index = m || {};
+      const ids = planIds();
+      if(!ids.length){   // nothing yet (or the last plan was deleted): start from the template
+        if(pid){ if(unsubP){ unsubP(); unsubP = null; } pid = ""; P = null; paintTabs(); paint(); }
+        if(!seeding){ seeding = true; createPlan("PLAN KVK", tplData(), seeded ? undefined : "main").then(()=>{ seeding = false; }); }
+        seeded = true; return;
+      }
+      seeded = true;
+      if(!pid || !index[pid]) openPlan(index[prefs.last] ? prefs.last : ids[0]); else { paintTabs(); paint(); }
+    }, onStoreError);
+  }
+  async function enter(){
+    let key = null; try{ key = sessionStorage.getItem(KEYSTORE); }catch(e){}
+    if(!key){
+      let code, wrong = false;
+      for(;;){   // a wrong code keeps the box open with a visible message
+        code = await ask("🗺️ " + t("kpTitle") + "\n\n" + (wrong ? "❌ " + t("kpWrong") + "\n\n" : "") + t("kpCode"), "", "password");
+        if(code == null || !code.trim()) return false;
+        if(kdf("chk", code) === PLAN_CHECK) break;
+        wrong = true; toast("❌ " + t("kpWrong"));
+      }
+      key = kdf("key", code); try{ sessionStorage.setItem(KEYSTORE, key); }catch(e){}
+    }
+    await storeReady;
+    build();
+    RAW = (STORE && STORE.mode === "online" && STORE.raw) ? STORE.raw : localRaw;
+    base = "kvkplan/" + key;
+    leaveSession();
+    html.classList.remove("picking"); html.classList.add("planning"); active = true;
+    try{ history.replaceState(null, "", "#plan"); }catch(e){}
+    texts(); subscribe();
+    if(prefs.z) setZoom(prefs.z); else fitZoom();
+    return true;
+  }
+  function leave(silent){
+    if(!active) return;
+    const ae = document.activeElement; if(ae && root.contains(ae) && ae !== document.body) ae.blur();
+    if(unsubI){ unsubI(); unsubI = null; } if(unsubP){ unsubP(); unsubP = null; } if(unsubR){ unsubR(); unsubR = null; } if(unsubH){ unsubH(); unsubH = null; }
+    active = false; pid = ""; P = null; sel.clear(); cur = null; closeSheet(); closeKpMenu();
+    html.classList.remove("planning");
+    if(silent !== true) showSessions();
+  }
+  function lock(){ try{ sessionStorage.removeItem(KEYSTORE); }catch(e){} leave(); }
+  $("kpBack").addEventListener("click", ()=>leave());
+  $("kpLock").addEventListener("click", lock);
+  document.getElementById("ssPlan").addEventListener("click", enter);
+  addEventListener("resize", ()=>{ if(active && !prefs.z) fitZoom(); });
+  const _render = render; render = function(){ _render.apply(this, arguments); texts(); };
+  return { enter, leave, lock, close:()=>leave(true), isActive:()=>active };
+})();
 
 /* ================= casino door =================
    NOTE: on a static site the password can never be truly secret (anyone can read the page source).

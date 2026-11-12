@@ -1,0 +1,37 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "rallysync": {
+      ".read": true,
+      "meta": {
+        "$sid": {
+          ".write": true,
+          ".validate": "newData.hasChild('name')",
+          "name": {
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 40"
+          }
+        }
+      },
+      "sessions": {
+        "$sid": {
+          ".write": true
+        }
+      },
+      "presence": {
+        "$sid": {
+          ".write": "!newData.exists()",
+          "$cid": {
+            ".write": true
+          }
+        }
+      }
+    },
+    "kvkplan": {
+      "$k": {
+        ".read": "$k.length === 64",
+        ".write": "$k.length === 64"
+      }
+    }
+  }
+}

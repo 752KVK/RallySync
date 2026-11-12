@@ -17,6 +17,7 @@ Coordinateur de lancement de rallyes pour le jeu mobile Kingshot. Il calcule à 
 - Nom d'alliance et couleurs par alliance ou par bloc
 - Interface en anglais, français, coréen et turc, thème clair ou sombre
 - Utilisable sur ordinateur et sur téléphone
+- **KvK PLAN** (bouton doré sur l'écran des sessions, protégé par un code à part) : la carte du château en 14 × 14 cases comme dans le Google Sheet, avec clans, temps de marche, couleurs, filtres par clan, notes, rectangles et cercles, plusieurs cartes en onglets, liste des joueurs, alerte doublon, historique des versions, verrouillage d'une carte, copie en texte et export PDF
 
 ## Fichiers
 - `index.html` : le site complet
@@ -32,7 +33,7 @@ Coordinateur de lancement de rallyes pour le jeu mobile Kingshot. Il calcule à 
 Sans configuration, le site fonctionne en **mode local** : les sessions restent sur l'appareil.
 Pour partager les sessions entre tous les appareils :
 1. Crée un projet sur <https://console.firebase.google.com> (offre gratuite « Spark », aucune carte bancaire).
-2. Crée une **Realtime Database**, puis colle le contenu de `database.rules.json` dans l'onglet *Règles* et publie.
+2. Crée une **Realtime Database**, puis colle le contenu de `database.rules.json` dans l'onglet *Règles* et publie. Ces règles couvrent les sessions (`rallysync`) et le KvK PLAN (`kvkplan`).
 3. Ajoute une **application Web** au projet et copie l'objet `firebaseConfig`.
 4. Dans `index.html`, remplace `const FIREBASE_CONFIG = null;` par ta configuration.
 
@@ -43,4 +44,5 @@ La configuration Firebase d'une application Web n'est pas un secret : elle est f
 - **Mode en ligne** : les sessions (noms des joueurs, temps de marche, équipes) sont stockées dans la base Firebase de l'alliance.
 - **Mode local** : les sessions sont stockées dans le navigateur.
 - Les réglages personnels (langue, thème, volume, position des blocs) restent toujours dans le navigateur de chacun.
+- Les données du KvK PLAN sont rangées sous une clé calculée à partir de son code : sans le code, on ne sait pas où elles se trouvent. Ce n'est pas non plus une sécurité forte.
 - Le mot de passe d'entrée est vérifié dans le navigateur : il éloigne les curieux, mais ce n'est pas une sécurité forte. Toute personne qui a le lien du site et contourne cet écran peut lire et modifier les sessions. N'y mets donc rien de sensible.
