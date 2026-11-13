@@ -504,7 +504,7 @@ async function initFB(){
     if (!LANG) show("scrLang"); else { show("scrAuth"); $("#fErr").textContent = t("errNet"); }
   }
 }
-const R = p => FB.ref(DB, p);
+const R = p => p ? FB.ref(DB, p) : FB.ref(DB);   // the real SDK refuses an empty path: root = ref(db)
 async function emailOf(name){
   const data = new TextEncoder().encode("752fun:" + name.trim().toLowerCase());
   const h = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", data)), b => b.toString(16).padStart(2, "0")).join("");
