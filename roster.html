@@ -2704,6 +2704,7 @@ if(rosterRef) rosterRef.on('value',snapshot=>{
   if(ignoreNext){ ignoreNext=false; return; }
   const data=snapshot.val();
   pool=data?(Array.isArray(data)?data:Object.values(data)):[];
+  pool=pool.filter(p=>p && typeof p==='object').map(cleanPlayer).filter(Boolean);   // never trust what comes from the database
   pool.forEach(p=>{ if(!p.rallyLead) p.rallyLead=false; if(p.half===undefined) p.half=null; fixPlayer(p); });
   render();
 });
@@ -2712,9 +2713,9 @@ if(rosterRef) rosterRef.on('value',snapshot=>{
 if(db) db.ref('settings/allianceNames').on('value', snapshot => {
   const data = snapshot.val();
   if(data){
-    if(data.koe) allianceNames.koe = data.koe;
-    if(data.war) allianceNames.war = data.war;
-    if(data.pan) allianceNames.pan = data.pan;
+    if(data.koe) allianceNames.koe = cleanName(data.koe) || 'KOE';
+    if(data.war) allianceNames.war = cleanName(data.war) || 'WAR';
+    if(data.pan) allianceNames.pan = cleanName(data.pan) || 'PAN';
     allianceNames.off3 = !!data.off3;
     document.body.classList.toggle('no-a3', allianceNames.off3);
     applyAllianceNames();
@@ -2722,6 +2723,21 @@ if(db) db.ref('settings/allianceNames').on('value', snapshot => {
   }
 });
 
+// ---- safety: data read from the database is cleaned before it is shown (no code can be slipped in through a name)
+function cleanName(v){ return String(v==null?'':v).replace(/[<>"'`&\\]/g,'').trim().slice(0,20); }
+function cleanPlayer(p){
+  let id = Number(p.id); if(!Number.isFinite(id)) id = Date.now() + Math.floor(Math.random()*1e6);   // a broken id is replaced, the player is kept
+  const q = Object.assign({}, p, {id});
+  q.pseudo = String(p.pseudo==null?'':p.pseudo).slice(0,40);
+  q.alliance = ['koe','war','pan'].includes(p.alliance) ? p.alliance : null;
+  q.tg = /^TG[1-8]$/.test(p.tg||'') ? p.tg : '';
+  q.half = (p.half==='h1'||p.half==='h2') ? p.half : null;
+  q.avail = p.avail !== false;
+  if(typeof p.t11s === 'string') q.t11s = ['i','c','a'].filter(x=>p.t11s.includes(x)).join('');
+  q.star = ['gold','red','blue'].includes(p.star) ? p.star : '';
+  q.rallyLead = !!p.rallyLead;
+  return q;
+}
 function syncToFirebase(){
   pool.forEach(fixPlayer);
   if(!rosterRef) return;

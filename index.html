@@ -210,6 +210,47 @@ html.locked #hub{visibility:hidden}
 .hb-plan .hb-txt b{text-shadow:none}
 .hb-roster{background:linear-gradient(180deg,#ff6b78,#c42737 55%,#86101d)}
 .hb-fun{background:linear-gradient(180deg,#b06bff,#6a2bd1 55%,#3d1388)}
+
+.hub-main{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.hub-big{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:250px;padding:24px 16px 20px;border-radius:22px;border:0;cursor:pointer;color:#fff;text-align:center;
+  box-shadow:0 6px 0 #0008,0 16px 34px #0008;transition:transform .12s,filter .15s;overflow:hidden;font:inherit}
+.hub-big::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% -10%,#ffffff40,transparent 62%);pointer-events:none}
+.hub-big:hover{filter:brightness(1.1);transform:translateY(-3px)}
+.hub-big:active{transform:translateY(4px);box-shadow:0 1px 0 #0008,0 6px 14px #0006}
+.hub-big:focus-visible,.hub-btn:focus-visible,.hub-ah button:focus-visible{outline:3px solid #ffd56a;outline-offset:3px}
+.hbb-ic{font-size:60px;line-height:1;filter:drop-shadow(0 4px 6px #000a);transition:transform .2s}
+.hub-big:hover .hbb-ic{transform:scale(1.08) rotate(-4deg)}
+.hbb-txt{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.hbb-txt b{font-size:27px;font-weight:900;letter-spacing:2px;text-shadow:0 2px 6px #0009;white-space:nowrap}
+.hbb-txt small{font-size:13px;font-weight:600;opacity:.92;line-height:1.35}
+.hbb-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:4px}
+.hbb-tag{font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;background:#0006;border:1px solid #fff5;letter-spacing:.4px;white-space:nowrap}
+.hbb-tools{font-size:19px;letter-spacing:3px;filter:drop-shadow(0 2px 2px #0008)}
+.hbb-go{display:none;font-size:30px;font-weight:300;opacity:.7;flex:none}
+.hb-admin{background:linear-gradient(160deg,#454b72,#23284a 50%,#11132a);box-shadow:inset 0 0 0 2px #e8b84a,0 6px 0 #0008,0 16px 34px #0008}
+.hb-admin .hbb-txt b{color:#ffd56a}
+.hub-admin{display:flex;flex-direction:column;gap:14px;animation:hubIn .28s cubic-bezier(.2,.8,.3,1)}
+.hub-main{animation:hubIn .28s cubic-bezier(.2,.8,.3,1)}
+.hub-admin[hidden],.hub-main[hidden]{display:none}
+@keyframes hubIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.hub-ah{display:flex;align-items:center;gap:12px;margin-bottom:2px}
+.hub-ah button{padding:8px 16px;border-radius:999px;border:1px solid #fff6;background:#000a;color:#fff;font:inherit;font-weight:800;cursor:pointer}
+.hub-ah button:hover{background:#000d;border-color:#ffd56a}
+.hub-ah b{font-size:18px;letter-spacing:1.5px;color:#ffd56a;text-shadow:0 2px 6px #000}
+.hub-btn{position:relative}
+.hb-last{position:absolute;top:-10px;right:16px;font-size:11px;font-weight:900;padding:2px 10px;border-radius:999px;background:#ffd56a;color:#3a2600;box-shadow:0 2px 6px #0008;letter-spacing:.3px}
+.hb-lock.open{opacity:1;filter:drop-shadow(0 0 4px #7dff9a)}
+.hub-note{margin:2px 0 0;text-align:center;font-size:12px;color:#f6e6b0;text-shadow:0 2px 6px #000}
+@media (prefers-reduced-motion:reduce){ .hub-admin,.hub-main{animation:none} .hub-big,.hbb-ic{transition:none} }
+@media (max-width:599px){
+  .hub-main{grid-template-columns:1fr;gap:14px}
+  .hub-big{flex-direction:row;justify-content:flex-start;text-align:left;min-height:0;padding:18px 16px;gap:14px}
+  .hbb-ic{font-size:44px}
+  .hbb-txt{align-items:flex-start;flex:1}
+  .hbb-txt b{font-size:22px}
+  .hbb-row{justify-content:flex-start}
+  .hbb-go{display:block}
+}
 .ss-back{position:fixed;top:max(12px,env(safe-area-inset-top));left:12px;z-index:2}
 @media (max-width:699px){ #hub{justify-content:flex-start;padding-top:64px} .hub-btn{padding:16px} .hub-btn .hb-txt b{font-size:19px} }
 html.picking #sessions{display:flex}
@@ -835,10 +876,17 @@ html.kp-resizing,html.kp-resizing *{cursor:ew-resize!important;user-select:none!
   <div class="ss-box hub-box">
     <h2>🎰 752 HOME</h2>
     <div class="ss-sub" data-i="hubSub"></div>
-    <button type="button" class="hub-btn hb-rally" id="hubRally"><span class="hb-ic">⚔️</span><span class="hb-txt"><b>RALLYSYNC</b><small data-i="hubRallySub"></small></span><span class="hb-lock">🔒</span></button>
-    <button type="button" class="hub-btn hb-plan" id="hubPlan"><span class="hb-ic">🗺️</span><span class="hb-txt"><b data-i="kpTitle"></b><small data-i="hubPlanSub"></small></span><span class="hb-lock">🔒</span></button>
-    <button type="button" class="hub-btn hb-roster" id="hubRoster"><span class="hb-ic">🛡️</span><span class="hb-txt"><b>BATTLE ROSTER</b><small data-i="hubRosterSub"></small></span><span class="hb-lock">🔒</span></button>
-    <button type="button" class="hub-btn hb-fun" id="hubFun"><span class="hb-ic">🎲</span><span class="hb-txt"><b>FUN</b><small data-i="hubFunSub"></small></span><span class="hb-lock">✨</span></button>
+    <div class="hub-main" id="hubMain">
+      <button type="button" class="hub-big hb-admin" id="hubAdmin"><span class="hbb-ic">👑</span><span class="hbb-txt"><b>752 ADMIN</b><small data-i="hubAdminSub"></small><span class="hbb-row"><span class="hbb-tag">🔒 <span data-i="hubAdminTag"></span></span><span class="hbb-tools">⚔️🗺️🛡️</span></span></span><span class="hbb-go">›</span></button>
+      <button type="button" class="hub-big hb-fun" id="hubFun"><span class="hbb-ic">🎲</span><span class="hbb-txt"><b>FUN</b><small data-i="hubFunSub"></small><span class="hbb-row"><span class="hbb-tag">🌍 <span data-i="hubFunTag"></span></span><span class="hbb-tools">🐍🧩🃏</span></span></span><span class="hbb-go">›</span></button>
+    </div>
+    <div class="hub-admin" id="hubAdminBox" hidden>
+      <div class="hub-ah"><button type="button" id="hubBack">← <span data-i="hubBack"></span></button><b>👑 752 ADMIN</b></div>
+    <button type="button" class="hub-btn hb-rally" id="hubRally"><span class="hb-ic">⚔️</span><span class="hb-txt"><b>RALLYSYNC</b><small data-i="hubRallySub"></small></span><span class="hb-lock" id="hlRally">🔒</span></button>
+    <button type="button" class="hub-btn hb-plan" id="hubPlan"><span class="hb-ic">🗺️</span><span class="hb-txt"><b data-i="kpTitle"></b><small data-i="hubPlanSub"></small></span><span class="hb-lock" id="hlPlan">🔒</span></button>
+    <button type="button" class="hub-btn hb-roster" id="hubRoster"><span class="hb-ic">🛡️</span><span class="hb-txt"><b>BATTLE ROSTER</b><small data-i="hubRosterSub"></small></span><span class="hb-lock" id="hlRoster">🔒</span></button>
+      <p class="hub-note" data-i="hubAdminNote"></p>
+    </div>
   </div>
 </div>
 <div id="sessions" role="dialog" aria-modal="true" aria-label="Sessions">
@@ -986,7 +1034,7 @@ const I18N = {
     del:"Delete",addPh:"Name 1m46, Name 54s…",badTime:"Invalid time — use 54s, 1m46 or 1:46",first:"starts first",
     hint:"Drag a block by its header to place it anywhere, ⊞ Align to tidy up · Drag ⠿ to move players · hover a player + 1–9 = move to team, B = bench · Ctrl+Z = undo · double-click a name to rename · resize a block from its bottom-right corner",
     renamePrompt:"New name:",imported:"Imported!",players:"players",rallyCustom:"Rally time (e.g. 2m30):",sync:"Synced landing"},
-  fr:{kpEnemyBtn:"Adversaires",kpEnemyShow:"Afficher les cases adverses (en rose)",kpEnemyHide:"Cacher les cases adverses",kpEnemy:"Zone adverse (aucun joueur)",kpEnemyNo:"Zone adverse : aucun de nos joueurs ne peut être placé ici",kpEnemyHas:"Un joueur est sur cette ville : déplace-le d'abord, puis marque-la en zone adverse",kpBg:"Fond",kpBgT:"Fond noir ou blanc (seulement sur ton écran)",hubSub:"Choisis un outil",hubRallySub:"Synchronisation des rallyes, sessions en direct",hubPlanSub:"Carte du château pour le KvK",hubRosterSub:"Joueurs et alliances pour la bataille",hubFunSub:"Mini-jeux et classements de la semaine",hubMenu:"Menu",rallyCode:"Entre le code RallySync :",rallyWrong:"Code incorrect",kpPlayers:"Joueurs",kpCopyTxt:"Copier en texte",kpCopied:"Plan copié, prêt à coller",kpCopyFail:"Copie bloquée : sélectionne le texte dans le panneau et copie-le",kpUnplaced:"Pas encore placés",kpRoster:"Membres de l'alliance (un par ligne)",kpRosterPh:"Colle ici la liste des membres de l'alliance, un nom par ligne",kpPickEmpty:"Clique d'abord sur une case vide de la carte, puis sur le nom",kpAllPlaced:"Tout le monde est placé 👍",kpNoClan:"Sans clan",kpDupT:"est placé deux fois",kpHist:"Historique",kpHistNone:"Aucune version enregistrée pour l'instant (une copie est gardée automatiquement avant les modifications)",kpRestoreQ:"Revenir à cette version ? La version actuelle est sauvegardée avant.",kpRestored:"Version restaurée",kpPlayersCount:"joueurs",kpLockMap:"Verrouiller la carte",kpUnlockMap:"Déverrouiller la carte",kpLocked:"Cette carte est verrouillée : déverrouille-la depuis le menu de son onglet pour la modifier",kpLockedPill:"Verrouillée",kpPdfDone:"PDF téléchargé",kpPdfFrame:"Rien n'a été téléchargé ? Ouvre le site directement dans ton navigateur.",kpNoteBtn:"Note",kpAddNote:"Ajouter un bloc de notes",kpAddRect:"Ajouter un rectangle",kpAddCirc:"Ajouter un cercle",kpText:"Texte",kpPdfT:"Télécharger la carte en PDF (paysage)",kpBoldT:"Gras (Ctrl+B)",kpSize:"Taille de police",kpTitle:"PLAN KVK",kpCode:"Entre le code du plan :",kpWrong:"Code incorrect",kpClear:"Vider",kpCC:"Couleurs des clans",kpHint:"Clic = modifier · glisser = déplacer une ville · Maj+clic = sélection multiple · Suppr = vider · Ctrl+Z = annuler",kpNotes:"NOTES",kpSearch:"Chercher un joueur",kpName:"Nom du joueur",kpNew:"Nouveau plan",kpLock:"Verrouiller le plan",kpClanAdd:"Nom du nouveau clan :",kpClanRen:"Nom du clan (laisse vide pour le retirer) :",kpClanDup:"Ce clan existe déjà",kpClanMax:"8 clans maximum",kpFit:"Ajuster à l'écran",kpDir_n:"Nord",kpDir_e:"Est",kpDir_s:"Sud",kpDir_w:"Ouest",kpLocal:"Le partage en ligne n'est pas encore actif pour le plan : les modifications restent sur cet appareil.",kpSelFirst:"Sélectionne d'abord une case",kpNone:"aucun",kpPlanName:"Nom du plan :",kpDup:"Dupliquer",kpDupCur:"Dupliquer ce plan",kpDel:"Supprimer ce plan pour tout le monde ?",kpTpl:"Nouveau plan (modèle)",kpMove:"Déplacer / échanger",kpMoveHint:"Touche maintenant la case de destination",sessTitle:"SESSIONS",sessSub:"Choisis une table ou ouvre-en une nouvelle",sessNamePh:"Nom de la session (ex. Castle 11/07)",sessCreate:"Créer",sessEmpty:"Aucune session pour l'instant — crée la première ci-dessus",sessDel:"Supprimer cette session pour tout le monde ?",sessRen:"Nom de la session :",sessGone:"Cette session a été supprimée",sessNotFound:"Session introuvable",linkCopied:"Lien copié — partage-le à ton équipe",modeOnline:"☁️ En ligne — chaque modification est partagée en direct avec tous ceux qui sont dans la même session",modeLocal:"💾 Local uniquement — les sessions sont enregistrées sur cet appareil. Le partage en ligne n'est pas encore configuré.",modeFail:"⚠️ Impossible de joindre la base en ligne — tu travailles uniquement sur cet appareil",offline:"Hors ligne — tes modifications seront envoyées au retour de la connexion",sessUpdated:"modifiée",sessOnlineN:"en ligne",sessions:"Sessions",stopAllTxt:"Tout arrêter",volBeep:"Volume des bips du décompte",volFx:"Volume des animations casino",gSub:"Entre le mot de passe, puis tire le levier",gSpin:"JOUER",gLose:"Perdu — retente ta chance",gWin:"JACKPOT !",gHint:"Appuie sur Entrée, sur JOUER ou tire le levier pour jouer",gPass:"Mot de passe",gEmpty:"Entre d'abord le mot de passe",lock:"Verrouiller (porte du casino)",about:"Outil non officiel fait par des fans, sans lien avec Kingshot ni son éditeur. Pas de compte, pas de suivi. Avec le partage en ligne, les sessions sont stockées dans la base Firebase gratuite de l’alliance ; tes réglages personnels restent dans ce navigateur.",alliance:"Alliance",color:"Couleur du bloc",planAll:"Planifier (UTC)",plan:"Planifier cette équipe à une heure UTC",planPrompt:"1er lancement à (UTC) — ex. 21:30 ou 21:30:15",planAllPrompt:"Toutes les équipes arrivent ensemble. 1er lancement à (UTC) — ex. 21:30",badClock:"Heure invalide — ex. 21:30 ou 21:30:15",startAt:"départ",landAt:"arrivée",resizeTip:"Glisse pour redimensionner · double-clic = taille par défaut",align:"Aligner",deleted:"Équipe supprimée",march:"marche",subtitle:"coordination des rallyes château",goAll:"▶ GO TOUS",stopAll:"■ Tout arrêter",addTeam:"+ Équipe",undo:"Annuler",team:"Équipe",bench:"Réserve",
+  fr:{kpEnemyBtn:"Adversaires",kpEnemyShow:"Afficher les cases adverses (en rose)",kpEnemyHide:"Cacher les cases adverses",kpEnemy:"Zone adverse (aucun joueur)",kpEnemyNo:"Zone adverse : aucun de nos joueurs ne peut être placé ici",kpEnemyHas:"Un joueur est sur cette ville : déplace-le d'abord, puis marque-la en zone adverse",kpBg:"Fond",kpBgT:"Fond noir ou blanc (seulement sur ton écran)",hubSub:"Choisis un outil",hubRallySub:"Synchronisation des rallyes, sessions en direct",hubPlanSub:"Carte du château pour le KvK",hubRosterSub:"Joueurs et alliances pour la bataille",hubFunSub:"Mini-jeux et classement de la semaine",hubMenu:"Menu",rallyCode:"Entre le code RallySync :",rallyWrong:"Code incorrect",kpPlayers:"Joueurs",kpCopyTxt:"Copier en texte",kpCopied:"Plan copié, prêt à coller",kpCopyFail:"Copie bloquée : sélectionne le texte dans le panneau et copie-le",kpUnplaced:"Pas encore placés",kpRoster:"Membres de l'alliance (un par ligne)",kpRosterPh:"Colle ici la liste des membres de l'alliance, un nom par ligne",kpPickEmpty:"Clique d'abord sur une case vide de la carte, puis sur le nom",kpAllPlaced:"Tout le monde est placé 👍",kpNoClan:"Sans clan",kpDupT:"est placé deux fois",kpHist:"Historique",kpHistNone:"Aucune version enregistrée pour l'instant (une copie est gardée automatiquement avant les modifications)",kpRestoreQ:"Revenir à cette version ? La version actuelle est sauvegardée avant.",kpRestored:"Version restaurée",kpPlayersCount:"joueurs",kpLockMap:"Verrouiller la carte",kpUnlockMap:"Déverrouiller la carte",kpLocked:"Cette carte est verrouillée : déverrouille-la depuis le menu de son onglet pour la modifier",kpLockedPill:"Verrouillée",kpPdfDone:"PDF téléchargé",kpPdfFrame:"Rien n'a été téléchargé ? Ouvre le site directement dans ton navigateur.",kpNoteBtn:"Note",kpAddNote:"Ajouter un bloc de notes",kpAddRect:"Ajouter un rectangle",kpAddCirc:"Ajouter un cercle",kpText:"Texte",kpPdfT:"Télécharger la carte en PDF (paysage)",kpBoldT:"Gras (Ctrl+B)",kpSize:"Taille de police",kpTitle:"PLAN KVK",kpCode:"Entre le code du plan :",kpWrong:"Code incorrect",kpClear:"Vider",kpCC:"Couleurs des clans",kpHint:"Clic = modifier · glisser = déplacer une ville · Maj+clic = sélection multiple · Suppr = vider · Ctrl+Z = annuler",kpNotes:"NOTES",kpSearch:"Chercher un joueur",kpName:"Nom du joueur",kpNew:"Nouveau plan",kpLock:"Verrouiller le plan",kpClanAdd:"Nom du nouveau clan :",kpClanRen:"Nom du clan (laisse vide pour le retirer) :",kpClanDup:"Ce clan existe déjà",kpClanMax:"8 clans maximum",kpFit:"Ajuster à l'écran",kpDir_n:"Nord",kpDir_e:"Est",kpDir_s:"Sud",kpDir_w:"Ouest",kpLocal:"Le partage en ligne n'est pas encore actif pour le plan : les modifications restent sur cet appareil.",kpSelFirst:"Sélectionne d'abord une case",kpNone:"aucun",kpPlanName:"Nom du plan :",kpDup:"Dupliquer",kpDupCur:"Dupliquer ce plan",kpDel:"Supprimer ce plan pour tout le monde ?",kpTpl:"Nouveau plan (modèle)",kpMove:"Déplacer / échanger",kpMoveHint:"Touche maintenant la case de destination",sessTitle:"SESSIONS",sessSub:"Choisis une table ou ouvre-en une nouvelle",sessNamePh:"Nom de la session (ex. Castle 11/07)",sessCreate:"Créer",sessEmpty:"Aucune session pour l'instant — crée la première ci-dessus",sessDel:"Supprimer cette session pour tout le monde ?",sessRen:"Nom de la session :",sessGone:"Cette session a été supprimée",sessNotFound:"Session introuvable",linkCopied:"Lien copié — partage-le à ton équipe",modeOnline:"☁️ En ligne — chaque modification est partagée en direct avec tous ceux qui sont dans la même session",modeLocal:"💾 Local uniquement — les sessions sont enregistrées sur cet appareil. Le partage en ligne n'est pas encore configuré.",modeFail:"⚠️ Impossible de joindre la base en ligne — tu travailles uniquement sur cet appareil",offline:"Hors ligne — tes modifications seront envoyées au retour de la connexion",sessUpdated:"modifiée",sessOnlineN:"en ligne",sessions:"Sessions",stopAllTxt:"Tout arrêter",volBeep:"Volume des bips du décompte",volFx:"Volume des animations casino",gSub:"Entre le mot de passe, puis tire le levier",gSpin:"JOUER",gLose:"Perdu — retente ta chance",gWin:"JACKPOT !",gHint:"Appuie sur Entrée, sur JOUER ou tire le levier pour jouer",gPass:"Mot de passe",gEmpty:"Entre d'abord le mot de passe",lock:"Verrouiller (porte du casino)",about:"Outil non officiel fait par des fans, sans lien avec Kingshot ni son éditeur. Pas de compte, pas de suivi. Avec le partage en ligne, les sessions sont stockées dans la base Firebase gratuite de l’alliance ; tes réglages personnels restent dans ce navigateur.",alliance:"Alliance",color:"Couleur du bloc",planAll:"Planifier (UTC)",plan:"Planifier cette équipe à une heure UTC",planPrompt:"1er lancement à (UTC) — ex. 21:30 ou 21:30:15",planAllPrompt:"Toutes les équipes arrivent ensemble. 1er lancement à (UTC) — ex. 21:30",badClock:"Heure invalide — ex. 21:30 ou 21:30:15",startAt:"départ",landAt:"arrivée",resizeTip:"Glisse pour redimensionner · double-clic = taille par défaut",align:"Aligner",deleted:"Équipe supprimée",march:"marche",subtitle:"coordination des rallyes château",goAll:"▶ GO TOUS",stopAll:"■ Tout arrêter",addTeam:"+ Équipe",undo:"Annuler",team:"Équipe",bench:"Réserve",
     rally:"Rallye",go:"▶ GO",stop:"■",launch:"LANCE !",firstIn:"1er lancement dans",landsIn:"Arrivée dans",landed:"ARRIVÉ",
     empty:"Dépose des joueurs ici",moveTo:"Déplacer vers",copy:"Copier l'ordre de lancement",copied:"Copié !",settings:"Paramètres",
     lead:"Compte à rebours avant le 1er lancement (s)",sound:"Son",export:"Exporter JSON",import:"Importer JSON",reset:"Tout réinitialiser",
@@ -1012,10 +1060,10 @@ const I18N = {
     renamePrompt:"Yeni isim:",imported:"İçe aktarıldı!",players:"oyuncu",rallyCustom:"Ralli süresi (örn. 2m30):",sync:"Senkron varış"}
 };
 /* ---------- texts of the Battle Roster link (KvK plan) ---------- */
-Object.assign(I18N.fr, {"kpBrLvl": "Niveau", "kpBrAvail": "Dispo", "kpBrAvailL": "Disponibilité", "kpBrClr": "Effacer les filtres", "kpBrGrip": "Tire pour élargir · double-clic = taille de départ",kpOnMap:"Sur la map",kpBrLoading:"Connexion au Battle Roster…",kpBrErr:"Battle Roster injoignable pour le moment",kpBrEmpty:"Aucun joueur ici",kpBrPool:"Sans alliance",kpBrFree:"Non placés",kpBrAllTg:"Tous",kpBrArm:"Touche une case pour placer {n}",kpBrDrag:"Glisse un joueur sur la map, ou touche-le puis touche une case. ✓ = sur la map · ☑ = coché à la main.",kpBrMove:"{n} est déjà placé ({k}). Le déplacer ici ?",kpBrReplace:"Cette case contient déjà {n}. Le remplacer ?",kpBrRemove:"Retirer de la map",kpBrDone:"Sur la map",kpBrManual:"Cocher / décocher à la main",kpBrEdit:"Modifier le joueur",kpBrSaved:"Enregistré dans le Battle Roster",kpBrSum:"Résumé",kpBrStarFree:"Joueurs étoilés pas encore placés",kpBrByTg:"Placés par niveau",kpBrMiss:"Sur la map mais absent du Battle Roster (supprimé ou pseudo différent)",kpBrWrong:"Clan de la case différent de l'alliance du Battle Roster",kpBrOpen:"Ouvrir le Battle Roster",kpBrNone:"Aucune",kpBrPseudo:"Pseudo",kpBrAlly:"Alliance",kpBrStar:"Étoile",kpBrGold:"Jaune",kpBrRed:"Rouge",kpBrBlue:"Bleue",kpBrCity:"Case",kpBrRow:"Ligne",kpBrCol:"Col.",kpBrGone:"Ce joueur vient d'être modifié ou supprimé dans le Battle Roster, réessaie",kpBrCancel:"Annuler",kpBrSaveBtn:"Enregistrer"});
-Object.assign(I18N.en, {"kpBrLvl": "Level", "kpBrAvail": "Avail.", "kpBrAvailL": "Availability", "kpBrClr": "Clear filters", "kpBrGrip": "Drag to widen · double-click = default size",kpOnMap:"On the map",kpBrLoading:"Connecting to Battle Roster…",kpBrErr:"Battle Roster can't be reached right now",kpBrEmpty:"No players here",kpBrPool:"No alliance",kpBrFree:"Not placed",kpBrAllTg:"All",kpBrArm:"Tap a city to place {n}",kpBrDrag:"Drag a player onto the map, or tap them then tap a city. ✓ = on the map · ☑ = ticked by hand.",kpBrMove:"{n} is already placed ({k}). Move here?",kpBrReplace:"This city already holds {n}. Replace?",kpBrRemove:"Remove from the map",kpBrDone:"On the map",kpBrManual:"Tick / untick by hand",kpBrEdit:"Edit player",kpBrSaved:"Saved in Battle Roster",kpBrSum:"Summary",kpBrStarFree:"Starred players not placed yet",kpBrByTg:"Placed by level",kpBrMiss:"On the map but not in Battle Roster (deleted or different name)",kpBrWrong:"City clan differs from the Battle Roster alliance",kpBrOpen:"Open Battle Roster",kpBrNone:"None",kpBrPseudo:"Name",kpBrAlly:"Alliance",kpBrStar:"Star",kpBrGold:"Yellow",kpBrRed:"Red",kpBrBlue:"Blue",kpBrCity:"City",kpBrRow:"Row",kpBrCol:"Col.",kpBrGone:"This player was just changed or deleted in Battle Roster, try again",kpBrCancel:"Cancel",kpBrSaveBtn:"Save"});
-Object.assign(I18N.ko, {"kpBrLvl": "레벨", "kpBrAvail": "참여", "kpBrAvailL": "참여 시간", "kpBrClr": "필터 지우기", "kpBrGrip": "끌어서 넓히기 · 더블클릭 = 기본 크기",kpOnMap:"맵 위",kpBrLoading:"배틀 로스터 연결 중…",kpBrErr:"지금은 배틀 로스터에 연결할 수 없습니다",kpBrEmpty:"플레이어 없음",kpBrPool:"연맹 없음",kpBrFree:"미배치",kpBrAllTg:"전체",kpBrArm:"{n}을(를) 놓을 칸을 누르세요",kpBrDrag:"플레이어를 맵으로 끌어다 놓거나, 누른 뒤 칸을 누르세요. ✓ = 맵 위 · ☑ = 직접 체크.",kpBrMove:"{n}은(는) 이미 배치됨 ({k}). 여기로 옮길까요?",kpBrReplace:"이 칸에 이미 {n}이(가) 있습니다. 바꿀까요?",kpBrRemove:"맵에서 빼기",kpBrDone:"맵 위",kpBrManual:"직접 체크 / 해제",kpBrEdit:"플레이어 수정",kpBrSaved:"배틀 로스터에 저장됨",kpBrSum:"요약",kpBrStarFree:"아직 배치되지 않은 별표 플레이어",kpBrByTg:"레벨별 배치",kpBrMiss:"맵에는 있지만 배틀 로스터에 없음 (삭제 또는 다른 이름)",kpBrWrong:"칸의 클랜이 배틀 로스터 연맹과 다름",kpBrOpen:"배틀 로스터 열기",kpBrNone:"없음",kpBrPseudo:"닉네임",kpBrAlly:"연맹",kpBrStar:"별",kpBrGold:"노랑",kpBrRed:"빨강",kpBrBlue:"파랑",kpBrCity:"칸",kpBrRow:"행",kpBrCol:"열",kpBrGone:"이 플레이어가 배틀 로스터에서 방금 수정 또는 삭제되었습니다. 다시 시도하세요",kpBrCancel:"취소",kpBrSaveBtn:"저장"});
-Object.assign(I18N.tr, {"kpBrLvl": "Seviye", "kpBrAvail": "Katılım", "kpBrAvailL": "Katılım", "kpBrClr": "Filtreleri temizle", "kpBrGrip": "Genişletmek için sürükle · çift tık = varsayılan boyut",kpOnMap:"Haritada",kpBrLoading:"Battle Roster'a bağlanılıyor…",kpBrErr:"Battle Roster'a şu an ulaşılamıyor",kpBrEmpty:"Burada oyuncu yok",kpBrPool:"İttifaksız",kpBrFree:"Yerleşmemiş",kpBrAllTg:"Tümü",kpBrArm:"{n} için bir şehre dokun",kpBrDrag:"Bir oyuncuyu haritaya sürükle ya da ona dokunup bir şehre dokun. ✓ = haritada · ☑ = elle işaretli.",kpBrMove:"{n} zaten yerleşik ({k}). Buraya taşınsın mı?",kpBrReplace:"Bu şehirde zaten {n} var. Değiştirilsin mi?",kpBrRemove:"Haritadan kaldır",kpBrDone:"Haritada",kpBrManual:"Elle işaretle / kaldır",kpBrEdit:"Oyuncuyu düzenle",kpBrSaved:"Battle Roster'a kaydedildi",kpBrSum:"Özet",kpBrStarFree:"Henüz yerleşmemiş yıldızlı oyuncular",kpBrByTg:"Seviyeye göre yerleşenler",kpBrMiss:"Haritada ama Battle Roster'da yok (silinmiş veya farklı ad)",kpBrWrong:"Şehrin klanı Battle Roster ittifakından farklı",kpBrOpen:"Battle Roster'ı aç",kpBrNone:"Yok",kpBrPseudo:"Ad",kpBrAlly:"İttifak",kpBrStar:"Yıldız",kpBrGold:"Sarı",kpBrRed:"Kırmızı",kpBrBlue:"Mavi",kpBrCity:"Şehir",kpBrRow:"Satır",kpBrCol:"Süt.",kpBrGone:"Bu oyuncu Battle Roster'da az önce değişti veya silindi, tekrar dene",kpBrCancel:"İptal",kpBrSaveBtn:"Kaydet"});
+Object.assign(I18N.fr, {"hubAdminSub": "Rallyes, plan KvK et roster", "hubAdminTag": "Leaders 752", "hubFunTag": "Tout le serveur", "hubBack": "Retour", "hubLast": "Dernier utilisé", "hubAdminNote": "Chaque outil garde son propre code.", "hubUnlocked": "Déjà déverrouillé sur cet appareil","kpBrLvl": "Niveau", "kpBrAvail": "Dispo", "kpBrAvailL": "Disponibilité", "kpBrClr": "Effacer les filtres", "kpBrGrip": "Tire pour élargir · double-clic = taille de départ",kpOnMap:"Sur la map",kpBrLoading:"Connexion au Battle Roster…",kpBrErr:"Battle Roster injoignable pour le moment",kpBrEmpty:"Aucun joueur ici",kpBrPool:"Sans alliance",kpBrFree:"Non placés",kpBrAllTg:"Tous",kpBrArm:"Touche une case pour placer {n}",kpBrDrag:"Glisse un joueur sur la map, ou touche-le puis touche une case. ✓ = sur la map · ☑ = coché à la main.",kpBrMove:"{n} est déjà placé ({k}). Le déplacer ici ?",kpBrReplace:"Cette case contient déjà {n}. Le remplacer ?",kpBrRemove:"Retirer de la map",kpBrDone:"Sur la map",kpBrManual:"Cocher / décocher à la main",kpBrEdit:"Modifier le joueur",kpBrSaved:"Enregistré dans le Battle Roster",kpBrSum:"Résumé",kpBrStarFree:"Joueurs étoilés pas encore placés",kpBrByTg:"Placés par niveau",kpBrMiss:"Sur la map mais absent du Battle Roster (supprimé ou pseudo différent)",kpBrWrong:"Clan de la case différent de l'alliance du Battle Roster",kpBrOpen:"Ouvrir le Battle Roster",kpBrNone:"Aucune",kpBrPseudo:"Pseudo",kpBrAlly:"Alliance",kpBrStar:"Étoile",kpBrGold:"Jaune",kpBrRed:"Rouge",kpBrBlue:"Bleue",kpBrCity:"Case",kpBrRow:"Ligne",kpBrCol:"Col.",kpBrGone:"Ce joueur vient d'être modifié ou supprimé dans le Battle Roster, réessaie",kpBrCancel:"Annuler",kpBrSaveBtn:"Enregistrer"});
+Object.assign(I18N.en, {"hubAdminSub": "Rally timing, KvK plan and roster", "hubAdminTag": "752 leaders", "hubFunTag": "Whole server", "hubBack": "Back", "hubLast": "Last used", "hubAdminNote": "Each tool keeps its own code.", "hubUnlocked": "Already unlocked on this device","kpBrLvl": "Level", "kpBrAvail": "Avail.", "kpBrAvailL": "Availability", "kpBrClr": "Clear filters", "kpBrGrip": "Drag to widen · double-click = default size",kpOnMap:"On the map",kpBrLoading:"Connecting to Battle Roster…",kpBrErr:"Battle Roster can't be reached right now",kpBrEmpty:"No players here",kpBrPool:"No alliance",kpBrFree:"Not placed",kpBrAllTg:"All",kpBrArm:"Tap a city to place {n}",kpBrDrag:"Drag a player onto the map, or tap them then tap a city. ✓ = on the map · ☑ = ticked by hand.",kpBrMove:"{n} is already placed ({k}). Move here?",kpBrReplace:"This city already holds {n}. Replace?",kpBrRemove:"Remove from the map",kpBrDone:"On the map",kpBrManual:"Tick / untick by hand",kpBrEdit:"Edit player",kpBrSaved:"Saved in Battle Roster",kpBrSum:"Summary",kpBrStarFree:"Starred players not placed yet",kpBrByTg:"Placed by level",kpBrMiss:"On the map but not in Battle Roster (deleted or different name)",kpBrWrong:"City clan differs from the Battle Roster alliance",kpBrOpen:"Open Battle Roster",kpBrNone:"None",kpBrPseudo:"Name",kpBrAlly:"Alliance",kpBrStar:"Star",kpBrGold:"Yellow",kpBrRed:"Red",kpBrBlue:"Blue",kpBrCity:"City",kpBrRow:"Row",kpBrCol:"Col.",kpBrGone:"This player was just changed or deleted in Battle Roster, try again",kpBrCancel:"Cancel",kpBrSaveBtn:"Save"});
+Object.assign(I18N.ko, {"hubAdminSub": "집결 타이밍, KvK 계획, 로스터", "hubAdminTag": "752 리더 전용", "hubFunTag": "서버 전체", "hubBack": "뒤로", "hubLast": "최근 사용", "hubAdminNote": "각 도구는 자체 코드가 있습니다.", "hubUnlocked": "이 기기에서 이미 잠금 해제됨","kpBrLvl": "레벨", "kpBrAvail": "참여", "kpBrAvailL": "참여 시간", "kpBrClr": "필터 지우기", "kpBrGrip": "끌어서 넓히기 · 더블클릭 = 기본 크기",kpOnMap:"맵 위",kpBrLoading:"배틀 로스터 연결 중…",kpBrErr:"지금은 배틀 로스터에 연결할 수 없습니다",kpBrEmpty:"플레이어 없음",kpBrPool:"연맹 없음",kpBrFree:"미배치",kpBrAllTg:"전체",kpBrArm:"{n}을(를) 놓을 칸을 누르세요",kpBrDrag:"플레이어를 맵으로 끌어다 놓거나, 누른 뒤 칸을 누르세요. ✓ = 맵 위 · ☑ = 직접 체크.",kpBrMove:"{n}은(는) 이미 배치됨 ({k}). 여기로 옮길까요?",kpBrReplace:"이 칸에 이미 {n}이(가) 있습니다. 바꿀까요?",kpBrRemove:"맵에서 빼기",kpBrDone:"맵 위",kpBrManual:"직접 체크 / 해제",kpBrEdit:"플레이어 수정",kpBrSaved:"배틀 로스터에 저장됨",kpBrSum:"요약",kpBrStarFree:"아직 배치되지 않은 별표 플레이어",kpBrByTg:"레벨별 배치",kpBrMiss:"맵에는 있지만 배틀 로스터에 없음 (삭제 또는 다른 이름)",kpBrWrong:"칸의 클랜이 배틀 로스터 연맹과 다름",kpBrOpen:"배틀 로스터 열기",kpBrNone:"없음",kpBrPseudo:"닉네임",kpBrAlly:"연맹",kpBrStar:"별",kpBrGold:"노랑",kpBrRed:"빨강",kpBrBlue:"파랑",kpBrCity:"칸",kpBrRow:"행",kpBrCol:"열",kpBrGone:"이 플레이어가 배틀 로스터에서 방금 수정 또는 삭제되었습니다. 다시 시도하세요",kpBrCancel:"취소",kpBrSaveBtn:"저장"});
+Object.assign(I18N.tr, {"hubAdminSub": "Ralli zamanlaması, KvK planı ve kadro", "hubAdminTag": "752 liderleri", "hubFunTag": "Tüm sunucu", "hubBack": "Geri", "hubLast": "Son kullanılan", "hubAdminNote": "Her aracın kendi kodu vardır.", "hubUnlocked": "Bu cihazda zaten açık","kpBrLvl": "Seviye", "kpBrAvail": "Katılım", "kpBrAvailL": "Katılım", "kpBrClr": "Filtreleri temizle", "kpBrGrip": "Genişletmek için sürükle · çift tık = varsayılan boyut",kpOnMap:"Haritada",kpBrLoading:"Battle Roster'a bağlanılıyor…",kpBrErr:"Battle Roster'a şu an ulaşılamıyor",kpBrEmpty:"Burada oyuncu yok",kpBrPool:"İttifaksız",kpBrFree:"Yerleşmemiş",kpBrAllTg:"Tümü",kpBrArm:"{n} için bir şehre dokun",kpBrDrag:"Bir oyuncuyu haritaya sürükle ya da ona dokunup bir şehre dokun. ✓ = haritada · ☑ = elle işaretli.",kpBrMove:"{n} zaten yerleşik ({k}). Buraya taşınsın mı?",kpBrReplace:"Bu şehirde zaten {n} var. Değiştirilsin mi?",kpBrRemove:"Haritadan kaldır",kpBrDone:"Haritada",kpBrManual:"Elle işaretle / kaldır",kpBrEdit:"Oyuncuyu düzenle",kpBrSaved:"Battle Roster'a kaydedildi",kpBrSum:"Özet",kpBrStarFree:"Henüz yerleşmemiş yıldızlı oyuncular",kpBrByTg:"Seviyeye göre yerleşenler",kpBrMiss:"Haritada ama Battle Roster'da yok (silinmiş veya farklı ad)",kpBrWrong:"Şehrin klanı Battle Roster ittifakından farklı",kpBrOpen:"Battle Roster'ı aç",kpBrNone:"Yok",kpBrPseudo:"Ad",kpBrAlly:"İttifak",kpBrStar:"Yıldız",kpBrGold:"Sarı",kpBrRed:"Kırmızı",kpBrBlue:"Mavi",kpBrCity:"Şehir",kpBrRow:"Satır",kpBrCol:"Süt.",kpBrGone:"Bu oyuncu Battle Roster'da az önce değişti veya silindi, tekrar dene",kpBrCancel:"İptal",kpBrSaveBtn:"Kaydet"});
 const COLORS = ["#f5b83d","#4aa3ff","#ff6b6b","#2ecc71","#b57bff","#ff9f43","#1dd1a1","#ff6bcb","#a3cb38","#48dbfb"];
 const KEY = "rallysync.v1", PREFS_KEY = "rallysync.prefs", LAYOUT_KEY = "rallysync.layout.";
 /* =====================================================================================
@@ -1978,10 +2026,28 @@ function h53(str){   // fingerprint of a code: the code itself is not written in
   return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
 }
 function rallyOk(){ if(rallyMem) return true; try{ return sessionStorage.getItem(RALLY_KEY) === RALLY_HASH; }catch(e){ return false; } }
+/* the home screen: "752 ADMIN" (the 3 leader tools, each with its own code) and "FUN" (whole server) */
+const HUBV_KEY = "rallysync.hubView", LAST_KEY = "rallysync.lastTool";
+const sGet = (st, k)=>{ try{ return st.getItem(k); }catch(e){ return null; } }, sSet = (st, k, v)=>{ try{ v == null ? st.removeItem(k) : st.setItem(k, v); }catch(e){} };
+function hubView(v){
+  if(v) sSet(sessionStorage, HUBV_KEY, v); else v = sGet(sessionStorage, HUBV_KEY) || "main";
+  const adm = v === "admin";
+  document.getElementById("hubMain").hidden = adm; document.getElementById("hubAdminBox").hidden = !adm;
+  if(adm){   // lock state of each tool on this device + the last tool used
+    const open = {Rally:rallyOk(), Plan:!!sGet(sessionStorage, "rallysync.kpkey"), Roster:sGet(sessionStorage, "kvk_unlocked") === "1"};
+    for(const k in open){ const l = document.getElementById("hl" + k); l.textContent = open[k] ? "🔓" : "🔒"; l.classList.toggle("open", open[k]); l.title = open[k] ? t("hubUnlocked") : ""; }
+    const last = sGet(localStorage, LAST_KEY);
+    document.querySelectorAll("#hubAdminBox .hb-last").forEach(e=>e.remove());
+    const lb = last && document.getElementById({rally:"hubRally", plan:"hubPlan", roster:"hubRoster"}[last]);
+    if(lb) lb.insertAdjacentHTML("beforeend", `<span class="hb-last">★ ${esc(t("hubLast"))}</span>`);
+  }
+  try{ dispatchEvent(new Event("resize")); }catch(e){}
+}
 function showHub(){
   if(KP.isActive()) KP.close();
   leaveSession(); closeMenu(); closeLangMenu();
   html.classList.add("picking", "hub");
+  hubView();
 }
 async function enterRally(then){
   if(!rallyOk()){
@@ -1998,8 +2064,16 @@ async function enterRally(then){
   if(then) then(); else showSessions();
   return true;
 }
-document.getElementById("hubRally").addEventListener("click", ()=>enterRally());
-document.getElementById("hubRoster").addEventListener("click", ()=>{ location.href = "roster.html"; });
+document.getElementById("hubRally").addEventListener("click", ()=>{ sSet(localStorage, LAST_KEY, "rally"); enterRally(); });
+document.getElementById("hubRoster").addEventListener("click", ()=>{ sSet(localStorage, LAST_KEY, "roster"); location.href = "roster.html"; });
+document.getElementById("hubPlan").addEventListener("click", ()=>sSet(localStorage, LAST_KEY, "plan"), true);
+document.getElementById("hubAdmin").addEventListener("click", ()=>{ hubView("admin"); document.getElementById("hubBack").focus({preventScroll:true}); });
+document.getElementById("hubBack").addEventListener("click", ()=>{ hubView("main"); document.getElementById("hubAdmin").focus({preventScroll:true}); });
+addEventListener("keydown", e=>{   // Esc on the admin list = back to the 2 big buttons
+  if(e.key !== "Escape" || !html.classList.contains("hub") || html.classList.contains("locked") || document.getElementById("hubAdminBox").hidden) return;
+  if(document.querySelector("dialog[open]") || document.querySelector(".langmenu")) return;
+  hubView("main");
+}, true);
 document.getElementById("hubFun").addEventListener("click", ()=>{ location.href = "fun.html"; });
 document.getElementById("hubLock").addEventListener("click", ()=>document.getElementById("lockTop").click());
 document.getElementById("ssHub").addEventListener("click", showHub);
@@ -2012,7 +2086,7 @@ document.getElementById("ssHub").addEventListener("click", showHub);
     sc.setAttribute("viewBox", tall ? "500 90 800 470" : "0 0 1376 768");
     sc.setAttribute("preserveAspectRatio", tall ? "xMidYMax slice" : "xMidYMid slice");
     if(tall){   // the picture starts just under the last button, whatever the phone height
-      const r = document.getElementById("hubFun").getBoundingClientRect();
+      const r = document.querySelector("#hub .hub-box").getBoundingClientRect();
       if(r.bottom > 0) sc.style.height = Math.max(170, Math.round(innerHeight - r.bottom + 6)) + "px";
     } else sc.style.height = "";
   }
@@ -3018,6 +3092,18 @@ const KP = (function(){
   const brSort = l=>[...l].sort((a, b)=>(brStar(a) ? 0 : 1) - (brStar(b) ? 0 : 1) || brPow(b) - brPow(a) || (BR_TG[b.tg || ""] || 0) - (BR_TG[a.tg || ""] || 0) || (b.avail ? 1 : 0) - (a.avail ? 1 : 0) || String(a.pseudo || "").localeCompare(String(b.pseudo || "")));
   const STARC = {gold:"#f5b400", red:"#ff4d5e", blue:"#3fa9ff"};
   const brAllies = ()=>["koe", "war", ...(BR.names.off3 ? [] : ["pan"])];
+  // data from Battle Roster is cleaned on arrival: nothing read from the database can become code on this page
+  const brCName = v=>String(v == null ? "" : v).replace(/[<>"'`&\\]/g, "").trim().slice(0, 20);
+  function brClean(p){
+    const q = Object.assign({}, p);
+    q.pseudo = String(p.pseudo).slice(0, 40); q._i = String(p._i).replace(/[^\w-]/g, "");
+    q.alliance = ["koe", "war", "pan"].includes(p.alliance) ? p.alliance : null;
+    q.tg = /^TG[1-8]$/.test(p.tg || "") ? p.tg : "";
+    q.half = p.half === "h1" || p.half === "h2" ? p.half : null;
+    if(typeof p.t11s === "string") q.t11s = ["i", "c", "a"].filter(x=>p.t11s.includes(x)).join(""); else delete q.t11s;
+    q.star = ["gold", "red", "blue"].includes(p.star) ? p.star : "";
+    return q;
+  }
   const brAName = a=>a ? (BR.names[a] || a.toUpperCase()) : "";
   const doneKey = s=>nk(s).replace(/[.#$\[\]\/]/g, "_").slice(0, 60) || "_";
   let brTab = prefs.brTab || "koe", brQ = "", brFree = false, brF = {lvl:new Set(), t11:new Set(), av:new Set()}, armed = null, brByName = new Map();
@@ -3031,10 +3117,10 @@ const KP = (function(){
       BR.D = D; BR.db = D.getDatabase(A.initializeApp(BR_CFG, "battleroster"));
       D.onValue(D.ref(BR.db, "roster/pool"), sn=>{
         const v = sn.val();
-        BR.pool = !v ? [] : (Array.isArray(v) ? v.map((p, i)=>p && Object.assign({}, p, {_i:String(i)})) : Object.keys(v).map(k=>v[k] && Object.assign({}, v[k], {_i:k}))).filter(p=>p && p.pseudo);
+        BR.pool = !v ? [] : (Array.isArray(v) ? v.map((p, i)=>p && Object.assign({}, p, {_i:String(i)})) : Object.keys(v).map(k=>v[k] && Object.assign({}, v[k], {_i:k}))).filter(p=>p && p.pseudo).map(brClean);
         BR.ok = true; BR.err = false; paint();
       }, e=>{ console.warn(e); BR.err = true; paint(); });
-      D.onValue(D.ref(BR.db, "settings/allianceNames"), sn=>{ const v = sn.val() || {}; BR.names = {koe:v.koe || "KOE", war:v.war || "WAR", pan:v.pan || "PAN", off3:!!v.off3}; paint(); }, ()=>{});
+      D.onValue(D.ref(BR.db, "settings/allianceNames"), sn=>{ const v = sn.val() || {}; BR.names = {koe:brCName(v.koe) || "KOE", war:brCName(v.war) || "WAR", pan:brCName(v.pan) || "PAN", off3:!!v.off3}; paint(); }, ()=>{});
     }catch(e){ console.warn("battle roster", e); BR.err = true; BR.connecting = false; paint(); }
   }
   // write a change back to Battle Roster (same rules as the Battle Roster page)
@@ -3268,7 +3354,7 @@ const KP = (function(){
       const w = brWhere(p.pseudo), d = w && !w.startsWith("tur:") ? P.tiles[w] : {};
       rows.push([p.pseudo, a === "_" ? "" : brAName(a), p.tg || "", brT11Txt(p), {full:"Full Battle", h1:"1st Half", h2:"2nd Half"}[brAv(p)], brStar(p), w ? "✓" : brDone(p) ? "☑" : "", w ? brCell(w) : "", d.g || "", d.t || ""]);
     }));
-    const csv = "﻿" + rows.map(r=>r.map(v=>`"${String(v ?? "").replace(/"/g, '""')}"`).join(";")).join("\r\n");
+    const csv = "﻿" + rows.map(r=>r.map(v=>`"${String(v ?? "").replace(/^([=+\-@\t\r])/, "'$1").replace(/"/g, '""')}"`).join(";")).join("\r\n");
     const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv;charset=utf-8"}));
     a.download = `kvk-plan-${String((index[pid] || {}).name || "plan").replace(/[^\w-]+/g, "_")}.csv`; document.body.appendChild(a); a.click(); a.remove();
   }
