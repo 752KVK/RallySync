@@ -34,6 +34,18 @@ a.btn{text-decoration:none;color:inherit}
 .chip{display:inline-flex;align-items:center;gap:6px;max-width:46vw;min-height:42px;padding:4px 10px 4px 4px;border-radius:999px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-weight:700}
 .chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .av{display:inline-block;flex:none;width:32px;height:32px;border-radius:50%;background-image:var(--sprite);background-size:900% 100%;background-repeat:no-repeat;border:2px solid var(--gold);box-shadow:0 0 0 2px #0006}
+.av.em{display:inline-flex;align-items:center;justify-content:center;font-size:18px;line-height:1;overflow:hidden}
+.lb .av.em{font-size:16px}.hello .av.em{font-size:36px}
+.avs button.em{display:flex;align-items:center;justify-content:center;font-size:30px;line-height:1}
+.hofgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:12px}
+.hofw b{display:block;margin-bottom:2px}
+.wst{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;margin:10px 0}
+.wst b{display:block;font-size:26px;color:var(--gold)}
+.wst span{font-size:12px;color:var(--mut)}
+.dist{display:flex;flex-direction:column;gap:4px;margin-top:8px}
+.dist div{display:flex;align-items:center;gap:6px;font-weight:800}
+.dist i{display:block;min-width:22px;padding:2px 6px;border-radius:4px;background:var(--no);font-style:normal;text-align:end}
+.dist i.hl{background:var(--ok)}
 .tag{font-weight:800;color:var(--cyan);letter-spacing:.5px}
 main{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:16px 14px calc(28px + env(safe-area-inset-bottom))}
 .scr{display:none;animation:pop .25s ease-out}
@@ -92,7 +104,7 @@ label.f{display:block;margin:10px 0 4px;font-weight:700;font-size:14px}
 .ovl{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:18px;text-align:center;border-radius:var(--r);background:#12082299;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
 .ovl h3{margin:0;font-size:28px;font-weight:900}
 .ovl .big{font-size:42px;font-weight:900;color:var(--gold);text-shadow:0 0 18px #ffd16677}
-.pad{display:grid;grid-template-columns:repeat(3,58px);grid-template-rows:repeat(2,52px);gap:8px;justify-content:center}
+.pad{direction:ltr;display:grid;grid-template-columns:repeat(3,58px);grid-template-rows:repeat(2,52px);gap:8px;justify-content:center}
 .pad .btn{min-height:0;font-size:22px;padding:0}
 .board{padding:14px}
 .board h3{margin:0 0 4px;font-size:18px;display:flex;align-items:center;gap:8px}
@@ -115,14 +127,14 @@ label.f{display:block;margin:10px 0 4px;font-weight:700;font-size:14px}
 #modal{position:fixed;inset:0;z-index:50;display:none;align-items:flex-start;justify-content:center;padding:max(16px,env(safe-area-inset-top)) 12px 16px;background:#0009;overflow-y:auto}
 #modal.on{display:flex}
 #modal .card{width:100%;max-width:480px;margin-top:4vh;animation:pop .2s}
-#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));z-index:60;transform:translateX(-50%) translateY(30px);opacity:0;padding:10px 18px;border-radius:999px;background:#000c;border:1px solid var(--gold);font-weight:800;pointer-events:none;transition:.25s;max-width:90vw;text-align:center}
+#toast{position:fixed;left:50%;top:calc(70px + env(safe-area-inset-top));z-index:60;transform:translateX(-50%) translateY(-20px);opacity:0;padding:10px 18px;border-radius:999px;background:#000c;border:1px solid var(--gold);font-weight:800;pointer-events:none;transition:.25s;max-width:90vw;text-align:center}
 #toast.on{opacity:1;transform:translateX(-50%)}
 .confetti{position:fixed;inset:0;pointer-events:none;z-index:70}
 .loading{padding:40px;text-align:center;color:var(--mut);font-weight:700}
 .recs{display:grid;grid-template-columns:1fr auto;gap:6px 12px;font-size:14px;margin-top:8px}
 .recs b{color:var(--gold);text-align:end;font-variant-numeric:tabular-nums}
 [dir=rtl] .flipx{transform:scaleX(-1)}
-@media (max-width:520px){#bar h1{font-size:17px;letter-spacing:1px}.chip .tag{display:none}.btn{font-size:14px}.games{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.gcard{min-height:120px;padding:12px}.gcard .ic{font-size:32px}.stage{padding:10px}}
+@media (max-width:520px){#bar{gap:6px;padding-left:10px;padding-right:10px}#toHub span{display:none}#bar .btn.sm{padding:5px 8px}.chip{max-width:34vw;min-width:0}#bar h1{font-size:17px;letter-spacing:1px}.chip .tag{display:none}.btn{font-size:14px}.games{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.gcard{min-height:120px;padding:12px}.gcard .ic{font-size:32px}.stage{padding:10px}}
 </style>
 <style id="gameCss">
 /* ---- blackjack ---- */
@@ -143,6 +155,10 @@ label.f{display:block;margin:10px 0 4px;font-weight:700;font-size:14px}
 .pc .ba{transform:rotateY(180deg);background:repeating-linear-gradient(45deg,#b0124f 0 6px,#8a0c3d 6px 12px);border:4px solid #fff}
 .bj-mid{display:flex;align-items:center;justify-content:center;min-height:46px}
 .bj-msg{font-size:22px;font-weight:900;color:var(--gold);text-shadow:0 2px 6px #000;animation:pop .3s}
+.bj-hands{display:flex;justify-content:center;gap:18px;flex-wrap:wrap}
+.bj-h{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 8px;border-radius:14px;border:2px solid transparent;transition:border-color .2s}
+.bj-h.act{border-color:var(--gold);background:#ffd16618}
+.bj-h .res{font-weight:900;font-size:14px;color:var(--gold);min-height:18px}
 .bj-ctrl{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%}
 .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 .chipb{width:56px;height:56px;border-radius:50%;border:4px dashed #fff;cursor:pointer;font-weight:900;font-size:14px;color:#fff;box-shadow:0 4px 0 #0007;text-shadow:0 1px 2px #000;transition:transform .1s;touch-action:manipulation}
@@ -192,7 +208,7 @@ label.f{display:block;margin:10px 0 4px;font-weight:700;font-size:14px}
 .mn button.b{background:#ff5d6c}
 .mn .n1{color:#7ec8ff}.mn .n2{color:#7dffb0}.mn .n3{color:#ff8f9a}.mn .n4{color:#c9a0ff}.mn .n5{color:#ffd166}.mn .n6{color:#5ff3ff}.mn .n7,.mn .n8{color:#fff}
 /* ---- simon ---- */
-.sim{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:min(380px,90%);aspect-ratio:1}
+.sim{direction:ltr;display:grid;grid-template-columns:1fr 1fr;gap:12px;width:min(380px,90%);aspect-ratio:1}
 .sim button{border:0;border-radius:24px;cursor:pointer;opacity:.55;transition:opacity .1s,transform .1s;touch-action:manipulation;box-shadow:0 6px 0 #0007}
 .sim button.lit{opacity:1;transform:scale(1.04);filter:brightness(1.3)}
 .sim button:nth-child(1){background:#2fbf71;border-top-left-radius:50%}.sim button:nth-child(2){background:#ff4f5e;border-top-right-radius:50%}
@@ -224,6 +240,7 @@ label.f{display:block;margin:10px 0 4px;font-weight:700;font-size:14px}
   <a class="btn sm ghost" id="toHub" href="index.html">⇦ <span data-i="menu"></span></a>
   <h1><span class="dice">🎲</span> <span>FUN</span></h1>
   <div class="sp"></div>
+  <button type="button" class="btn sm" id="sndBtn" aria-label="sound">🔊</button>
   <button type="button" class="btn sm" id="langBtn"></button>
   <button type="button" class="chip" id="meChip" hidden></button>
 </header>
@@ -260,7 +277,7 @@ label.f{display:block;margin:10px 0 4px;font-weight:700;font-size:14px}
   <section class="scr" id="scrHome">
     <div class="card">
       <div class="hello"><span class="av" id="hAv"></span><div><h2 id="hName"></h2><div class="mut small" data-i="homeSub"></div></div></div>
-      <div class="weekbox"><div><div class="mut small" data-i="weekEnds"></div><div class="cd" id="cd"></div></div><button type="button" class="btn gold" id="toRanks">🏆 <span data-i="general"></span></button></div>
+      <div class="weekbox"><div><div class="mut small" data-i="weekEnds"></div><div class="cd" id="cd"></div></div><div class="row"><button type="button" class="btn gold" id="toRanks">🏆 <span data-i="general"></span></button><button type="button" class="btn" id="toHof">🏛️ <span data-i="hof"></span></button></div></div>
       <div class="mut small" data-i="champs"></div>
       <div class="champs" id="champs"></div>
     </div>
@@ -270,6 +287,11 @@ label.f{display:block;margin:10px 0 4px;font-weight:700;font-size:14px}
     <div class="ghead"><button type="button" class="btn sm" id="gBack">⇦ <span data-i="games"></span></button><h2 id="gTitle"></h2></div>
     <p class="ghelp" id="gHelp"></p>
     <div class="gwrap"><div class="stage" id="stage"></div><aside class="card board" id="gBoard"></aside></div>
+  </section>
+  <section class="scr" id="scrHof">
+    <div class="ghead"><button type="button" class="btn sm" id="hBack">⇦ <span data-i="games"></span></button><h2>🏛️ <span data-i="hof"></span></h2></div>
+    <p class="ghelp" data-i="hofSub"></p>
+    <div id="hofList"></div>
   </section>
   <section class="scr" id="scrRanks">
     <div class="ghead"><button type="button" class="btn sm" id="rBack">⇦ <span data-i="games"></span></button><h2>🏆 <span data-i="general"></span></h2></div>
@@ -291,7 +313,7 @@ homeSub:"Choisis un jeu et grimpe dans le classement !",weekEnds:"Remise à zér
 tabPoints:"Points Fun",tabPlays:"Parties jouées",tabFirst:"1res places",tabAlly:"Alliances",helpPoints:"Dans chaque jeu : 1er = 10 pts, 2e = 8, 3e = 6, 4e = 5, 5e = 4, 6e = 3, 7e = 2, 8e à 10e = 1. On additionne tous les jeux.",helpPlays:"Nombre total de parties jouées cette semaine, tous jeux confondus.",helpFirst:"Nombre de jeux où le joueur est 1er cette semaine.",helpAlly:"Total des Points Fun de tous les membres de l'alliance.",pts:"pts",plays:"parties",firsts:"1res places",members:"membres",loading:"Chargement…",saveFail:"Score non enregistré : vérifie ta connexion",d:"j",close:"Fermer",cancel:"Annuler",
 g_snake:"Snake",h_snake:"Mange les pommes sans toucher les murs ni ta queue. Flèches du clavier, ou glisse le doigt.",g_bj:"Blackjack",h_bj:"Approche-toi de 21 sans dépasser et bats le croupier. 1 000 jetons offerts chaque semaine. Le classement compte tes jetons.",g_wordle:"Wordle",h_wordle:"Trouve le mot du jour en 6 essais. Vert = bonne place, jaune = mauvaise place. Plus tu trouves vite, plus tu gagnes de points (6 à 1).",g_2048:"2048",h_2048:"Glisse pour fusionner les tuiles identiques et atteins 2048 !",g_memory:"Memory",h_memory:"Retrouve les 8 paires de personnages le plus vite possible.",g_reflex:"Réflexes",h_reflex:"Touche l'écran dès qu'il devient vert. 5 essais, on garde ta moyenne.",g_mines:"Démineur",h_mines:"Ouvre toutes les cases sans mine. Appui long (ou clic droit) pour poser un drapeau.",g_blocks:"Blocs",h_blocks:"Complète des lignes avec les blocs qui tombent. Touche = tourner, glisse = déplacer, glisse vers le bas = lâcher.",g_flappy:"Flappy",h_flappy:"Touche l'écran (ou Espace) pour voler entre les obstacles.",g_simon:"Simon",h_simon:"Mémorise la suite de couleurs et répète-la. Elle s'allonge à chaque tour.",g_c4:"Puissance 4",h_c4:"Aligne 4 jetons contre l'ordinateur. Victoire : facile +1, moyen +3, difficile +6 points.",g_sudoku:"Sudoku",h_sudoku:"Remplis la grille : chaque ligne, colonne et carré contient 1 à 9. Grille finie : facile +1, moyen +3, difficile +6 points.",
 bjBet:"Mise",bjDeal:"Distribuer",bjHit:"Carte",bjStand:"Rester",bjDouble:"Doubler",bjChips:"Jetons",bjWin:"Gagné !",bjLose:"Perdu",bjPush:"Égalité",bjBJ:"Blackjack !",bjBust:"Dépassé !",bjDealer:"Croupier",bjYou:"Toi",bjRebuy:"Recharger 500 jetons",bjRebuyUsed:"Recharge déjà utilisée aujourd'hui, reviens demain",bjClear:"Effacer",bjMin:"Mise d'abord des jetons",
-wNotWord:"Ce mot n'est pas dans le dictionnaire",wShort:"Pas assez de lettres",wWon:"Bravo ! +{n} pts",wLost:"Le mot était :",wNext:"Prochain mot dans",wLang:"Langue du mot",wLoad:"Chargement du dictionnaire…",wLoadFail:"Impossible de charger le dictionnaire",enter:"Entrée",
+wNotWord:"Ce mot n'est pas dans le dictionnaire",wErase:"efface avec ⌫ et essaie un autre mot",wShort:"Pas assez de lettres",wWon:"Bravo ! +{n} pts",wLost:"Le mot était :",wNext:"Prochain mot dans",wLang:"Langue du mot",wLoad:"Chargement du dictionnaire…",wLoadFail:"Impossible de charger le dictionnaire",enter:"Entrée",
 mPairs:"Paires",mMoves:"Coups",rxWait:"Attends le vert…",rxTap:"TOUCHE !",rxEarly:"Trop tôt ! On recommence cet essai",rxTry:"Essai",rxAvg:"Moyenne",rxStart:"Touche pour commencer",mnFlag:"Mode drapeau",mnWin:"Déminé !",mnBoom:"Boum !",mnLeft:"Mines",bkLines:"Lignes",bkLevel:"Niveau",bkNext:"Suivant",fpTap:"Touche pour voler",smWatch:"Regarde…",smYour:"À toi !",smWrong:"Raté !",smLevel:"Suite",
 lvEasy:"Facile",lvMid:"Moyen",lvHard:"Difficile",c4You:"À toi de jouer",c4Ai:"L'ordinateur réfléchit…",c4Win:"Tu as gagné ! +{n} pts",c4Lose:"L'ordinateur a gagné",c4Draw:"Match nul",newGame:"Nouvelle partie",sdErase:"Effacer",sdWin:"Grille terminée ! +{n} pts",sdMist:"Erreurs",
 uPts:"pts",uChips:"jetons",uWins:"pts"},
@@ -301,7 +323,7 @@ homeSub:"Pick a game and climb the ranking!",weekEnds:"Rankings reset in",champs
 tabPoints:"Fun Points",tabPlays:"Games played",tabFirst:"1st places",tabAlly:"Alliances",helpPoints:"In every game: 1st = 10 pts, 2nd = 8, 3rd = 6, 4th = 5, 5th = 4, 6th = 3, 7th = 2, 8th to 10th = 1. All games are added up.",helpPlays:"Total games played this week, all games together.",helpFirst:"Number of games where the player is 1st this week.",helpAlly:"Total Fun Points of all alliance members.",pts:"pts",plays:"games",firsts:"1st places",members:"members",loading:"Loading…",saveFail:"Score not saved: check your connection",d:"d",close:"Close",cancel:"Cancel",
 g_snake:"Snake",h_snake:"Eat the apples without hitting the walls or your tail. Arrow keys, or swipe.",g_bj:"Blackjack",h_bj:"Get close to 21 without going over and beat the dealer. 1,000 free chips every week. The ranking counts your chips.",g_wordle:"Wordle",h_wordle:"Find the word of the day in 6 tries. Green = right spot, yellow = wrong spot. The faster you find it, the more points (6 to 1).",g_2048:"2048",h_2048:"Swipe to merge equal tiles and reach 2048!",g_memory:"Memory",h_memory:"Find the 8 pairs of characters as fast as you can.",g_reflex:"Reflexes",h_reflex:"Tap as soon as the screen turns green. 5 tries, your average counts.",g_mines:"Minesweeper",h_mines:"Open every safe square. Long press (or right click) to place a flag.",g_blocks:"Blocks",h_blocks:"Complete lines with the falling blocks. Tap = rotate, swipe = move, swipe down = drop.",g_flappy:"Flappy",h_flappy:"Tap (or Space) to fly between the obstacles.",g_simon:"Simon",h_simon:"Remember the colour sequence and repeat it. It gets longer every round.",g_c4:"Connect 4",h_c4:"Line up 4 discs against the computer. Win: easy +1, medium +3, hard +6 points.",g_sudoku:"Sudoku",h_sudoku:"Fill the grid: every row, column and box holds 1 to 9. Finished grid: easy +1, medium +3, hard +6 points.",
 bjBet:"Bet",bjDeal:"Deal",bjHit:"Hit",bjStand:"Stand",bjDouble:"Double",bjChips:"Chips",bjWin:"You win!",bjLose:"You lose",bjPush:"Push",bjBJ:"Blackjack!",bjBust:"Bust!",bjDealer:"Dealer",bjYou:"You",bjRebuy:"Refill 500 chips",bjRebuyUsed:"Refill already used today, come back tomorrow",bjClear:"Clear",bjMin:"Place a bet first",
-wNotWord:"This word is not in the dictionary",wShort:"Not enough letters",wWon:"Well done! +{n} pts",wLost:"The word was:",wNext:"Next word in",wLang:"Word language",wLoad:"Loading the dictionary…",wLoadFail:"Could not load the dictionary",enter:"Enter",
+wNotWord:"This word is not in the dictionary",wErase:"erase with ⌫ and try another word",wShort:"Not enough letters",wWon:"Well done! +{n} pts",wLost:"The word was:",wNext:"Next word in",wLang:"Word language",wLoad:"Loading the dictionary…",wLoadFail:"Could not load the dictionary",enter:"Enter",
 mPairs:"Pairs",mMoves:"Moves",rxWait:"Wait for green…",rxTap:"TAP!",rxEarly:"Too early! This try restarts",rxTry:"Try",rxAvg:"Average",rxStart:"Tap to start",mnFlag:"Flag mode",mnWin:"Cleared!",mnBoom:"Boom!",mnLeft:"Mines",bkLines:"Lines",bkLevel:"Level",bkNext:"Next",fpTap:"Tap to fly",smWatch:"Watch…",smYour:"Your turn!",smWrong:"Missed!",smLevel:"Sequence",
 lvEasy:"Easy",lvMid:"Medium",lvHard:"Hard",c4You:"Your turn",c4Ai:"The computer is thinking…",c4Win:"You win! +{n} pts",c4Lose:"The computer wins",c4Draw:"Draw",newGame:"New game",sdErase:"Erase",sdWin:"Grid solved! +{n} pts",sdMist:"Mistakes",
 uPts:"pts",uChips:"chips",uWins:"pts"},
@@ -311,7 +333,7 @@ homeSub:"¡Elige un juego y sube en la clasificación!",weekEnds:"Las clasificac
 tabPoints:"Puntos Fun",tabPlays:"Partidas jugadas",tabFirst:"1.ºs puestos",tabAlly:"Alianzas",helpPoints:"En cada juego: 1.º = 10 pts, 2.º = 8, 3.º = 6, 4.º = 5, 5.º = 4, 6.º = 3, 7.º = 2, 8.º a 10.º = 1. Se suman todos los juegos.",helpPlays:"Total de partidas jugadas esta semana, en todos los juegos.",helpFirst:"Número de juegos en los que el jugador es 1.º esta semana.",helpAlly:"Total de Puntos Fun de todos los miembros de la alianza.",pts:"pts",plays:"partidas",firsts:"1.ºs puestos",members:"miembros",loading:"Cargando…",saveFail:"Puntuación no guardada: revisa tu conexión",d:"d",close:"Cerrar",cancel:"Cancelar",
 g_snake:"Snake",h_snake:"Come las manzanas sin tocar las paredes ni tu cola. Flechas del teclado o desliza el dedo.",g_bj:"Blackjack",h_bj:"Acércate a 21 sin pasarte y gana al crupier. 1000 fichas gratis cada semana. La clasificación cuenta tus fichas.",g_wordle:"Wordle",h_wordle:"Encuentra la palabra del día en 6 intentos. Verde = lugar correcto, amarillo = lugar incorrecto. Cuanto antes la encuentres, más puntos (6 a 1).",g_2048:"2048",h_2048:"Desliza para unir fichas iguales y llega a 2048.",g_memory:"Memoria",h_memory:"Encuentra las 8 parejas de personajes lo más rápido posible.",g_reflex:"Reflejos",h_reflex:"Toca en cuanto la pantalla se ponga verde. 5 intentos, cuenta tu media.",g_mines:"Buscaminas",h_mines:"Abre todas las casillas sin mina. Pulsación larga (o clic derecho) para poner una bandera.",g_blocks:"Bloques",h_blocks:"Completa líneas con los bloques que caen. Toque = girar, deslizar = mover, deslizar abajo = soltar.",g_flappy:"Flappy",h_flappy:"Toca (o Espacio) para volar entre los obstáculos.",g_simon:"Simón",h_simon:"Memoriza la secuencia de colores y repítela. Se alarga cada ronda.",g_c4:"Conecta 4",h_c4:"Alinea 4 fichas contra el ordenador. Victoria: fácil +1, medio +3, difícil +6 puntos.",g_sudoku:"Sudoku",h_sudoku:"Rellena la cuadrícula: cada fila, columna y cuadro tiene del 1 al 9. Cuadrícula terminada: fácil +1, medio +3, difícil +6 puntos.",
 bjBet:"Apuesta",bjDeal:"Repartir",bjHit:"Carta",bjStand:"Plantarse",bjDouble:"Doblar",bjChips:"Fichas",bjWin:"¡Ganas!",bjLose:"Pierdes",bjPush:"Empate",bjBJ:"¡Blackjack!",bjBust:"¡Te pasaste!",bjDealer:"Crupier",bjYou:"Tú",bjRebuy:"Recargar 500 fichas",bjRebuyUsed:"Recarga ya usada hoy, vuelve mañana",bjClear:"Borrar",bjMin:"Primero apuesta fichas",
-wNotWord:"Esta palabra no está en el diccionario",wShort:"Faltan letras",wWon:"¡Bravo! +{n} pts",wLost:"La palabra era:",wNext:"Próxima palabra en",wLang:"Idioma de la palabra",wLoad:"Cargando el diccionario…",wLoadFail:"No se pudo cargar el diccionario",enter:"Enviar",
+wNotWord:"Esta palabra no está en el diccionario",wErase:"borra con ⌫ y prueba otra palabra",wShort:"Faltan letras",wWon:"¡Bravo! +{n} pts",wLost:"La palabra era:",wNext:"Próxima palabra en",wLang:"Idioma de la palabra",wLoad:"Cargando el diccionario…",wLoadFail:"No se pudo cargar el diccionario",enter:"Enviar",
 mPairs:"Parejas",mMoves:"Jugadas",rxWait:"Espera el verde…",rxTap:"¡TOCA!",rxEarly:"¡Demasiado pronto! Se repite este intento",rxTry:"Intento",rxAvg:"Media",rxStart:"Toca para empezar",mnFlag:"Modo bandera",mnWin:"¡Despejado!",mnBoom:"¡Bum!",mnLeft:"Minas",bkLines:"Líneas",bkLevel:"Nivel",bkNext:"Siguiente",fpTap:"Toca para volar",smWatch:"Mira…",smYour:"¡Tu turno!",smWrong:"¡Fallaste!",smLevel:"Secuencia",
 lvEasy:"Fácil",lvMid:"Medio",lvHard:"Difícil",c4You:"Tu turno",c4Ai:"El ordenador piensa…",c4Win:"¡Ganaste! +{n} pts",c4Lose:"Gana el ordenador",c4Draw:"Empate",newGame:"Nueva partida",sdErase:"Borrar",sdWin:"¡Cuadrícula resuelta! +{n} pts",sdMist:"Errores",
 uPts:"pts",uChips:"fichas",uWins:"pts"},
@@ -321,7 +343,7 @@ homeSub:"Bir oyun seç ve sıralamada yüksel!",weekEnds:"Sıralamaların sıfı
 tabPoints:"Fun Puanı",tabPlays:"Oynanan oyunlar",tabFirst:"Birincilikler",tabAlly:"İttifaklar",helpPoints:"Her oyunda: 1. = 10 puan, 2. = 8, 3. = 6, 4. = 5, 5. = 4, 6. = 3, 7. = 2, 8. ile 10. arası = 1. Tüm oyunlar toplanır.",helpPlays:"Bu hafta tüm oyunlarda oynanan toplam oyun sayısı.",helpFirst:"Oyuncunun bu hafta birinci olduğu oyun sayısı.",helpAlly:"İttifakın tüm üyelerinin toplam Fun Puanı.",pts:"puan",plays:"oyun",firsts:"birincilik",members:"üye",loading:"Yükleniyor…",saveFail:"Skor kaydedilmedi: bağlantını kontrol et",d:"g",close:"Kapat",cancel:"İptal",
 g_snake:"Yılan",h_snake:"Duvarlara ve kuyruğuna çarpmadan elmaları ye. Ok tuşları veya parmağını kaydır.",g_bj:"Blackjack",h_bj:"21'i geçmeden yaklaş ve krupiyeyi yen. Her hafta 1.000 bedava jeton. Sıralama jetonlarını sayar.",g_wordle:"Wordle",h_wordle:"Günün kelimesini 6 denemede bul. Yeşil = doğru yer, sarı = yanlış yer. Ne kadar hızlı bulursan o kadar çok puan (6'dan 1'e).",g_2048:"2048",h_2048:"Aynı karoları birleştirmek için kaydır ve 2048'e ulaş!",g_memory:"Hafıza",h_memory:"8 karakter çiftini olabildiğince hızlı bul.",g_reflex:"Refleks",h_reflex:"Ekran yeşile döner dönmez dokun. 5 deneme, ortalaman sayılır.",g_mines:"Mayın Tarlası",h_mines:"Mayınsız tüm kareleri aç. Bayrak için uzun bas (veya sağ tık).",g_blocks:"Bloklar",h_blocks:"Düşen bloklarla satırları tamamla. Dokun = döndür, kaydır = taşı, aşağı kaydır = bırak.",g_flappy:"Flappy",h_flappy:"Engellerin arasından uçmak için dokun (veya Boşluk).",g_simon:"Simon",h_simon:"Renk dizisini ezberle ve tekrarla. Her turda uzar.",g_c4:"Dört Bir",h_c4:"Bilgisayara karşı 4 pulu hizala. Galibiyet: kolay +1, orta +3, zor +6 puan.",g_sudoku:"Sudoku",h_sudoku:"Tabloyu doldur: her satır, sütun ve kutuda 1'den 9'a. Biten tablo: kolay +1, orta +3, zor +6 puan.",
 bjBet:"Bahis",bjDeal:"Dağıt",bjHit:"Kart",bjStand:"Dur",bjDouble:"İkiye katla",bjChips:"Jeton",bjWin:"Kazandın!",bjLose:"Kaybettin",bjPush:"Berabere",bjBJ:"Blackjack!",bjBust:"Battın!",bjDealer:"Krupiye",bjYou:"Sen",bjRebuy:"500 jeton yükle",bjRebuyUsed:"Yükleme bugün zaten kullanıldı, yarın gel",bjClear:"Temizle",bjMin:"Önce jeton yatır",
-wNotWord:"Bu kelime sözlükte yok",wShort:"Yeterli harf yok",wWon:"Bravo! +{n} puan",wLost:"Kelime şuydu:",wNext:"Sonraki kelimeye",wLang:"Kelime dili",wLoad:"Sözlük yükleniyor…",wLoadFail:"Sözlük yüklenemedi",enter:"Gir",
+wNotWord:"Bu kelime sözlükte yok",wErase:"⌫ ile sil ve başka bir kelime dene",wShort:"Yeterli harf yok",wWon:"Bravo! +{n} puan",wLost:"Kelime şuydu:",wNext:"Sonraki kelimeye",wLang:"Kelime dili",wLoad:"Sözlük yükleniyor…",wLoadFail:"Sözlük yüklenemedi",enter:"Gir",
 mPairs:"Çiftler",mMoves:"Hamle",rxWait:"Yeşili bekle…",rxTap:"DOKUN!",rxEarly:"Çok erken! Bu deneme yeniden başlıyor",rxTry:"Deneme",rxAvg:"Ortalama",rxStart:"Başlamak için dokun",mnFlag:"Bayrak modu",mnWin:"Temizlendi!",mnBoom:"Bum!",mnLeft:"Mayın",bkLines:"Satır",bkLevel:"Seviye",bkNext:"Sıradaki",fpTap:"Uçmak için dokun",smWatch:"İzle…",smYour:"Sıra sende!",smWrong:"Kaçırdın!",smLevel:"Dizi",
 lvEasy:"Kolay",lvMid:"Orta",lvHard:"Zor",c4You:"Sıra sende",c4Ai:"Bilgisayar düşünüyor…",c4Win:"Kazandın! +{n} puan",c4Lose:"Bilgisayar kazandı",c4Draw:"Berabere",newGame:"Yeni oyun",sdErase:"Sil",sdWin:"Tablo tamam! +{n} puan",sdMist:"Hata",
 uPts:"puan",uChips:"jeton",uWins:"puan"},
@@ -331,7 +353,7 @@ homeSub:"게임을 골라 순위를 올리세요!",weekEnds:"순위 초기화까
 tabPoints:"펀 포인트",tabPlays:"플레이 횟수",tabFirst:"1위 횟수",tabAlly:"연맹",helpPoints:"각 게임마다: 1위 = 10점, 2위 = 8, 3위 = 6, 4위 = 5, 5위 = 4, 6위 = 3, 7위 = 2, 8~10위 = 1. 모든 게임을 합산합니다.",helpPlays:"이번 주 모든 게임의 총 플레이 횟수.",helpFirst:"이번 주 플레이어가 1위인 게임 수.",helpAlly:"연맹 모든 멤버의 펀 포인트 합계.",pts:"점",plays:"판",firsts:"회 1위",members:"명",loading:"불러오는 중…",saveFail:"점수가 저장되지 않았습니다: 연결을 확인하세요",d:"일",close:"닫기",cancel:"취소",
 g_snake:"스네이크",h_snake:"벽과 꼬리에 부딪히지 않고 사과를 먹으세요. 방향키 또는 스와이프.",g_bj:"블랙잭",h_bj:"21을 넘지 않게 가까이 만들어 딜러를 이기세요. 매주 칩 1,000개 무료. 순위는 칩 수로 정해집니다.",g_wordle:"워들",h_wordle:"6번 안에 오늘의 단어를 맞히세요. 초록 = 맞는 자리, 노랑 = 다른 자리. 빨리 맞힐수록 점수가 높습니다 (6~1점).",g_2048:"2048",h_2048:"밀어서 같은 타일을 합치고 2048을 만드세요!",g_memory:"메모리",h_memory:"캐릭터 8쌍을 최대한 빨리 찾으세요.",g_reflex:"반응 속도",h_reflex:"화면이 초록색이 되면 바로 누르세요. 5번 시도, 평균이 기록됩니다.",g_mines:"지뢰찾기",h_mines:"지뢰가 없는 칸을 모두 여세요. 길게 누르기(또는 우클릭)로 깃발.",g_blocks:"블록",h_blocks:"떨어지는 블록으로 줄을 채우세요. 탭 = 회전, 밀기 = 이동, 아래로 밀기 = 떨어뜨리기.",g_flappy:"플래피",h_flappy:"탭(또는 스페이스)으로 장애물 사이를 날아가세요.",g_simon:"사이먼",h_simon:"색깔 순서를 기억하고 따라 하세요. 매 라운드 길어집니다.",g_c4:"사목",h_c4:"컴퓨터와 대결해 4개를 한 줄로 놓으세요. 승리: 쉬움 +1, 보통 +3, 어려움 +6점.",g_sudoku:"스도쿠",h_sudoku:"각 행, 열, 상자에 1~9를 채우세요. 완성: 쉬움 +1, 보통 +3, 어려움 +6점.",
 bjBet:"베팅",bjDeal:"딜",bjHit:"히트",bjStand:"스탠드",bjDouble:"더블",bjChips:"칩",bjWin:"승리!",bjLose:"패배",bjPush:"무승부",bjBJ:"블랙잭!",bjBust:"버스트!",bjDealer:"딜러",bjYou:"나",bjRebuy:"칩 500개 충전",bjRebuyUsed:"오늘은 이미 충전했습니다. 내일 다시 오세요",bjClear:"지우기",bjMin:"먼저 칩을 거세요",
-wNotWord:"사전에 없는 단어입니다",wShort:"글자가 부족합니다",wWon:"훌륭해요! +{n}점",wLost:"정답:",wNext:"다음 단어까지",wLang:"단어 언어",wLoad:"사전 불러오는 중…",wLoadFail:"사전을 불러올 수 없습니다",enter:"입력",
+wNotWord:"사전에 없는 단어입니다",wErase:"⌫로 지우고 다른 단어를 입력하세요",wShort:"글자가 부족합니다",wWon:"훌륭해요! +{n}점",wLost:"정답:",wNext:"다음 단어까지",wLang:"단어 언어",wLoad:"사전 불러오는 중…",wLoadFail:"사전을 불러올 수 없습니다",enter:"입력",
 mPairs:"쌍",mMoves:"횟수",rxWait:"초록색을 기다리세요…",rxTap:"지금!",rxEarly:"너무 빨라요! 이번 시도를 다시 합니다",rxTry:"시도",rxAvg:"평균",rxStart:"눌러서 시작",mnFlag:"깃발 모드",mnWin:"성공!",mnBoom:"펑!",mnLeft:"지뢰",bkLines:"줄",bkLevel:"레벨",bkNext:"다음",fpTap:"탭해서 날기",smWatch:"보세요…",smYour:"따라 하세요!",smWrong:"틀렸어요!",smLevel:"순서",
 lvEasy:"쉬움",lvMid:"보통",lvHard:"어려움",c4You:"내 차례",c4Ai:"컴퓨터가 생각 중…",c4Win:"승리! +{n}점",c4Lose:"컴퓨터 승리",c4Draw:"무승부",newGame:"새 게임",sdErase:"지우기",sdWin:"완성! +{n}점",sdMist:"실수",
 uPts:"점",uChips:"칩",uWins:"점"},
@@ -341,11 +363,18 @@ homeSub:"اختر لعبة واصعد في الترتيب!",weekEnds:"إعادة
 tabPoints:"نقاط المرح",tabPlays:"الجولات الملعوبة",tabFirst:"المراكز الأولى",tabAlly:"التحالفات",helpPoints:"في كل لعبة: الأول = 10 نقاط، الثاني = 8، الثالث = 6، الرابع = 5، الخامس = 4، السادس = 3، السابع = 2، من الثامن إلى العاشر = 1. تُجمع كل الألعاب.",helpPlays:"إجمالي الجولات الملعوبة هذا الأسبوع في كل الألعاب.",helpFirst:"عدد الألعاب التي يتصدرها اللاعب هذا الأسبوع.",helpAlly:"مجموع نقاط المرح لكل أعضاء التحالف.",pts:"نقطة",plays:"جولة",firsts:"مركز أول",members:"عضو",loading:"جارٍ التحميل…",saveFail:"لم تُحفظ النتيجة: تحقّق من اتصالك",d:"ي",close:"إغلاق",cancel:"إلغاء",
 g_snake:"الثعبان",h_snake:"كُل التفاح دون أن تلمس الجدران أو ذيلك. أسهم لوحة المفاتيح أو اسحب بإصبعك.",g_bj:"بلاك جاك",h_bj:"اقترب من 21 دون أن تتجاوزه واهزم الموزّع. 1000 رقاقة مجانية كل أسبوع. الترتيب يحسب رقاقاتك.",g_wordle:"وردل",h_wordle:"اعثر على كلمة اليوم في 6 محاولات. الأخضر = مكان صحيح، الأصفر = مكان خاطئ. كلما أسرعت زادت نقاطك (من 6 إلى 1).",g_2048:"2048",h_2048:"اسحب لدمج المربعات المتشابهة ووصل إلى 2048!",g_memory:"الذاكرة",h_memory:"اعثر على أزواج الشخصيات الثمانية بأسرع ما يمكن.",g_reflex:"ردّ الفعل",h_reflex:"المس الشاشة فور أن تصبح خضراء. 5 محاولات ويُحسب متوسطك.",g_mines:"كاسحة الألغام",h_mines:"افتح كل المربعات الخالية من الألغام. ضغطة طويلة (أو نقرة يمنى) لوضع علم.",g_blocks:"المكعبات",h_blocks:"أكمل الصفوف بالقطع المتساقطة. لمسة = تدوير، سحب = تحريك، سحب للأسفل = إسقاط.",g_flappy:"فلابي",h_flappy:"المس الشاشة (أو المسافة) لتطير بين العوائق.",g_simon:"سايمون",h_simon:"احفظ تسلسل الألوان وكرّره. يطول في كل جولة.",g_c4:"أربعة في صف",h_c4:"صفّ 4 أقراص ضد الكمبيوتر. الفوز: سهل +1، متوسط +3، صعب +6 نقاط.",g_sudoku:"سودوكو",h_sudoku:"املأ الشبكة: كل صف وعمود ومربع يحوي الأرقام من 1 إلى 9. شبكة مكتملة: سهل +1، متوسط +3، صعب +6 نقاط.",
 bjBet:"الرهان",bjDeal:"وزّع",bjHit:"ورقة",bjStand:"توقّف",bjDouble:"ضاعف",bjChips:"الرقاقات",bjWin:"فزت!",bjLose:"خسرت",bjPush:"تعادل",bjBJ:"بلاك جاك!",bjBust:"تجاوزت!",bjDealer:"الموزّع",bjYou:"أنت",bjRebuy:"اشحن 500 رقاقة",bjRebuyUsed:"استخدمت الشحن اليوم، عد غدًا",bjClear:"مسح",bjMin:"راهن بالرقاقات أولًا",
-wNotWord:"هذه الكلمة ليست في القاموس",wShort:"الأحرف غير كافية",wWon:"أحسنت! +{n} نقطة",wLost:"الكلمة كانت:",wNext:"الكلمة التالية بعد",wLang:"لغة الكلمة",wLoad:"جارٍ تحميل القاموس…",wLoadFail:"تعذّر تحميل القاموس",enter:"إدخال",
+wNotWord:"هذه الكلمة ليست في القاموس",wErase:"امسح بـ ⌫ وجرّب كلمة أخرى",wShort:"الأحرف غير كافية",wWon:"أحسنت! +{n} نقطة",wLost:"الكلمة كانت:",wNext:"الكلمة التالية بعد",wLang:"لغة الكلمة",wLoad:"جارٍ تحميل القاموس…",wLoadFail:"تعذّر تحميل القاموس",enter:"إدخال",
 mPairs:"الأزواج",mMoves:"المحاولات",rxWait:"انتظر الأخضر…",rxTap:"الآن!",rxEarly:"مبكر جدًا! تُعاد هذه المحاولة",rxTry:"محاولة",rxAvg:"المتوسط",rxStart:"المس للبدء",mnFlag:"وضع العلم",mnWin:"تم التنظيف!",mnBoom:"بوم!",mnLeft:"ألغام",bkLines:"صفوف",bkLevel:"المستوى",bkNext:"التالي",fpTap:"المس لتطير",smWatch:"شاهد…",smYour:"دورك!",smWrong:"أخطأت!",smLevel:"التسلسل",
 lvEasy:"سهل",lvMid:"متوسط",lvHard:"صعب",c4You:"دورك",c4Ai:"الكمبيوتر يفكّر…",c4Win:"فزت! +{n} نقطة",c4Lose:"فاز الكمبيوتر",c4Draw:"تعادل",newGame:"جولة جديدة",sdErase:"مسح",sdWin:"اكتملت الشبكة! +{n} نقطة",sdMist:"الأخطاء",
 uPts:"نقطة",uChips:"رقاقة",uWins:"نقطة"}
 };
+// ---- additions (improvements: sound, leave warning, daily cap, alerts, Wordle share/stats, blackjack split/insurance, hall of fame)
+Object.assign(I18N.fr, {leaveTitle:"Quitter la partie ?",leaveBj:"Une main est en cours : ta mise sera perdue si tu quittes.",stay:"Rester",leave:"Quitter",capReached:"Plafond du jour atteint (30 pts). La partie compte, mais sans points : reviens demain !",todayPts:"Aujourd'hui : {n}/30 pts",passed:"🔔 {who} t'a dépassé : {game} (tu es #{n})",wShare:"Partager",wCopied:"Copié ! Colle-le dans le chat du jeu",wStats:"Statistiques",stPlayed:"Parties",stWin:"% victoires",stStreak:"Série actuelle",stMax:"Meilleure série",stDist:"Répartition des essais",wNewAt:"Nouveau mot chaque jour à {n} (ton heure)",bjSplit:"Séparer",bjIns:"Assurance ({n})",bjNoIns:"Non merci",bjInsQ:"Le croupier montre un As : prendre l'assurance ?",bjInsWin:"Assurance payée !",bjHand:"Main",hof:"Panthéon",hofSub:"Les 3 meilleurs de chaque semaine (Points Fun)",hofTitles:"Titres de champion",hofWeek:"Semaine du {n}",hofEmpty:"Le Panthéon se remplira à la fin de la première semaine (dimanche 00:00 UTC).",sound:"Son"});
+Object.assign(I18N.en, {leaveTitle:"Leave the game?",leaveBj:"A hand is in progress: your bet is lost if you leave.",stay:"Stay",leave:"Leave",capReached:"Daily cap reached (30 pts). The game counts, but without points: come back tomorrow!",todayPts:"Today: {n}/30 pts",passed:"🔔 {who} passed you: {game} (you are #{n})",wShare:"Share",wCopied:"Copied! Paste it in the game chat",wStats:"Statistics",stPlayed:"Played",stWin:"Win %",stStreak:"Current streak",stMax:"Best streak",stDist:"Guess distribution",wNewAt:"New word every day at {n} (your time)",bjSplit:"Split",bjIns:"Insurance ({n})",bjNoIns:"No thanks",bjInsQ:"The dealer shows an Ace: take insurance?",bjInsWin:"Insurance paid!",bjHand:"Hand",hof:"Hall of Fame",hofSub:"The top 3 of every week (Fun Points)",hofTitles:"Champion titles",hofWeek:"Week of {n}",hofEmpty:"The Hall of Fame fills up at the end of the first week (Sunday 00:00 UTC).",sound:"Sound"});
+Object.assign(I18N.es, {leaveTitle:"¿Salir de la partida?",leaveBj:"Hay una mano en curso: perderás tu apuesta si sales.",stay:"Quedarme",leave:"Salir",capReached:"Límite diario alcanzado (30 pts). La partida cuenta, pero sin puntos: ¡vuelve mañana!",todayPts:"Hoy: {n}/30 pts",passed:"🔔 {who} te ha superado: {game} (eres #{n})",wShare:"Compartir",wCopied:"¡Copiado! Pégalo en el chat del juego",wStats:"Estadísticas",stPlayed:"Partidas",stWin:"% victorias",stStreak:"Racha actual",stMax:"Mejor racha",stDist:"Distribución de intentos",wNewAt:"Nueva palabra cada día a las {n} (tu hora)",bjSplit:"Separar",bjIns:"Seguro ({n})",bjNoIns:"No, gracias",bjInsQ:"El crupier muestra un As: ¿tomar el seguro?",bjInsWin:"¡Seguro pagado!",bjHand:"Mano",hof:"Salón de la Fama",hofSub:"Los 3 mejores de cada semana (Puntos Fun)",hofTitles:"Títulos de campeón",hofWeek:"Semana del {n}",hofEmpty:"El Salón de la Fama se llenará al final de la primera semana (domingo 00:00 UTC).",sound:"Sonido"});
+Object.assign(I18N.tr, {leaveTitle:"Oyundan çıkılsın mı?",leaveBj:"Devam eden bir el var: çıkarsan bahsini kaybedersin.",stay:"Kal",leave:"Çık",capReached:"Günlük sınıra ulaşıldı (30 puan). Oyun sayılır ama puansız: yarın gel!",todayPts:"Bugün: {n}/30 puan",passed:"🔔 {who} seni geçti: {game} (#{n} sıradasın)",wShare:"Paylaş",wCopied:"Kopyalandı! Oyun sohbetine yapıştır",wStats:"İstatistikler",stPlayed:"Oyun",stWin:"Kazanma %",stStreak:"Mevcut seri",stMax:"En iyi seri",stDist:"Deneme dağılımı",wNewAt:"Her gün {n}'de yeni kelime (senin saatin)",bjSplit:"Böl",bjIns:"Sigorta ({n})",bjNoIns:"Hayır, teşekkürler",bjInsQ:"Krupiye As gösteriyor: sigorta alınsın mı?",bjInsWin:"Sigorta ödendi!",bjHand:"El",hof:"Şöhretler Salonu",hofSub:"Her haftanın ilk 3'ü (Fun Puanı)",hofTitles:"Şampiyonluk",hofWeek:"{n} haftası",hofEmpty:"Şöhretler Salonu ilk haftanın sonunda dolacak (Pazar 00:00 UTC).",sound:"Ses"});
+Object.assign(I18N.ko, {leaveTitle:"게임을 나갈까요?",leaveBj:"진행 중인 핸드가 있습니다: 나가면 베팅을 잃습니다.",stay:"계속하기",leave:"나가기",capReached:"오늘의 한도 도달 (30점). 게임은 기록되지만 점수는 없습니다: 내일 다시 오세요!",todayPts:"오늘: {n}/30점",passed:"🔔 {who}님이 추월했습니다: {game} (현재 #{n})",wShare:"공유",wCopied:"복사됨! 게임 채팅에 붙여넣으세요",wStats:"통계",stPlayed:"플레이",stWin:"승률 %",stStreak:"현재 연승",stMax:"최고 연승",stDist:"시도 횟수 분포",wNewAt:"매일 {n}에 새 단어 (내 시간)",bjSplit:"스플릿",bjIns:"인슈어런스 ({n})",bjNoIns:"괜찮아요",bjInsQ:"딜러가 에이스를 보입니다: 인슈어런스를 할까요?",bjInsWin:"인슈어런스 지급!",bjHand:"핸드",hof:"명예의 전당",hofSub:"매주 TOP 3 (펀 포인트)",hofTitles:"챔피언 횟수",hofWeek:"{n} 주",hofEmpty:"첫 주가 끝나면 명예의 전당이 채워집니다 (일요일 00:00 UTC).",sound:"소리"});
+Object.assign(I18N.ar, {leaveTitle:"مغادرة اللعبة؟",leaveBj:"هناك يد جارية: ستخسر رهانك إذا غادرت.",stay:"ابقَ",leave:"غادر",capReached:"بلغت الحد اليومي (30 نقطة). الجولة تُحسب لكن دون نقاط: عد غدًا!",todayPts:"اليوم: {n}/30 نقطة",passed:"🔔 {who} تجاوزك: {game} (أنت #{n})",wShare:"مشاركة",wCopied:"تم النسخ! الصقه في دردشة اللعبة",wStats:"إحصائيات",stPlayed:"الجولات",stWin:"نسبة الفوز",stStreak:"السلسلة الحالية",stMax:"أفضل سلسلة",stDist:"توزيع المحاولات",wNewAt:"كلمة جديدة كل يوم الساعة {n} (بتوقيتك)",bjSplit:"تقسيم",bjIns:"تأمين ({n})",bjNoIns:"لا، شكرًا",bjInsQ:"الموزّع يُظهر آسًا: هل تأخذ التأمين؟",bjInsWin:"تم دفع التأمين!",bjHand:"اليد",hof:"قاعة المشاهير",hofSub:"أفضل 3 في كل أسبوع (نقاط المرح)",hofTitles:"ألقاب البطولة",hofWeek:"أسبوع {n}",hofEmpty:"ستمتلئ قاعة المشاهير في نهاية الأسبوع الأول (الأحد 00:00 UTC).",sound:"الصوت"});
 
 "use strict";
 const FB_CFG = {apiKey:"AIzaSyButTPJ74DlFm2Drdz2ROyxQAJO_ZnA-M8",authDomain:"rallysync-749b6.firebaseapp.com",databaseURL:"https://rallysync-749b6-default-rtdb.europe-west1.firebasedatabase.app",projectId:"rallysync-749b6",storageBucket:"rallysync-749b6.firebasestorage.app"};
@@ -356,7 +385,7 @@ const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt
 const ls = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k, v){ try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch(e){} } };
 let LANG = ls.get("fun.lang");
 if (!I18N[LANG]) LANG = null;
-const t = (k, n) => String((I18N[LANG || "en"] || I18N.en)[k] ?? I18N.en[k] ?? k).replace("{n}", n);
+const t = (k, n) => { const s = String((I18N[LANG || "en"] || I18N.en)[k] ?? I18N.en[k] ?? k); return n === undefined ? s : s.replace("{n}", n); };
 
 // ---------- time: weeks start Sunday 00:00 UTC (day 3 after 1970-01-01 was a Sunday)
 let OFF = 0;
@@ -398,8 +427,12 @@ let curGame = null, curBoard = null, cleanup = null, lastNameTyped = ls.get("fun
 
 // ---------- small UI helpers
 function toast(msg, ms = 2200){ const b = $("#toast"); b.textContent = msg; b.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => b.classList.remove("on"), ms); }
-const avStyle = i => `background-position:${(Math.max(0, Math.min(8, i | 0)) * 12.5)}% 0`;
-const avHtml = (i, extra = "") => `<span class="av" style="${avStyle(i)}" ${extra}></span>`;
+const EMO = [["🦊","#ffb36b","#c2410c"],["🐶","#f5c26b","#a16207"],["🐻","#c49a7a","#5c3d2e"],["🐨","#b8c4d6","#475569"],["🐸","#8ee891","#15803d"],["🦁","#ffd166","#d97706"],["🐰","#fbcfe8","#db2777"],["🐧","#93c5fd","#1e3a8a"],["🦄","#e9d5ff","#9333ea"],["🐲","#86efac","#047857"],["🐺","#cbd5e1","#334155"],["🐹","#fde68a","#b45309"]];
+const AV_N = 9 + EMO.length;
+const avEmo = i => (i | 0) >= 9 && EMO[(i | 0) - 9] ? EMO[(i | 0) - 9][0] : "";
+const avStyle = i => { i = i | 0; const e = EMO[i - 9]; return i >= 9 && e ? `background:radial-gradient(circle at 35% 30%,${e[1]},${e[2]})` : `background-position:${(Math.max(0, Math.min(8, i)) * 12.5)}% 0`; };
+const avHtml = (i, extra = "") => `<span class="av${avEmo(i) ? " em" : ""}" style="${avStyle(i)}" ${extra}>${avEmo(i)}</span>`;
+function paintAv(e, i, size){ e.className = "av" + (avEmo(i) ? " em" : ""); e.style.cssText = avStyle(i) + (size ? `;width:${size}px;height:${size}px;font-size:${size * .58}px` : ""); e.textContent = avEmo(i); }
 function who(uid){ const u = USERS[uid] || {}; return `${avHtml(u.c)}<span class="nm"><span class="tag">[${esc(u.a || "???")}]</span> ${esc(u.n || "?")}</span>`; }
 function confetti(){
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -409,8 +442,10 @@ function confetti(){
   const P = Array.from({length: 120}, () => ({x: W / 2 + (Math.random() - .5) * 120, y: H * .35, vx: (Math.random() - .5) * 14, vy: -Math.random() * 14 - 4, r: Math.random() * 6 + 3, c: cols[Math.random() * cols.length | 0], a: Math.random() * 6}));
   let f = 0; (function step(){ x.clearRect(0, 0, W, H); P.forEach(p => { p.vy += .35; p.x += p.vx; p.y += p.vy; p.a += .2; x.fillStyle = p.c; x.save(); x.translate(p.x, p.y); x.rotate(p.a); x.fillRect(-p.r / 2, -p.r / 4, p.r, p.r / 2); x.restore(); }); if (++f < 140) requestAnimationFrame(step); else c.remove(); })();
 }
-let AC = null;
+let AC = null, MUTE = ls.get("fun.mute") === "1";
+function paintSnd(){ const b = $("#sndBtn"); if (b){ b.textContent = MUTE ? "🔇" : "🔊"; b.title = t("sound"); b.setAttribute("aria-pressed", String(!MUTE)); } }
 function tone(freq, dur = .15, type = "sine", vol = .15){
+  if (MUTE) return;
   try { AC = AC || new (window.AudioContext || window.webkitAudioContext)(); if (AC.state === "suspended") AC.resume();
     const o = AC.createOscillator(), g = AC.createGain(); o.type = type; o.frequency.value = freq; g.gain.setValueAtTime(vol, AC.currentTime); g.gain.exponentialRampToValueAtTime(.0001, AC.currentTime + dur); o.connect(g).connect(AC.destination); o.start(); o.stop(AC.currentTime + dur + .02); } catch(e){}
 }
@@ -433,7 +468,7 @@ function applyLang(){
   if ($("#scrHome").classList.contains("on")) renderHome();
   if ($("#scrRanks").classList.contains("on")) renderRanks();
   if (curGame){ $("#gTitle").innerHTML = `${GBY[curGame].ic} ${esc(t("g_" + curGame))}`; $("#gHelp").textContent = t("h_" + curGame); renderBoard(); }
-  renderChip();
+  renderChip(); paintSnd();
 }
 function setLang(l){ LANG = l; ls.set("fun.lang", l); applyLang(); }
 function langList(host, after){
@@ -444,7 +479,17 @@ function langList(host, after){
 // ---------- screens + phone back button
 function show(id){ document.querySelectorAll(".scr").forEach(s => s.classList.toggle("on", s.id === id)); scrollTo(0, 0); }
 let skipPop = false;
-addEventListener("popstate", () => { if (skipPop){ skipPop = false; return; } if (curGame) closeGame(true); else if ($("#scrRanks").classList.contains("on")) { show("scrHome"); renderHome(); } else closeModal(); });
+let guardFn = null;
+function requestClose(fromPop){
+  if (guardFn && guardFn()){
+    if (fromPop) history.pushState({g: curGame}, "");
+    openModal(`<h2>⚠️ ${t("leaveTitle")}</h2><p class="mut">${t("leaveBj")}</p><div class="row end"><button type="button" class="btn go" id="lgStay">${t("stay")}</button><button type="button" class="btn pri" id="lgLeave">${t("leave")}</button></div>`);
+    $("#lgStay").onclick = closeModal; $("#lgLeave").onclick = () => { closeModal(); guardFn = null; closeGame(); };
+    return;
+  }
+  closeGame(fromPop);
+}
+addEventListener("popstate", () => { if (skipPop){ skipPop = false; return; } if (curGame) requestClose(true); else if ($("#scrHof").classList.contains("on")) { show("scrHome"); renderHome(); } else if ($("#scrRanks").classList.contains("on")) { show("scrHome"); renderHome(); } else closeModal(); });
 
 // ---------- Firebase
 async function initFB(){
@@ -485,7 +530,7 @@ function setMode(up){
 }
 function avPicker(host, sel, onPick){
   host.innerHTML = "";
-  for (let i = 0; i < 9; i++){ const b = el("button", i === sel ? "on" : ""); b.type = "button"; b.style.cssText = avStyle(i); b.setAttribute("aria-label", "#" + (i + 1)); b.onclick = () => { host.querySelectorAll("button").forEach(x => x.classList.remove("on")); b.classList.add("on"); onPick(i); tone(660, .08, "triangle", .08); }; host.appendChild(b); }
+  for (let i = 0; i < AV_N; i++){ const b = el("button", (i === sel ? "on" : "") + (avEmo(i) ? " em" : "")); b.type = "button"; b.style.cssText = avStyle(i); b.textContent = avEmo(i); b.setAttribute("aria-label", "#" + (i + 1)); b.onclick = () => { host.querySelectorAll("button").forEach(x => x.classList.remove("on")); b.classList.add("on"); onPick(i); tone(660, .08, "triangle", .08); }; host.appendChild(b); }
 }
 function cleanName(s){ return s.replace(/[\u0000-\u001f\u007f]/g, "").replace(/\s+/g, " ").trim(); }
 async function submitAuth(e){
@@ -537,8 +582,22 @@ function onUser(u){
 function subscribeWeek(){
   WK = weekIdx();
   if (subscribeWeek.u) try { subscribeWeek.u(); } catch(e){}
-  subscribeWeek.u = FB.onValue(R("fun/w/" + WK), s => { WKD = s.val() || {}; refresh(); }, e => console.warn(e));
+  let first = true;
+  subscribeWeek.u = FB.onValue(R("fun/w/" + WK), s => { const old = WKD; WKD = s.val() || {}; if (!first) overtaken(old); first = false; refresh(); }, e => console.warn(e));
   FB.get(R("fun/w/" + (WK - 1))).then(s => { LASTWK = s.val() || {}; if ($("#scrHome").classList.contains("on")) renderChamps(); }).catch(() => { LASTWK = {}; });
+}
+// someone else's new score pushed me down a place -> small alert
+function overtaken(old){
+  if (!USER || !ME) return;
+  for (const g of GAMES){
+    const before = boardRows(g.id, old).find(r => r.uid === USER.uid), after = boardRows(g.id).find(r => r.uid === USER.uid);
+    if (!before || !after || after.rank <= before.rank || after.v !== before.v) continue;
+    const rows = boardRows(g.id), mine = rows.indexOf(after);
+    const rival = rows.slice(0, mine).find(r => { const o = boardRows(g.id, old).find(x => x.uid === r.uid); return !o || o.v !== r.v; });
+    if (!rival) continue;
+    toast(t("passed").replace("{who}", (USERS[rival.uid] || {}).n || "?").replace("{game}", t("g_" + g.id)).replace("{n}", after.rank), 4500);
+    tone(330, .12, "triangle", .08); return;
+  }
 }
 function refresh(){
   if (!ME) return;
@@ -565,7 +624,7 @@ function renderChip(){
 }
 
 // ---------- ranking maths
-function boardRows(board, data = WKD, wk = data === WKD ? WK : WK - 1){
+function boardRows(board, data = WKD, wk = WK){
   const t0 = (wk * 7 + 3) * DAY, t1 = weekEnd(wk), inWeek = r => !r.t || (r.t >= t0 - 6e4 && r.t < t1 + 6e4);   // a score only counts in the week the server stamped it
   let src;
   if (board === "wordle"){   // best Wordle language board of each player
@@ -577,10 +636,10 @@ function boardRows(board, data = WKD, wk = data === WKD ? WK : WK - 1){
   rows.forEach((r, i) => r.rank = i && rows[i - 1].v === r.v ? rows[i - 1].rank : i + 1);
   return rows;
 }
-function totals(data = WKD){
+function totals(data = WKD, wk = WK){
   const T = {};
   const row = uid => T[uid] || (T[uid] = {uid, pts: 0, plays: 0, firsts: 0});
-  GAMES.forEach(g => boardRows(g.id, data, data === WKD ? WK : WK - 1).forEach(r => { const o = row(r.uid); o.pts += PTS[r.rank - 1] || 0; o.plays += r.n; if (r.rank === 1) o.firsts++; }));
+  GAMES.forEach(g => boardRows(g.id, data, wk).forEach(r => { const o = row(r.uid); o.pts += PTS[r.rank - 1] || 0; o.plays += r.n; if (r.rank === 1) o.firsts++; }));
   return Object.values(T);
 }
 function rankList(rows, key){
@@ -593,7 +652,7 @@ const medal = r => r === 1 ? "🥇" : r === 2 ? "🥈" : r === 3 ? "🥉" : r;
 // ---------- home
 function renderHome(){
   if (!ME) return;
-  $("#hAv").style.cssText = avStyle(ME.c);
+  paintAv($("#hAv"), ME.c);
   $("#hName").innerHTML = `<span class="tag">[${esc(ME.a)}]</span> ${esc(ME.n)}`;
   const host = $("#games"); host.innerHTML = "";
   GAMES.forEach(g => {
@@ -608,7 +667,7 @@ function renderHome(){
 function renderChamps(){
   const host = $("#champs"); if (!host) return;
   if (!LASTWK){ host.innerHTML = `<span class="mut small">${t("loading")}</span>`; return; }
-  const top = rankList(totals(LASTWK), "pts").slice(0, 3);
+  const top = rankList(totals(LASTWK, WK - 1), "pts").slice(0, 3);
   host.innerHTML = top.length ? top.map(r => `<span class="champ">${medal(r.rank)} ${who(r.uid)} · ${r.pts} ${t("pts")}</span>`).join("") : `<span class="mut small">${t("noChamps")}</span>`;
 }
 function tick(){
@@ -635,54 +694,82 @@ function renderBoard(){
 }
 
 // ---------- score saving
-async function submit(board, val, game){
+// saves run one after another; each one re-reads the server value first, so a slow load, a cut connection or two quick saves never break the count
+let submitQ = Promise.resolve();
+function submit(board, val, game){ const p = submitQ.then(() => doSubmit(board, val, game)).catch(e => { console.warn(e); return {}; }); submitQ = p; return p; }
+async function doSubmit(board, val, game){
   if (!USER || !FB) return {};
+  if (weekIdx() !== WK) subscribeWeek();
   const g = GBY[game]; val = Math.round(val);
   if (g.max != null && val > g.max) val = g.max;
   if (g.min != null && val < g.min) return {};
-  const cur = (WKD[board] || {})[USER.uid];
+  const path = `fun/w/${WK}/${board}/${USER.uid}`;
+  if (beginP[board]) await beginP[board];
+  let cur;
+  try { cur = (await FB.get(R(path))).val(); } catch (e) { toast(t("saveFail"), 4000); return {}; }
   const n = (cur ? cur.n : 0) + 1;
   let v = g.mode === "add" ? (cur ? cur.v : 0) + val : g.mode === "set" ? val : (cur && !better(val, cur.v, g.dir) ? cur.v : val);
   if (g.mode === "add" && g.max != null) v = Math.min(v, g.max);
+  let capped = false, extra = {};
+  if (CAPPED.includes(board)){   // at most 30 points per day in Connect 4 and Sudoku
+    const today = dayIdx(), had = cur && cur.d === today ? cur.dp || 0 : 0, add = Math.max(0, Math.min(val, DAY_CAP - had));
+    capped = add < val; v = (cur ? cur.v : 0) + add; extra = {d: today, dp: had + add};
+  }
   const improved = !cur || v !== cur.v;
   const rec = REC[board], isRec = g.mode !== "set" && (rec == null || better(v, rec, g.dir));
-  const upd = {}; upd[`fun/w/${WK}/${board}/${USER.uid}`] = {v, n, t: FB.serverTimestamp()};
+  const upd = {}; upd[path] = {v, n, t: FB.serverTimestamp(), ...extra};
   if (isRec || (g.mode === "set" && (rec == null || v > rec))) upd[`fun/rec/${USER.uid}/${board}`] = v;
-  WKD[board] = WKD[board] || {}; WKD[board][USER.uid] = {v, n, t: now()};   // shows at once, the live listener confirms
+  const before = (WKD[board] || {})[USER.uid];
+  WKD[board] = WKD[board] || {}; WKD[board][USER.uid] = {v, n, t: now(), ...extra};   // shows at once, the live listener confirms
   renderBoard();
-  try { await FB.update(R(""), upd); } catch (e) { console.warn(e); toast(/PERMISSION/i.test(e.code + e.message) ? t("errDb") : t("saveFail"), 4000); return {}; }
+  try { await FB.update(R(""), upd); }
+  catch (e) {
+    console.warn(e);
+    if (before) WKD[board][USER.uid] = before; else delete WKD[board][USER.uid];   // undo the instant display
+    renderBoard();
+    toast(/PERMISSION/i.test(e.code + e.message) ? t("errDb") : t("saveFail"), 4000); return {};
+  }
+  if (upd[`fun/rec/${USER.uid}/${board}`] != null) REC[board] = v;
   const li = $(`#gBoard li[data-u="${USER.uid}"]`); if (li && improved){ li.classList.add("flash"); }
   const rank = (boardRows(board).find(r => r.uid === USER.uid) || {}).rank;
-  return {improved, record: isRec && cur != null && g.mode !== "set", rank};
+  if (capped) toast(t("capReached"), 5000);
+  return {improved, record: isRec && cur != null && g.mode !== "set", rank, capped};
 }
+const CAPPED = ["c4", "sudoku"], DAY_CAP = 30, beginP = {};
+// a game tells the server when it starts: the database rules refuse scores that come too fast to be human
+function begin(board){ if (!USER || !FB) return; beginP[board] = FB.set(privRef("st/" + board), FB.serverTimestamp()).catch(e => console.warn(e)); }
+function dayPts(board){ const r = (WKD[board] || {})[USER && USER.uid]; return r && r.d === dayIdx() ? r.dp || 0 : 0; }
 function privRef(path){ return R(`fun/p/${USER.uid}/${path}`); }
 
 // ---------- open / close a game
 function api(game){
   return {
     t, lang: () => LANG || "en", av: () => (ME ? ME.c : 0), avStyle, tone, toast, confetti, now, day: dayIdx, week: () => WK,
-    overlay: o => overlay($("#stage"), o),
+    overlay: o => overlay($("#stage"), o), fit: () => setTimeout(fitStage, 30),
     setBoard: b => { curBoard = b; renderBoard(); },
+    guard: fn => { guardFn = fn; }, begin: board => begin(board || curBoard || game), dayPts: board => dayPts(board || game), modal: html => openModal(html), closeModal,
     submit: (val, board) => submit(board || curBoard || game, val, game),
     get: async path => { try { const s = await FB.get(privRef(path)); return s.val(); } catch(e){ return null; } },
     put: async (path, val) => { try { await FB.set(privRef(path), val); return true; } catch(e){ console.warn(e); return false; } }
   };
 }
+// if the game does not fit under the top bar, scroll so the game area starts right under it (controls stay visible)
+function fitStage(){ const st = $("#stage"); if (!st || !curGame) return; const r = st.getBoundingClientRect(), bar = $("#bar").offsetHeight; if (r.bottom > innerHeight || r.top < bar) scrollTo({top: Math.max(0, r.top + scrollY - bar - 8)}); }
 function openGame(id, noPush){
   if (cleanup) closeGame(true);
-  curGame = id; curBoard = null;
+  curGame = id; curBoard = null; guardFn = null;
   $("#gTitle").innerHTML = `${GBY[id].ic} ${esc(t("g_" + id))}`;
   $("#gHelp").textContent = t("h_" + id);
   show("scrGame");
   const st = $("#stage"); st.innerHTML = ""; st.className = "stage g-" + id;
   renderBoard();
   if (!noPush) history.pushState({g: id}, "");
-  if (innerWidth < 900) setTimeout(() => { const y = st.getBoundingClientRect().top + scrollY - $("#bar").offsetHeight - 8; scrollTo({top: Math.max(0, y)}); }, 80);   // phone/tablet: the game fills the screen
+  setTimeout(fitStage, 80);
   try { cleanup = GAME_IMPL[id](st, api(id)) || null; } catch (e) { console.error(e); st.innerHTML = `<div class="loading">⚠️ ${esc(e.message)}</div>`; }
 }
 function closeGame(fromPop){
   if (cleanup) try { cleanup(); } catch(e){}
-  cleanup = null; curGame = null; curBoard = null; $("#stage").innerHTML = "";
+  cleanup = null; curGame = null; curBoard = null; guardFn = null; $("#stage").innerHTML = "";
   show("scrHome"); renderHome();
   if (!fromPop && history.state && history.state.g){ skipPop = true; history.back(); }
 }
@@ -703,6 +790,27 @@ function renderRanks(){
     return;
   }
   $("#rList").innerHTML = lbHtml(rankList(T, rTab), r => rTab === "pts" ? `${r.pts} ${t("pts")}` : rTab === "plays" ? `🎮 ${r.plays}` : `🥇 ${r.firsts}`);
+}
+
+// ---------- hall of fame: top 3 of every finished week
+async function openHof(){
+  show("scrHof"); history.pushState({h: 1}, "");
+  const host = $("#hofList"); host.innerHTML = `<div class="loading">${t("loading")}</div>`;
+  let all = {};
+  try { all = (await FB.get(R("fun/w"))).val() || {}; } catch (e) { host.innerHTML = `<div class="loading">${t("errNet")}</div>`; return; }
+  const weeks = Object.keys(all).map(Number).filter(w => w < WK).sort((a, b) => b - a);
+  const titles = {}, cards = [];
+  const fmtD = w => new Date((w * 7 + 3) * DAY).toLocaleDateString(LANG === "ar" ? "ar-u-nu-latn" : (LANG || "en"), {day: "numeric", month: "short", year: "numeric", timeZone: "UTC"});
+  weeks.forEach(w => {
+    const top = rankList(totals(all[w], w), "pts").slice(0, 3);
+    if (!top.length) return;
+    top.filter(r => r.rank === 1).forEach(r => titles[r.uid] = (titles[r.uid] || 0) + 1);
+    cards.push(`<div class="card hofw"><b>📅 ${esc(t("hofWeek").replace("{n}", fmtD(w)))}</b><ol class="lb">${top.map(r => `<li class="${r.uid === USER.uid ? "me" : ""}"><span class="n">${medal(r.rank)}</span>${who(r.uid)}<span class="v">${r.pts} ${t("pts")}</span></li>`).join("")}</ol></div>`);
+  });
+  if (!cards.length){ host.innerHTML = `<div class="card"><p class="mut">🏛️ ${t("hofEmpty")}</p></div>`; return; }
+  const tl = Object.entries(titles).map(([uid, n]) => ({uid, n})).sort((a, b) => b.n - a.n);
+  tl.forEach((r, i) => r.rank = i && tl[i - 1].n === r.n ? tl[i - 1].rank : i + 1);
+  host.innerHTML = `<div class="card"><b>👑 ${t("hofTitles")}</b><ol class="lb">${tl.map(r => `<li class="${r.uid === USER.uid ? "me" : ""}"><span class="n">${medal(r.rank)}</span>${who(r.uid)}<span class="v">🏆 ${r.n}</span></li>`).join("")}</ol></div><div class="hofgrid">${cards.join("")}</div>`;
 }
 
 // ---------- modal + profile
@@ -729,7 +837,8 @@ function openProfile(){
   <label class="f" for="pNew">${t("newPass")}</label><input class="inp" id="pNew" type="password" autocomplete="new-password">
   <div class="err" id="pErr2"></div>
   <div class="row" style="justify-content:space-between"><button type="button" class="btn" id="pPass">${t("changePass")}</button><button type="button" class="btn ghost" id="pOut">🚪 ${t("logout")}</button></div>`);
-  avPicker($("#pAvs"), c, i => { c = i; $("#pAv").style.cssText = avStyle(i) + ";width:56px;height:56px"; });
+  paintAv($("#pAv"), c, 56);
+  avPicker($("#pAvs"), c, i => { c = i; paintAv($("#pAv"), i, 56); });
   langList($("#pLangs"), () => { closeModal(); openProfile(); });
   $("#pX").onclick = closeModal;
   $("#pSave").onclick = async () => {
@@ -757,9 +866,11 @@ function boot(){
   if (lastNameTyped) $("#fName").value = lastNameTyped;
   $("#langBtn").onclick = () => { openModal(`<div class="row" style="justify-content:space-between"><h2>🌍 ${t("language")}</h2><button type="button" class="btn sm ghost" id="lX">✕</button></div><div class="langs" id="mLangs"></div>`); $("#lX").onclick = closeModal; langList($("#mLangs"), closeModal); };
   $("#meChip").onclick = openProfile;
-  $("#gBack").onclick = () => closeGame();
+  $("#gBack").onclick = () => requestClose(false);
   $("#toRanks").onclick = () => { show("scrRanks"); renderRanks(); history.pushState({r: 1}, ""); };
   $("#rBack").onclick = () => history.back();
+  $("#toHof").onclick = openHof; $("#hBack").onclick = () => history.back();
+  $("#sndBtn").onclick = () => { MUTE = !MUTE; ls.set("fun.mute", MUTE ? "1" : "0"); paintSnd(); if (!MUTE) tone(660, .1, "triangle", .1); };
   setMode(false); applyLang();
   if (!LANG){ show("scrLang"); langList($("#langList"), () => { if (!USER) show("scrAuth"); }); }
   else show("scrAuth");
@@ -812,18 +923,30 @@ GAME_IMPL.snake = (st, A) => {
     snake = [h, ...body];
     if (eat){ score++; A.tone(520 + score * 8, .07, "square", .06); step = Math.max(65, 140 - score * 3); hud.querySelector(".sc").textContent = score; hud.querySelector(".sp").textContent = 1 + Math.floor((140 - step) / 15); if (snake.length >= N * N) return over(); placeFood(); }
   }
+  function drawApple(cx, cy){
+    const r = cell * .38, pulse = 1 + Math.sin(performance.now() / 180) * .06;
+    x.save(); x.translate(cx, cy + cell * .04); x.scale(pulse, pulse);
+    x.shadowColor = "#ff3b4e"; x.shadowBlur = cell * .6;
+    const gr = x.createRadialGradient(-r * .35, -r * .35, r * .1, 0, 0, r * 1.1); gr.addColorStop(0, "#ff8a8a"); gr.addColorStop(.5, "#ef2335"); gr.addColorStop(1, "#a50e1c");
+    x.fillStyle = gr; x.beginPath(); x.arc(-r * .32, 0, r * .78, 0, 7); x.arc(r * .32, 0, r * .78, 0, 7); x.fill();
+    x.shadowBlur = 0; x.strokeStyle = "#6b3d16"; x.lineWidth = Math.max(1.5, cell * .08); x.lineCap = "round";
+    x.beginPath(); x.moveTo(0, -r * .55); x.quadraticCurveTo(r * .05, -r * 1.05, r * .25, -r * 1.2); x.stroke();
+    x.fillStyle = "#2fbf71"; x.beginPath(); x.ellipse(r * .45, -r * .95, r * .38, r * .18, -.5, 0, 7); x.fill();
+    x.fillStyle = "#ffffffaa"; x.beginPath(); x.ellipse(-r * .45, -r * .3, r * .16, r * .24, -.6, 0, 7); x.fill();
+    x.restore();
+  }
   function draw(){
     const W = cell * N; x.fillStyle = "#0b0616"; x.fillRect(0, 0, W, W);
     for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) if ((i + j) % 2){ x.fillStyle = "#ffffff07"; x.fillRect(i * cell, j * cell, cell, cell); }
     if (!snake) return;
-    x.font = `${cell * .9}px system-ui`; x.textAlign = "center"; x.textBaseline = "middle"; x.fillText("🍎", food.x * cell + cell / 2, food.y * cell + cell / 2 + 1);
+    drawApple(food.x * cell + cell / 2, food.y * cell + cell / 2);
     snake.forEach((s, i) => { const k = 1 - i / (snake.length + 6); x.fillStyle = `hsl(${140 - i * 2},70%,${35 + k * 25}%)`; const p = i ? 2 : 1; x.beginPath(); x.roundRect(s.x * cell + p, s.y * cell + p, cell - 2 * p, cell - 2 * p, cell * .3); x.fill(); });
     const h = snake[0]; x.fillStyle = "#fff"; const ex = dir === "left" ? .3 : dir === "right" ? .7 : .5, ey = dir === "up" ? .3 : dir === "down" ? .7 : .5;
     const ox = dir === "up" || dir === "down" ? .18 : 0, oy = dir === "left" || dir === "right" ? .18 : 0;
     [[ex - ox, ey - oy], [ex + ox, ey + oy]].forEach(([a, b]) => { x.beginPath(); x.arc(h.x * cell + a * cell, h.y * cell + b * cell, cell * .12, 0, 7); x.fill(); });
   }
   function loop(ts){ raf = requestAnimationFrame(loop); if (!running) return; acc += Math.min(200, ts - (last || ts)); last = ts; while (acc >= step && running){ acc -= step; tickGame(); } draw(); }
-  function start(){ reset(); running = true; last = 0; draw(); }
+  function start(){ reset(); running = true; last = 0; A.begin(); draw(); }
   async function over(){ running = false; A.tone(160, .4, "sawtooth", .08); draw(); const res = await A.submit(score); resultOverlay(A, {big: "🍎 " + score, again: start, res}); }
   const kd = e => { const d = KEYDIR[e.key] || KEYDIR[e.key.toLowerCase && e.key.toLowerCase()]; if (d && running){ e.preventDefault(); turn(d); } else if ((e.key === " " || e.key === "Enter") && !running && !st.querySelector(".ovl")) start(); };
   addEventListener("keydown", kd);
@@ -834,83 +957,126 @@ GAME_IMPL.snake = (st, A) => {
   return () => { cancelAnimationFrame(raf); running = false; removeEventListener("keydown", kd); removeEventListener("resize", size); offSw(); };
 };
 
-/* =================== BLACKJACK =================== */
+/* =================== BLACKJACK (split, double, insurance) =================== */
 GAME_IMPL.bj = (st, A) => {
   const SUITS = [["♠", 0], ["♥", 1], ["♦", 1], ["♣", 0]], RANKS = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
-  let shoe = [], chips = 1000, rd = -1, bet = 0, ph = [], dh = [], phase = "bet", doubled = false, saving = Promise.resolve();
+  let shoe = [], chips = 1000, rd = -1, bet = 0, hands = [], hi = 0, dh = [], phase = "load", ins = 0, saving = Promise.resolve(), dead = false;
   st.innerHTML = `<div class="bj-table"><div class="bj-row"><div class="bj-lbl"><span data-k="d"></span> <b class="dv"></b></div><div class="bj-hand dh"></div></div>
     <div class="bj-mid"><div class="bj-msg"></div></div>
-    <div class="bj-row"><div class="bj-hand ph"></div><div class="bj-lbl"><span data-k="y"></span> <b class="pv"></b></div></div></div>
+    <div class="bj-hands"></div></div>
     <div class="hud"><span>🪙 <b class="ch">…</b></span><span>${A.t("bjBet")} : <b class="bt">0</b></span></div>
     <div class="bj-ctrl"></div>`;
-  st.querySelector('[data-k="d"]').textContent = A.t("bjDealer"); st.querySelector('[data-k="y"]').textContent = A.t("bjYou");
-  const ctrl = st.querySelector(".bj-ctrl"), msg = st.querySelector(".bj-msg");
-  const val = h => { let s = 0, a = 0; h.forEach(c => { const r = c.r; if (r === "A"){ a++; s += 11; } else s += ["J","Q","K"].includes(r) ? 10 : +r; }); while (s > 21 && a){ s -= 10; a--; } return {s, soft: a > 0}; };
+  st.querySelector('[data-k="d"]').textContent = A.t("bjDealer");
+  const ctrl = st.querySelector(".bj-ctrl"), msg = st.querySelector(".bj-msg"), hostH = st.querySelector(".bj-hands");
+  const cv = c => c.r === "A" ? 11 : ["J","Q","K"].includes(c.r) ? 10 : +c.r;
+  const val = h => { let s = 0, a = 0; h.forEach(c => { if (c.r === "A") a++; s += cv(c); }); while (s > 21 && a){ s -= 10; a--; } return {s, soft: a > 0}; };
   const isBJ = h => h.length === 2 && val(h).s === 21;
   function newShoe(){ shoe = []; for (let d = 0; d < 6; d++) SUITS.forEach(([s, red]) => RANKS.forEach(r => shoe.push({r, s, red}))); for (let i = shoe.length - 1; i > 0; i--){ const j = Math.random() * (i + 1) | 0; [shoe[i], shoe[j]] = [shoe[j], shoe[i]]; } }
   const draw1 = (down = false) => { if (shoe.length < 20) newShoe(); return {...shoe.pop(), down}; };
   const cardHtml = c => `<div class="pc ${c.down ? "down" : ""}"><div class="in"><div class="fa ${c.red ? "r" : ""}"><span>${c.r}<br>${c.s}</span><span class="mid">${c.s}</span><span class="bot">${c.r}<br>${c.s}</span></div><div class="ba"></div></div></div>`;
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const H = () => hands[hi];
   function paint(){
-    st.querySelector(".dh").innerHTML = dh.map(cardHtml).join(""); st.querySelector(".ph").innerHTML = ph.map(cardHtml).join("");
-    st.querySelector(".pv").textContent = ph.length ? val(ph).s : "";
+    if (dead) return;
+    st.querySelector(".dh").innerHTML = dh.map(cardHtml).join("");
     st.querySelector(".dv").textContent = dh.length ? (dh.some(c => c.down) ? val(dh.filter(c => !c.down)).s + " + ?" : val(dh).s) : "";
-    st.querySelector(".ch").textContent = fmtN(chips); st.querySelector(".bt").textContent = fmtN(bet);
+    hostH.innerHTML = (hands.length ? hands : [{cards: [], bet}]).map((h, i) => `<div class="bj-h ${hands.length > 1 && i === hi && phase === "play" ? "act" : ""}"><div class="bj-hand">${h.cards.map(cardHtml).join("")}</div><div class="bj-lbl">${hands.length > 1 ? A.t("bjHand") + " " + (i + 1) : A.t("bjYou")} <b>${h.cards.length ? val(h.cards).s : ""}</b> · 🪙 ${fmtN(h.bet || 0)}</div><div class="res">${h.res || ""}</div></div>`).join("");
+    st.querySelector(".ch").textContent = fmtN(chips); st.querySelector(".bt").textContent = fmtN(phase !== "bet" && hands.length ? hands.reduce((a, h) => a + h.bet, 0) : bet);
     ctrl.innerHTML = "";
     const B = (label, fn, cls = "", dis = false) => { const b = el("button", "btn " + cls, label); b.type = "button"; b.disabled = dis; b.onclick = fn; return b; };
+    const row = () => { const r = el("div", "row"); r.style.justifyContent = "center"; ctrl.appendChild(r); return r; };
     if (phase === "bet"){
-      const row = el("div", "chips");
-      [[10, "#3e8bff"], [25, "#2fbf71"], [100, "#111"], [500, "#7b2cbf"]].forEach(([v, c]) => { const b = el("button", "chipb", v); b.type = "button"; b.style.background = c; b.disabled = chips - bet < v; b.style.opacity = b.disabled ? .35 : 1; b.onclick = () => { bet += v; A.tone(900, .05, "triangle", .05); paint(); }; row.appendChild(b); });
-      ctrl.appendChild(row);
-      const r2 = el("div", "row"); r2.style.justifyContent = "center";
-      r2.append(B(A.t("bjClear"), () => { bet = 0; paint(); }, "", !bet), B("🃏 " + A.t("bjDeal"), deal, "go", !bet));
+      const cr = el("div", "chips");
+      [[10, "#3e8bff"], [25, "#2fbf71"], [100, "#111"], [500, "#7b2cbf"]].forEach(([v, c]) => { const b = el("button", "chipb", v); b.type = "button"; b.style.background = c; b.disabled = chips - bet < v; b.style.opacity = b.disabled ? .35 : 1; b.onclick = () => { bet += v; A.tone(900, .05, "triangle", .05); paint(); }; cr.appendChild(b); });
+      ctrl.appendChild(cr);
+      const r2 = row(); r2.append(B(A.t("bjClear"), () => { bet = 0; paint(); }, "", !bet), B("🃏 " + A.t("bjDeal"), deal, "go", !bet || bet > chips));
       if (chips < 10 && !bet) r2.append(B("🪙 " + A.t("bjRebuy"), rebuy, "gold", rd === A.day()));
-      ctrl.appendChild(r2);
-      if (chips < 10 && rd === A.day()){ const m = el("div", "mut small", A.t("bjRebuyUsed")); ctrl.appendChild(m); }
+      if (chips < 10 && rd === A.day()) ctrl.appendChild(el("div", "mut small", A.t("bjRebuyUsed")));
+    } else if (phase === "ins"){
+      ctrl.appendChild(el("div", "mut", A.t("bjInsQ")));
+      const cost = Math.floor(hands[0].bet / 2);
+      row().append(B("🛡️ " + A.t("bjIns", fmtN(cost)), () => insurance(true), "gold", chips < cost || !cost), B(A.t("bjNoIns"), () => insurance(false)));
     } else if (phase === "play"){
-      const r = el("div", "row"); r.style.justifyContent = "center";
-      r.append(B(A.t("bjHit"), hit, "pri"), B(A.t("bjStand"), stand, "go"), B(A.t("bjDouble") + " ×2", dbl, "gold", ph.length !== 2 || chips < bet));
-      ctrl.appendChild(r);
+      const h = H(), two = h.cards.length === 2;
+      const canSplit = two && hands.length < 4 && cv(h.cards[0]) === cv(h.cards[1]) && chips >= h.bet;
+      const r = row(); r.append(B(A.t("bjHit"), hit, "pri"), B(A.t("bjStand"), stand, "go"), B(A.t("bjDouble") + " ×2", dbl, "gold", !two || chips < h.bet));
+      if (canSplit) r.append(B("✂️ " + A.t("bjSplit"), split, "gold"));
     }
   }
   function save(){ const s = {w: A.week(), c: chips, rd}; saving = saving.then(() => A.put("bj", s)).then(() => {}); return saving; }
   async function deal(){
-    if (!bet || bet > chips) return toast(A.t("bjMin"));
-    chips -= bet; doubled = false; save();
-    msg.textContent = ""; ph = []; dh = []; phase = "deal"; paint();
-    const seq = [[ph], [dh], [ph], [dh, true]];
-    for (const [h, down] of seq){ h.push(draw1(!!down)); A.tone(300, .04, "triangle", .05); paint(); await wait(260); }
-    if (isBJ(ph) || isBJ([dh[0], {...dh[1], down: false}])) return finish();
+    if (!bet || bet > chips) return A.toast(A.t("bjMin"));
+    chips -= bet; save();
+    msg.textContent = ""; hands = [{cards: [], bet}]; hi = 0; dh = []; ins = 0; phase = "deal"; paint();
+    for (const [h, down] of [[hands[0].cards], [dh], [hands[0].cards], [dh, true]]){ h.push(draw1(!!down)); A.tone(300, .04, "triangle", .05); paint(); await wait(260); if (dead) return; }
+    if (dh[0].r === "A" && !isBJ(hands[0].cards)){ phase = "ins"; return paint(); }
+    afterPeek();
+  }
+  async function insurance(take){
+    if (take){ ins = Math.floor(hands[0].bet / 2); chips -= ins; save(); }
+    afterPeek();
+  }
+  function afterPeek(){
+    const dealerBJ = isBJ([dh[0], {...dh[1], down: false}]);
+    if (dealerBJ || isBJ(hands[0].cards)) return finish();
+    if (ins){ msg.textContent = "🛡️ ✗"; }
     phase = "play"; paint();
   }
-  function hit(){ ph.push(draw1()); A.tone(300, .04, "triangle", .05); if (val(ph).s >= 21){ phase = "deal"; paint(); setTimeout(val(ph).s > 21 ? finish : stand, 350); } else paint(); }
-  function dbl(){ if (chips < bet) return; chips -= bet; bet *= 2; doubled = true; save(); ph.push(draw1()); phase = "deal"; paint(); setTimeout(val(ph).s > 21 ? finish : stand, 450); }
-  async function stand(){
+  function nextHand(){
+    if (hi < hands.length - 1){ hi++; const h = H(); if (h.cards.length < 2) h.cards.push(draw1()); if (h.aces || val(h.cards).s === 21) return nextHand(); phase = "play"; paint(); return; }
+    dealerPlay();
+  }
+  function hit(){ const h = H(); h.cards.push(draw1()); A.tone(300, .04, "triangle", .05); const s = val(h.cards).s; if (s >= 21){ phase = "wait"; paint(); setTimeout(nextHand, 350); } else paint(); }
+  function stand(){ phase = "wait"; nextHand(); }
+  function dbl(){ const h = H(); if (chips < h.bet) return; chips -= h.bet; h.bet *= 2; h.doubled = true; save(); h.cards.push(draw1()); phase = "wait"; paint(); setTimeout(nextHand, 450); }
+  function split(){
+    const h = H(); chips -= h.bet; save();
+    const nh = {cards: [h.cards.pop()], bet: h.bet, split: true}; h.split = true;
+    if (h.cards[0].r === "A"){ h.aces = nh.aces = true; }
+    hands.splice(hi + 1, 0, nh); h.cards.push(draw1());
+    if (h.aces){ phase = "wait"; paint(); return setTimeout(nextHand, 400); }
+    paint();
+  }
+  async function dealerPlay(){
     phase = "deal"; dh[1].down = false; paint(); await wait(450);
-    while (val(dh).s < 17){ dh.push(draw1()); paint(); await wait(420); }
+    if (hands.some(h => val(h.cards).s <= 21)) while (val(dh).s < 17){ dh.push(draw1()); paint(); await wait(420); if (dead) return; }
     finish();
   }
   async function finish(){
-    dh.forEach(c => c.down = false); phase = "deal"; paint();
-    const p = val(ph).s, d = val(dh).s, pbj = isBJ(ph) && !doubled, dbj = isBJ(dh);
-    let win = 0, text;
-    if (p > 21){ text = A.t("bjBust"); }
-    else if (pbj && !dbj){ win = bet + Math.floor(bet * 1.5); text = A.t("bjBJ"); }
-    else if (dbj && !pbj){ text = A.t("bjLose"); }
-    else if (d > 21 || p > d){ win = bet * 2; text = A.t("bjWin"); }
-    else if (p === d){ win = bet; text = A.t("bjPush"); }
-    else text = A.t("bjLose");
+    dh.forEach(c => c.down = false); phase = "deal";
+    const d = val(dh).s, dbj = isBJ(dh);
+    let win = 0, total = 0;
+    if (ins && dbj){ win += ins * 3; msg.textContent = "🛡️ " + A.t("bjInsWin"); }
+    hands.forEach(h => {
+      const p = val(h.cards).s, pbj = isBJ(h.cards) && !h.split && !h.doubled; total += h.bet;
+      let w = 0, r;
+      if (p > 21) r = A.t("bjBust");
+      else if (pbj && !dbj){ w = h.bet + Math.floor(h.bet * 1.5); r = A.t("bjBJ"); }
+      else if (dbj && !pbj) r = A.t("bjLose");
+      else if (d > 21 || p > d){ w = h.bet * 2; r = A.t("bjWin"); }
+      else if (p === d){ w = h.bet; r = A.t("bjPush"); }
+      else r = A.t("bjLose");
+      h.res = r + (w > h.bet ? " +" + fmtN(w - h.bet) : ""); win += w;
+    });
     chips += win;
-    msg.textContent = text + (win > bet ? ` +${fmtN(win - bet)}` : "");
+    const net = win - total - ins;
+    if (!msg.textContent) msg.textContent = hands.length === 1 ? hands[0].res : (net > 0 ? "+" + fmtN(net) : net < 0 ? "−" + fmtN(-net) : A.t("bjPush"));
+    else msg.textContent += " · " + (net >= 0 ? "+" : "−") + fmtN(Math.abs(net));
     msg.style.animation = "none"; void msg.offsetWidth; msg.style.animation = "";
-    if (win > bet){ A.tone(784, .12, "triangle", .1); setTimeout(() => A.tone(1046, .2, "triangle", .1), 120); if (pbj) A.confetti(); } else if (!win) A.tone(200, .25, "sawtooth", .06);
-    const last = bet; bet = 0; await save(); A.submit(chips);
-    phase = "bet"; bet = Math.min(last, chips); paint();
+    paint();
+    if (net > 0){ A.tone(784, .12, "triangle", .1); setTimeout(() => A.tone(1046, .2, "triangle", .1), 120); if (hands.some(h => /Blackjack/i.test(h.res || ""))) A.confetti(); } else if (net < 0) A.tone(200, .25, "sawtooth", .06);
+    const last = hands[0] ? hands[0].bet / (hands[0].doubled ? 2 : 1) : bet;
+    await save(); A.submit(chips);
+    if (dead) return;
+    phase = "bet"; bet = Math.min(last, chips); paint();   // the last hands stay on the table with their result until the next deal
   }
   async function rebuy(){ if (rd === A.day()) return; chips += 500; rd = A.day(); await save(); A.submit(chips); paint(); }
-  const wait = ms => new Promise(r => setTimeout(r, ms));
-  newShoe(); phase = "load"; paint();
-  A.get("bj").then(s => { if (s && s.w === A.week()){ chips = s.c | 0; rd = s.rd ?? -1; } else { chips = 1000; rd = s ? (s.rd ?? -1) : -1; save(); } phase = "bet"; bet = Math.min(50, chips); paint(); });
-  return () => { phase = "dead"; };
+  A.guard(() => ["deal", "play", "ins", "wait"].includes(phase) && hands.length > 0);
+  newShoe(); paint();
+  A.get("bj").then(s => { if (dead) return; if (s && s.w === A.week()){ chips = s.c | 0; rd = s.rd ?? -1; } else { chips = 1000; rd = s ? (s.rd ?? -1) : -1; save(); } phase = "bet"; bet = Math.min(50, chips); paint(); });
+  // test hook: force the next cards (used only by automated tests)
+  st.__stack = cards => { cards.slice().reverse().forEach(([r, s]) => shoe.push({r, s: s || "♠", red: s === "♥" || s === "♦"})); };
+  return () => { dead = true; };
 };
 
 /* =================== WORDLE =================== */
@@ -931,7 +1097,7 @@ async function loadWords(L){
 GAME_IMPL.wordle = (st, A) => {
   let L = WORDLE_LANGS.includes(A.lang()) ? A.lang() : "en";
   let W, day, target, guesses = [], cur = [], status = 0, busy = false, dead = false;
-  st.innerHTML = `<div class="row" style="justify-content:center"><span class="mut small">${A.t("wLang")}</span><div class="seg wl"></div></div><div class="wd-grid"></div><div class="mut small wmsg" style="min-height:20px;text-align:center;font-weight:700"></div><div class="kb"></div>`;
+  st.innerHTML = `<div class="row" style="justify-content:center"><span class="mut small">${A.t("wLang")}</span><div class="seg wl"></div></div><div class="wd-grid"></div><div class="mut small wmsg" style="min-height:20px;text-align:center;font-weight:700"></div><div class="kb"></div><div class="mut small wnew" style="text-align:center"></div>`;
   const seg = st.querySelector(".wl"), grid = st.querySelector(".wd-grid"), kb = st.querySelector(".kb"), wmsg = st.querySelector(".wmsg");
   LANGS.forEach(([c, , f]) => { const b = el("button", c === L ? "on" : "", f); b.type = "button"; b.title = c.toUpperCase(); b.onclick = () => { if (c !== L){ L = c; seg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); setup(); } }; seg.appendChild(b); });
   const up = s => L === "tr" ? s.toLocaleUpperCase("tr") : L === "ar" || L === "ko" ? s : s.toUpperCase();
@@ -942,7 +1108,7 @@ GAME_IMPL.wordle = (st, A) => {
     return res;
   }
   function paintGrid(animRow = -1){
-    const kbH = WKB[L].length * (innerHeight < 700 ? 48 : 58), avail = innerHeight - ($("#bar").offsetHeight || 60) - 150 - kbH;
+    const kbH = WKB[L].length * (innerHeight < 700 ? 48 : 58), avail = innerHeight - ($("#bar").offsetHeight || 60) - 172 - kbH;
     grid.style.width = Math.max(140, Math.min(340, st.clientWidth - 20, avail * 5 / 6)) + "px";
     grid.style.direction = kb.style.direction = L === "ar" ? "rtl" : "ltr";
     grid.innerHTML = "";
@@ -958,16 +1124,18 @@ GAME_IMPL.wordle = (st, A) => {
     WKB[L].forEach(rw => { const r = el("div", "kb-r"); [...rw].forEach(k => { const b = el("button", "kb-k" + (k === "⏎" || k === "⌫" ? " wide" : "") + (st8[k] ? " " + st8[k] : ""), k === "⏎" ? A.t("enter") : k === "⌫" ? "⌫" : up(k)); b.type = "button"; b.onclick = () => press(k); r.appendChild(b); }); kb.appendChild(r); });
   }
   function shake(){ const row = grid.children[guesses.length]; if (row){ row.classList.remove("shake"); void row.offsetWidth; row.classList.add("shake"); } }
+  function say(s){ wmsg.innerHTML = `<span style="color:#ff8f9a">⚠️ ${esc(s)}</span>`; }
   function press(k){
+    if (!status && wmsg.querySelector("span")) wmsg.textContent = "";
     if (busy || status || !W) return;
     if (k === "⌫"){ cur.pop(); return paintGrid(); }
     if (k === "⏎") return enter();
     if (cur.length < 5){ cur.push(k); paintGrid(); }
   }
   async function enter(){
-    if (cur.length < 5){ shake(); return A.toast(A.t("wShort")); }
+    if (cur.length < 5){ shake(); return say(A.t("wShort")); }
     const g = cur.join("");
-    if (!W.ok.has(g)){ shake(); return A.toast(A.t("wNotWord")); }
+    if (!W.ok.has(g)){ shake(); return say(A.t("wNotWord") + " · " + A.t("wErase")); }
     guesses.push(g); cur = [];
     if (g === target) status = 1; else if (guesses.length >= 6) status = 2;
     busy = true; paintGrid(guesses.length - 1); setTimeout(() => { busy = false; paintKb(); }, 1000);
@@ -982,11 +1150,37 @@ GAME_IMPL.wordle = (st, A) => {
   function done(pts){
     const ansWord = W.ans[day % W.ans.length];
     if (status === 1){ A.confetti(); A.tone(784, .15, "triangle", .1); }
-    wmsg.innerHTML = (status === 1 ? `🎉 ${esc(A.t("wWon", pts))}` : `${esc(A.t("wLost"))} <b style="color:var(--gold);font-size:18px">${esc(up(ansWord))}</b>`) + `<br><span class="nx"></span>`;
+    wmsg.innerHTML = (status === 1 ? `🎉 ${esc(A.t("wWon", pts))}` : `${esc(A.t("wLost"))} <b style="color:var(--gold);font-size:18px">${esc(up(ansWord))}</b>`) + `<br><span class="nx"></span><div class="row" style="justify-content:center;margin-top:6px"><button type="button" class="btn sm go wsh">📋 ${esc(A.t("wShare"))}</button><button type="button" class="btn sm wst8">📊 ${esc(A.t("wStats"))}</button></div>`;
+    wmsg.querySelector(".wsh").onclick = share; wmsg.querySelector(".wst8").onclick = stats;
     nextTick();
   }
   function nextTick(){ const n = st.querySelector(".nx"); if (!n) return; const left = (A.day() + 1) * DAY - A.now(); const h = Math.floor(left / 36e5), m = Math.floor(left / 6e4) % 60, s = Math.floor(left / 1e3) % 60; n.textContent = `${A.t("wNext")} ${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`; if (A.day() !== day) setup(); }
   const iv = setInterval(nextTick, 1000);
+  function shareText(){
+    const flag = (LANGS.find(l => l[0] === L) || [])[2] || "";
+    const rows = guesses.map(gs => { const r = colors(gs).map(c => c === "ok" ? "🟩" : c === "mid" ? "🟨" : "⬛"); return (L === "ar" ? r.reverse() : r).join(""); });
+    return `752 FUN Wordle ${flag} #${day} ${status === 1 ? guesses.length : "X"}/6\n\n${rows.join("\n")}`;
+  }
+  async function share(){
+    const txt = shareText();
+    try { await navigator.clipboard.writeText(txt); }
+    catch (e) { const ta = el("textarea"); ta.value = txt; ta.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } catch(_){} ta.remove(); }
+    A.toast(A.t("wCopied"), 3000);
+  }
+  async function stats(){
+    const all = (await A.get("wd/" + L)) || {};
+    const days = Object.keys(all).map(Number).filter(d => all[d] && all[d].s).sort((a, b) => a - b);
+    const won = days.filter(d => all[d].s === 1), dist = [0, 0, 0, 0, 0, 0];
+    won.forEach(d => { const k = String(all[d].g || "").split(",").filter(Boolean).length; if (k >= 1 && k <= 6) dist[k - 1]++; });
+    let maxS = 0, run = 0, prev = null;
+    days.forEach(d => { if (all[d].s === 1){ run = prev === d - 1 && run ? run + 1 : 1; maxS = Math.max(maxS, run); } else run = 0; prev = d; });
+    let curS = 0; for (let d = A.day(); all[d] ? all[d].s === 1 : d === A.day(); d--) if (all[d]) curS++;
+    const mx = Math.max(1, ...dist), mine = status === 1 ? guesses.length : 0;
+    A.modal(`<div class="row" style="justify-content:space-between"><h2>📊 ${esc(A.t("wStats"))} ${(LANGS.find(l => l[0] === L) || [])[2]}</h2><button type="button" class="btn sm ghost" id="wsX">✕</button></div>
+      <div class="wst"><div><b>${days.length}</b><span>${esc(A.t("stPlayed"))}</span></div><div><b>${days.length ? Math.round(won.length * 100 / days.length) : 0}</b><span>${esc(A.t("stWin"))}</span></div><div><b>${curS}</b><span>${esc(A.t("stStreak"))}</span></div><div><b>${maxS}</b><span>${esc(A.t("stMax"))}</span></div></div>
+      <b>${esc(A.t("stDist"))}</b><div class="dist">${dist.map((n, i) => `<div><span>${i + 1}</span><i class="${i + 1 === mine ? "hl" : ""}" style="width:${8 + 88 * n / mx}%">${n}</i></div>`).join("")}</div>`);
+    $("#wsX").onclick = A.closeModal;
+  }
   async function setup(){
     A.setBoard("wordle_" + L);
     W = null; guesses = []; cur = []; status = 0; wmsg.textContent = A.t("wLoad"); paintGrid(); kb.innerHTML = "";
@@ -998,7 +1192,8 @@ GAME_IMPL.wordle = (st, A) => {
     if (!saved){ try { const c = JSON.parse(ls.get(`fun.wd.${L}.${day}`)); if (c) saved = {g: c.g.join(","), s: c.s}; } catch(e){} }
     if (myL !== L || dead) return;
     if (saved && saved.g){ guesses = saved.g.split(",").filter(Boolean).slice(0, 6); status = saved.s | 0; }
-    wmsg.textContent = ""; paintGrid(); paintKb();
+    wmsg.textContent = ""; paintGrid(); paintKb(); A.fit();
+    st.querySelector(".wnew").textContent = "🕐 " + A.t("wNewAt").replace("{n}", new Date((day + 1) * DAY).toLocaleTimeString(L === "ar" ? "ar-u-nu-latn" : undefined, {hour: "2-digit", minute: "2-digit"}));
     if (status) done(status === 1 ? 7 - guesses.length : 0);
   }
   const kd = e => {
@@ -1058,7 +1253,7 @@ GAME_IMPL["2048"] = (st, A) => {
     setTimeout(() => { add(); render(); if (!canMove()) end(); }, 110);
   }
   async function end(){ over = true; if (sent || !score) return; sent = true; const res = await A.submit(score); resultOverlay(A, {big: fmtN(score), again: start, res}); }
-  function start(){ bd.querySelectorAll(".t").forEach(e => e.remove()); tiles = []; score = 0; over = false; sent = false; won = false; add(); add(); render(); }
+  function start(){ bd.querySelectorAll(".t").forEach(e => e.remove()); tiles = []; score = 0; over = false; sent = false; won = false; add(); add(); render(); A.begin(); }
   nb.onclick = async () => { if (!over && score && !sent){ sent = true; await A.submit(score); } start(); };
   const kd = e => { const d = KEYDIR[e.key]; if (d){ e.preventDefault(); move(d); } };
   addEventListener("keydown", kd);
@@ -1084,7 +1279,7 @@ GAME_IMPL.memory = (st, A) => {
   const paint = () => { hud.querySelector(".tm").textContent = ((t0 ? performance.now() - t0 : 0) / 1000).toFixed(2) + " s"; hud.querySelector(".pr").textContent = pairs + "/8"; hud.querySelector(".mv").textContent = moves; };
   function flip(i, b){
     const c = cards[i]; if (lock || finished || c.done || open.includes(i)) return;
-    if (!t0){ t0 = performance.now(); iv = setInterval(paint, 50); }
+    if (!t0){ t0 = performance.now(); iv = setInterval(paint, 50); A.begin(); }
     b.classList.add("up"); open.push(i); A.tone(500, .05, "triangle", .05);
     if (open.length < 2) return;
     moves++; const [a, d] = open.map(k => cards[k]);
@@ -1108,7 +1303,7 @@ GAME_IMPL.reflex = (st, A) => {
   function arm(){ set("wait", "⏳", A.t("rxWait")); clearTimeout(to); to = setTimeout(() => { set("go", "⚡ " + A.t("rxTap")); tGo = performance.now(); }, 1300 + Math.random() * 2700); }
   async function hit(e){
     e.preventDefault();
-    if (state === "idle" || state === "early"){ if (state === "idle") times = []; paintHud(); return arm(); }
+    if (state === "idle" || state === "early"){ if (state === "idle"){ times = []; A.begin(); } paintHud(); return arm(); }
     if (state === "wait"){ clearTimeout(to); A.tone(150, .2, "sawtooth", .06); set("early", "✋", A.t("rxEarly")); return; }
     if (state === "go"){
       const ms = Math.round(performance.now() - tGo); times.push(ms); paintHud(); A.tone(880, .06, "square", .06);
@@ -1154,7 +1349,7 @@ GAME_IMPL.mines = (st, A) => {
     }
     paint();
   }
-  function plant(safe){ const ban = new Set([safe, ...nb8(safe)]); while (mines.size < M){ const k = Math.random() * N * N | 0; if (!ban.has(k)) mines.add(k); } started = true; t0 = performance.now(); iv = setInterval(() => hud.querySelector(".tm").textContent = ((performance.now() - t0) / 1000).toFixed(1) + " s", 100); }
+  function plant(safe){ const ban = new Set([safe, ...nb8(safe)]); while (mines.size < M){ const k = Math.random() * N * N | 0; if (!ban.has(k)) mines.add(k); } started = true; t0 = performance.now(); A.begin(); iv = setInterval(() => hud.querySelector(".tm").textContent = ((performance.now() - t0) / 1000).toFixed(1) + " s", 100); }
   function toggleFlag(i){ if (over || open.has(i)) return; flag.has(i) ? flag.delete(i) : flag.add(i); A.tone(700, .04, "triangle", .05); paint(); }
   function reveal(i){
     if (over || flag.has(i)) return;
@@ -1234,7 +1429,7 @@ GAME_IMPL.blocks = (st, A) => {
     const ns = +nx.dataset.s; nxx.clearRect(0, 0, ns * 4, ns * 4); if (next){ const cl = SH[next], w = Math.max(...cl.map(p => p[0])) + 1, h = Math.max(...cl.map(p => p[1])) + 1; nxx.save(); nxx.translate((4 - w) * ns / 2, (4 - h) * ns / 2); cl.forEach(([cx, cy]) => block(nxx, cx, cy, ns, COL[next])); nxx.restore(); }
   }
   function loop(ts){ raf = requestAnimationFrame(loop); if (!running) return; acc += Math.min(250, ts - (last || ts)); last = ts; const sp = Math.max(70, 800 - (level - 1) * 75); if (acc >= sp){ acc = 0; if (fits(cur.cells, cur.x, cur.y + 1)){ cur.y++; draw(); } else lockPiece(); } }
-  function start(){ grid = Array.from({length: Rw}, () => Array(C).fill(null)); bag = []; cur = spawn(pick()); next = pick(); score = 0; lines = 0; level = 1; acc = 0; last = 0; over = false; running = true; paintHud(); draw(); }
+  function start(){ grid = Array.from({length: Rw}, () => Array(C).fill(null)); bag = []; cur = spawn(pick()); next = pick(); score = 0; lines = 0; level = 1; acc = 0; last = 0; over = false; running = true; paintHud(); draw(); A.begin(); }
   async function end(){ running = false; over = true; draw(); A.tone(130, .5, "sawtooth", .08); const res = await A.submit(score); resultOverlay(A, {big: fmtN(score), sub: `${lines} ${A.t("bkLines").toLowerCase()}`, again: start, res}); }
   const kd = e => {
     if (!running) return;
@@ -1273,7 +1468,7 @@ GAME_IMPL.flappy = (st, A) => {
   function reset(){ bird = {y: H * .42, vy: 0, r: 17}; pipes = []; score = 0; tAll = 0; hud.querySelector(".sc").textContent = 0; }
   function flap(){
     if (state === "dead") return;
-    if (state === "ready"){ state = "play"; }
+    if (state === "ready"){ state = "play"; A.begin(); }
     bird.vy = -420; A.tone(740, .05, "triangle", .05);
   }
   function update(dt){
@@ -1299,7 +1494,8 @@ GAME_IMPL.flappy = (st, A) => {
     x.save(); x.translate(90, bird.y); x.rotate(Math.max(-.5, Math.min(1.2, bird.vy / 600)));
     x.beginPath(); x.arc(0, 0, bird.r + 3, 0, 7); x.fillStyle = "#ffd166"; x.fill();
     x.save(); x.beginPath(); x.arc(0, 0, bird.r, 0, 7); x.clip();
-    if (img.complete && img.naturalWidth) x.drawImage(img, av * 128, 0, 128, 128, -bird.r, -bird.r, bird.r * 2, bird.r * 2); else { x.fillStyle = "#ff4fa3"; x.fill(); }
+    if (av >= 9 && EMO[av - 9]){ const e = EMO[av - 9], gr = x.createRadialGradient(-6, -6, 2, 0, 0, bird.r); gr.addColorStop(0, e[1]); gr.addColorStop(1, e[2]); x.fillStyle = gr; x.fillRect(-bird.r, -bird.r, bird.r * 2, bird.r * 2); x.fillStyle = "#000"; x.font = `${bird.r * 1.3}px system-ui,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji"`; x.textAlign = "center"; x.textBaseline = "middle"; x.fillText(e[0], 0, 2); }
+    else if (img.complete && img.naturalWidth) x.drawImage(img, av * 128, 0, 128, 128, -bird.r, -bird.r, bird.r * 2, bird.r * 2); else { x.fillStyle = "#ff4fa3"; x.fill(); }
     x.restore(); x.restore();
     if (state === "ready"){ x.fillStyle = "#fff"; x.font = "bold 22px system-ui"; x.textAlign = "center"; x.fillText("👆 " + A.t("fpTap"), W / 2, H * .62); }
   }
@@ -1337,7 +1533,7 @@ GAME_IMPL.simon = (st, A) => {
   const KEYS = {"1": 0, "2": 1, "3": 2, "4": 3, q: 0, w: 1, a: 2, s: 3};
   const kd = e => { const i = KEYS[e.key]; if (i != null) press(i); };
   addEventListener("keydown", kd);
-  function start(){ seq = []; next(); }
+  function start(){ seq = []; A.begin(); next(); }
   A.overlay({title: "🎵 " + A.t("g_simon"), sub: A.t("h_simon"), btns: [["▶ " + A.t("start"), start, "go"]]});
   return () => { alive = false; removeEventListener("keydown", kd); };
 };
@@ -1350,7 +1546,8 @@ GAME_IMPL.c4 = (st, A) => {
   const seg = el("div", "seg"); [[1, "lvEasy"], [2, "lvMid"], [3, "lvHard"]].forEach(([v, k]) => { const s = el("button", v === lvl ? "on" : "", A.t(k)); s.type = "button"; s.onclick = () => { if (busy) return; lvl = v; ls.set("fun.c4lvl", v); seg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === s)); start(); }; seg.appendChild(s); });
   const nb = el("button", "btn sm", "🔄 " + A.t("newGame")); nb.type = "button"; nb.onclick = () => { if (!busy) start(); };
   top.append(seg, nb); st.appendChild(top);
-  const msg = el("div", "hud", `<span class="m">…</span>`); st.appendChild(msg);
+  const msg = el("div", "hud", `<span class="m">…</span><span class="tp"></span>`); st.appendChild(msg);
+  const tp = () => msg.querySelector(".tp").textContent = "📅 " + A.t("todayPts", A.dayPts());
   const g = el("div", "c4"); st.appendChild(g);
   const cells = []; for (let r = 0; r < RW; r++) for (let c = 0; c < CL; c++){ const k = el("button"); k.type = "button"; k.onclick = () => play(c); cells.push(k); g.appendChild(k); }
   const say = s => msg.querySelector(".m").textContent = s;
@@ -1395,6 +1592,7 @@ GAME_IMPL.c4 = (st, A) => {
     if (w1) A.confetti();
     const res = await A.submit(pts);
     if (dead) return true;
+    tp();
     setTimeout(() => !dead && A.overlay({title: w1 ? "🎉 " + A.t("c4Win", pts) : w2 ? "🤖 " + A.t("c4Lose") : "🤝 " + A.t("c4Draw"), sub: res && res.rank ? `${A.t("rank")} #${res.rank}` : "", btns: [["🔁 " + A.t("replay"), start, "go"]]}), 900);
     return true;
   }
@@ -1406,7 +1604,7 @@ GAME_IMPL.c4 = (st, A) => {
   async function play(c){ if (over || busy || drop(b, c) < 0) return; place(c, 1); if (await check()) return; aiTurn(); }
   const kd = e => { const n = +e.key; if (n >= 1 && n <= 7) play(n - 1); };
   addEventListener("keydown", kd);
-  function start(){ b = Array.from({length: RW}, () => Array(CL).fill(0)); over = false; busy = false; paint(); youFirst = !youFirst; if (youFirst) say("👉 " + A.t("c4You")); else aiTurn(); }
+  function start(){ b = Array.from({length: RW}, () => Array(CL).fill(0)); over = false; busy = false; paint(); A.begin(); tp(); youFirst = !youFirst; if (youFirst) say("👉 " + A.t("c4You")); else aiTurn(); }
   youFirst = false; start();
   return () => { dead = true; removeEventListener("keydown", kd); };
 };
@@ -1419,7 +1617,8 @@ GAME_IMPL.sudoku = (st, A) => {
   const seg = el("div", "seg"); [[1, "lvEasy"], [2, "lvMid"], [3, "lvHard"]].forEach(([v, k]) => { const s = el("button", v === lvl ? "on" : "", A.t(k)); s.type = "button"; s.onclick = () => { lvl = v; ls.set("fun.sdlvl", v); seg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === s)); start(); }; seg.appendChild(s); });
   const nb = el("button", "btn sm", "🔄 " + A.t("newGame")); nb.type = "button"; nb.onclick = () => start();
   top.append(seg, nb); st.appendChild(top);
-  const hud = el("div", "hud", `<span>⏱️ <b class="tm">0:00</b></span><span>${A.t("sdMist")} : <b class="mi">0</b></span>`); st.appendChild(hud);
+  const hud = el("div", "hud", `<span>⏱️ <b class="tm">0:00</b></span><span>${A.t("sdMist")} : <b class="mi">0</b></span><span class="tp"></span>`); st.appendChild(hud);
+  const tp = () => hud.querySelector(".tp").textContent = "📅 " + A.t("todayPts", A.dayPts());
   const g = el("div", "sd"); st.appendChild(g);
   const np = el("div", "nump"); st.appendChild(np);
   const cells = []; for (let i = 0; i < 81; i++){ const k = el("button"); k.type = "button"; const r = i / 9 | 0, c = i % 9; if (c === 2 || c === 5) k.classList.add("c3"); if (r === 2 || r === 5) k.classList.add("r3"); k.onclick = () => { sel = i; paint(); }; cells.push(k); g.appendChild(k); }
@@ -1448,7 +1647,7 @@ GAME_IMPL.sudoku = (st, A) => {
     return [full, p];
   }
   function start(){
-    [sol, puz] = generate(); cur = puz.slice(); sel = -1; mist = 0; done = false; t0 = performance.now(); clearInterval(iv);
+    [sol, puz] = generate(); cur = puz.slice(); sel = -1; mist = 0; done = false; t0 = performance.now(); clearInterval(iv); A.begin(); tp();
     iv = setInterval(() => { const s = (performance.now() - t0) / 1000 | 0; hud.querySelector(".tm").textContent = `${s / 60 | 0}:${String(s % 60).padStart(2, "0")}`; }, 500);
     st.querySelectorAll(":scope > .ovl").forEach(o => o.remove()); paint();
   }
@@ -1468,7 +1667,7 @@ GAME_IMPL.sudoku = (st, A) => {
     paint();
     if (cur.every((v, i) => v === sol[i])){
       done = true; clearInterval(iv); A.confetti(); const pts = PTS[lvl];
-      const res = await A.submit(pts);
+      const res = await A.submit(pts); tp();
       A.overlay({title: "🧩 " + A.t("sdWin", pts), sub: hud.querySelector(".tm").textContent + (res && res.rank ? ` · ${A.t("rank")} #${res.rank}` : ""), btns: [["🔁 " + A.t("newGame"), start, "go"]]});
     }
   }
