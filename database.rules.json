@@ -32,6 +32,41 @@
         ".read": "$k.length === 64",
         ".write": "$k.length === 64"
       }
+    },
+    "fun": {
+      "u": {
+        ".read": true,
+        "$uid": {
+          ".write": "auth != null && auth.uid === $uid",
+          ".validate": "newData.hasChildren(['n', 'a', 'c']) && newData.child('n').isString() && newData.child('n').val().length >= 3 && newData.child('n').val().length <= 16 && newData.child('a').isString() && newData.child('a').val().matches(/^[A-Z]{3}$/) && newData.child('c').isNumber() && newData.child('c').val() >= 0 && newData.child('c').val() <= 8 && (!data.exists() || newData.child('n').val() === data.child('n').val())"
+        }
+      },
+      "w": {
+        ".read": true,
+        "$wk": {
+          "$board": {
+            "$uid": {
+              ".write": "auth != null && auth.uid === $uid",
+              ".validate": "newData.hasChildren(['v', 'n', 't']) && newData.child('v').isNumber() && newData.child('v').val() >= 0 && newData.child('n').isNumber() && newData.child('n').val() === (data.exists() ? data.child('n').val() : 0) + 1 && newData.child('t').val() === now && (($board === 'snake' && newData.child('v').val() <= 400) || ($board === 'bj' && newData.child('v').val() <= 100000000) || ($board.beginsWith('wordle_') && newData.child('v').val() <= 42 && newData.child('v').val() <= (data.exists() ? data.child('v').val() : 0) + 6) || ($board === '2048' && newData.child('v').val() <= 4000000) || ($board === 'memory' && newData.child('v').val() >= 4000) || ($board === 'reflex' && newData.child('v').val() >= 100) || ($board === 'mines' && newData.child('v').val() >= 3000) || ($board === 'blocks' && newData.child('v').val() <= 100000000) || ($board === 'flappy' && newData.child('v').val() <= 5000) || ($board === 'simon' && newData.child('v').val() <= 500) || ($board === 'c4' && newData.child('v').val() <= (data.exists() ? data.child('v').val() : 0) + 6) || ($board === 'sudoku' && newData.child('v').val() <= (data.exists() ? data.child('v').val() : 0) + 6))"
+            }
+          }
+        }
+      },
+      "rec": {
+        ".read": true,
+        "$uid": {
+          ".write": "auth != null && auth.uid === $uid",
+          "$board": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          }
+        }
+      },
+      "p": {
+        "$uid": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": "auth != null && auth.uid === $uid"
+        }
+      }
     }
   }
 }
