@@ -620,7 +620,8 @@ html.kp-resizing,html.kp-resizing *{cursor:ew-resize!important;user-select:none!
 .v-nm{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.2}
 .v-nm b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px}
 .v-star{font-style:normal;margin-right:3px}
-.v-nm small{display:flex;align-items:center;gap:5px;margin-top:3px;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden}
+.v-nm small{display:flex;flex-wrap:wrap;align-items:center;gap:4px 5px;margin-top:3px;font-size:11px;color:var(--muted);white-space:nowrap}
+.v-full11{flex:none;font-size:10px;font-weight:900;padding:0 5px;border-radius:6px;color:#a855f7;background:#a855f722;border:1px solid #a855f766}
 .v-tg{flex:none;font-size:11px;font-weight:900;padding:0 5px;border-radius:6px;background:#8881;color:var(--muted)}
 .v-tg.g8{background:#f5b40026;color:#d79b00}.v-tg.g7{background:#a855f726;color:#a855f7}.v-tg.g6{background:#3fa9ff26;color:#2b8fd9}
 .v-t11{flex:none;display:flex;gap:1px;font-size:12px}.v-t11 i{font-style:normal;font-size:12px}.v-t11 i:only-child:not(:has(*)){font-weight:900;color:#a855f7;font-size:10px}
@@ -3108,11 +3109,11 @@ const KP = (function(){
     const all = BR.pool, q = nk(brQ);
     return brSort(all.filter(p=>(brTab === "_" ? !p.alliance : p.alliance === brTab) && (!q || nk(p.pseudo).includes(q)) && brMatch(p)));
   }
-  const T11I = {i:"🛡️", c:"🐎", a:"🏹"}, AVL = {full:"Full", h1:"1st", h2:"2nd"};
+  const T11I = {i:"🛡️", c:"🐎", a:"🏹"}, AVL = {full:"Full Battle", h1:"1st Half", h2:"2nd Half"};
   const brAv = p=>p.half === "h1" ? "h1" : p.half === "h2" ? "h2" : "full";   // same as Battle Roster: a half wins, otherwise Full Battle
   const brT11s = p=>typeof p.t11s === "string" ? p.t11s : "";
   function brIcons(p){ if(typeof p.t11s !== "string") return p.t11 ? `<span class="v-t11"><i>T11</i></span>` : "";
-    const l = ["i", "c", "a"].filter(x=>p.t11s.includes(x)); return l.length ? `<span class="v-t11" title="${esc(brT11Txt(p))}">${l.map(x=>`<i>${T11I[x]}</i>`).join("")}</span>` : ""; }
+    const l = ["i", "c", "a"].filter(x=>p.t11s.includes(x)); if(l.length === 3) return `<span class="v-full11">Full T11</span>`; return l.length ? `<span class="v-t11" title="${esc(brT11Txt(p))}">${l.map(x=>`<i>${T11I[x]}</i>`).join("")}</span>` : ""; }
   const brTgC = p=>"g" + ((p.tg || "").replace("TG", "") || "0");
   const brIni = n=>[...String(n || "?")].slice(0, 2).join("").toUpperCase();
   const brShort = w=>w.startsWith("tur:") ? "🏰" : (([r, c])=>`${r + 1}·${c + 1}`)(rc(w));
@@ -3136,7 +3137,7 @@ const KP = (function(){
   function brFilters(){
     const row = (lbl, key, items)=>`<div class="v-frow"><span>${esc(lbl)}</span><div>${items.map(([v, l, c])=>`<button type="button" data-fk="${key}" data-fv="${v}" class="${brF[key].has(v) ? "on " : ""}${c || ""}">${esc(l)}</button>`).join("")}</div></div>`;
     return row(t("kpBrLvl"), "lvl", [["star", "★"], ["TG8", "TG8"], ["TG7", "TG7"], ["TG6", "TG6"]])
-      + row("T11", "t11", [["all", "ALL"], ["i", "🛡️ INF"], ["c", "🐎 CAV"], ["a", "🏹 ARC"]])
+      + row("T11", "t11", [["all", "Full T11"], ["i", "🛡️ INF"], ["c", "🐎 CAV"], ["a", "🏹 ARC"]])
       + row(t("kpBrAvail"), "av", [["full", "Full Battle", "full"], ["h1", "1st Half", "h1"], ["h2", "2nd Half", "h2"]])
       + (brFOn() ? `<button type="button" class="v-fclr" data-fclr="1">✕ ${esc(t("kpBrClr"))}</button>` : "");
   }
