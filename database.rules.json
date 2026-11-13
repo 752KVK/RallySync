@@ -37,8 +37,8 @@
       "u": {
         ".read": true,
         "$uid": {
-          ".write": "auth != null && auth.uid === $uid",
-          ".validate": "newData.hasChildren(['n', 'a', 'c']) && newData.child('n').isString() && newData.child('n').val().length >= 3 && newData.child('n').val().length <= 16 && newData.child('a').isString() && newData.child('a').val().matches(/^[A-Z]{3}$/) && newData.child('c').isNumber() && newData.child('c').val() >= 0 && newData.child('c').val() <= 20 && (!data.exists() || newData.child('n').val() === data.child('n').val())"
+          ".write": "auth != null && (auth.uid === $uid || root.child('fun/roles/' + auth.uid).val() === 'admin')",
+          ".validate": "newData.hasChildren(['n', 'a', 'c']) && newData.child('n').isString() && newData.child('n').val().length >= 3 && newData.child('n').val().length <= 16 && newData.child('a').isString() && newData.child('a').val().matches(/^[A-Z]{3}$/) && newData.child('c').isNumber() && newData.child('c').val() >= 0 && newData.child('c').val() <= 20 && (!data.exists() || newData.child('n').val() === data.child('n').val()) && (!data.exists() || newData.child('a').val() === data.child('a').val() || root.child('fun/roles/' + auth.uid).val() === 'admin' || (newData.child('ac').val() === now && (!data.child('ac').exists() || now - data.child('ac').val() >= 604800000)))"
         }
       },
       "w": {
@@ -46,8 +46,8 @@
         "$wk": {
           "$board": {
             "$uid": {
-              ".write": "auth != null && auth.uid === $uid",
-              ".validate": "newData.hasChildren(['v', 'n', 't']) && newData.child('v').isNumber() && newData.child('v').val() >= 0 && newData.child('n').isNumber() && newData.child('n').val() === (data.exists() ? data.child('n').val() : 0) + 1 && newData.child('t').val() === now && (($board === 'snake' && newData.child('v').val() <= 400 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 0 && newData.child('v').val() * 250 <= (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) + 3000) || ($board === 'bj' && newData.child('v').val() <= 100000000) || ($board.beginsWith('wordle_') && newData.child('v').val() <= 42 && newData.child('v').val() <= (data.exists() ? data.child('v').val() : 0) + 6) || ($board === '2048' && newData.child('v').val() <= 4000000 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 0) || ($board === 'memory' && newData.child('v').val() >= 4000 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 3500) || ($board === 'memory12' && newData.child('v').val() >= 3000 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 2500) || ($board === 'memory20' && newData.child('v').val() >= 5000 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 4500) || ($board === 'reflex' && newData.child('v').val() >= 100 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 5000) || ($board === 'mines' && newData.child('v').val() >= 3000 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 2500) || ($board === 'blocks' && newData.child('v').val() <= 100000000 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 0) || ($board === 'flappy' && newData.child('v').val() <= 5000 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 0 && newData.child('v').val() * 800 <= (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) + 3000) || ($board === 'simon' && newData.child('v').val() <= 500 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 0 && newData.child('v').val() * newData.child('v').val() * 150 <= (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) + 3000) || ($board === 'c4' && newData.child('v').val() <= (data.exists() ? data.child('v').val() : 0) + 6 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 2000 && newData.child('d').isNumber() && newData.child('d').val() * 86400000 <= now && (newData.child('d').val() + 1) * 86400000 > now && newData.child('dp').isNumber() && newData.child('dp').val() >= 0 && newData.child('dp').val() <= 30 && newData.child('dp').val() === (data.exists() && data.child('d').val() === newData.child('d').val() ? data.child('dp').val() : 0) + (newData.child('v').val() - (data.exists() ? data.child('v').val() : 0))) || ($board === 'sudoku' && newData.child('v').val() <= (data.exists() ? data.child('v').val() : 0) + 6 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 15000 && newData.child('d').isNumber() && newData.child('d').val() * 86400000 <= now && (newData.child('d').val() + 1) * 86400000 > now && newData.child('dp').isNumber() && newData.child('dp').val() >= 0 && newData.child('dp').val() <= 30 && newData.child('dp').val() === (data.exists() && data.child('d').val() === newData.child('d').val() ? data.child('dp').val() : 0) + (newData.child('v').val() - (data.exists() ? data.child('v').val() : 0))))"
+              ".write": "auth != null && ((auth.uid === $uid && !root.child('fun/ban/' + auth.uid).exists()) || (root.child('fun/roles/' + auth.uid).val() === 'admin' && !newData.exists()))",
+              ".validate": "newData.hasChildren(['v', 'n', 't']) && newData.child('v').isNumber() && newData.child('v').val() >= 0 && newData.child('n').isNumber() && newData.child('n').val() === (data.exists() ? data.child('n').val() : 0) + 1 && newData.child('t').val() === now && (($board === 'snake' && newData.child('v').val() <= 400 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 0 && newData.child('v').val() * 250 <= (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) + 3000) || ($board === 'bj' && newData.child('v').val() <= 100000000) || ($board.beginsWith('wordle_') && newData.child('v').val() <= 42 && newData.child('v').val() <= (data.exists() ? data.child('v').val() : 0) + 6) || ($board === '2048' && newData.child('v').val() <= 4000000 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 0) || ($board === 'memory' && newData.child('v').val() >= 4000 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 3500) || ($board === 'memory12' && newData.child('v').val() >= 3000 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 2500) || ($board === 'memory20' && newData.child('v').val() >= 5000 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 4500) || ($board === 'reflex' && newData.child('v').val() >= 100 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 5000) || ($board === 'mines' && newData.child('v').val() >= 3000 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 2500) || ($board === 'blocks' && newData.child('v').val() <= 100000000 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 0) || ($board === 'flappy' && newData.child('v').val() <= 5000 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 0 && newData.child('v').val() * 800 <= (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) + 3000) || ($board === 'simon' && newData.child('v').val() <= 500 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 0 && newData.child('v').val() * newData.child('v').val() * 150 <= (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) + 3000) || ($board === 'c4' && newData.child('v').val() <= (data.exists() ? data.child('v').val() : 0) + 6 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 2000 && newData.child('d').isNumber() && newData.child('d').val() * 86400000 <= now && (newData.child('d').val() + 1) * 86400000 > now && newData.child('dp').isNumber() && newData.child('dp').val() >= 0 && newData.child('dp').val() <= 30 && newData.child('dp').val() === (data.exists() && data.child('d').val() === newData.child('d').val() ? data.child('dp').val() : 0) + (newData.child('v').val() - (data.exists() ? data.child('v').val() : 0))) || ($board === 'sudoku' && newData.child('v').val() <= (data.exists() ? data.child('v').val() : 0) + 6 && root.child('fun/p/' + $uid + '/st/' + $board).exists() && (now - root.child('fun/p/' + $uid + '/st/' + $board).val()) >= 15000 && newData.child('d').isNumber() && newData.child('d').val() * 86400000 <= now && (newData.child('d').val() + 1) * 86400000 > now && newData.child('dp').isNumber() && newData.child('dp').val() >= 0 && newData.child('dp').val() <= 30 && newData.child('dp').val() === (data.exists() && data.child('d').val() === newData.child('d').val() ? data.child('dp').val() : 0) + (newData.child('v').val() - (data.exists() ? data.child('v').val() : 0))) || ($board === 'duel' && newData.child('v').val() <= (data.exists() ? data.child('v').val() : 0) + 1))"
             }
           }
         }
@@ -55,7 +55,7 @@
       "rec": {
         ".read": true,
         "$uid": {
-          ".write": "auth != null && auth.uid === $uid",
+          ".write": "auth != null && (auth.uid === $uid || root.child('fun/roles/' + auth.uid).val() === 'admin')",
           "$board": {
             ".validate": "newData.isNumber() && newData.val() >= 0"
           }
@@ -82,7 +82,7 @@
         "$room": {
           ".read": "auth != null && ($room === 'g' || root.child('fun/u/' + auth.uid + '/a').val() === $room || (root.child('fun/roles/' + auth.uid).val() === 'admin' || root.child('fun/roles/' + auth.uid).val() === 'mod'))",
           "$id": {
-            ".write": "auth != null && ((!data.exists() && newData.child('u').val() === auth.uid && (!root.child('fun/mute/' + auth.uid).exists() || root.child('fun/mute/' + auth.uid + '/until').val() < now) && ($room === 'g' || root.child('fun/u/' + auth.uid + '/a').val() === $room)) || (data.exists() && !newData.exists() && (data.child('u').val() === auth.uid || (root.child('fun/roles/' + auth.uid).val() === 'admin' || root.child('fun/roles/' + auth.uid).val() === 'mod'))))",
+            ".write": "auth != null && ((!data.exists() && newData.child('u').val() === auth.uid && !root.child('fun/ban/' + auth.uid).exists() && (!root.child('fun/mute/' + auth.uid).exists() || root.child('fun/mute/' + auth.uid + '/until').val() < now) && ($room === 'g' || root.child('fun/u/' + auth.uid + '/a').val() === $room)) || (data.exists() && !newData.exists() && (data.child('u').val() === auth.uid || (root.child('fun/roles/' + auth.uid).val() === 'admin' || root.child('fun/roles/' + auth.uid).val() === 'mod'))))",
             ".validate": "newData.hasChildren(['u', 'x', 't']) && newData.child('x').isString() && newData.child('x').val().length >= 1 && newData.child('x').val().length <= 300 && newData.child('t').val() === now && newData.parent().parent().parent().child('cl/' + auth.uid).val() === now"
           }
         }
@@ -123,6 +123,91 @@
         ".read": "root.child('fun/roles/' + auth.uid).val() === 'admin'",
         "$uid": {
           ".write": "auth != null && (auth.uid === $uid || root.child('fun/roles/' + auth.uid).val() === 'admin')"
+        }
+      },
+      "ban": {
+        ".read": "auth != null",
+        "$uid": {
+          ".write": "auth != null && root.child('fun/roles/' + auth.uid).val() === 'admin' && $uid !== auth.uid"
+        }
+      },
+      "cfg": {
+        ".read": "auth != null",
+        "ann": {
+          ".write": "auth != null && root.child('fun/roles/' + auth.uid).val() === 'admin'"
+        },
+        "bad": {
+          ".write": "auth != null && root.child('fun/roles/' + auth.uid).val() === 'admin'"
+        },
+        "pin": {
+          "$room": {
+            ".write": "auth != null && (root.child('fun/roles/' + auth.uid).val() === 'admin' || root.child('fun/roles/' + auth.uid).val() === 'mod')"
+          }
+        }
+      },
+      "rep": {
+        ".read": "auth != null && (root.child('fun/roles/' + auth.uid).val() === 'admin' || root.child('fun/roles/' + auth.uid).val() === 'mod')",
+        "$id": {
+          ".write": "auth != null && ((!data.exists() && newData.child('by').val() === auth.uid) || ((root.child('fun/roles/' + auth.uid).val() === 'admin' || root.child('fun/roles/' + auth.uid).val() === 'mod') && !newData.exists()))"
+        }
+      },
+      "pub": {
+        ".read": "auth != null",
+        "$uid": {
+          ".write": "auth != null && auth.uid === $uid"
+        }
+      },
+      "ach": {
+        ".read": true,
+        "$uid": {
+          "$a": {
+            ".write": "auth != null && auth.uid === $uid && !data.exists()",
+            ".validate": "newData.val() === now"
+          }
+        }
+      },
+      "dch": {
+        ".read": true,
+        "$uid": {
+          "$d": {
+            ".write": "auth != null && auth.uid === $uid && !data.exists()",
+            ".validate": "newData.child('d').isNumber() && newData.child('d').val() * 86400000 <= now && (newData.child('d').val() + 1) * 86400000 > now && newData.child('t').val() === now"
+          }
+        }
+      },
+      "streak": {
+        ".read": true,
+        "$uid": {
+          ".write": "auth != null && auth.uid === $uid",
+          ".validate": "newData.child('d').isNumber() && newData.child('d').val() * 86400000 <= now && (newData.child('d').val() + 1) * 86400000 > now && newData.child('s').isNumber() && newData.child('s').val() >= 1 && newData.child('s').val() <= (data.exists() && data.child('d').val() === newData.child('d').val() - 1 ? data.child('s').val() + 1 : 1)"
+        }
+      },
+      "inbox": {
+        "$uid": {
+          ".read": "auth != null && auth.uid === $uid",
+          "$id": {
+            ".write": "auth != null && (auth.uid === $uid || (!data.exists() && newData.child('from').val() === auth.uid))"
+          }
+        }
+      },
+      "duel": {
+        "$id": {
+          ".read": "auth != null && (data.child('a').val() === auth.uid || data.child('b').val() === auth.uid)",
+          ".write": "auth != null && !root.child('fun/ban/' + auth.uid).exists() && ((!data.exists() && newData.child('a').val() === auth.uid) || (data.exists() && (data.child('a').val() === auth.uid || data.child('b').val() === auth.uid)))",
+          ".validate": "newData.hasChildren(['a', 'b', 'g', 'st']) && (!data.exists() || (newData.child('a').val() === data.child('a').val() && newData.child('b').val() === data.child('b').val() && newData.child('g').val() === data.child('g').val()))"
+        }
+      },
+      "tour": {
+        ".read": "auth != null",
+        ".write": "auth != null && root.child('fun/roles/' + auth.uid).val() === 'admin'"
+      },
+      "tourw": {
+        ".read": "auth != null",
+        "$tid": {
+          "$uid": {
+            ".write": "auth != null && auth.uid === $uid && !root.child('fun/ban/' + auth.uid).exists() && root.child('fun/tour/id').val() === $tid && root.child('fun/tour/s').val() <= now && root.child('fun/tour/e').val() > now",
+            ".validate": "newData.child('v').isNumber() && newData.child('v').val() >= 0 && newData.child('v').val() <= 100000000 && newData.child('t').val() === now && (!data.exists() || newData.child('v').val() > data.child('v').val())"
+          }
         }
       }
     }

@@ -1,0 +1,25 @@
+{
+ "name": "752 FUN",
+ "short_name": "752 FUN",
+ "description": "Mini-jeux, classements et chat de l'alliance",
+ "start_url": "fun.html",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "portrait",
+ "background_color": "#140a24",
+ "theme_color": "#1a0b2e",
+ "icons": [
+  {
+   "src": "fun-icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any maskable"
+  },
+  {
+   "src": "fun-icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}
