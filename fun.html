@@ -696,6 +696,8 @@ function renderBoard(){
 // ---------- score saving
 // saves run one after another; each one re-reads the server value first, so a slow load, a cut connection or two quick saves never break the count
 let submitQ = Promise.resolve();
+let lastErr = "";
+const errCode = e => String((e && (e.code || e.message)) || e || "?").replace(/^Error:\s*/, "").slice(0, 40);
 function submit(board, val, game){ const p = submitQ.then(() => doSubmit(board, val, game)).catch(e => { console.warn(e); return {}; }); submitQ = p; return p; }
 async function doSubmit(board, val, game){
   if (!USER || !FB) return {};
@@ -704,9 +706,11 @@ async function doSubmit(board, val, game){
   if (g.max != null && val > g.max) val = g.max;
   if (g.min != null && val < g.min) return {};
   const path = `fun/w/${WK}/${board}/${USER.uid}`;
+  lastErr = "";
   if (beginP[board]) await beginP[board];
   let cur;
-  try { cur = (await FB.get(R(path))).val(); } catch (e) { toast(t("saveFail"), 4000); return {}; }
+  try { cur = (await Promise.race([FB.get(R(path)), new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), 4000))])).val(); }
+  catch (e) { console.warn("get", e); lastErr = errCode(e); cur = (WKD[board] || {})[USER.uid] || null; }   // fall back on the live copy of the rankings
   const n = (cur ? cur.n : 0) + 1;
   let v = g.mode === "add" ? (cur ? cur.v : 0) + val : g.mode === "set" ? val : (cur && !better(val, cur.v, g.dir) ? cur.v : val);
   if (g.mode === "add" && g.max != null) v = Math.min(v, g.max);
@@ -717,6 +721,7 @@ async function doSubmit(board, val, game){
   }
   const improved = !cur || v !== cur.v;
   const rec = REC[board], isRec = g.mode !== "set" && (rec == null || better(v, rec, g.dir));
+  lastErr = [lastErr && "get:" + lastErr, beginErr].filter(Boolean).join(" / ");
   const upd = {}; upd[path] = {v, n, t: FB.serverTimestamp(), ...extra};
   if (isRec || (g.mode === "set" && (rec == null || v > rec))) upd[`fun/rec/${USER.uid}/${board}`] = v;
   const before = (WKD[board] || {})[USER.uid];
@@ -727,7 +732,7 @@ async function doSubmit(board, val, game){
     console.warn(e);
     if (before) WKD[board][USER.uid] = before; else delete WKD[board][USER.uid];   // undo the instant display
     renderBoard();
-    toast(/PERMISSION/i.test(e.code + e.message) ? t("errDb") : t("saveFail"), 4000); return {};
+    toast((/PERMISSION/i.test(e.code + e.message) ? t("errDb") : t("saveFail")) + " [" + errCode(e) + (lastErr ? " / " + lastErr : "") + "]", 6000); return {};
   }
   if (upd[`fun/rec/${USER.uid}/${board}`] != null) REC[board] = v;
   const li = $(`#gBoard li[data-u="${USER.uid}"]`); if (li && improved){ li.classList.add("flash"); }
@@ -737,7 +742,8 @@ async function doSubmit(board, val, game){
 }
 const CAPPED = ["c4", "sudoku"], DAY_CAP = 30, beginP = {};
 // a game tells the server when it starts: the database rules refuse scores that come too fast to be human
-function begin(board){ if (!USER || !FB) return; beginP[board] = FB.set(privRef("st/" + board), FB.serverTimestamp()).catch(e => console.warn(e)); }
+function begin(board){ if (!USER || !FB) return; beginP[board] = FB.set(privRef("st/" + board), FB.serverTimestamp()).catch(e => { console.warn(e); beginErr = "st:" + errCode(e); }); }
+let beginErr = "";
 function dayPts(board){ const r = (WKD[board] || {})[USER && USER.uid]; return r && r.d === dayIdx() ? r.dp || 0 : 0; }
 function privRef(path){ return R(`fun/p/${USER.uid}/${path}`); }
 
