@@ -542,7 +542,7 @@ html.planning .toast{z-index:480}
 /* players panel */
 .kp-mid{flex:1;display:flex;min-height:0;position:relative}
 .kp-mid .kp-view{flex:1;min-width:0}
-.kp-panel{width:290px;flex:none;display:flex;flex-direction:column;background:var(--panel);border-left:1px solid var(--line);min-height:0}
+.kp-panel{width:var(--kppw,290px);flex:none;display:flex;flex-direction:column;background:var(--panel);border-left:1px solid var(--line);min-height:0}
 .kp-panel[hidden]{display:none}
 .kp-pn-head{display:flex;align-items:center;gap:6px;padding:8px 10px;border-bottom:1px solid var(--line)}
 .kp-pn-head b{flex:1;white-space:nowrap;font-size:14px}
@@ -582,8 +582,55 @@ html.planning .toast{z-index:480}
 .kp-br-b{display:flex;gap:3px;flex:none}
 .kp-br-b i{font-style:normal;font-size:10px;font-weight:800;padding:1px 4px;border-radius:4px;background:#00000014}
 .kp-br-b i.t11{background:#8e24aa22;color:#8e24aa}
-.kp-br>button:not(.kp-br-ck){padding:2px 5px;font-size:13px;border-radius:6px;flex:none}
 .kp-br-foot{display:flex;gap:6px;margin-top:8px}
+/* ---- Battle Roster panel: cards grouped by level ---- */
+.kp-panel{position:relative}
+.kp-pn-grip{position:absolute;left:-5px;top:0;bottom:0;width:10px;cursor:ew-resize;z-index:5;touch-action:none}
+.kp-pn-grip::after{content:"";position:absolute;left:3px;top:50%;width:4px;height:44px;margin-top:-22px;border-radius:3px;background:var(--line);transition:background .15s}
+.kp-pn-grip:hover::after,.kp-pn-grip.on::after{background:#2b7de9}
+html.kp-resizing,html.kp-resizing *{cursor:ew-resize!important;user-select:none!important}
+.kp-br-tabs{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:6px;margin-bottom:8px}
+.kp-br-tabs [hidden]{display:none!important}
+.kp-br-tabs button{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;border-radius:12px;padding:7px 10px 10px;border:1px solid var(--line);background:#8881;text-align:left;font-weight:800}
+.kp-br-tabs button.on{outline:0;border-color:currentColor;background:color-mix(in srgb,currentColor 12%,transparent)}
+.kp-br-tabs span{font-size:12px}.kp-br-tabs strong{font-size:20px;line-height:1.1}.kp-br-tabs em{font-style:normal;font-size:12px;opacity:.6}
+.kp-br-tabs u{position:absolute;left:0;bottom:0;height:4px;background:currentColor;text-decoration:none;opacity:.8}
+.kp-br-tools{margin-bottom:6px}
+.kp-br-tools input{padding:7px 10px;border-radius:10px;border:1px solid var(--line)}
+#kpBrFree{border-radius:10px;padding:6px 10px;font-weight:700}
+.kp-br-chips{margin:0 0 4px}
+.v-frow{display:flex;align-items:flex-start;gap:6px;margin:0 0 5px}
+.v-frow>span{flex:none;width:42px;padding-top:4px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.v-frow>div{display:flex;flex-wrap:wrap;gap:4px}
+.v-frow button{padding:3px 9px;border-radius:999px;font-size:12px;font-weight:700;border:1px solid var(--line);background:transparent;color:var(--muted)}
+.v-frow button.on{background:var(--text);color:var(--panel);border-color:var(--text)}
+.v-frow button.full{color:#22a35a}.v-frow button.h1{color:#4a8aff}.v-frow button.h2{color:#c870d0}
+.v-frow button.on.full{background:#22a35a;border-color:#22a35a;color:#fff}.v-frow button.on.h1{background:#4a8aff;border-color:#4a8aff;color:#fff}.v-frow button.on.h2{background:#c870d0;border-color:#c870d0;color:#fff}
+.v-fclr{display:block;margin:2px 0 6px auto;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:800;border:0;background:#e5393522;color:#e53935}
+.v-grp{margin:10px 2px 4px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);display:flex;justify-content:space-between}
+.kp-br{border-radius:12px;padding:7px 8px;gap:8px;margin:4px 0;background:#8881;border:1px solid transparent}
+.kp-br:hover{border-color:#2b7de9}
+.kp-br.placed{background:color-mix(in srgb,#2e9d4f 12%,transparent);border-color:#2e9d4f55}
+.kp-br.done{background:color-mix(in srgb,#d79b00 12%,transparent)}
+.kp-br-ck{width:22px;height:22px;padding:0;border-radius:50%;border:2px solid var(--line);background:transparent;font-size:12px;line-height:1;color:#fff;font-weight:900;flex:none}
+.kp-br.placed .kp-br-ck{background:#2e9d4f;border-color:#2e9d4f;color:#fff}
+.kp-br.done .kp-br-ck{background:#d79b00;border-color:#d79b00;color:#fff}
+.v-av{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:900;color:#fff;background:#777}
+.v-av.a-koe{background:#1e88e5}.v-av.a-war{background:#e53935}.v-av.a-pan{background:#43a047}
+.v-nm{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.2}
+.v-nm b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px}
+.v-star{font-style:normal;margin-right:3px}
+.v-nm small{display:flex;align-items:center;gap:5px;margin-top:3px;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden}
+.v-tg{flex:none;font-size:11px;font-weight:900;padding:0 5px;border-radius:6px;background:#8881;color:var(--muted)}
+.v-tg.g8{background:#f5b40026;color:#d79b00}.v-tg.g7{background:#a855f726;color:#a855f7}.v-tg.g6{background:#3fa9ff26;color:#2b8fd9}
+.v-t11{flex:none;display:flex;gap:1px;font-size:12px}.v-t11 i{font-style:normal;font-size:12px}.v-t11 i:only-child:not(:has(*)){font-weight:900;color:#a855f7;font-size:10px}
+.v-avb{flex:none;font-size:10px;font-weight:900;padding:0 5px;border-radius:6px;border:1px solid}
+.v-avb.full{color:#22a35a;border-color:#22a35a66;background:#22a35a1a}.v-avb.h1{color:#4a8aff;border-color:#4a8aff66;background:#4a8aff1a}.v-avb.h2{color:#c870d0;border-color:#c870d066;background:#c870d01a}
+.v-l1{display:flex;align-items:baseline;gap:6px;min-width:0}
+.v-loc{flex:none;font-size:11px;font-weight:800;color:#2e9d4f}.v-loc.d{color:#d79b00}
+.v-act{flex:none;width:26px;height:26px;padding:0;border-radius:8px;border:0;background:transparent;color:var(--muted);font-size:15px;opacity:.6}
+.kp-br:hover .v-act{opacity:1}.v-act:hover{background:#8882;color:var(--text)}
+
 .kp-br-foot button{flex:1;font-weight:800;padding:6px;border-radius:8px}
 .kp-arm{position:absolute;top:auto;bottom:12px;left:50%;pointer-events:none;transform:translateX(-50%);z-index:8;padding:8px 12px;border-radius:999px;background:#2b7de9;color:#fff;font-weight:800;box-shadow:0 6px 18px #0005;white-space:nowrap;max-width:94%;overflow:hidden;text-overflow:ellipsis}
 .kp-arm button{pointer-events:auto;margin-left:8px;border-radius:50%;width:24px;height:24px;padding:0;background:#fff3;color:#fff;border:0}
@@ -605,7 +652,7 @@ html.planning .toast{z-index:480}
 #plan #kpRoster{width:100%;box-sizing:border-box;min-height:150px;font-size:13px;resize:vertical}
 #plan #kpTxtOut{width:100%;box-sizing:border-box;min-height:120px;font-size:12px;margin-top:8px}
 #kpPl.on{background:var(--accent);border-color:var(--accent);color:#111}
-@media (max-width:699px){ .kp-panel{position:absolute;inset:0;width:auto;z-index:6;border-left:0} #kpPl span{display:none} #kpPl{order:5} }
+@media (max-width:699px){ .kp-pn-grip{display:none} .kp-panel{position:absolute;inset:0;width:auto;z-index:6;border-left:0} #kpPl span{display:none} #kpPl{order:5} }
 /* duplicates */
 .kp-board .pt.dup{box-shadow:inset 0 0 0 .22em #ff6d00}
 .kp-board .pt.dup .pt-n{color:#d84315}
@@ -837,15 +884,14 @@ html.planning .toast{z-index:480}
   <div class="kp-mid">
   <div class="kp-arm" id="kpArm" hidden></div>
   <div class="kp-view" id="kpView"><div class="kp-wrap loading" id="kpWrap"><div class="kp-board" id="kpBoard"></div><div class="kp-layer" id="kpLayer"></div></div></div>
-  <aside class="kp-panel" id="kpPanel" hidden>
+  <aside class="kp-panel" id="kpPanel" hidden><div class="kp-pn-grip" id="kpGrip"></div>
     <div class="kp-pn-head"><b>👥 <span data-i="kpPlayers"></span> <span id="kpPnCount"></span></b><button type="button" id="kpCopyTxt">📋 <span data-i="kpCopyTxt"></span></button><button type="button" id="kpPnClose">✕</button></div>
     <div class="kp-pn-tabs"><button type="button" data-pt="br">🛡️ Battle Roster</button><button type="button" data-pt="map">🗺️ <span data-i="kpOnMap"></span></button></div>
     <div class="kp-pn-body" id="kpBrBody">
       <div class="kp-br-st"><span id="kpBrSt"></span><a href="roster.html" target="_blank" rel="noopener" data-i="kpBrOpen"></a></div>
       <div class="kp-br-tabs" id="kpBrTabs"></div>
-      <div class="kp-br-tools"><input id="kpBrQ" type="search" placeholder="🔍" autocomplete="off" spellcheck="false"><button type="button" id="kpBrFree" data-i="kpBrFree"></button>
-        <select id="kpBrTg"><option value="" data-i="kpBrAllTg"></option><option value="star">★</option><option>TG8</option><option>TG7</option><option>TG6</option></select></div>
-      <p class="kp-br-help" data-i="kpBrDrag"></p>
+      <div class="kp-br-tools"><input id="kpBrQ" type="search" placeholder="🔍" autocomplete="off" spellcheck="false"><button type="button" id="kpBrFree" data-i="kpBrFree"></button></div>
+      <div class="kp-br-chips" id="kpBrChips"></div>
       <div id="kpBrList"></div>
       <div class="kp-br-foot"><button type="button" id="kpBrSum">📊 <span data-i="kpBrSum"></span></button><button type="button" id="kpBrCsv">⬇️ CSV</button></div>
     </div>
@@ -965,10 +1011,10 @@ const I18N = {
     renamePrompt:"Yeni isim:",imported:"İçe aktarıldı!",players:"oyuncu",rallyCustom:"Ralli süresi (örn. 2m30):",sync:"Senkron varış"}
 };
 /* ---------- texts of the Battle Roster link (KvK plan) ---------- */
-Object.assign(I18N.fr, {kpOnMap:"Sur la map",kpBrLoading:"Connexion au Battle Roster…",kpBrErr:"Battle Roster injoignable pour le moment",kpBrEmpty:"Aucun joueur ici",kpBrPool:"Sans alliance",kpBrFree:"Non placés",kpBrAllTg:"Tous",kpBrArm:"Touche une case pour placer {n}",kpBrDrag:"Glisse un joueur sur la map, ou touche-le puis touche une case. ✓ = sur la map · ☑ = coché à la main.",kpBrMove:"{n} est déjà placé ({k}). Le déplacer ici ?",kpBrReplace:"Cette case contient déjà {n}. Le remplacer ?",kpBrRemove:"Retirer de la map",kpBrDone:"Sur la map",kpBrManual:"Cocher / décocher à la main",kpBrEdit:"Modifier le joueur",kpBrSaved:"Enregistré dans le Battle Roster",kpBrSum:"Résumé",kpBrStarFree:"Joueurs étoilés pas encore placés",kpBrByTg:"Placés par niveau",kpBrMiss:"Sur la map mais absent du Battle Roster (supprimé ou pseudo différent)",kpBrWrong:"Clan de la case différent de l'alliance du Battle Roster",kpBrOpen:"Ouvrir le Battle Roster",kpBrNone:"Aucune",kpBrPseudo:"Pseudo",kpBrAlly:"Alliance",kpBrStar:"Étoile",kpBrGold:"Jaune",kpBrRed:"Rouge",kpBrBlue:"Bleue",kpBrCity:"Case",kpBrRow:"Ligne",kpBrCol:"Col.",kpBrGone:"Ce joueur vient d'être modifié ou supprimé dans le Battle Roster, réessaie",kpBrCancel:"Annuler",kpBrSaveBtn:"Enregistrer"});
-Object.assign(I18N.en, {kpOnMap:"On the map",kpBrLoading:"Connecting to Battle Roster…",kpBrErr:"Battle Roster can't be reached right now",kpBrEmpty:"No players here",kpBrPool:"No alliance",kpBrFree:"Not placed",kpBrAllTg:"All",kpBrArm:"Tap a city to place {n}",kpBrDrag:"Drag a player onto the map, or tap them then tap a city. ✓ = on the map · ☑ = ticked by hand.",kpBrMove:"{n} is already placed ({k}). Move here?",kpBrReplace:"This city already holds {n}. Replace?",kpBrRemove:"Remove from the map",kpBrDone:"On the map",kpBrManual:"Tick / untick by hand",kpBrEdit:"Edit player",kpBrSaved:"Saved in Battle Roster",kpBrSum:"Summary",kpBrStarFree:"Starred players not placed yet",kpBrByTg:"Placed by level",kpBrMiss:"On the map but not in Battle Roster (deleted or different name)",kpBrWrong:"City clan differs from the Battle Roster alliance",kpBrOpen:"Open Battle Roster",kpBrNone:"None",kpBrPseudo:"Name",kpBrAlly:"Alliance",kpBrStar:"Star",kpBrGold:"Yellow",kpBrRed:"Red",kpBrBlue:"Blue",kpBrCity:"City",kpBrRow:"Row",kpBrCol:"Col.",kpBrGone:"This player was just changed or deleted in Battle Roster, try again",kpBrCancel:"Cancel",kpBrSaveBtn:"Save"});
-Object.assign(I18N.ko, {kpOnMap:"맵 위",kpBrLoading:"배틀 로스터 연결 중…",kpBrErr:"지금은 배틀 로스터에 연결할 수 없습니다",kpBrEmpty:"플레이어 없음",kpBrPool:"연맹 없음",kpBrFree:"미배치",kpBrAllTg:"전체",kpBrArm:"{n}을(를) 놓을 칸을 누르세요",kpBrDrag:"플레이어를 맵으로 끌어다 놓거나, 누른 뒤 칸을 누르세요. ✓ = 맵 위 · ☑ = 직접 체크.",kpBrMove:"{n}은(는) 이미 배치됨 ({k}). 여기로 옮길까요?",kpBrReplace:"이 칸에 이미 {n}이(가) 있습니다. 바꿀까요?",kpBrRemove:"맵에서 빼기",kpBrDone:"맵 위",kpBrManual:"직접 체크 / 해제",kpBrEdit:"플레이어 수정",kpBrSaved:"배틀 로스터에 저장됨",kpBrSum:"요약",kpBrStarFree:"아직 배치되지 않은 별표 플레이어",kpBrByTg:"레벨별 배치",kpBrMiss:"맵에는 있지만 배틀 로스터에 없음 (삭제 또는 다른 이름)",kpBrWrong:"칸의 클랜이 배틀 로스터 연맹과 다름",kpBrOpen:"배틀 로스터 열기",kpBrNone:"없음",kpBrPseudo:"닉네임",kpBrAlly:"연맹",kpBrStar:"별",kpBrGold:"노랑",kpBrRed:"빨강",kpBrBlue:"파랑",kpBrCity:"칸",kpBrRow:"행",kpBrCol:"열",kpBrGone:"이 플레이어가 배틀 로스터에서 방금 수정 또는 삭제되었습니다. 다시 시도하세요",kpBrCancel:"취소",kpBrSaveBtn:"저장"});
-Object.assign(I18N.tr, {kpOnMap:"Haritada",kpBrLoading:"Battle Roster'a bağlanılıyor…",kpBrErr:"Battle Roster'a şu an ulaşılamıyor",kpBrEmpty:"Burada oyuncu yok",kpBrPool:"İttifaksız",kpBrFree:"Yerleşmemiş",kpBrAllTg:"Tümü",kpBrArm:"{n} için bir şehre dokun",kpBrDrag:"Bir oyuncuyu haritaya sürükle ya da ona dokunup bir şehre dokun. ✓ = haritada · ☑ = elle işaretli.",kpBrMove:"{n} zaten yerleşik ({k}). Buraya taşınsın mı?",kpBrReplace:"Bu şehirde zaten {n} var. Değiştirilsin mi?",kpBrRemove:"Haritadan kaldır",kpBrDone:"Haritada",kpBrManual:"Elle işaretle / kaldır",kpBrEdit:"Oyuncuyu düzenle",kpBrSaved:"Battle Roster'a kaydedildi",kpBrSum:"Özet",kpBrStarFree:"Henüz yerleşmemiş yıldızlı oyuncular",kpBrByTg:"Seviyeye göre yerleşenler",kpBrMiss:"Haritada ama Battle Roster'da yok (silinmiş veya farklı ad)",kpBrWrong:"Şehrin klanı Battle Roster ittifakından farklı",kpBrOpen:"Battle Roster'ı aç",kpBrNone:"Yok",kpBrPseudo:"Ad",kpBrAlly:"İttifak",kpBrStar:"Yıldız",kpBrGold:"Sarı",kpBrRed:"Kırmızı",kpBrBlue:"Mavi",kpBrCity:"Şehir",kpBrRow:"Satır",kpBrCol:"Süt.",kpBrGone:"Bu oyuncu Battle Roster'da az önce değişti veya silindi, tekrar dene",kpBrCancel:"İptal",kpBrSaveBtn:"Kaydet"});
+Object.assign(I18N.fr, {"kpBrLvl": "Niveau", "kpBrAvail": "Dispo", "kpBrAvailL": "Disponibilité", "kpBrClr": "Effacer les filtres", "kpBrGrip": "Tire pour élargir · double-clic = taille de départ",kpOnMap:"Sur la map",kpBrLoading:"Connexion au Battle Roster…",kpBrErr:"Battle Roster injoignable pour le moment",kpBrEmpty:"Aucun joueur ici",kpBrPool:"Sans alliance",kpBrFree:"Non placés",kpBrAllTg:"Tous",kpBrArm:"Touche une case pour placer {n}",kpBrDrag:"Glisse un joueur sur la map, ou touche-le puis touche une case. ✓ = sur la map · ☑ = coché à la main.",kpBrMove:"{n} est déjà placé ({k}). Le déplacer ici ?",kpBrReplace:"Cette case contient déjà {n}. Le remplacer ?",kpBrRemove:"Retirer de la map",kpBrDone:"Sur la map",kpBrManual:"Cocher / décocher à la main",kpBrEdit:"Modifier le joueur",kpBrSaved:"Enregistré dans le Battle Roster",kpBrSum:"Résumé",kpBrStarFree:"Joueurs étoilés pas encore placés",kpBrByTg:"Placés par niveau",kpBrMiss:"Sur la map mais absent du Battle Roster (supprimé ou pseudo différent)",kpBrWrong:"Clan de la case différent de l'alliance du Battle Roster",kpBrOpen:"Ouvrir le Battle Roster",kpBrNone:"Aucune",kpBrPseudo:"Pseudo",kpBrAlly:"Alliance",kpBrStar:"Étoile",kpBrGold:"Jaune",kpBrRed:"Rouge",kpBrBlue:"Bleue",kpBrCity:"Case",kpBrRow:"Ligne",kpBrCol:"Col.",kpBrGone:"Ce joueur vient d'être modifié ou supprimé dans le Battle Roster, réessaie",kpBrCancel:"Annuler",kpBrSaveBtn:"Enregistrer"});
+Object.assign(I18N.en, {"kpBrLvl": "Level", "kpBrAvail": "Avail.", "kpBrAvailL": "Availability", "kpBrClr": "Clear filters", "kpBrGrip": "Drag to widen · double-click = default size",kpOnMap:"On the map",kpBrLoading:"Connecting to Battle Roster…",kpBrErr:"Battle Roster can't be reached right now",kpBrEmpty:"No players here",kpBrPool:"No alliance",kpBrFree:"Not placed",kpBrAllTg:"All",kpBrArm:"Tap a city to place {n}",kpBrDrag:"Drag a player onto the map, or tap them then tap a city. ✓ = on the map · ☑ = ticked by hand.",kpBrMove:"{n} is already placed ({k}). Move here?",kpBrReplace:"This city already holds {n}. Replace?",kpBrRemove:"Remove from the map",kpBrDone:"On the map",kpBrManual:"Tick / untick by hand",kpBrEdit:"Edit player",kpBrSaved:"Saved in Battle Roster",kpBrSum:"Summary",kpBrStarFree:"Starred players not placed yet",kpBrByTg:"Placed by level",kpBrMiss:"On the map but not in Battle Roster (deleted or different name)",kpBrWrong:"City clan differs from the Battle Roster alliance",kpBrOpen:"Open Battle Roster",kpBrNone:"None",kpBrPseudo:"Name",kpBrAlly:"Alliance",kpBrStar:"Star",kpBrGold:"Yellow",kpBrRed:"Red",kpBrBlue:"Blue",kpBrCity:"City",kpBrRow:"Row",kpBrCol:"Col.",kpBrGone:"This player was just changed or deleted in Battle Roster, try again",kpBrCancel:"Cancel",kpBrSaveBtn:"Save"});
+Object.assign(I18N.ko, {"kpBrLvl": "레벨", "kpBrAvail": "참여", "kpBrAvailL": "참여 시간", "kpBrClr": "필터 지우기", "kpBrGrip": "끌어서 넓히기 · 더블클릭 = 기본 크기",kpOnMap:"맵 위",kpBrLoading:"배틀 로스터 연결 중…",kpBrErr:"지금은 배틀 로스터에 연결할 수 없습니다",kpBrEmpty:"플레이어 없음",kpBrPool:"연맹 없음",kpBrFree:"미배치",kpBrAllTg:"전체",kpBrArm:"{n}을(를) 놓을 칸을 누르세요",kpBrDrag:"플레이어를 맵으로 끌어다 놓거나, 누른 뒤 칸을 누르세요. ✓ = 맵 위 · ☑ = 직접 체크.",kpBrMove:"{n}은(는) 이미 배치됨 ({k}). 여기로 옮길까요?",kpBrReplace:"이 칸에 이미 {n}이(가) 있습니다. 바꿀까요?",kpBrRemove:"맵에서 빼기",kpBrDone:"맵 위",kpBrManual:"직접 체크 / 해제",kpBrEdit:"플레이어 수정",kpBrSaved:"배틀 로스터에 저장됨",kpBrSum:"요약",kpBrStarFree:"아직 배치되지 않은 별표 플레이어",kpBrByTg:"레벨별 배치",kpBrMiss:"맵에는 있지만 배틀 로스터에 없음 (삭제 또는 다른 이름)",kpBrWrong:"칸의 클랜이 배틀 로스터 연맹과 다름",kpBrOpen:"배틀 로스터 열기",kpBrNone:"없음",kpBrPseudo:"닉네임",kpBrAlly:"연맹",kpBrStar:"별",kpBrGold:"노랑",kpBrRed:"빨강",kpBrBlue:"파랑",kpBrCity:"칸",kpBrRow:"행",kpBrCol:"열",kpBrGone:"이 플레이어가 배틀 로스터에서 방금 수정 또는 삭제되었습니다. 다시 시도하세요",kpBrCancel:"취소",kpBrSaveBtn:"저장"});
+Object.assign(I18N.tr, {"kpBrLvl": "Seviye", "kpBrAvail": "Katılım", "kpBrAvailL": "Katılım", "kpBrClr": "Filtreleri temizle", "kpBrGrip": "Genişletmek için sürükle · çift tık = varsayılan boyut",kpOnMap:"Haritada",kpBrLoading:"Battle Roster'a bağlanılıyor…",kpBrErr:"Battle Roster'a şu an ulaşılamıyor",kpBrEmpty:"Burada oyuncu yok",kpBrPool:"İttifaksız",kpBrFree:"Yerleşmemiş",kpBrAllTg:"Tümü",kpBrArm:"{n} için bir şehre dokun",kpBrDrag:"Bir oyuncuyu haritaya sürükle ya da ona dokunup bir şehre dokun. ✓ = haritada · ☑ = elle işaretli.",kpBrMove:"{n} zaten yerleşik ({k}). Buraya taşınsın mı?",kpBrReplace:"Bu şehirde zaten {n} var. Değiştirilsin mi?",kpBrRemove:"Haritadan kaldır",kpBrDone:"Haritada",kpBrManual:"Elle işaretle / kaldır",kpBrEdit:"Oyuncuyu düzenle",kpBrSaved:"Battle Roster'a kaydedildi",kpBrSum:"Özet",kpBrStarFree:"Henüz yerleşmemiş yıldızlı oyuncular",kpBrByTg:"Seviyeye göre yerleşenler",kpBrMiss:"Haritada ama Battle Roster'da yok (silinmiş veya farklı ad)",kpBrWrong:"Şehrin klanı Battle Roster ittifakından farklı",kpBrOpen:"Battle Roster'ı aç",kpBrNone:"Yok",kpBrPseudo:"Ad",kpBrAlly:"İttifak",kpBrStar:"Yıldız",kpBrGold:"Sarı",kpBrRed:"Kırmızı",kpBrBlue:"Mavi",kpBrCity:"Şehir",kpBrRow:"Satır",kpBrCol:"Süt.",kpBrGone:"Bu oyuncu Battle Roster'da az önce değişti veya silindi, tekrar dene",kpBrCancel:"İptal",kpBrSaveBtn:"Kaydet"});
 const COLORS = ["#f5b83d","#4aa3ff","#ff6b6b","#2ecc71","#b57bff","#ff9f43","#1dd1a1","#ff6bcb","#a3cb38","#48dbfb"];
 const KEY = "rallysync.v1", PREFS_KEY = "rallysync.prefs", LAYOUT_KEY = "rallysync.layout.";
 /* =====================================================================================
@@ -2973,7 +3019,7 @@ const KP = (function(){
   const brAllies = ()=>["koe", "war", ...(BR.names.off3 ? [] : ["pan"])];
   const brAName = a=>a ? (BR.names[a] || a.toUpperCase()) : "";
   const doneKey = s=>nk(s).replace(/[.#$\[\]\/]/g, "_").slice(0, 60) || "_";
-  let brTab = prefs.brTab || "koe", brQ = "", brFree = false, brTgF = "", armed = null, brByName = new Map();
+  let brTab = prefs.brTab || "koe", brQ = "", brFree = false, brF = {lvl:new Set(), t11:new Set(), av:new Set()}, armed = null, brByName = new Map();
 
   async function brConnect(){
     if(BR.db || BR.connecting) return;
@@ -3060,7 +3106,39 @@ const KP = (function(){
   function setPt(v){ prefs.pt = v; savePrefs(); paint(); }
   function brList(){
     const all = BR.pool, q = nk(brQ);
-    return brSort(all.filter(p=>(brTab === "_" ? !p.alliance : p.alliance === brTab) && (!q || nk(p.pseudo).includes(q)) && (!brTgF || (brTgF === "star" ? brStar(p) : (p.tg || "") === brTgF)) && (!brFree || !(brWhere(p.pseudo) || brDone(p)))));
+    return brSort(all.filter(p=>(brTab === "_" ? !p.alliance : p.alliance === brTab) && (!q || nk(p.pseudo).includes(q)) && brMatch(p)));
+  }
+  const T11I = {i:"🛡️", c:"🐎", a:"🏹"}, AVL = {full:"Full", h1:"1st", h2:"2nd"};
+  const brAv = p=>p.half === "h1" ? "h1" : p.half === "h2" ? "h2" : "full";   // same as Battle Roster: a half wins, otherwise Full Battle
+  const brT11s = p=>typeof p.t11s === "string" ? p.t11s : "";
+  function brIcons(p){ if(typeof p.t11s !== "string") return p.t11 ? `<span class="v-t11"><i>T11</i></span>` : "";
+    const l = ["i", "c", "a"].filter(x=>p.t11s.includes(x)); return l.length ? `<span class="v-t11" title="${esc(brT11Txt(p))}">${l.map(x=>`<i>${T11I[x]}</i>`).join("")}</span>` : ""; }
+  const brTgC = p=>"g" + ((p.tg || "").replace("TG", "") || "0");
+  const brIni = n=>[...String(n || "?")].slice(0, 2).join("").toUpperCase();
+  const brShort = w=>w.startsWith("tur:") ? "🏰" : (([r, c])=>`${r + 1}·${c + 1}`)(rc(w));
+  function brCard(p){
+    const w = brWhere(p.pseudo), d = brDone(p), s = brStar(p), arm8 = armed && armed.id === p.id;
+    const ck = `<button type="button" class="kp-br-ck" data-ck="1" title="${esc(w ? t("kpBrDone") + " · " + brCell(w) : t("kpBrManual"))}">${w || d ? "✓" : ""}</button>`;
+    const av = brAv(p);
+    const sub = `<span class="v-tg ${brTgC(p)}">${esc(p.tg || "—")}</span>${brIcons(p)}<span class="v-avb ${av}">${AVL[av]}</span>`;
+    const loc = w ? `<span class="v-loc" title="${esc(brCell(w))}">📍${esc(brShort(w))}</span>` : d ? `<span class="v-loc d" title="${esc(t("kpBrManual"))}">☑</span>` : "";
+    return `<div class="kp-br${w ? " placed" : d ? " done" : ""}${arm8 ? " armed" : ""}" draggable="${isLocked() ? "false" : "true"}" data-bid="${esc(p._i)}">${ck}<span class="v-av a-${p.alliance || "_"}">${esc(brIni(p.pseudo))}</span>
+      <div class="v-nm"><span class="v-l1"><b>${s ? `<i class="v-star" style="color:${STARC[s]}">★</i>` : ""}${esc(p.pseudo)}</b>${loc}</span><small>${sub}</small></div>${w ? `<button type="button" class="v-act" data-rm="1" title="${esc(t("kpBrRemove"))}">↩</button>` : ""}<button type="button" class="v-act" data-ed="1" title="${esc(t("kpBrEdit"))}">✎</button></div>`;
+  }
+  const brFOn = ()=>brFree || brF.lvl.size || brF.t11.size || brF.av.size;
+  function brMatch(p){
+    const s = brT11s(p);
+    return (!brF.lvl.size || [...brF.lvl].some(v=>v === "star" ? brStar(p) : (p.tg || "") === v))
+      && (!brF.t11.size || [...brF.t11].some(v=>v === "all" ? ["i", "c", "a"].every(x=>s.includes(x)) : s.includes(v)))
+      && (!brF.av.size || brF.av.has(brAv(p)))
+      && (!brFree || !(brWhere(p.pseudo) || brDone(p)));
+  }
+  function brFilters(){
+    const row = (lbl, key, items)=>`<div class="v-frow"><span>${esc(lbl)}</span><div>${items.map(([v, l, c])=>`<button type="button" data-fk="${key}" data-fv="${v}" class="${brF[key].has(v) ? "on " : ""}${c || ""}">${esc(l)}</button>`).join("")}</div></div>`;
+    return row(t("kpBrLvl"), "lvl", [["star", "★"], ["TG8", "TG8"], ["TG7", "TG7"], ["TG6", "TG6"]])
+      + row("T11", "t11", [["all", "ALL"], ["i", "🛡️ INF"], ["c", "🐎 CAV"], ["a", "🏹 ARC"]])
+      + row(t("kpBrAvail"), "av", [["full", "Full Battle", "full"], ["h1", "1st Half", "h1"], ["h2", "2nd Half", "h2"]])
+      + (brFOn() ? `<button type="button" class="v-fclr" data-fclr="1">✕ ${esc(t("kpBrClr"))}</button>` : "");
   }
   function paintBR(){
     const isBr = (prefs.pt || "br") === "br";
@@ -3074,20 +3152,20 @@ const KP = (function(){
     const tabs = [...brAllies(), "_"];
     if(!tabs.includes(brTab)) brTab = "koe";
     $("kpBrTabs").innerHTML = tabs.map(a=>{ const l = BR.pool.filter(p=>a === "_" ? !p.alliance : p.alliance === a), n = l.filter(p=>brWhere(p.pseudo) || brDone(p)).length;
-      return `<button type="button" data-bt="${a}" class="${a === brTab ? "on" : ""} a-${a}">${esc(a === "_" ? t("kpBrPool") : brAName(a))} <small>${n}/${l.length}</small></button>`; }).join("");
+      return l.length || a === brTab ? `<button type="button" data-bt="${a}" class="${a === brTab ? "on" : ""} a-${a}"><span>${esc(a === "_" ? t("kpBrPool") : brAName(a))}</span><strong>${n}<em>/${l.length}</em></strong><u style="width:${l.length ? n * 100 / l.length : 0}%"></u></button>` : ""; }).join("");
     $("kpBrFree").classList.toggle("on", brFree);
     const ae = document.activeElement;
     if($("kpBrQ") !== ae && $("kpBrQ").value !== brQ) $("kpBrQ").value = brQ;
-    if($("kpBrTg").value !== brTgF) $("kpBrTg").value = brTgF;
+    $("kpBrChips").innerHTML = brFilters();
     const list = brList();
-    $("kpBrList").innerHTML = list.length ? list.map(p=>{
-      const w = brWhere(p.pseudo), d = brDone(p), s = brStar(p), arm8 = armed && armed.id === p.id;
-      return `<div class="kp-br${w ? " placed" : d ? " done" : ""}${arm8 ? " armed" : ""}" draggable="${isLocked() ? "false" : "true"}" data-bid="${esc(p._i)}">
-        <button type="button" class="kp-br-ck" data-ck="1" title="${esc(w ? t("kpBrDone") + " · " + brCell(w) : t("kpBrManual"))}">${w ? "✓" : d ? "☑" : "☐"}</button>
-        <span class="kp-br-n">${s ? `<b style="color:${STARC[s]}">★</b> ` : ""}${esc(p.pseudo)}${p.avail === false ? " <small>½</small>" : ""}</span>
-        <span class="kp-br-b">${p.tg ? `<i>${esc(p.tg)}</i>` : ""}${brT11Txt(p) ? `<i class="t11">${esc(brT11Txt(p).replace("T11 ", ""))}</i>` : ""}</span>
-        ${w ? `<button type="button" data-rm="1" title="${esc(t("kpBrRemove"))}">↩</button>` : ""}<button type="button" data-ed="1" title="${esc(t("kpBrEdit"))}">✏️</button></div>`;
-    }).join("") : `<p class="kp-pn-empty">${esc(BR.ok ? t("kpBrEmpty") : t("kpBrLoading"))}</p>`;
+    const gk = x=>brStar(x) ? "★" : (x.tg || "—");
+    // one group per level (★ first, then TG8, TG7…); inside a group the Battle Roster order is kept
+    const order = ["★", "TG8", "TG7", "TG6", "TG5", "TG4", "TG3", "TG2", "TG1"], gs = [...new Set(list.map(gk))].sort((x, y)=>(order.indexOf(x) + 1 || 99) - (order.indexOf(y) + 1 || 99));
+    let h = "";
+    gs.forEach(g=>{ const gl = list.filter(x=>gk(x) === g);
+      h += `<h6 class="v-grp"><span>${g === "★" ? "★ " + esc(t("kpBrStar")) : esc(g)}</span><small>${gl.filter(x=>brWhere(x.pseudo) || brDone(x)).length}/${gl.length}</small></h6>` + gl.map(brCard).join(""); });
+    $("kpBrList").title = t("kpBrDrag");
+    $("kpBrList").innerHTML = list.length ? h : `<p class="kp-pn-empty">${esc(BR.ok ? t("kpBrEmpty") : t("kpBrLoading"))}</p>`;
   }
   const brFind = el=>{ const r = el.closest("[data-bid]"); return r ? BR.pool.find(p=>p._i === r.dataset.bid) : null; };
   function initBRPanel(){
@@ -3095,7 +3173,21 @@ const KP = (function(){
     $("kpBrTabs").addEventListener("click", e=>{ const b = e.target.closest("[data-bt]"); if(!b) return; brTab = b.dataset.bt; prefs.brTab = brTab; savePrefs(); paint(); });
     $("kpBrQ").addEventListener("input", e=>{ brQ = e.target.value; paint(); });
     $("kpBrFree").addEventListener("click", ()=>{ brFree = !brFree; paint(); });
-    $("kpBrTg").addEventListener("change", e=>{ brTgF = e.target.value; paint(); });
+    $("kpBrChips").addEventListener("click", e=>{
+      if(e.target.closest("[data-fclr]")){ brFree = false; Object.values(brF).forEach(x=>x.clear()); paint(); return; }
+      const b = e.target.closest("[data-fk]"); if(!b) return; const S = brF[b.dataset.fk], v = b.dataset.fv; S.has(v) ? S.delete(v) : S.add(v); paint(); });
+    // widen the panel to the left: the first size is the smallest, about +40 % at most; remembered on this device
+    const PW0 = 290, PW1 = 410, grip = $("kpGrip");
+    const setW = w=>{ w = Math.round(Math.min(PW1, Math.max(PW0, w))); root.style.setProperty("--kppw", w + "px"); return w; };
+    if(prefs.pw) setW(prefs.pw);
+    grip.title = t("kpBrGrip");
+    grip.addEventListener("pointerdown", e=>{
+      e.preventDefault(); const x0 = e.clientX, w0 = panel.getBoundingClientRect().width; grip.setPointerCapture(e.pointerId); grip.classList.add("on"); document.documentElement.classList.add("kp-resizing");
+      const mv = ev=>{ prefs.pw = setW(w0 + (x0 - ev.clientX)); };
+      const up = ()=>{ grip.removeEventListener("pointermove", mv); grip.removeEventListener("pointerup", up); grip.removeEventListener("pointercancel", up); grip.classList.remove("on"); document.documentElement.classList.remove("kp-resizing"); savePrefs(); };
+      grip.addEventListener("pointermove", mv); grip.addEventListener("pointerup", up); grip.addEventListener("pointercancel", up);
+    });
+    grip.addEventListener("dblclick", ()=>{ prefs.pw = setW(PW0); savePrefs(); });
     $("kpBrSum").addEventListener("click", brSummary);
     $("kpBrCsv").addEventListener("click", brCsv);
     const L = $("kpBrList");
@@ -3127,6 +3219,7 @@ const KP = (function(){
       <label>${esc(t("kpBrAlly"))}<select id="brE_a">${opt("", p.alliance || "", "— " + t("kpBrPool"))}${brAllies().map(a=>opt(a, p.alliance || "", brAName(a))).join("")}</select></label>
       <label>TG<select id="brE_tg">${["", "TG6", "TG7", "TG8", ...(["TG1", "TG2", "TG3", "TG4", "TG5"].includes(p.tg) ? [p.tg] : [])].map(v=>opt(v, p.tg || "", v || "—")).join("")}</select></label>
       <label>T11<select id="brE_t11">${[["", "—"], ...(t11 === "?" ? [["?", "T11"]] : []), ["ica", "T11 ALL"], ["i", "T11 INF"], ["c", "T11 CAV"], ["a", "T11 ARC"], ["ic", "INF+CAV"], ["ia", "INF+ARC"], ["ca", "CAV+ARC"]].map(([v, l])=>opt(v, t11, l)).join("")}</select></label>
+      <label>${esc(t("kpBrAvailL"))}<select id="brE_av">${[["full", "Full Battle"], ["h1", "1st Half"], ["h2", "2nd Half"]].map(([v, l])=>opt(v, brAv(p), l)).join("")}</select></label>
       <label>${esc(t("kpBrStar"))}<select id="brE_s">${[["", "☆ " + t("kpBrNone")], ["gold", "★ " + t("kpBrGold")], ["red", "★ " + t("kpBrRed")], ["blue", "★ " + t("kpBrBlue")]].map(([v, l])=>opt(v, brStar(p), l)).join("")}</select></label>
       <div class="kp-br-edb"><a href="roster.html" target="_blank" rel="noopener">↗ ${esc(t("kpBrOpen"))}</a><span></span><button type="button" id="brE_x">${esc(t("kpBrCancel"))}</button><button type="button" id="brE_ok" class="pri">${esc(t("kpBrSaveBtn"))}</button></div></div>`;
     root.appendChild(box);
@@ -3137,6 +3230,7 @@ const KP = (function(){
       const name = $("brE_n").value.replace(/\s+/g, " ").trim().slice(0, 40), a = $("brE_a").value;
       if(!name) return;
       const f = {pseudo:name, alliance:a || null, tg:$("brE_tg").value, star:a ? $("brE_s").value : ""};
+      const av = $("brE_av").value; if(av !== brAv(p)) Object.assign(f, av === "full" ? {avail:true, half:null} : {avail:false, half:av});
       if($("brE_t11").value !== "?") f.t11s = $("brE_t11").value;   // "?" = old "T11" without the type: left as it is
       if(!await brSave(p, f)) return;
       if(name !== p.pseudo){   // keep the map in step with the new name
@@ -3168,10 +3262,10 @@ const KP = (function(){
     $("brS_x").onclick = close;
   }
   function brCsv(){
-    const rows = [[t("kpBrPseudo"), t("kpBrAlly"), "TG", "T11", t("kpBrStar"), t("kpBrDone"), t("kpBrCity"), "Clan", "Time"]];
+    const rows = [[t("kpBrPseudo"), t("kpBrAlly"), "TG", "T11", t("kpBrAvailL"), t("kpBrStar"), t("kpBrDone"), t("kpBrCity"), "Clan", "Time"]];
     brAllies().concat("_").forEach(a=>brSort(BR.pool.filter(p=>a === "_" ? !p.alliance : p.alliance === a)).forEach(p=>{
       const w = brWhere(p.pseudo), d = w && !w.startsWith("tur:") ? P.tiles[w] : {};
-      rows.push([p.pseudo, a === "_" ? "" : brAName(a), p.tg || "", brT11Txt(p), brStar(p), w ? "✓" : brDone(p) ? "☑" : "", w ? brCell(w) : "", d.g || "", d.t || ""]);
+      rows.push([p.pseudo, a === "_" ? "" : brAName(a), p.tg || "", brT11Txt(p), {full:"Full Battle", h1:"1st Half", h2:"2nd Half"}[brAv(p)], brStar(p), w ? "✓" : brDone(p) ? "☑" : "", w ? brCell(w) : "", d.g || "", d.t || ""]);
     }));
     const csv = "﻿" + rows.map(r=>r.map(v=>`"${String(v ?? "").replace(/"/g, '""')}"`).join(";")).join("\r\n");
     const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv;charset=utf-8"}));
