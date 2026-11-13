@@ -335,6 +335,7 @@ html.planning{overflow:hidden}
 html.planning body>*:not(#gate):not(#plan):not(.toast):not(dialog):not(.langmenu):not(.kp-menu):not(.kp-ghost){visibility:hidden}
 html.locked #plan{visibility:hidden}
 html.planning #plan{display:flex}
+html.planning .toast{z-index:480}
 #plan{position:fixed;inset:0;z-index:440;flex-direction:column;background:var(--bg);color:var(--text)}
 #ask p{white-space:pre-line}
 .ss-plan{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin:0 0 16px;padding:12px 14px;border-radius:14px;border:0;cursor:pointer;
@@ -555,6 +556,50 @@ html.planning #plan{display:flex}
 .kp-pl.dup{background:#ff6d0022;border-color:#ff6d00}
 .kp-pl.dup span{color:#ff6d00}
 .kp-chips{display:flex;flex-wrap:wrap;gap:5px}
+.kp-pn-tabs{display:flex;gap:4px;padding:6px 8px 0}
+.kp-pn-tabs button{flex:1;padding:6px 4px;border-radius:8px 8px 0 0;font-weight:800;font-size:13px;opacity:.6}
+.kp-pn-tabs button.on{opacity:1;box-shadow:inset 0 -3px 0 var(--accent,#2b7de9)}
+.kp-br-st{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:12px;margin-bottom:6px}
+.kp-br-st a{font-weight:700;white-space:nowrap}
+.kp-br-tabs{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}
+.kp-br-tabs button{padding:4px 8px;border-radius:999px;font-weight:800;font-size:12px}
+.kp-br-tabs button small{opacity:.7;font-weight:700}
+.kp-br-tabs button.on{outline:2px solid currentColor}
+.kp-br-tabs .a-koe{color:#1e88e5}.kp-br-tabs .a-war{color:#e53935}.kp-br-tabs .a-pan{color:#43a047}
+.kp-br-tools{display:flex;gap:4px;margin-bottom:4px}
+.kp-br-tools input{flex:1;min-width:0;padding:5px 7px;border-radius:7px;font-size:13px}
+.kp-br-tools button.on{background:#2b7de9;color:#fff}
+.kp-br-tools button,.kp-br-tools select{font-size:12px;padding:4px 6px;border-radius:7px}
+.kp-br-help{margin:2px 0 6px;font-size:11px;color:var(--muted)}
+.kp-br{display:flex;align-items:center;gap:6px;padding:4px 6px;margin:2px 0;border-radius:8px;border:1px solid var(--line);background:var(--panel);cursor:grab;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.kp-br:hover{border-color:#2b7de9}
+.kp-br.placed{background:color-mix(in srgb,#43a047 14%,var(--panel));border-color:#43a04788}
+.kp-br.done{background:color-mix(in srgb,#fbc02d 14%,var(--panel))}
+.kp-br.armed{outline:3px solid #2b7de9;outline-offset:1px}
+.kp-br-ck{width:26px;height:26px;padding:0;border-radius:6px;font-weight:900;flex:none}
+.kp-br.placed .kp-br-ck{color:#2e7d32}
+.kp-br-n{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700;font-size:13px}
+.kp-br-b{display:flex;gap:3px;flex:none}
+.kp-br-b i{font-style:normal;font-size:10px;font-weight:800;padding:1px 4px;border-radius:4px;background:#00000014}
+.kp-br-b i.t11{background:#8e24aa22;color:#8e24aa}
+.kp-br>button:not(.kp-br-ck){padding:2px 5px;font-size:13px;border-radius:6px;flex:none}
+.kp-br-foot{display:flex;gap:6px;margin-top:8px}
+.kp-br-foot button{flex:1;font-weight:800;padding:6px;border-radius:8px}
+.kp-arm{position:absolute;top:auto;bottom:12px;left:50%;pointer-events:none;transform:translateX(-50%);z-index:8;padding:8px 12px;border-radius:999px;background:#2b7de9;color:#fff;font-weight:800;box-shadow:0 6px 18px #0005;white-space:nowrap;max-width:94%;overflow:hidden;text-overflow:ellipsis}
+.kp-arm button{pointer-events:auto;margin-left:8px;border-radius:50%;width:24px;height:24px;padding:0;background:#fff3;color:#fff;border:0}
+#plan.kp-arming .kp-board .pt{cursor:copy}
+.kp-board .pt.drop{box-shadow:inset 0 0 0 .3em #2b7de9}
+.kp-board .pt.brx .pt-n::after{content:" ⚠";color:#e65100;font-size:.8em}
+.kp-br-ed{position:fixed;inset:0;z-index:470;display:flex;align-items:center;justify-content:center;padding:12px;background:#0007}
+.kp-br-edc{width:min(380px,100%);max-height:90vh;overflow:auto;padding:16px;border-radius:14px;background:var(--panel,#fff);color:var(--text,#222);box-shadow:0 14px 40px #0008}
+.kp-br-edc.wide{width:min(560px,100%)}
+.kp-br-edc h4{margin:0 0 10px}.kp-br-edc h5{margin:12px 0 6px}
+.kp-br-edc label{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0;font-weight:700}
+.kp-br-edc input,.kp-br-edc select{width:60%;padding:6px 8px;border-radius:8px;font-size:15px}
+.kp-br-edb{display:flex;align-items:center;gap:8px;margin-top:14px}.kp-br-edb span{flex:1}
+.kp-br-edb button{padding:7px 14px;border-radius:9px;font-weight:800}.kp-br-edb button.pri{background:#2b7de9;color:#fff}
+.kp-sumt{width:100%;border-collapse:collapse;font-size:14px}.kp-sumt td{padding:4px 6px;border-bottom:1px solid var(--line)}
+.kp-prog{height:10px;border-radius:5px;background:#0001;overflow:hidden;min-width:80px}.kp-prog i{display:block;height:100%;background:linear-gradient(90deg,#43a047,#9ccc65)}
 .kp-chips button{padding:3px 9px;font-size:12px;font-weight:700;border-radius:12px}
 .kp-pn-empty{margin:4px 0;color:var(--muted);font-size:12px}
 #plan #kpRoster{width:100%;box-sizing:border-box;min-height:150px;font-size:13px;resize:vertical}
@@ -790,9 +835,20 @@ html.planning #plan{display:flex}
     <span class="kp-hint" data-i="kpHint"></span>
   </div>
   <div class="kp-mid">
+  <div class="kp-arm" id="kpArm" hidden></div>
   <div class="kp-view" id="kpView"><div class="kp-wrap loading" id="kpWrap"><div class="kp-board" id="kpBoard"></div><div class="kp-layer" id="kpLayer"></div></div></div>
   <aside class="kp-panel" id="kpPanel" hidden>
     <div class="kp-pn-head"><b>👥 <span data-i="kpPlayers"></span> <span id="kpPnCount"></span></b><button type="button" id="kpCopyTxt">📋 <span data-i="kpCopyTxt"></span></button><button type="button" id="kpPnClose">✕</button></div>
+    <div class="kp-pn-tabs"><button type="button" data-pt="br">🛡️ Battle Roster</button><button type="button" data-pt="map">🗺️ <span data-i="kpOnMap"></span></button></div>
+    <div class="kp-pn-body" id="kpBrBody">
+      <div class="kp-br-st"><span id="kpBrSt"></span><a href="roster.html" target="_blank" rel="noopener" data-i="kpBrOpen"></a></div>
+      <div class="kp-br-tabs" id="kpBrTabs"></div>
+      <div class="kp-br-tools"><input id="kpBrQ" type="search" placeholder="🔍" autocomplete="off" spellcheck="false"><button type="button" id="kpBrFree" data-i="kpBrFree"></button>
+        <select id="kpBrTg"><option value="" data-i="kpBrAllTg"></option><option value="star">★</option><option>TG8</option><option>TG7</option><option>TG6</option></select></div>
+      <p class="kp-br-help" data-i="kpBrDrag"></p>
+      <div id="kpBrList"></div>
+      <div class="kp-br-foot"><button type="button" id="kpBrSum">📊 <span data-i="kpBrSum"></span></button><button type="button" id="kpBrCsv">⬇️ CSV</button></div>
+    </div>
     <div class="kp-pn-body">
       <textarea id="kpTxtOut" readonly hidden></textarea>
       <div id="kpPnList"></div>
@@ -908,6 +964,11 @@ const I18N = {
     hint:"Blokları başlığından sürükleyip istediğin yere koy, ⊞ Hizala ile düzenle · Oyuncuları taşımak için ⠿ sürükle · oyuncu üzerinde 1–9 = takıma taşı, B = yedek · Ctrl+Z = geri al · yeniden adlandırmak için isme çift tıkla · bloğu sağ alt köşesinden boyutlandır",
     renamePrompt:"Yeni isim:",imported:"İçe aktarıldı!",players:"oyuncu",rallyCustom:"Ralli süresi (örn. 2m30):",sync:"Senkron varış"}
 };
+/* ---------- texts of the Battle Roster link (KvK plan) ---------- */
+Object.assign(I18N.fr, {kpOnMap:"Sur la map",kpBrLoading:"Connexion au Battle Roster…",kpBrErr:"Battle Roster injoignable pour le moment",kpBrEmpty:"Aucun joueur ici",kpBrPool:"Sans alliance",kpBrFree:"Non placés",kpBrAllTg:"Tous",kpBrArm:"Touche une case pour placer {n}",kpBrDrag:"Glisse un joueur sur la map, ou touche-le puis touche une case. ✓ = sur la map · ☑ = coché à la main.",kpBrMove:"{n} est déjà placé ({k}). Le déplacer ici ?",kpBrReplace:"Cette case contient déjà {n}. Le remplacer ?",kpBrRemove:"Retirer de la map",kpBrDone:"Sur la map",kpBrManual:"Cocher / décocher à la main",kpBrEdit:"Modifier le joueur",kpBrSaved:"Enregistré dans le Battle Roster",kpBrSum:"Résumé",kpBrStarFree:"Joueurs étoilés pas encore placés",kpBrByTg:"Placés par niveau",kpBrMiss:"Sur la map mais absent du Battle Roster (supprimé ou pseudo différent)",kpBrWrong:"Clan de la case différent de l'alliance du Battle Roster",kpBrOpen:"Ouvrir le Battle Roster",kpBrNone:"Aucune",kpBrPseudo:"Pseudo",kpBrAlly:"Alliance",kpBrStar:"Étoile",kpBrGold:"Jaune",kpBrRed:"Rouge",kpBrBlue:"Bleue",kpBrCity:"Case",kpBrRow:"Ligne",kpBrCol:"Col.",kpBrGone:"Ce joueur vient d'être modifié ou supprimé dans le Battle Roster, réessaie",kpBrCancel:"Annuler",kpBrSaveBtn:"Enregistrer"});
+Object.assign(I18N.en, {kpOnMap:"On the map",kpBrLoading:"Connecting to Battle Roster…",kpBrErr:"Battle Roster can't be reached right now",kpBrEmpty:"No players here",kpBrPool:"No alliance",kpBrFree:"Not placed",kpBrAllTg:"All",kpBrArm:"Tap a city to place {n}",kpBrDrag:"Drag a player onto the map, or tap them then tap a city. ✓ = on the map · ☑ = ticked by hand.",kpBrMove:"{n} is already placed ({k}). Move here?",kpBrReplace:"This city already holds {n}. Replace?",kpBrRemove:"Remove from the map",kpBrDone:"On the map",kpBrManual:"Tick / untick by hand",kpBrEdit:"Edit player",kpBrSaved:"Saved in Battle Roster",kpBrSum:"Summary",kpBrStarFree:"Starred players not placed yet",kpBrByTg:"Placed by level",kpBrMiss:"On the map but not in Battle Roster (deleted or different name)",kpBrWrong:"City clan differs from the Battle Roster alliance",kpBrOpen:"Open Battle Roster",kpBrNone:"None",kpBrPseudo:"Name",kpBrAlly:"Alliance",kpBrStar:"Star",kpBrGold:"Yellow",kpBrRed:"Red",kpBrBlue:"Blue",kpBrCity:"City",kpBrRow:"Row",kpBrCol:"Col.",kpBrGone:"This player was just changed or deleted in Battle Roster, try again",kpBrCancel:"Cancel",kpBrSaveBtn:"Save"});
+Object.assign(I18N.ko, {kpOnMap:"맵 위",kpBrLoading:"배틀 로스터 연결 중…",kpBrErr:"지금은 배틀 로스터에 연결할 수 없습니다",kpBrEmpty:"플레이어 없음",kpBrPool:"연맹 없음",kpBrFree:"미배치",kpBrAllTg:"전체",kpBrArm:"{n}을(를) 놓을 칸을 누르세요",kpBrDrag:"플레이어를 맵으로 끌어다 놓거나, 누른 뒤 칸을 누르세요. ✓ = 맵 위 · ☑ = 직접 체크.",kpBrMove:"{n}은(는) 이미 배치됨 ({k}). 여기로 옮길까요?",kpBrReplace:"이 칸에 이미 {n}이(가) 있습니다. 바꿀까요?",kpBrRemove:"맵에서 빼기",kpBrDone:"맵 위",kpBrManual:"직접 체크 / 해제",kpBrEdit:"플레이어 수정",kpBrSaved:"배틀 로스터에 저장됨",kpBrSum:"요약",kpBrStarFree:"아직 배치되지 않은 별표 플레이어",kpBrByTg:"레벨별 배치",kpBrMiss:"맵에는 있지만 배틀 로스터에 없음 (삭제 또는 다른 이름)",kpBrWrong:"칸의 클랜이 배틀 로스터 연맹과 다름",kpBrOpen:"배틀 로스터 열기",kpBrNone:"없음",kpBrPseudo:"닉네임",kpBrAlly:"연맹",kpBrStar:"별",kpBrGold:"노랑",kpBrRed:"빨강",kpBrBlue:"파랑",kpBrCity:"칸",kpBrRow:"행",kpBrCol:"열",kpBrGone:"이 플레이어가 배틀 로스터에서 방금 수정 또는 삭제되었습니다. 다시 시도하세요",kpBrCancel:"취소",kpBrSaveBtn:"저장"});
+Object.assign(I18N.tr, {kpOnMap:"Haritada",kpBrLoading:"Battle Roster'a bağlanılıyor…",kpBrErr:"Battle Roster'a şu an ulaşılamıyor",kpBrEmpty:"Burada oyuncu yok",kpBrPool:"İttifaksız",kpBrFree:"Yerleşmemiş",kpBrAllTg:"Tümü",kpBrArm:"{n} için bir şehre dokun",kpBrDrag:"Bir oyuncuyu haritaya sürükle ya da ona dokunup bir şehre dokun. ✓ = haritada · ☑ = elle işaretli.",kpBrMove:"{n} zaten yerleşik ({k}). Buraya taşınsın mı?",kpBrReplace:"Bu şehirde zaten {n} var. Değiştirilsin mi?",kpBrRemove:"Haritadan kaldır",kpBrDone:"Haritada",kpBrManual:"Elle işaretle / kaldır",kpBrEdit:"Oyuncuyu düzenle",kpBrSaved:"Battle Roster'a kaydedildi",kpBrSum:"Özet",kpBrStarFree:"Henüz yerleşmemiş yıldızlı oyuncular",kpBrByTg:"Seviyeye göre yerleşenler",kpBrMiss:"Haritada ama Battle Roster'da yok (silinmiş veya farklı ad)",kpBrWrong:"Şehrin klanı Battle Roster ittifakından farklı",kpBrOpen:"Battle Roster'ı aç",kpBrNone:"Yok",kpBrPseudo:"Ad",kpBrAlly:"İttifak",kpBrStar:"Yıldız",kpBrGold:"Sarı",kpBrRed:"Kırmızı",kpBrBlue:"Mavi",kpBrCity:"Şehir",kpBrRow:"Satır",kpBrCol:"Süt.",kpBrGone:"Bu oyuncu Battle Roster'da az önce değişti veya silindi, tekrar dene",kpBrCancel:"İptal",kpBrSaveBtn:"Kaydet"});
 const COLORS = ["#f5b83d","#4aa3ff","#ff6b6b","#2ecc71","#b57bff","#ff9f43","#1dd1a1","#ff6bcb","#a3cb38","#48dbfb"];
 const KEY = "rallysync.v1", PREFS_KEY = "rallysync.prefs", LAYOUT_KEY = "rallysync.layout.";
 /* =====================================================================================
@@ -2027,7 +2088,8 @@ const KP = (function(){
     for(const id in (d.shapes || {})){ const o = d.shapes[id]; if(o && o.k) shapes[id] = normObj(o); }
     if(!d.shapes && !d.shapesInit) shapes.main = normObj(Object.assign(defObj("note"), {t:d.memo || "", s:d.memoS || "", b:d.memoB || ""}));
     const castle = {}; for(const k in (d.castle || {})) castle[k] = String(d.castle[k] ?? "");
-    return {clans, tiles, castle, shapes};
+    const done = {}; for(const k in (d.done || {})) if(d.done[k]) done[k] = 1;
+    return {clans, tiles, castle, shapes, done};
   }
   const BW = 121.5625, BH = 101.5625;   // area where objects can be placed (board + room on the right), in em
   const OCOL = ["#333d4c", "#e53935", "#1e88e5", "#43a047", "#fb8c00", "#8e24aa", "#000000"];
@@ -2170,7 +2232,10 @@ const KP = (function(){
       const ci = P.clans.indexOf(d.g);
       const cls = "pt" + (d.c ? " c-" + d.c : "") + (fOn && !filter.has(d.g) ? " dim" : "") + (sel.has(k) ? " sel" : "") + (cur === k ? " cur" : "")
         + (q && d.n.toLowerCase().includes(q) ? " hit" : "") + (d.n.length > 22 ? " xs" : d.n.length > 11 ? " sm" : "") + (moveFrom === k ? " mv" : "") + (d.w === "n" ? " nb" : "") + (d.n && dup.has(nk(d.n)) ? " dup" : "");
-      if(el.className !== cls) el.className = cls;
+      const bp = d.n && brByName.get(nk(d.n)), cls2 = cls + (d.n && BR.ok && BR.pool.length && !bp ? " brx" : "");
+      if(el.className !== cls2) el.className = cls2;
+      const tip = bp ? brTip(bp) : (d.n && BR.ok && BR.pool.length ? "⚠ " + t("kpBrMiss") : "");
+      if(el.title !== tip) el.title = tip;
       if(ci >= 0){ el.style.setProperty("--cc", CLANC[ci % CLANC.length]); el.dataset.clan = "1"; counts[d.g] = (counts[d.g] || 0) + 1; }
       else if(el.dataset.clan){ delete el.dataset.clan; }
     });
@@ -2180,7 +2245,7 @@ const KP = (function(){
       root.querySelectorAll(".kp-layer textarea,.kp-layer input,.kp-board input").forEach(x=>{ if(x.readOnly !== ro) x.readOnly = ro; });
       root.querySelectorAll(".kp-layer div.ko-txt").forEach(x=>{ const v = ro ? "false" : ceMode; if(x.getAttribute("contenteditable") !== v) x.setAttribute("contenteditable", v); }); }
     fmtBar();
-    paintPanel(ae, dup);
+    paintPanel(ae, dup); paintBR();
     setTimeout(applyClans, 0);
     $("kpClans").innerHTML = P.clans.map((c, i)=>`<label class="kp-clan" style="--cc:${CLANC[i % CLANC.length]}"><input type="checkbox" data-fclan="${esc(c)}"${filter.has(c) ? " checked" : ""}><b>${esc(c)}</b><small>${counts[c] || 0}</small><button type="button" data-ren="${i}" title="${esc(t("rename"))}">✎</button></label>`).join("");
     $("kpUndo").disabled = !undoS.length; $("kpRedo").disabled = !redoS.length;
@@ -2894,6 +2959,226 @@ const KP = (function(){
   const saveRoster = ()=>{ clearTimeout(rosterT); const v = $("kpRoster").value.replace(/\s+$/, ""); if(v === roster) return; roster = v; RAW.update({[`${base}/roster`]:v || null}).catch(fail); paint(); };
   $("kpRoster").addEventListener("input", ()=>{ clearTimeout(rosterT); rosterT = setTimeout(saveRoster, 800); });
   $("kpRoster").addEventListener("focusout", saveRoster);
+  /* ---------- Battle Roster link: the players and teams of Battle Roster, live, to place them on the map ---------- */
+  const BR_CFG = {apiKey:"AIzaSyCecwHJgRcuvNrZBOjXja3swFMLZtd06f0", authDomain:"kingshot-kvk.firebaseapp.com", databaseURL:"https://kingshot-kvk-default-rtdb.firebaseio.com", projectId:"kingshot-kvk", storageBucket:"kingshot-kvk.firebasestorage.app", messagingSenderId:"762489973337", appId:"1:762489973337:web:1a4aa206302f9a88bc5f48"};
+  const BR = {pool:[], names:{koe:"KOE", war:"WAR", pan:"PAN", off3:false}, ok:false, err:false, db:null, D:null, connecting:false};
+  // same ranking as Battle Roster: star first, then power = TG level + 1 per T11 type, then TG, full battle, name
+  const BR_TG = {TG8:8, TG7:7, TG6:6, TG5:5, TG4:4, TG3:3, TG2:2, TG1:1, "":0};
+  const brStar = p=>["gold", "red", "blue"].includes(p.star) ? p.star : (p.rallyLead ? "gold" : "");
+  const brT11 = p=>typeof p.t11s === "string" ? ["i", "c", "a"].filter(x=>p.t11s.includes(x)).length : (p.t11 ? 1 : 0);
+  const brT11Txt = p=>{ if(typeof p.t11s !== "string") return p.t11 ? "T11" : ""; const s = ["i", "c", "a"].filter(x=>p.t11s.includes(x)); return !s.length ? "" : s.length === 3 ? "T11 ALL" : "T11 " + s.map(x=>({i:"INF", c:"CAV", a:"ARC"})[x]).join("+"); };
+  const brPow = p=>(BR_TG[p.tg || ""] || 0) + brT11(p);
+  const brSort = l=>[...l].sort((a, b)=>(brStar(a) ? 0 : 1) - (brStar(b) ? 0 : 1) || brPow(b) - brPow(a) || (BR_TG[b.tg || ""] || 0) - (BR_TG[a.tg || ""] || 0) || (b.avail ? 1 : 0) - (a.avail ? 1 : 0) || String(a.pseudo || "").localeCompare(String(b.pseudo || "")));
+  const STARC = {gold:"#f5b400", red:"#ff4d5e", blue:"#3fa9ff"};
+  const brAllies = ()=>["koe", "war", ...(BR.names.off3 ? [] : ["pan"])];
+  const brAName = a=>a ? (BR.names[a] || a.toUpperCase()) : "";
+  const doneKey = s=>nk(s).replace(/[.#$\[\]\/]/g, "_").slice(0, 60) || "_";
+  let brTab = prefs.brTab || "koe", brQ = "", brFree = false, brTgF = "", armed = null, brByName = new Map();
+
+  async function brConnect(){
+    if(BR.db || BR.connecting) return;
+    BR.connecting = true;
+    try{
+      const b8 = "https://www.gstatic.com/firebasejs/13.2.0/";
+      const [A, D] = await Promise.all([import(b8 + "firebase-app.js"), import(b8 + "firebase-database.js")]);
+      BR.D = D; BR.db = D.getDatabase(A.initializeApp(BR_CFG, "battleroster"));
+      D.onValue(D.ref(BR.db, "roster/pool"), sn=>{
+        const v = sn.val();
+        BR.pool = !v ? [] : (Array.isArray(v) ? v.map((p, i)=>p && Object.assign({}, p, {_i:String(i)})) : Object.keys(v).map(k=>v[k] && Object.assign({}, v[k], {_i:k}))).filter(p=>p && p.pseudo);
+        BR.ok = true; BR.err = false; paint();
+      }, e=>{ console.warn(e); BR.err = true; paint(); });
+      D.onValue(D.ref(BR.db, "settings/allianceNames"), sn=>{ const v = sn.val() || {}; BR.names = {koe:v.koe || "KOE", war:v.war || "WAR", pan:v.pan || "PAN", off3:!!v.off3}; paint(); }, ()=>{});
+    }catch(e){ console.warn("battle roster", e); BR.err = true; BR.connecting = false; paint(); }
+  }
+  // write a change back to Battle Roster (same rules as the Battle Roster page)
+  async function brSave(p, f){
+    if(!BR.db) return;
+    const cur = BR.pool.find(x=>x._i === p._i);
+    if(!cur || cur.id !== p.id){ toast("⚠️ " + t("kpBrGone")); return false; }
+    const n = Object.assign({}, f);
+    if("star" in n) n.rallyLead = !!n.star;
+    if("t11s" in n) n.t11 = n.t11s.length > 0;
+    if("alliance" in n && !n.alliance){ n.alliance = null; n.star = ""; n.rallyLead = false; }
+    try{ await BR.D.update(BR.D.ref(BR.db, "roster/pool/" + p._i), n); return true; }catch(e){ fail(e); return false; }
+  }
+  // where is a player on the current map? (city key or "tur:x" for the castle turrets)
+  function brWhere(name){
+    if(!P || !name) return null; const n = nk(name);
+    for(const k in P.tiles) if(P.tiles[k].n && nk(P.tiles[k].n) === n) return k;
+    for(const x of ["n", "e", "w", "s"]) if(P.castle[x] && nk(P.castle[x]) === n) return "tur:" + x;
+    return null;
+  }
+  const brCell = k=>k.startsWith("tur:") ? "🏰 " + t("kpDir_" + k.slice(4)) : (([r, c])=>`${t("kpBrRow")} ${r + 1} · ${t("kpBrCol")} ${c + 1}`)(rc(k));
+  const brDone = p=>!!(P && P.done && P.done[doneKey(p.pseudo)]);
+  function brTip(p){ return `${brStar(p) ? "★ " : ""}${p.pseudo} · ${p.alliance ? brAName(p.alliance) : t("kpBrPool")}${p.tg ? " · " + p.tg : ""}${brT11Txt(p) ? " · " + brT11Txt(p) : ""}`; }
+  function brClanFor(p){ const a = brAName(p.alliance).toLowerCase(); return a ? P.clans.find(c=>c.toLowerCase() === a) || "" : ""; }
+  function locate(k){
+    if(k.startsWith("tur:")){ const x = boardEl.querySelector(`.kp-tur.${k.slice(4)}`); if(x) x.scrollIntoView({block:"center", inline:"center", behavior:"smooth"}); return; }
+    const el = tileEl(k); if(!el) return;
+    el.scrollIntoView({block:"center", inline:"center", behavior:"smooth"});
+    el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); setTimeout(()=>el.classList.remove("flash"), 1300);
+  }
+  async function placeOn(k, p){
+    if(!P) return;
+    if(isLocked()){ lockedMsg(); return; }
+    if(isEnemy(k)){ toast("⛔ " + t("kpEnemyNo")); return; }
+    const from = brWhere(p.pseudo), there = (P.tiles[k] || {}).n || "";
+    if(from === k){ locate(k); return; }
+    if(there && nk(there) !== nk(p.pseudo) && !await ask(t("kpBrReplace").replace("{n}", there), null, "confirm")) return;
+    if(from && !await ask(t("kpBrMove").replace("{n}", p.pseudo).replace("{k}", brCell(from)), null, "confirm")) return;
+    const list = [];
+    if(from){ if(from.startsWith("tur:")) list.push({path:`castle/${from.slice(4)}`, val:""}); else list.push({path:`tiles/${from}/n`, val:""}); }
+    list.push({path:`tiles/${k}/n`, val:p.pseudo});
+    const cl = brClanFor(p); if(cl && (P.tiles[k] || {}).g !== cl) list.push({path:`tiles/${k}/g`, val:cl});
+    change(list);
+    setTimeout(()=>locate(k), 60);
+  }
+  function arm(p){
+    armed = p; root.classList.add("kp-arming");
+    const b = $("kpArm"); b.hidden = false; b.innerHTML = `👉 ${esc(t("kpBrArm").replace("{n}", p.pseudo))} <button type="button" id="kpArmX">✕</button>`;
+    $("kpArmX").onclick = disarm;
+    if(innerWidth < 700) panel.hidden = true;   // phone: show the map to tap the city
+    paint();
+  }
+  function disarm(){ armed = null; root.classList.remove("kp-arming"); $("kpArm").hidden = true; paint(); }
+  // tap / click on a city while a player is "armed" places him there
+  boardEl.addEventListener("pointerdown", e=>{ if(armed && e.target.closest(".pt")){ e.preventDefault(); e.stopPropagation(); } }, true);
+  boardEl.addEventListener("click", async e=>{
+    if(!armed) return; const el = e.target.closest(".pt"); if(!el) return;
+    e.preventDefault(); e.stopPropagation();
+    const p = armed; disarm(); await placeOn(el.dataset.k, p);
+    if(innerWidth < 700 && prefs.pl){ panel.hidden = false; paint(); }
+  }, true);
+  addEventListener("keydown", e=>{ if(e.key === "Escape" && armed) disarm(); });
+  // drag & drop from the panel (computer)
+  let dragP = null;
+  boardEl.addEventListener("dragover", e=>{ if(!dragP) return; const el = e.target.closest(".pt"); if(!el) return; e.preventDefault(); e.dataTransfer.dropEffect = "move"; boardEl.querySelectorAll(".pt.drop").forEach(x=>{ if(x !== el) x.classList.remove("drop"); }); el.classList.add("drop"); });
+  boardEl.addEventListener("dragleave", e=>{ const el = e.target.closest(".pt"); if(el) el.classList.remove("drop"); });
+  boardEl.addEventListener("drop", e=>{ if(!dragP) return; const el = e.target.closest(".pt"); boardEl.querySelectorAll(".pt.drop").forEach(x=>x.classList.remove("drop")); if(!el) return; e.preventDefault(); const p = dragP; dragP = null; placeOn(el.dataset.k, p); });
+
+  // ---------- the panel tab "Battle Roster"
+  function setPt(v){ prefs.pt = v; savePrefs(); paint(); }
+  function brList(){
+    const all = BR.pool, q = nk(brQ);
+    return brSort(all.filter(p=>(brTab === "_" ? !p.alliance : p.alliance === brTab) && (!q || nk(p.pseudo).includes(q)) && (!brTgF || (brTgF === "star" ? brStar(p) : (p.tg || "") === brTgF)) && (!brFree || !(brWhere(p.pseudo) || brDone(p)))));
+  }
+  function paintBR(){
+    const isBr = (prefs.pt || "br") === "br";
+    panel.querySelectorAll("[data-pt]").forEach(b=>b.classList.toggle("on", b.dataset.pt === (prefs.pt || "br")));
+    $("kpBrBody").hidden = !isBr; panel.querySelector(".kp-pn-body:not(#kpBrBody)").hidden = isBr;
+    if(panel.hidden || !isBr || !P) return;
+    brConnect();
+    brByName = new Map(BR.pool.map(p=>[nk(p.pseudo), p]));
+    const st = $("kpBrSt");
+    st.textContent = BR.err ? "⚠️ " + t("kpBrErr") : !BR.ok ? "⏳ " + t("kpBrLoading") : "🟢 " + BR.pool.length + " " + t("kpPlayersCount");
+    const tabs = [...brAllies(), "_"];
+    if(!tabs.includes(brTab)) brTab = "koe";
+    $("kpBrTabs").innerHTML = tabs.map(a=>{ const l = BR.pool.filter(p=>a === "_" ? !p.alliance : p.alliance === a), n = l.filter(p=>brWhere(p.pseudo) || brDone(p)).length;
+      return `<button type="button" data-bt="${a}" class="${a === brTab ? "on" : ""} a-${a}">${esc(a === "_" ? t("kpBrPool") : brAName(a))} <small>${n}/${l.length}</small></button>`; }).join("");
+    $("kpBrFree").classList.toggle("on", brFree);
+    const ae = document.activeElement;
+    if($("kpBrQ") !== ae && $("kpBrQ").value !== brQ) $("kpBrQ").value = brQ;
+    if($("kpBrTg").value !== brTgF) $("kpBrTg").value = brTgF;
+    const list = brList();
+    $("kpBrList").innerHTML = list.length ? list.map(p=>{
+      const w = brWhere(p.pseudo), d = brDone(p), s = brStar(p), arm8 = armed && armed.id === p.id;
+      return `<div class="kp-br${w ? " placed" : d ? " done" : ""}${arm8 ? " armed" : ""}" draggable="${isLocked() ? "false" : "true"}" data-bid="${esc(p._i)}">
+        <button type="button" class="kp-br-ck" data-ck="1" title="${esc(w ? t("kpBrDone") + " · " + brCell(w) : t("kpBrManual"))}">${w ? "✓" : d ? "☑" : "☐"}</button>
+        <span class="kp-br-n">${s ? `<b style="color:${STARC[s]}">★</b> ` : ""}${esc(p.pseudo)}${p.avail === false ? " <small>½</small>" : ""}</span>
+        <span class="kp-br-b">${p.tg ? `<i>${esc(p.tg)}</i>` : ""}${brT11Txt(p) ? `<i class="t11">${esc(brT11Txt(p).replace("T11 ", ""))}</i>` : ""}</span>
+        ${w ? `<button type="button" data-rm="1" title="${esc(t("kpBrRemove"))}">↩</button>` : ""}<button type="button" data-ed="1" title="${esc(t("kpBrEdit"))}">✏️</button></div>`;
+    }).join("") : `<p class="kp-pn-empty">${esc(BR.ok ? t("kpBrEmpty") : t("kpBrLoading"))}</p>`;
+  }
+  const brFind = el=>{ const r = el.closest("[data-bid]"); return r ? BR.pool.find(p=>p._i === r.dataset.bid) : null; };
+  function initBRPanel(){
+    panel.querySelectorAll("[data-pt]").forEach(b=>b.addEventListener("click", ()=>setPt(b.dataset.pt)));
+    $("kpBrTabs").addEventListener("click", e=>{ const b = e.target.closest("[data-bt]"); if(!b) return; brTab = b.dataset.bt; prefs.brTab = brTab; savePrefs(); paint(); });
+    $("kpBrQ").addEventListener("input", e=>{ brQ = e.target.value; paint(); });
+    $("kpBrFree").addEventListener("click", ()=>{ brFree = !brFree; paint(); });
+    $("kpBrTg").addEventListener("change", e=>{ brTgF = e.target.value; paint(); });
+    $("kpBrSum").addEventListener("click", brSummary);
+    $("kpBrCsv").addEventListener("click", brCsv);
+    const L = $("kpBrList");
+    L.addEventListener("click", async e=>{
+      const p = brFind(e.target); if(!p) return;
+      if(e.target.closest("[data-ed]")) return brEdit(p);
+      if(e.target.closest("[data-rm]")){ const w = brWhere(p.pseudo); if(!w) return; if(isLocked()) return lockedMsg(); change([w.startsWith("tur:") ? {path:`castle/${w.slice(4)}`, val:""} : {path:`tiles/${w}/n`, val:""}]); return; }
+      if(e.target.closest("[data-ck]")){
+        const w = brWhere(p.pseudo); if(w){ locate(w); return; }
+        if(isLocked()) return lockedMsg();
+        RAW.update({[`${base}/plans/${pid}/done/${doneKey(p.pseudo)}`]:brDone(p) ? null : 1, [`${base}/index/${pid}/updated`]:RAW.TS()}).catch(fail);
+        return;
+      }
+      const w = brWhere(p.pseudo);
+      if(w && !armed){ locate(w); return; }
+      if(isLocked()) return lockedMsg();
+      if(armed && armed.id === p.id) disarm(); else arm(p);
+    });
+    L.addEventListener("dragstart", e=>{ const p = brFind(e.target); if(!p || isLocked()){ e.preventDefault(); return; } dragP = p; e.dataTransfer.effectAllowed = "move"; try{ e.dataTransfer.setData("text/plain", p.pseudo); }catch(_){} });
+    L.addEventListener("dragend", ()=>{ dragP = null; boardEl.querySelectorAll(".pt.drop").forEach(x=>x.classList.remove("drop")); });
+  }
+  // edit a player here -> saved in Battle Roster (and renamed on the map)
+  function brEdit(p){
+    const opt = (v, cur, l)=>`<option value="${esc(v)}"${v === cur ? " selected" : ""}>${esc(l)}</option>`;
+    const t11 = typeof p.t11s === "string" ? ["i", "c", "a"].filter(x=>p.t11s.includes(x)).join("") : (p.t11 ? "?" : "");
+    const box = document.createElement("div"); box.className = "kp-br-ed";
+    box.innerHTML = `<div class="kp-br-edc"><h4>✏️ ${esc(t("kpBrEdit"))}</h4>
+      <label>${esc(t("kpBrPseudo"))}<input id="brE_n" maxlength="40" value="${esc(p.pseudo)}"></label>
+      <label>${esc(t("kpBrAlly"))}<select id="brE_a">${opt("", p.alliance || "", "— " + t("kpBrPool"))}${brAllies().map(a=>opt(a, p.alliance || "", brAName(a))).join("")}</select></label>
+      <label>TG<select id="brE_tg">${["", "TG6", "TG7", "TG8", ...(["TG1", "TG2", "TG3", "TG4", "TG5"].includes(p.tg) ? [p.tg] : [])].map(v=>opt(v, p.tg || "", v || "—")).join("")}</select></label>
+      <label>T11<select id="brE_t11">${[["", "—"], ...(t11 === "?" ? [["?", "T11"]] : []), ["ica", "T11 ALL"], ["i", "T11 INF"], ["c", "T11 CAV"], ["a", "T11 ARC"], ["ic", "INF+CAV"], ["ia", "INF+ARC"], ["ca", "CAV+ARC"]].map(([v, l])=>opt(v, t11, l)).join("")}</select></label>
+      <label>${esc(t("kpBrStar"))}<select id="brE_s">${[["", "☆ " + t("kpBrNone")], ["gold", "★ " + t("kpBrGold")], ["red", "★ " + t("kpBrRed")], ["blue", "★ " + t("kpBrBlue")]].map(([v, l])=>opt(v, brStar(p), l)).join("")}</select></label>
+      <div class="kp-br-edb"><a href="roster.html" target="_blank" rel="noopener">↗ ${esc(t("kpBrOpen"))}</a><span></span><button type="button" id="brE_x">${esc(t("kpBrCancel"))}</button><button type="button" id="brE_ok" class="pri">${esc(t("kpBrSaveBtn"))}</button></div></div>`;
+    root.appendChild(box);
+    const close = ()=>box.remove();
+    box.addEventListener("click", e=>{ if(e.target === box) close(); });
+    $("brE_x").onclick = close;
+    $("brE_ok").onclick = async ()=>{
+      const name = $("brE_n").value.replace(/\s+/g, " ").trim().slice(0, 40), a = $("brE_a").value;
+      if(!name) return;
+      const f = {pseudo:name, alliance:a || null, tg:$("brE_tg").value, star:a ? $("brE_s").value : ""};
+      if($("brE_t11").value !== "?") f.t11s = $("brE_t11").value;   // "?" = old "T11" without the type: left as it is
+      if(!await brSave(p, f)) return;
+      if(name !== p.pseudo){   // keep the map in step with the new name
+        const w = brWhere(p.pseudo);
+        if(w && !isLocked()) change([w.startsWith("tur:") ? {path:`castle/${w.slice(4)}`, val:name} : {path:`tiles/${w}/n`, val:name}]);
+        if(brDone(p) && doneKey(name) !== doneKey(p.pseudo)) RAW.update({[`${base}/plans/${pid}/done/${doneKey(p.pseudo)}`]:null, [`${base}/plans/${pid}/done/${doneKey(name)}`]:1}).catch(fail);
+      }
+      close(); toast("✔ " + t("kpBrSaved"));
+    };
+  }
+  function brSummary(){
+    const rows = [...brAllies(), "_"].map(a=>{ const l = BR.pool.filter(p=>a === "_" ? !p.alliance : p.alliance === a), n = l.filter(p=>brWhere(p.pseudo) || brDone(p)).length; return `<tr><td>${esc(a === "_" ? t("kpBrPool") : brAName(a))}</td><td><b>${n}</b> / ${l.length}</td><td><div class="kp-prog"><i style="width:${l.length ? 100 * n / l.length : 0}%"></i></div></td></tr>`; }).join("");
+    const tgs = ["TG8", "TG7", "TG6", ""].map(tg=>{ const l = BR.pool.filter(p=>p.alliance && (p.tg || "") === tg); return l.length ? `<tr><td>${tg || "—"}</td><td><b>${l.filter(p=>brWhere(p.pseudo)).length}</b> / ${l.length}</td></tr>` : ""; }).join("");
+    const starsFree = brSort(BR.pool.filter(p=>p.alliance && brStar(p) && !brWhere(p.pseudo) && !brDone(p)));
+    const onMap = []; for(const k in P.tiles){ const n = P.tiles[k].n; if(n) onMap.push([k, n]); }
+    const miss = BR.ok && BR.pool.length ? onMap.filter(([, n])=>!brByName.has(nk(n))) : [];
+    const wrong = onMap.filter(([k, n])=>{ const p = brByName.get(nk(n)), g = P.tiles[k].g, cl = p && brClanFor(p); return p && cl && g && g !== cl; });
+    const box = document.createElement("div"); box.className = "kp-br-ed";
+    box.innerHTML = `<div class="kp-br-edc wide"><h4>📊 ${esc(t("kpBrSum"))} — ${esc((index[pid] || {}).name || "")}</h4>
+      <table class="kp-sumt">${rows}</table><h5>${esc(t("kpBrByTg"))}</h5><table class="kp-sumt">${tgs}</table>
+      <h5>★ ${esc(t("kpBrStarFree"))} (${starsFree.length})</h5><div class="kp-chips">${starsFree.map(p=>`<button type="button" data-arm="${esc(p._i)}"><b style="color:${STARC[brStar(p)]}">★</b> ${esc(p.pseudo)} <small>${esc(brAName(p.alliance))}</small></button>`).join("") || "✔"}</div>
+      ${miss.length ? `<h5>⚠️ ${esc(t("kpBrMiss"))} (${miss.length})</h5><div class="kp-chips">${miss.map(([k, n])=>`<button type="button" data-go="${esc(k)}">${esc(n)}</button>`).join("")}</div>` : ""}
+      ${wrong.length ? `<h5>⚠️ ${esc(t("kpBrWrong"))} (${wrong.length})</h5><div class="kp-chips">${wrong.map(([k, n])=>`<button type="button" data-go="${esc(k)}">${esc(n)} <small>${esc(P.tiles[k].g)} → ${esc(brClanFor(brByName.get(nk(n))))}</small></button>`).join("")}</div>` : ""}
+      <div class="kp-br-edb"><span></span><button type="button" id="brS_x" class="pri">OK</button></div></div>`;
+    root.appendChild(box);
+    const close = ()=>box.remove();
+    box.addEventListener("click", e=>{ if(e.target === box) return close(); const a = e.target.closest("[data-arm]"), g = e.target.closest("[data-go]");
+      if(a){ close(); const p = BR.pool.find(x=>x._i === a.dataset.arm); if(p) arm(p); } if(g){ close(); locate(g.dataset.go); } });
+    $("brS_x").onclick = close;
+  }
+  function brCsv(){
+    const rows = [[t("kpBrPseudo"), t("kpBrAlly"), "TG", "T11", t("kpBrStar"), t("kpBrDone"), t("kpBrCity"), "Clan", "Time"]];
+    brAllies().concat("_").forEach(a=>brSort(BR.pool.filter(p=>a === "_" ? !p.alliance : p.alliance === a)).forEach(p=>{
+      const w = brWhere(p.pseudo), d = w && !w.startsWith("tur:") ? P.tiles[w] : {};
+      rows.push([p.pseudo, a === "_" ? "" : brAName(a), p.tg || "", brT11Txt(p), brStar(p), w ? "✓" : brDone(p) ? "☑" : "", w ? brCell(w) : "", d.g || "", d.t || ""]);
+    }));
+    const csv = "﻿" + rows.map(r=>r.map(v=>`"${String(v ?? "").replace(/"/g, '""')}"`).join(";")).join("\r\n");
+    const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv;charset=utf-8"}));
+    a.download = `kvk-plan-${String((index[pid] || {}).name || "plan").replace(/[^\w-]+/g, "_")}.csv`; document.body.appendChild(a); a.click(); a.remove();
+  }
+  initBRPanel();
+
   function planText(){
     const name = (index[pid] && index[pid].name) || "KvK plan", lines = [`🗺️ ${name} — ${todayName()}`];
     const tur = ["n", "e", "w", "s"].filter(x=>P.castle[x]).map(x=>`${t("kpDir_" + x)}: ${P.castle[x]}`);
