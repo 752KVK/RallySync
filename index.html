@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Rally Sync — rally timer for Kingshot (fan-made)</title>
-<meta name="description" content="Unofficial fan-made rally launch coordinator. Not affiliated with Kingshot or its publisher. Data stays in your browser.">
+<title>752 HOME</title>
+<meta name="description" content="752 HOME: tools for the 752 leaders (RallySync, KvK PLAN, Battle Roster) and FUN for the whole server. Unofficial fan-made site, not affiliated with Kingshot or its publisher.">
 <meta name="theme-color" content="#0f1115">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Rally Sync">
+<meta name="apple-mobile-web-app-title" content="752 HOME">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="format-detection" content="telephone=no">
 <style>
@@ -241,6 +241,19 @@ html.locked #hub{visibility:hidden}
 .hb-last{position:absolute;top:-10px;right:16px;font-size:11px;font-weight:900;padding:2px 10px;border-radius:999px;background:#ffd56a;color:#3a2600;box-shadow:0 2px 6px #0008;letter-spacing:.3px}
 .hb-lock.open{opacity:1;filter:drop-shadow(0 0 4px #7dff9a)}
 #hubAdminBox .hb-lock{display:none}
+.hub-bk{align-self:center;padding:9px 18px;border-radius:999px;border:1px solid #ffd56a88;background:#000b;color:#ffd56a;font:inherit;font-weight:800;cursor:pointer}
+.hub-bk:hover{background:#000d;border-color:#ffd56a}
+.bk-box{position:fixed;inset:0;z-index:470;display:flex;align-items:center;justify-content:center;padding:12px;background:#000a}
+.bk-card{width:min(520px,100%);max-height:92vh;overflow:auto;padding:18px;border-radius:16px;background:#14182c;color:#fff;box-shadow:0 18px 50px #000c;border:1px solid #ffd56a55}
+.bk-card h4{margin:0 0 6px;font-size:18px;color:#ffd56a}.bk-card h5{margin:16px 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#f6e6b0}
+.bk-card p{margin:4px 0;font-size:13px;opacity:.85;line-height:1.4}
+.bk-card button{font:inherit;font-weight:800;border-radius:10px;padding:9px 12px;border:1px solid #fff3;background:#ffffff14;color:#fff;cursor:pointer}
+.bk-card button:hover{background:#ffffff26}
+.bk-card .pri{background:#2e9d4f;border-color:#2e9d4f}.bk-card .warn{background:#c62828;border-color:#c62828}
+.bk-row{display:flex;align-items:center;gap:8px;padding:8px 10px;margin:4px 0;border-radius:10px;background:#ffffff0d;font-size:13px}
+.bk-row span{flex:1;min-width:0}.bk-row small{opacity:.7}
+.bk-chk{display:flex;flex-direction:column;gap:6px;margin:8px 0}.bk-chk label{display:flex;gap:8px;align-items:center;font-size:14px}
+.bk-act{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .hub-note{margin:2px 0 0;text-align:center;font-size:12px;color:#f6e6b0;text-shadow:0 2px 6px #000}
 @media (prefers-reduced-motion:reduce){ .hub-admin,.hub-main{animation:none} .hub-big,.hbb-ic{transition:none} }
 @media (max-width:599px){
@@ -886,6 +899,7 @@ html.kp-resizing,html.kp-resizing *{cursor:ew-resize!important;user-select:none!
     <button type="button" class="hub-btn hb-rally" id="hubRally"><span class="hb-ic">⚔️</span><span class="hb-txt"><b>RALLYSYNC</b><small data-i="hubRallySub"></small></span><span class="hb-lock" id="hlRally">🔒</span></button>
     <button type="button" class="hub-btn hb-plan" id="hubPlan"><span class="hb-ic">🗺️</span><span class="hb-txt"><b data-i="kpTitle"></b><small data-i="hubPlanSub"></small></span><span class="hb-lock" id="hlPlan">🔒</span></button>
     <button type="button" class="hub-btn hb-roster" id="hubRoster"><span class="hb-ic">🛡️</span><span class="hb-txt"><b>BATTLE ROSTER</b><small data-i="hubRosterSub"></small></span><span class="hb-lock" id="hlRoster">🔒</span></button>
+      <button type="button" class="hub-bk" id="hubBk">💾 <span data-i="bkBtn"></span></button>
       <p class="hub-note" data-i="hubAdminNote"></p>
     </div>
   </div>
@@ -1061,10 +1075,10 @@ const I18N = {
     renamePrompt:"Yeni isim:",imported:"İçe aktarıldı!",players:"oyuncu",rallyCustom:"Ralli süresi (örn. 2m30):",sync:"Senkron varış"}
 };
 /* ---------- texts of the Battle Roster link (KvK plan) ---------- */
-Object.assign(I18N.fr, {"admCode": "Code des leaders 752 (demandé une fois, puis retenu 30 jours sur cet appareil).", "admWrong": "Code incorrect", "hubAdmLock": "Verrouiller", "hubAdmUntil": "Déverrouillé sur cet appareil jusqu'au {d}", "admMoved": "Données transférées vers le nouvel espace sécurisé","hubAdminSub": "Rallyes, plan KvK et roster", "hubAdminTag": "Leaders 752", "hubFunTag": "Tout le serveur", "hubBack": "Retour", "hubLast": "Dernier utilisé", "hubAdminNote": "Chaque outil garde son propre code.", "hubUnlocked": "Déjà déverrouillé sur cet appareil","kpBrLvl": "Niveau", "kpBrAvail": "Dispo", "kpBrAvailL": "Disponibilité", "kpBrClr": "Effacer les filtres", "kpBrGrip": "Tire pour élargir · double-clic = taille de départ",kpOnMap:"Sur la map",kpBrLoading:"Connexion au Battle Roster…",kpBrErr:"Battle Roster injoignable pour le moment",kpBrEmpty:"Aucun joueur ici",kpBrPool:"Sans alliance",kpBrFree:"Non placés",kpBrAllTg:"Tous",kpBrArm:"Touche une case pour placer {n}",kpBrDrag:"Glisse un joueur sur la map, ou touche-le puis touche une case. ✓ = sur la map · ☑ = coché à la main.",kpBrMove:"{n} est déjà placé ({k}). Le déplacer ici ?",kpBrReplace:"Cette case contient déjà {n}. Le remplacer ?",kpBrRemove:"Retirer de la map",kpBrDone:"Sur la map",kpBrManual:"Cocher / décocher à la main",kpBrEdit:"Modifier le joueur",kpBrSaved:"Enregistré dans le Battle Roster",kpBrSum:"Résumé",kpBrStarFree:"Joueurs étoilés pas encore placés",kpBrByTg:"Placés par niveau",kpBrMiss:"Sur la map mais absent du Battle Roster (supprimé ou pseudo différent)",kpBrWrong:"Clan de la case différent de l'alliance du Battle Roster",kpBrOpen:"Ouvrir le Battle Roster",kpBrNone:"Aucune",kpBrPseudo:"Pseudo",kpBrAlly:"Alliance",kpBrStar:"Étoile",kpBrGold:"Jaune",kpBrRed:"Rouge",kpBrBlue:"Bleue",kpBrCity:"Case",kpBrRow:"Ligne",kpBrCol:"Col.",kpBrGone:"Ce joueur vient d'être modifié ou supprimé dans le Battle Roster, réessaie",kpBrCancel:"Annuler",kpBrSaveBtn:"Enregistrer"});
-Object.assign(I18N.en, {"admCode": "Code for the 752 leaders (asked once, then remembered 30 days on this device).", "admWrong": "Wrong code", "hubAdmLock": "Lock", "hubAdmUntil": "Unlocked on this device until {d}", "admMoved": "Data moved to the new secure place","hubAdminSub": "Rally timing, KvK plan and roster", "hubAdminTag": "752 leaders", "hubFunTag": "Whole server", "hubBack": "Back", "hubLast": "Last used", "hubAdminNote": "Each tool keeps its own code.", "hubUnlocked": "Already unlocked on this device","kpBrLvl": "Level", "kpBrAvail": "Avail.", "kpBrAvailL": "Availability", "kpBrClr": "Clear filters", "kpBrGrip": "Drag to widen · double-click = default size",kpOnMap:"On the map",kpBrLoading:"Connecting to Battle Roster…",kpBrErr:"Battle Roster can't be reached right now",kpBrEmpty:"No players here",kpBrPool:"No alliance",kpBrFree:"Not placed",kpBrAllTg:"All",kpBrArm:"Tap a city to place {n}",kpBrDrag:"Drag a player onto the map, or tap them then tap a city. ✓ = on the map · ☑ = ticked by hand.",kpBrMove:"{n} is already placed ({k}). Move here?",kpBrReplace:"This city already holds {n}. Replace?",kpBrRemove:"Remove from the map",kpBrDone:"On the map",kpBrManual:"Tick / untick by hand",kpBrEdit:"Edit player",kpBrSaved:"Saved in Battle Roster",kpBrSum:"Summary",kpBrStarFree:"Starred players not placed yet",kpBrByTg:"Placed by level",kpBrMiss:"On the map but not in Battle Roster (deleted or different name)",kpBrWrong:"City clan differs from the Battle Roster alliance",kpBrOpen:"Open Battle Roster",kpBrNone:"None",kpBrPseudo:"Name",kpBrAlly:"Alliance",kpBrStar:"Star",kpBrGold:"Yellow",kpBrRed:"Red",kpBrBlue:"Blue",kpBrCity:"City",kpBrRow:"Row",kpBrCol:"Col.",kpBrGone:"This player was just changed or deleted in Battle Roster, try again",kpBrCancel:"Cancel",kpBrSaveBtn:"Save"});
-Object.assign(I18N.ko, {"admCode": "752 리더 코드 (한 번 입력하면 이 기기에서 30일 동안 기억됩니다).", "admWrong": "코드가 틀렸습니다", "hubAdmLock": "잠그기", "hubAdmUntil": "이 기기에서 {d}까지 잠금 해제됨", "admMoved": "데이터를 새 보안 공간으로 옮겼습니다","hubAdminSub": "집결 타이밍, KvK 계획, 로스터", "hubAdminTag": "752 리더 전용", "hubFunTag": "서버 전체", "hubBack": "뒤로", "hubLast": "최근 사용", "hubAdminNote": "각 도구는 자체 코드가 있습니다.", "hubUnlocked": "이 기기에서 이미 잠금 해제됨","kpBrLvl": "레벨", "kpBrAvail": "참여", "kpBrAvailL": "참여 시간", "kpBrClr": "필터 지우기", "kpBrGrip": "끌어서 넓히기 · 더블클릭 = 기본 크기",kpOnMap:"맵 위",kpBrLoading:"배틀 로스터 연결 중…",kpBrErr:"지금은 배틀 로스터에 연결할 수 없습니다",kpBrEmpty:"플레이어 없음",kpBrPool:"연맹 없음",kpBrFree:"미배치",kpBrAllTg:"전체",kpBrArm:"{n}을(를) 놓을 칸을 누르세요",kpBrDrag:"플레이어를 맵으로 끌어다 놓거나, 누른 뒤 칸을 누르세요. ✓ = 맵 위 · ☑ = 직접 체크.",kpBrMove:"{n}은(는) 이미 배치됨 ({k}). 여기로 옮길까요?",kpBrReplace:"이 칸에 이미 {n}이(가) 있습니다. 바꿀까요?",kpBrRemove:"맵에서 빼기",kpBrDone:"맵 위",kpBrManual:"직접 체크 / 해제",kpBrEdit:"플레이어 수정",kpBrSaved:"배틀 로스터에 저장됨",kpBrSum:"요약",kpBrStarFree:"아직 배치되지 않은 별표 플레이어",kpBrByTg:"레벨별 배치",kpBrMiss:"맵에는 있지만 배틀 로스터에 없음 (삭제 또는 다른 이름)",kpBrWrong:"칸의 클랜이 배틀 로스터 연맹과 다름",kpBrOpen:"배틀 로스터 열기",kpBrNone:"없음",kpBrPseudo:"닉네임",kpBrAlly:"연맹",kpBrStar:"별",kpBrGold:"노랑",kpBrRed:"빨강",kpBrBlue:"파랑",kpBrCity:"칸",kpBrRow:"행",kpBrCol:"열",kpBrGone:"이 플레이어가 배틀 로스터에서 방금 수정 또는 삭제되었습니다. 다시 시도하세요",kpBrCancel:"취소",kpBrSaveBtn:"저장"});
-Object.assign(I18N.tr, {"admCode": "752 liderleri kodu (bir kez sorulur, sonra bu cihazda 30 gün hatırlanır).", "admWrong": "Yanlış kod", "hubAdmLock": "Kilitle", "hubAdmUntil": "Bu cihazda {d} tarihine kadar açık", "admMoved": "Veriler yeni güvenli alana taşındı","hubAdminSub": "Ralli zamanlaması, KvK planı ve kadro", "hubAdminTag": "752 liderleri", "hubFunTag": "Tüm sunucu", "hubBack": "Geri", "hubLast": "Son kullanılan", "hubAdminNote": "Her aracın kendi kodu vardır.", "hubUnlocked": "Bu cihazda zaten açık","kpBrLvl": "Seviye", "kpBrAvail": "Katılım", "kpBrAvailL": "Katılım", "kpBrClr": "Filtreleri temizle", "kpBrGrip": "Genişletmek için sürükle · çift tık = varsayılan boyut",kpOnMap:"Haritada",kpBrLoading:"Battle Roster'a bağlanılıyor…",kpBrErr:"Battle Roster'a şu an ulaşılamıyor",kpBrEmpty:"Burada oyuncu yok",kpBrPool:"İttifaksız",kpBrFree:"Yerleşmemiş",kpBrAllTg:"Tümü",kpBrArm:"{n} için bir şehre dokun",kpBrDrag:"Bir oyuncuyu haritaya sürükle ya da ona dokunup bir şehre dokun. ✓ = haritada · ☑ = elle işaretli.",kpBrMove:"{n} zaten yerleşik ({k}). Buraya taşınsın mı?",kpBrReplace:"Bu şehirde zaten {n} var. Değiştirilsin mi?",kpBrRemove:"Haritadan kaldır",kpBrDone:"Haritada",kpBrManual:"Elle işaretle / kaldır",kpBrEdit:"Oyuncuyu düzenle",kpBrSaved:"Battle Roster'a kaydedildi",kpBrSum:"Özet",kpBrStarFree:"Henüz yerleşmemiş yıldızlı oyuncular",kpBrByTg:"Seviyeye göre yerleşenler",kpBrMiss:"Haritada ama Battle Roster'da yok (silinmiş veya farklı ad)",kpBrWrong:"Şehrin klanı Battle Roster ittifakından farklı",kpBrOpen:"Battle Roster'ı aç",kpBrNone:"Yok",kpBrPseudo:"Ad",kpBrAlly:"İttifak",kpBrStar:"Yıldız",kpBrGold:"Sarı",kpBrRed:"Kırmızı",kpBrBlue:"Mavi",kpBrCity:"Şehir",kpBrRow:"Satır",kpBrCol:"Süt.",kpBrGone:"Bu oyuncu Battle Roster'da az önce değişti veya silindi, tekrar dene",kpBrCancel:"İptal",kpBrSaveBtn:"Kaydet"});
+Object.assign(I18N.fr, {"bkBtn": "Sauvegardes", "bkTitle": "Sauvegardes", "bkIntro": "Pour remettre les données si elles sont effacées ou abîmées par erreur (sessions RallySync, cartes KvK PLAN, joueurs Battle Roster).", "bkNowT": "Maintenant dans la base", "bkDl": "Télécharger une sauvegarde", "bkFileT": "Remettre une sauvegarde", "bkUp": "Choisir un fichier de sauvegarde", "bkAutoT": "Copies automatiques sur cet appareil", "bkAutoP": "Une copie par jour est gardée dans ce navigateur (7 derniers jours). Elle est mise à jour chaque fois qu'un leader ouvre 752 ADMIN sur cet appareil, sauf si des données ont disparu.", "bkUse": "Remettre", "bkRestT": "Remettre cette sauvegarde", "bkRestP": "Les parties cochées vont remplacer ce qu'il y a maintenant. Par sécurité, l'état actuel est d'abord téléchargé.", "bkGo": "Remettre", "bkRestored": "Sauvegarde remise", "bkDone": "Sauvegarde téléchargée", "bkBad": "Ce fichier n'est pas une sauvegarde 752 HOME", "bkEmptyNow": "La base est vide", "bkSess": "sessions", "bkMaps": "cartes", "bkPlayers": "joueurs","admCode": "Code des leaders 752 (demandé une fois, puis retenu 30 jours sur cet appareil).", "admWrong": "Code incorrect", "hubAdmLock": "Verrouiller", "hubAdmUntil": "Déverrouillé sur cet appareil jusqu'au {d}", "admMoved": "Données transférées vers le nouvel espace sécurisé","hubAdminSub": "Rallyes, plan KvK et roster", "hubAdminTag": "Leaders 752", "hubFunTag": "Tout le serveur", "hubBack": "Retour", "hubLast": "Dernier utilisé", "hubAdminNote": "Chaque outil garde son propre code.", "hubUnlocked": "Déjà déverrouillé sur cet appareil","kpBrLvl": "Niveau", "kpBrAvail": "Dispo", "kpBrAvailL": "Disponibilité", "kpBrClr": "Effacer les filtres", "kpBrGrip": "Tire pour élargir · double-clic = taille de départ",kpOnMap:"Sur la map",kpBrLoading:"Connexion au Battle Roster…",kpBrErr:"Battle Roster injoignable pour le moment",kpBrEmpty:"Aucun joueur ici",kpBrPool:"Sans alliance",kpBrFree:"Non placés",kpBrAllTg:"Tous",kpBrArm:"Touche une case pour placer {n}",kpBrDrag:"Glisse un joueur sur la map, ou touche-le puis touche une case. ✓ = sur la map · ☑ = coché à la main.",kpBrMove:"{n} est déjà placé ({k}). Le déplacer ici ?",kpBrReplace:"Cette case contient déjà {n}. Le remplacer ?",kpBrRemove:"Retirer de la map",kpBrDone:"Sur la map",kpBrManual:"Cocher / décocher à la main",kpBrEdit:"Modifier le joueur",kpBrSaved:"Enregistré dans le Battle Roster",kpBrSum:"Résumé",kpBrStarFree:"Joueurs étoilés pas encore placés",kpBrByTg:"Placés par niveau",kpBrMiss:"Sur la map mais absent du Battle Roster (supprimé ou pseudo différent)",kpBrWrong:"Clan de la case différent de l'alliance du Battle Roster",kpBrOpen:"Ouvrir le Battle Roster",kpBrNone:"Aucune",kpBrPseudo:"Pseudo",kpBrAlly:"Alliance",kpBrStar:"Étoile",kpBrGold:"Jaune",kpBrRed:"Rouge",kpBrBlue:"Bleue",kpBrCity:"Case",kpBrRow:"Ligne",kpBrCol:"Col.",kpBrGone:"Ce joueur vient d'être modifié ou supprimé dans le Battle Roster, réessaie",kpBrCancel:"Annuler",kpBrSaveBtn:"Enregistrer"});
+Object.assign(I18N.en, {"bkBtn": "Backups", "bkTitle": "Backups", "bkIntro": "To put the data back if it is erased or damaged by mistake (RallySync sessions, KvK PLAN maps, Battle Roster players).", "bkNowT": "In the database now", "bkDl": "Download a backup", "bkFileT": "Restore a backup", "bkUp": "Choose a backup file", "bkAutoT": "Automatic copies on this device", "bkAutoP": "One copy per day is kept in this browser (last 7 days), each time a leader opens 752 ADMIN.", "bkUse": "Restore", "bkRestT": "Restore this backup", "bkRestP": "The ticked parts will replace what is there now. To be safe, the current state is downloaded first.", "bkGo": "Restore", "bkRestored": "Backup restored", "bkDone": "Backup downloaded", "bkBad": "This file is not a 752 HOME backup", "bkEmptyNow": "The database is empty", "bkSess": "sessions", "bkMaps": "maps", "bkPlayers": "players","admCode": "Code for the 752 leaders (asked once, then remembered 30 days on this device).", "admWrong": "Wrong code", "hubAdmLock": "Lock", "hubAdmUntil": "Unlocked on this device until {d}", "admMoved": "Data moved to the new secure place","hubAdminSub": "Rally timing, KvK plan and roster", "hubAdminTag": "752 leaders", "hubFunTag": "Whole server", "hubBack": "Back", "hubLast": "Last used", "hubAdminNote": "Each tool keeps its own code.", "hubUnlocked": "Already unlocked on this device","kpBrLvl": "Level", "kpBrAvail": "Avail.", "kpBrAvailL": "Availability", "kpBrClr": "Clear filters", "kpBrGrip": "Drag to widen · double-click = default size",kpOnMap:"On the map",kpBrLoading:"Connecting to Battle Roster…",kpBrErr:"Battle Roster can't be reached right now",kpBrEmpty:"No players here",kpBrPool:"No alliance",kpBrFree:"Not placed",kpBrAllTg:"All",kpBrArm:"Tap a city to place {n}",kpBrDrag:"Drag a player onto the map, or tap them then tap a city. ✓ = on the map · ☑ = ticked by hand.",kpBrMove:"{n} is already placed ({k}). Move here?",kpBrReplace:"This city already holds {n}. Replace?",kpBrRemove:"Remove from the map",kpBrDone:"On the map",kpBrManual:"Tick / untick by hand",kpBrEdit:"Edit player",kpBrSaved:"Saved in Battle Roster",kpBrSum:"Summary",kpBrStarFree:"Starred players not placed yet",kpBrByTg:"Placed by level",kpBrMiss:"On the map but not in Battle Roster (deleted or different name)",kpBrWrong:"City clan differs from the Battle Roster alliance",kpBrOpen:"Open Battle Roster",kpBrNone:"None",kpBrPseudo:"Name",kpBrAlly:"Alliance",kpBrStar:"Star",kpBrGold:"Yellow",kpBrRed:"Red",kpBrBlue:"Blue",kpBrCity:"City",kpBrRow:"Row",kpBrCol:"Col.",kpBrGone:"This player was just changed or deleted in Battle Roster, try again",kpBrCancel:"Cancel",kpBrSaveBtn:"Save"});
+Object.assign(I18N.ko, {"bkBtn": "백업", "bkTitle": "백업", "bkIntro": "데이터가 실수로 지워지거나 손상되었을 때 되돌리기 위한 기능입니다 (RallySync 세션, KvK PLAN 지도, 배틀 로스터 플레이어).", "bkNowT": "현재 데이터베이스", "bkDl": "백업 다운로드", "bkFileT": "백업 복원", "bkUp": "백업 파일 선택", "bkAutoT": "이 기기의 자동 사본", "bkAutoP": "리더가 752 ADMIN을 열 때마다 하루에 한 개의 사본이 이 브라우저에 보관됩니다 (최근 7일).", "bkUse": "복원", "bkRestT": "이 백업 복원", "bkRestP": "선택한 부분이 현재 내용을 대체합니다. 안전을 위해 현재 상태를 먼저 다운로드합니다.", "bkGo": "복원", "bkRestored": "백업이 복원되었습니다", "bkDone": "백업이 다운로드되었습니다", "bkBad": "752 HOME 백업 파일이 아닙니다", "bkEmptyNow": "데이터베이스가 비어 있습니다", "bkSess": "세션", "bkMaps": "지도", "bkPlayers": "플레이어","admCode": "752 리더 코드 (한 번 입력하면 이 기기에서 30일 동안 기억됩니다).", "admWrong": "코드가 틀렸습니다", "hubAdmLock": "잠그기", "hubAdmUntil": "이 기기에서 {d}까지 잠금 해제됨", "admMoved": "데이터를 새 보안 공간으로 옮겼습니다","hubAdminSub": "집결 타이밍, KvK 계획, 로스터", "hubAdminTag": "752 리더 전용", "hubFunTag": "서버 전체", "hubBack": "뒤로", "hubLast": "최근 사용", "hubAdminNote": "각 도구는 자체 코드가 있습니다.", "hubUnlocked": "이 기기에서 이미 잠금 해제됨","kpBrLvl": "레벨", "kpBrAvail": "참여", "kpBrAvailL": "참여 시간", "kpBrClr": "필터 지우기", "kpBrGrip": "끌어서 넓히기 · 더블클릭 = 기본 크기",kpOnMap:"맵 위",kpBrLoading:"배틀 로스터 연결 중…",kpBrErr:"지금은 배틀 로스터에 연결할 수 없습니다",kpBrEmpty:"플레이어 없음",kpBrPool:"연맹 없음",kpBrFree:"미배치",kpBrAllTg:"전체",kpBrArm:"{n}을(를) 놓을 칸을 누르세요",kpBrDrag:"플레이어를 맵으로 끌어다 놓거나, 누른 뒤 칸을 누르세요. ✓ = 맵 위 · ☑ = 직접 체크.",kpBrMove:"{n}은(는) 이미 배치됨 ({k}). 여기로 옮길까요?",kpBrReplace:"이 칸에 이미 {n}이(가) 있습니다. 바꿀까요?",kpBrRemove:"맵에서 빼기",kpBrDone:"맵 위",kpBrManual:"직접 체크 / 해제",kpBrEdit:"플레이어 수정",kpBrSaved:"배틀 로스터에 저장됨",kpBrSum:"요약",kpBrStarFree:"아직 배치되지 않은 별표 플레이어",kpBrByTg:"레벨별 배치",kpBrMiss:"맵에는 있지만 배틀 로스터에 없음 (삭제 또는 다른 이름)",kpBrWrong:"칸의 클랜이 배틀 로스터 연맹과 다름",kpBrOpen:"배틀 로스터 열기",kpBrNone:"없음",kpBrPseudo:"닉네임",kpBrAlly:"연맹",kpBrStar:"별",kpBrGold:"노랑",kpBrRed:"빨강",kpBrBlue:"파랑",kpBrCity:"칸",kpBrRow:"행",kpBrCol:"열",kpBrGone:"이 플레이어가 배틀 로스터에서 방금 수정 또는 삭제되었습니다. 다시 시도하세요",kpBrCancel:"취소",kpBrSaveBtn:"저장"});
+Object.assign(I18N.tr, {"bkBtn": "Yedekler", "bkTitle": "Yedekler", "bkIntro": "Veriler yanlışlıkla silinir veya bozulursa geri koymak için (RallySync oturumları, KvK PLAN haritaları, Battle Roster oyuncuları).", "bkNowT": "Şu an veritabanında", "bkDl": "Yedek indir", "bkFileT": "Yedeği geri yükle", "bkUp": "Yedek dosyası seç", "bkAutoT": "Bu cihazdaki otomatik kopyalar", "bkAutoP": "Bir lider 752 ADMIN'i her açtığında bu tarayıcıda günde bir kopya tutulur (son 7 gün).", "bkUse": "Geri yükle", "bkRestT": "Bu yedeği geri yükle", "bkRestP": "İşaretli kısımlar şu ankilerin yerine geçer. Güvenlik için önce mevcut durum indirilir.", "bkGo": "Geri yükle", "bkRestored": "Yedek geri yüklendi", "bkDone": "Yedek indirildi", "bkBad": "Bu dosya bir 752 HOME yedeği değil", "bkEmptyNow": "Veritabanı boş", "bkSess": "oturum", "bkMaps": "harita", "bkPlayers": "oyuncu","admCode": "752 liderleri kodu (bir kez sorulur, sonra bu cihazda 30 gün hatırlanır).", "admWrong": "Yanlış kod", "hubAdmLock": "Kilitle", "hubAdmUntil": "Bu cihazda {d} tarihine kadar açık", "admMoved": "Veriler yeni güvenli alana taşındı","hubAdminSub": "Ralli zamanlaması, KvK planı ve kadro", "hubAdminTag": "752 liderleri", "hubFunTag": "Tüm sunucu", "hubBack": "Geri", "hubLast": "Son kullanılan", "hubAdminNote": "Her aracın kendi kodu vardır.", "hubUnlocked": "Bu cihazda zaten açık","kpBrLvl": "Seviye", "kpBrAvail": "Katılım", "kpBrAvailL": "Katılım", "kpBrClr": "Filtreleri temizle", "kpBrGrip": "Genişletmek için sürükle · çift tık = varsayılan boyut",kpOnMap:"Haritada",kpBrLoading:"Battle Roster'a bağlanılıyor…",kpBrErr:"Battle Roster'a şu an ulaşılamıyor",kpBrEmpty:"Burada oyuncu yok",kpBrPool:"İttifaksız",kpBrFree:"Yerleşmemiş",kpBrAllTg:"Tümü",kpBrArm:"{n} için bir şehre dokun",kpBrDrag:"Bir oyuncuyu haritaya sürükle ya da ona dokunup bir şehre dokun. ✓ = haritada · ☑ = elle işaretli.",kpBrMove:"{n} zaten yerleşik ({k}). Buraya taşınsın mı?",kpBrReplace:"Bu şehirde zaten {n} var. Değiştirilsin mi?",kpBrRemove:"Haritadan kaldır",kpBrDone:"Haritada",kpBrManual:"Elle işaretle / kaldır",kpBrEdit:"Oyuncuyu düzenle",kpBrSaved:"Battle Roster'a kaydedildi",kpBrSum:"Özet",kpBrStarFree:"Henüz yerleşmemiş yıldızlı oyuncular",kpBrByTg:"Seviyeye göre yerleşenler",kpBrMiss:"Haritada ama Battle Roster'da yok (silinmiş veya farklı ad)",kpBrWrong:"Şehrin klanı Battle Roster ittifakından farklı",kpBrOpen:"Battle Roster'ı aç",kpBrNone:"Yok",kpBrPseudo:"Ad",kpBrAlly:"İttifak",kpBrStar:"Yıldız",kpBrGold:"Sarı",kpBrRed:"Kırmızı",kpBrBlue:"Mavi",kpBrCity:"Şehir",kpBrRow:"Satır",kpBrCol:"Süt.",kpBrGone:"Bu oyuncu Battle Roster'da az önce değişti veya silindi, tekrar dene",kpBrCancel:"İptal",kpBrSaveBtn:"Kaydet"});
 const COLORS = ["#f5b83d","#4aa3ff","#ff6b6b","#2ecc71","#b57bff","#ff9f43","#1dd1a1","#ff6bcb","#a3cb38","#48dbfb"];
 const KEY = "rallysync.v1", PREFS_KEY = "rallysync.prefs", LAYOUT_KEY = "rallysync.layout.";
 /* =====================================================================================
@@ -2095,6 +2109,89 @@ async function moveOld(key){
   return !failed;   // tried again next time if something could not be moved
 }
 let admStarted = "", admStarting = null;
+/* ---------- backups of everything in 752 ADMIN (RallySync, KvK PLAN, Battle Roster) ----------
+   - a file can be downloaded at any time and loaded back later;
+   - every leader's device also keeps one automatic copy per day (last 7 days) in its own browser,
+     so even if all the data is erased from the database, any leader can put it back. */
+const BK_KEY = "rallysync.bk", BK_DAYS = 7, BK_PARTS = ["rs", "kvk", "br"];
+const bkName = k=>({rs:"RallySync", kvk:"KvK PLAN", br:"Battle Roster"}[k]);
+function bkCount(d){   // what a backup holds, in words
+  d = d || {}; const n = o=>o && typeof o === "object" ? Object.keys(o).length : 0;
+  return [`⚔️ ${n((d.rs || {}).meta)} ${t("bkSess")}`, `🗺️ ${n((d.kvk || {}).index)} ${t("bkMaps")}`, `🛡️ ${n((d.br || {}).pool)} ${t("bkPlayers")}`].join(" · ");
+}
+const bkEmpty = d=>!d || BK_PARTS.every(k=>!d[k]);
+async function bkRead(key){ return await onceRaw(STORE.raw, "a/" + key); }
+function bkList(){ try{ const l = JSON.parse(localStorage.getItem(BK_KEY) || "[]"); return Array.isArray(l) ? l.filter(x=>x && x.d && x.data) : []; }catch(e){ return []; } }
+function bkSave(list){
+  while(list.length){ try{ localStorage.setItem(BK_KEY, JSON.stringify(list)); return true; }catch(e){ list.pop(); } }   // too big for this browser: keep fewer copies
+  return false;
+}
+async function bkAuto(key){   // one automatic copy per day on this device (an empty database is never saved over a good copy)
+  try{
+    if(!STORE || STORE.mode !== "online" || !STORE.raw) return;
+    const day = new Date().toISOString().slice(0, 10), list = bkList();
+    const data = await bkRead(key); if(bkEmpty(data)) return;
+    const copy = {d:day, t:Date.now(), data:Object.fromEntries(BK_PARTS.map(k=>[k, data[k] || null]))};
+    const i = list.findIndex(x=>x.d === day);
+    if(i >= 0){   // today's copy is refreshed, unless a part that was there has disappeared (then it is kept as it was)
+      if(BK_PARTS.some(k=>list[i].data[k] && !copy.data[k])) return;
+      list[i] = copy;
+    } else list.unshift(copy);
+    bkSave(list.slice(0, BK_DAYS));
+  }catch(e){ console.error(e); }
+}
+function bkDownload(data){
+  const stamp = new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-");
+  const blob = new Blob([JSON.stringify({app:"752home", v:1, date:new Date().toISOString(), data}, null, 1)], {type:"application/json"});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `752home-backup-${stamp}.json`;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+}
+async function bkRestore(key, data, parts){   // a copy of what is there now is downloaded first, then the chosen parts are put back
+  const now = await bkRead(key);
+  if(!bkEmpty(now)) bkDownload(Object.fromEntries(BK_PARTS.map(k=>[k, (now || {})[k] || null])));
+  const u = {}; parts.forEach(k=>{ u[`a/${key}/${k}`] = data[k] || null; });
+  await STORE.raw.update(u);
+}
+function bkOpen(){
+  const key = admKey(); if(!key) return;
+  const host = document.getElementById("hub"), box = document.createElement("div"); box.className = "bk-box";
+  const close = ()=>box.remove();
+  const local = bkList();
+  box.innerHTML = `<div class="bk-card" role="dialog" aria-modal="true"><h4>💾 ${esc(t("bkTitle"))}</h4><p>${esc(t("bkIntro"))}</p>
+    <h5>${esc(t("bkNowT"))}</h5><p id="bkNow">⏳</p><div class="bk-act"><button type="button" class="pri" id="bkDl">⬇️ ${esc(t("bkDl"))}</button></div>
+    <h5>${esc(t("bkFileT"))}</h5><div class="bk-act"><button type="button" id="bkUp">⬆️ ${esc(t("bkUp"))}</button><input type="file" id="bkFile" accept=".json,application/json" hidden></div>
+    <h5>${esc(t("bkAutoT"))}</h5><p>${esc(t("bkAutoP"))}</p>
+    ${local.length ? local.map((x, i)=>`<div class="bk-row"><span><b>${esc(new Date(x.t).toLocaleDateString(S.lang, {weekday:"short", day:"numeric", month:"short"}))}</b><br><small>${esc(bkCount(x.data))}</small></span><button type="button" data-bki="${i}">↩ ${esc(t("bkUse"))}</button></div>`).join("") : `<p>—</p>`}
+    <div class="bk-act" style="justify-content:flex-end;margin-top:16px"><button type="button" id="bkX">${esc(t("kpBrCancel"))}</button></div></div>`;
+  host.appendChild(box);
+  box.addEventListener("click", e=>{ if(e.target === box) close(); });
+  box.querySelector("#bkX").onclick = close;
+  let current = null;
+  bkRead(key).then(d=>{ current = d; const el = box.querySelector("#bkNow"); if(el) el.textContent = bkEmpty(d) ? "⚠️ " + t("bkEmptyNow") : bkCount(d); });
+  box.querySelector("#bkDl").onclick = async ()=>{ const d = current || await bkRead(key); if(bkEmpty(d)){ toast("⚠️ " + t("bkEmptyNow")); return; } bkDownload(Object.fromEntries(BK_PARTS.map(k=>[k, d[k] || null]))); toast("✔ " + t("bkDone")); };
+  box.querySelector("#bkUp").onclick = ()=>box.querySelector("#bkFile").click();
+  box.querySelector("#bkFile").onchange = async e=>{
+    const f = e.target.files && e.target.files[0]; e.target.value = ""; if(!f) return;
+    let j = null; try{ j = JSON.parse(await f.text()); }catch(err){}
+    if(!j || j.app !== "752home" || !j.data || typeof j.data !== "object"){ toast("⚠️ " + t("bkBad")); return; }
+    choose(j.data, new Date(j.date || Date.now()));
+  };
+  box.querySelectorAll("[data-bki]").forEach(b=>b.onclick = ()=>{ const x = local[+b.dataset.bki]; choose(x.data, new Date(x.t)); });
+  function choose(data, when){   // pick the parts to put back, then confirm
+    const card = box.querySelector(".bk-card");
+    card.innerHTML = `<h4>↩ ${esc(t("bkRestT"))}</h4><p><b>${esc(when.toLocaleString(S.lang))}</b><br>${esc(bkCount(data))}</p><p>${esc(t("bkRestP"))}</p>
+      <div class="bk-chk">${BK_PARTS.map(k=>`<label><input type="checkbox" value="${k}" ${data[k] ? "checked" : "disabled"}> ${esc(bkName(k))}</label>`).join("")}</div>
+      <div class="bk-act" style="justify-content:flex-end"><button type="button" id="bkNo">${esc(t("kpBrCancel"))}</button><button type="button" class="warn" id="bkGo">↩ ${esc(t("bkGo"))}</button></div>`;
+    card.querySelector("#bkNo").onclick = close;
+    card.querySelector("#bkGo").onclick = async ()=>{
+      const parts = [...card.querySelectorAll("input:checked")].map(x=>x.value); if(!parts.length) return;
+      card.querySelector("#bkGo").disabled = true;
+      try{ await bkRestore(key, data, parts); close(); toast("✔ " + t("bkRestored") + " (" + parts.map(bkName).join(", ") + ")", 5000); }
+      catch(err){ console.error(err); toast("⚠️ " + (err && err.code || err)); card.querySelector("#bkGo").disabled = false; }
+    };
+  }
+}
+document.getElementById("hubBk").addEventListener("click", ()=>{ if(admGet()) bkOpen(); });
 function adminStart(){   // the store points at the admin place; moves old data once
   const key = admKey(); if(!key) return Promise.resolve(false);
   if(admStarted === key) return Promise.resolve(true);
@@ -2104,7 +2201,7 @@ function adminStart(){   // the store points at the admin place; moves old data 
     ROOT = "a/" + key + "/rs";
     if(sGet(localStorage, "rallysync.moved") !== key && await moveOld(key)) sSet(localStorage, "rallysync.moved", key);
     if(STORE && STORE.start) STORE.start();
-    admStarted = key; return true;
+    admStarted = key; setTimeout(()=>bkAuto(key), 1500); return true;
   })().finally(()=>{ admStarting = null; });
   return admStarting;
 }

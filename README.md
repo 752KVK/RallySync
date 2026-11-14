@@ -1,48 +1,30 @@
-# Rally Sync
+# 752 HOME
 
-Coordinateur de lancement de rallyes pour le jeu mobile Kingshot. Il calcule à quel moment chaque joueur doit lancer son rallye pour que toutes les troupes arrivent au château à la même seconde.
+Le site du serveur 752 sur Kingshot : https://752kvk.github.io/752Home/
 
-**Outil non officiel fait par des fans. Il n'a aucun lien avec Kingshot ni avec son éditeur, qui ne l'approuvent pas.** Il n'utilise aucune image, aucun logo et aucune ressource du jeu. Kingshot est une marque de son propriétaire.
+**Outil non officiel fait par des fans. Il n'a aucun lien avec Kingshot ni avec son éditeur.** Il n'utilise aucune image, aucun logo et aucune ressource du jeu.
 
-## Fonctionnalités
-- Écran d'entrée « machine à sous » protégé par mot de passe
-- **Sessions nommées** (ex. « Castle 11/07 ») : chaque groupe peut travailler sur sa propre session en même temps
-- **Partage en direct** : une modification faite sur un appareil apparaît chez tous ceux qui sont dans la même session, et tout reste enregistré après la fermeture du site
-- Lien direct vers une session (🔗) et nombre de personnes connectées
-- Équipes avec temps de rallye (1, 3, 5, 10 min ou durée personnalisée) et temps de marche de chaque joueur
-- Calcul automatique de l'ordre et du moment de lancement, planification à une heure UTC précise
-- Décomptes synchronisés sur l'horloge du serveur, avec bips et vibrations à partir de 5 s
-- Déplacement des joueurs par glisser-déposer, avec le bouton ⇄ ou au clavier
-- Blocs déplaçables, redimensionnables et alignables
-- Nom d'alliance et couleurs par alliance ou par bloc
-- Interface en anglais, français, coréen et turc, thème clair ou sombre
-- Utilisable sur ordinateur et sur téléphone
-- **KvK PLAN** (bouton doré sur l'écran des sessions, protégé par un code à part) : la carte du château en 14 × 14 cases comme dans le Google Sheet, avec clans, temps de marche, couleurs, filtres par clan, notes, rectangles et cercles, plusieurs cartes en onglets, liste des joueurs, alerte doublon, historique des versions, verrouillage d'une carte, copie en texte et export PDF
+## Ce qu'il y a dedans
+- **Porte du casino** (code 752) à l'entrée.
+- **👑 752 ADMIN** (un seul code, retenu 30 jours sur l'appareil) :
+  - **RallySync** : calcul du moment de lancement des rallyes, sessions partagées en direct ;
+  - **KvK PLAN** : la carte du château, reliée au Battle Roster ;
+  - **Battle Roster** : joueurs, alliances, TG, T11, disponibilités.
+- **🎲 FUN** (tout le serveur) : mini-jeux, classement de la semaine, tchat.
+
+## Sauvegardes
+Dans **752 ADMIN**, le bouton **💾 Sauvegardes** permet de :
+- télécharger une sauvegarde complète (sessions RallySync, cartes KvK PLAN, joueurs Battle Roster) ;
+- remettre une sauvegarde depuis un fichier, en choisissant les parties à remettre (l'état actuel est d'abord téléchargé par sécurité) ;
+- remettre une des copies automatiques : chaque appareil de leader garde une copie par jour des 7 derniers jours.
 
 ## Fichiers
-- `index.html` : le site complet
-- `database.rules.json` : les règles de sécurité à coller dans Firebase (voir plus bas)
-- `README.md` : ce fichier
+- `index.html` : l'accueil, RallySync et KvK PLAN
+- `roster.html` : Battle Roster
+- `fun.html`, `fun.webmanifest`, `fun-icon-*.png`, `words-*.json` : FUN
+- `database.rules.json` : les règles de sécurité Firebase (à coller dans la console Firebase, onglet Règles)
 
-## Mise en ligne (GitHub Pages)
-1. Ajoute les fichiers à la racine d'un dépôt **public**.
-2. Va dans *Settings → Pages → Deploy from a branch*, puis choisis `main` et `/ (root)`.
-3. Le site est disponible à l'adresse `https://<ton-pseudo>.github.io/<nom-du-dépôt>/`.
-
-## Partage en ligne (Firebase Realtime Database, gratuit)
-Sans configuration, le site fonctionne en **mode local** : les sessions restent sur l'appareil.
-Pour partager les sessions entre tous les appareils :
-1. Crée un projet sur <https://console.firebase.google.com> (offre gratuite « Spark », aucune carte bancaire).
-2. Crée une **Realtime Database**, puis colle le contenu de `database.rules.json` dans l'onglet *Règles* et publie. Ces règles couvrent les sessions (`rallysync`) et le KvK PLAN (`kvkplan`).
-3. Ajoute une **application Web** au projet et copie l'objet `firebaseConfig`.
-4. Dans `index.html`, remplace `const FIREBASE_CONFIG = null;` par ta configuration.
-
-La configuration Firebase d'une application Web n'est pas un secret : elle est faite pour être visible dans le code d'un site. Ce qui protège la base, ce sont les règles, qui limitent l'accès au seul dossier de l'application.
-
-## Confidentialité et limites
-- Pas de compte, pas de cookie, pas d'outil de suivi.
-- **Mode en ligne** : les sessions (noms des joueurs, temps de marche, équipes) sont stockées dans la base Firebase de l'alliance.
-- **Mode local** : les sessions sont stockées dans le navigateur.
-- Les réglages personnels (langue, thème, volume, position des blocs) restent toujours dans le navigateur de chacun.
-- Les données du KvK PLAN sont rangées sous une clé calculée à partir de son code : sans le code, on ne sait pas où elles se trouvent. Ce n'est pas non plus une sécurité forte.
-- Le mot de passe d'entrée est vérifié dans le navigateur : il éloigne les curieux, mais ce n'est pas une sécurité forte. Toute personne qui a le lien du site et contourne cet écran peut lire et modifier les sessions. N'y mets donc rien de sensible.
+## Sécurité
+- Les données des leaders sont rangées dans la base à une adresse secrète tirée du code 752 ADMIN. Le code n'est écrit nulle part dans le site.
+- Sans le code, la base refuse toute lecture et toute modification de ces données.
+- La configuration Firebase visible dans le code n'est pas un secret : ce sont les règles qui protègent la base.
