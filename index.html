@@ -240,6 +240,7 @@ html.locked #hub{visibility:hidden}
 .hub-btn{position:relative}
 .hb-last{position:absolute;top:-10px;right:16px;font-size:11px;font-weight:900;padding:2px 10px;border-radius:999px;background:#ffd56a;color:#3a2600;box-shadow:0 2px 6px #0008;letter-spacing:.3px}
 .hb-lock.open{opacity:1;filter:drop-shadow(0 0 4px #7dff9a)}
+#hubAdminBox .hb-lock{display:none}
 .hub-note{margin:2px 0 0;text-align:center;font-size:12px;color:#f6e6b0;text-shadow:0 2px 6px #000}
 @media (prefers-reduced-motion:reduce){ .hub-admin,.hub-main{animation:none} .hub-big,.hbb-ic{transition:none} }
 @media (max-width:599px){
@@ -877,11 +878,11 @@ html.kp-resizing,html.kp-resizing *{cursor:ew-resize!important;user-select:none!
     <h2>🎰 752 HOME</h2>
     <div class="ss-sub" data-i="hubSub"></div>
     <div class="hub-main" id="hubMain">
-      <button type="button" class="hub-big hb-admin" id="hubAdmin"><span class="hbb-ic">👑</span><span class="hbb-txt"><b>752 ADMIN</b><small data-i="hubAdminSub"></small><span class="hbb-row"><span class="hbb-tag">🔒 <span data-i="hubAdminTag"></span></span><span class="hbb-tools">⚔️🗺️🛡️</span></span></span><span class="hbb-go">›</span></button>
+      <button type="button" class="hub-big hb-admin" id="hubAdmin"><span class="hbb-ic">👑</span><span class="hbb-txt"><b>752 ADMIN</b><small data-i="hubAdminSub"></small><span class="hbb-row"><span class="hbb-tag"><span id="hubAdmIc">🔒</span> <span data-i="hubAdminTag"></span></span><span class="hbb-tools">⚔️🗺️🛡️</span></span></span><span class="hbb-go">›</span></button>
       <button type="button" class="hub-big hb-fun" id="hubFun"><span class="hbb-ic">🎲</span><span class="hbb-txt"><b>FUN</b><small data-i="hubFunSub"></small><span class="hbb-row"><span class="hbb-tag">🌍 <span data-i="hubFunTag"></span></span><span class="hbb-tools">🐍🧩🃏</span></span></span><span class="hbb-go">›</span></button>
     </div>
     <div class="hub-admin" id="hubAdminBox" hidden>
-      <div class="hub-ah"><button type="button" id="hubBack">← <span data-i="hubBack"></span></button><b>👑 752 ADMIN</b></div>
+      <div class="hub-ah"><button type="button" id="hubBack">← <span data-i="hubBack"></span></button><b>👑 752 ADMIN</b><span style="flex:1"></span><button type="button" id="hubAdmLock">🔒 <span data-i="hubAdmLock"></span></button></div>
     <button type="button" class="hub-btn hb-rally" id="hubRally"><span class="hb-ic">⚔️</span><span class="hb-txt"><b>RALLYSYNC</b><small data-i="hubRallySub"></small></span><span class="hb-lock" id="hlRally">🔒</span></button>
     <button type="button" class="hub-btn hb-plan" id="hubPlan"><span class="hb-ic">🗺️</span><span class="hb-txt"><b data-i="kpTitle"></b><small data-i="hubPlanSub"></small></span><span class="hb-lock" id="hlPlan">🔒</span></button>
     <button type="button" class="hub-btn hb-roster" id="hubRoster"><span class="hb-ic">🛡️</span><span class="hb-txt"><b>BATTLE ROSTER</b><small data-i="hubRosterSub"></small></span><span class="hb-lock" id="hlRoster">🔒</span></button>
@@ -1060,10 +1061,10 @@ const I18N = {
     renamePrompt:"Yeni isim:",imported:"İçe aktarıldı!",players:"oyuncu",rallyCustom:"Ralli süresi (örn. 2m30):",sync:"Senkron varış"}
 };
 /* ---------- texts of the Battle Roster link (KvK plan) ---------- */
-Object.assign(I18N.fr, {"hubAdminSub": "Rallyes, plan KvK et roster", "hubAdminTag": "Leaders 752", "hubFunTag": "Tout le serveur", "hubBack": "Retour", "hubLast": "Dernier utilisé", "hubAdminNote": "Chaque outil garde son propre code.", "hubUnlocked": "Déjà déverrouillé sur cet appareil","kpBrLvl": "Niveau", "kpBrAvail": "Dispo", "kpBrAvailL": "Disponibilité", "kpBrClr": "Effacer les filtres", "kpBrGrip": "Tire pour élargir · double-clic = taille de départ",kpOnMap:"Sur la map",kpBrLoading:"Connexion au Battle Roster…",kpBrErr:"Battle Roster injoignable pour le moment",kpBrEmpty:"Aucun joueur ici",kpBrPool:"Sans alliance",kpBrFree:"Non placés",kpBrAllTg:"Tous",kpBrArm:"Touche une case pour placer {n}",kpBrDrag:"Glisse un joueur sur la map, ou touche-le puis touche une case. ✓ = sur la map · ☑ = coché à la main.",kpBrMove:"{n} est déjà placé ({k}). Le déplacer ici ?",kpBrReplace:"Cette case contient déjà {n}. Le remplacer ?",kpBrRemove:"Retirer de la map",kpBrDone:"Sur la map",kpBrManual:"Cocher / décocher à la main",kpBrEdit:"Modifier le joueur",kpBrSaved:"Enregistré dans le Battle Roster",kpBrSum:"Résumé",kpBrStarFree:"Joueurs étoilés pas encore placés",kpBrByTg:"Placés par niveau",kpBrMiss:"Sur la map mais absent du Battle Roster (supprimé ou pseudo différent)",kpBrWrong:"Clan de la case différent de l'alliance du Battle Roster",kpBrOpen:"Ouvrir le Battle Roster",kpBrNone:"Aucune",kpBrPseudo:"Pseudo",kpBrAlly:"Alliance",kpBrStar:"Étoile",kpBrGold:"Jaune",kpBrRed:"Rouge",kpBrBlue:"Bleue",kpBrCity:"Case",kpBrRow:"Ligne",kpBrCol:"Col.",kpBrGone:"Ce joueur vient d'être modifié ou supprimé dans le Battle Roster, réessaie",kpBrCancel:"Annuler",kpBrSaveBtn:"Enregistrer"});
-Object.assign(I18N.en, {"hubAdminSub": "Rally timing, KvK plan and roster", "hubAdminTag": "752 leaders", "hubFunTag": "Whole server", "hubBack": "Back", "hubLast": "Last used", "hubAdminNote": "Each tool keeps its own code.", "hubUnlocked": "Already unlocked on this device","kpBrLvl": "Level", "kpBrAvail": "Avail.", "kpBrAvailL": "Availability", "kpBrClr": "Clear filters", "kpBrGrip": "Drag to widen · double-click = default size",kpOnMap:"On the map",kpBrLoading:"Connecting to Battle Roster…",kpBrErr:"Battle Roster can't be reached right now",kpBrEmpty:"No players here",kpBrPool:"No alliance",kpBrFree:"Not placed",kpBrAllTg:"All",kpBrArm:"Tap a city to place {n}",kpBrDrag:"Drag a player onto the map, or tap them then tap a city. ✓ = on the map · ☑ = ticked by hand.",kpBrMove:"{n} is already placed ({k}). Move here?",kpBrReplace:"This city already holds {n}. Replace?",kpBrRemove:"Remove from the map",kpBrDone:"On the map",kpBrManual:"Tick / untick by hand",kpBrEdit:"Edit player",kpBrSaved:"Saved in Battle Roster",kpBrSum:"Summary",kpBrStarFree:"Starred players not placed yet",kpBrByTg:"Placed by level",kpBrMiss:"On the map but not in Battle Roster (deleted or different name)",kpBrWrong:"City clan differs from the Battle Roster alliance",kpBrOpen:"Open Battle Roster",kpBrNone:"None",kpBrPseudo:"Name",kpBrAlly:"Alliance",kpBrStar:"Star",kpBrGold:"Yellow",kpBrRed:"Red",kpBrBlue:"Blue",kpBrCity:"City",kpBrRow:"Row",kpBrCol:"Col.",kpBrGone:"This player was just changed or deleted in Battle Roster, try again",kpBrCancel:"Cancel",kpBrSaveBtn:"Save"});
-Object.assign(I18N.ko, {"hubAdminSub": "집결 타이밍, KvK 계획, 로스터", "hubAdminTag": "752 리더 전용", "hubFunTag": "서버 전체", "hubBack": "뒤로", "hubLast": "최근 사용", "hubAdminNote": "각 도구는 자체 코드가 있습니다.", "hubUnlocked": "이 기기에서 이미 잠금 해제됨","kpBrLvl": "레벨", "kpBrAvail": "참여", "kpBrAvailL": "참여 시간", "kpBrClr": "필터 지우기", "kpBrGrip": "끌어서 넓히기 · 더블클릭 = 기본 크기",kpOnMap:"맵 위",kpBrLoading:"배틀 로스터 연결 중…",kpBrErr:"지금은 배틀 로스터에 연결할 수 없습니다",kpBrEmpty:"플레이어 없음",kpBrPool:"연맹 없음",kpBrFree:"미배치",kpBrAllTg:"전체",kpBrArm:"{n}을(를) 놓을 칸을 누르세요",kpBrDrag:"플레이어를 맵으로 끌어다 놓거나, 누른 뒤 칸을 누르세요. ✓ = 맵 위 · ☑ = 직접 체크.",kpBrMove:"{n}은(는) 이미 배치됨 ({k}). 여기로 옮길까요?",kpBrReplace:"이 칸에 이미 {n}이(가) 있습니다. 바꿀까요?",kpBrRemove:"맵에서 빼기",kpBrDone:"맵 위",kpBrManual:"직접 체크 / 해제",kpBrEdit:"플레이어 수정",kpBrSaved:"배틀 로스터에 저장됨",kpBrSum:"요약",kpBrStarFree:"아직 배치되지 않은 별표 플레이어",kpBrByTg:"레벨별 배치",kpBrMiss:"맵에는 있지만 배틀 로스터에 없음 (삭제 또는 다른 이름)",kpBrWrong:"칸의 클랜이 배틀 로스터 연맹과 다름",kpBrOpen:"배틀 로스터 열기",kpBrNone:"없음",kpBrPseudo:"닉네임",kpBrAlly:"연맹",kpBrStar:"별",kpBrGold:"노랑",kpBrRed:"빨강",kpBrBlue:"파랑",kpBrCity:"칸",kpBrRow:"행",kpBrCol:"열",kpBrGone:"이 플레이어가 배틀 로스터에서 방금 수정 또는 삭제되었습니다. 다시 시도하세요",kpBrCancel:"취소",kpBrSaveBtn:"저장"});
-Object.assign(I18N.tr, {"hubAdminSub": "Ralli zamanlaması, KvK planı ve kadro", "hubAdminTag": "752 liderleri", "hubFunTag": "Tüm sunucu", "hubBack": "Geri", "hubLast": "Son kullanılan", "hubAdminNote": "Her aracın kendi kodu vardır.", "hubUnlocked": "Bu cihazda zaten açık","kpBrLvl": "Seviye", "kpBrAvail": "Katılım", "kpBrAvailL": "Katılım", "kpBrClr": "Filtreleri temizle", "kpBrGrip": "Genişletmek için sürükle · çift tık = varsayılan boyut",kpOnMap:"Haritada",kpBrLoading:"Battle Roster'a bağlanılıyor…",kpBrErr:"Battle Roster'a şu an ulaşılamıyor",kpBrEmpty:"Burada oyuncu yok",kpBrPool:"İttifaksız",kpBrFree:"Yerleşmemiş",kpBrAllTg:"Tümü",kpBrArm:"{n} için bir şehre dokun",kpBrDrag:"Bir oyuncuyu haritaya sürükle ya da ona dokunup bir şehre dokun. ✓ = haritada · ☑ = elle işaretli.",kpBrMove:"{n} zaten yerleşik ({k}). Buraya taşınsın mı?",kpBrReplace:"Bu şehirde zaten {n} var. Değiştirilsin mi?",kpBrRemove:"Haritadan kaldır",kpBrDone:"Haritada",kpBrManual:"Elle işaretle / kaldır",kpBrEdit:"Oyuncuyu düzenle",kpBrSaved:"Battle Roster'a kaydedildi",kpBrSum:"Özet",kpBrStarFree:"Henüz yerleşmemiş yıldızlı oyuncular",kpBrByTg:"Seviyeye göre yerleşenler",kpBrMiss:"Haritada ama Battle Roster'da yok (silinmiş veya farklı ad)",kpBrWrong:"Şehrin klanı Battle Roster ittifakından farklı",kpBrOpen:"Battle Roster'ı aç",kpBrNone:"Yok",kpBrPseudo:"Ad",kpBrAlly:"İttifak",kpBrStar:"Yıldız",kpBrGold:"Sarı",kpBrRed:"Kırmızı",kpBrBlue:"Mavi",kpBrCity:"Şehir",kpBrRow:"Satır",kpBrCol:"Süt.",kpBrGone:"Bu oyuncu Battle Roster'da az önce değişti veya silindi, tekrar dene",kpBrCancel:"İptal",kpBrSaveBtn:"Kaydet"});
+Object.assign(I18N.fr, {"admCode": "Code des leaders 752 (demandé une fois, puis retenu 30 jours sur cet appareil).", "admWrong": "Code incorrect", "hubAdmLock": "Verrouiller", "hubAdmUntil": "Déverrouillé sur cet appareil jusqu'au {d}", "admMoved": "Données transférées vers le nouvel espace sécurisé","hubAdminSub": "Rallyes, plan KvK et roster", "hubAdminTag": "Leaders 752", "hubFunTag": "Tout le serveur", "hubBack": "Retour", "hubLast": "Dernier utilisé", "hubAdminNote": "Chaque outil garde son propre code.", "hubUnlocked": "Déjà déverrouillé sur cet appareil","kpBrLvl": "Niveau", "kpBrAvail": "Dispo", "kpBrAvailL": "Disponibilité", "kpBrClr": "Effacer les filtres", "kpBrGrip": "Tire pour élargir · double-clic = taille de départ",kpOnMap:"Sur la map",kpBrLoading:"Connexion au Battle Roster…",kpBrErr:"Battle Roster injoignable pour le moment",kpBrEmpty:"Aucun joueur ici",kpBrPool:"Sans alliance",kpBrFree:"Non placés",kpBrAllTg:"Tous",kpBrArm:"Touche une case pour placer {n}",kpBrDrag:"Glisse un joueur sur la map, ou touche-le puis touche une case. ✓ = sur la map · ☑ = coché à la main.",kpBrMove:"{n} est déjà placé ({k}). Le déplacer ici ?",kpBrReplace:"Cette case contient déjà {n}. Le remplacer ?",kpBrRemove:"Retirer de la map",kpBrDone:"Sur la map",kpBrManual:"Cocher / décocher à la main",kpBrEdit:"Modifier le joueur",kpBrSaved:"Enregistré dans le Battle Roster",kpBrSum:"Résumé",kpBrStarFree:"Joueurs étoilés pas encore placés",kpBrByTg:"Placés par niveau",kpBrMiss:"Sur la map mais absent du Battle Roster (supprimé ou pseudo différent)",kpBrWrong:"Clan de la case différent de l'alliance du Battle Roster",kpBrOpen:"Ouvrir le Battle Roster",kpBrNone:"Aucune",kpBrPseudo:"Pseudo",kpBrAlly:"Alliance",kpBrStar:"Étoile",kpBrGold:"Jaune",kpBrRed:"Rouge",kpBrBlue:"Bleue",kpBrCity:"Case",kpBrRow:"Ligne",kpBrCol:"Col.",kpBrGone:"Ce joueur vient d'être modifié ou supprimé dans le Battle Roster, réessaie",kpBrCancel:"Annuler",kpBrSaveBtn:"Enregistrer"});
+Object.assign(I18N.en, {"admCode": "Code for the 752 leaders (asked once, then remembered 30 days on this device).", "admWrong": "Wrong code", "hubAdmLock": "Lock", "hubAdmUntil": "Unlocked on this device until {d}", "admMoved": "Data moved to the new secure place","hubAdminSub": "Rally timing, KvK plan and roster", "hubAdminTag": "752 leaders", "hubFunTag": "Whole server", "hubBack": "Back", "hubLast": "Last used", "hubAdminNote": "Each tool keeps its own code.", "hubUnlocked": "Already unlocked on this device","kpBrLvl": "Level", "kpBrAvail": "Avail.", "kpBrAvailL": "Availability", "kpBrClr": "Clear filters", "kpBrGrip": "Drag to widen · double-click = default size",kpOnMap:"On the map",kpBrLoading:"Connecting to Battle Roster…",kpBrErr:"Battle Roster can't be reached right now",kpBrEmpty:"No players here",kpBrPool:"No alliance",kpBrFree:"Not placed",kpBrAllTg:"All",kpBrArm:"Tap a city to place {n}",kpBrDrag:"Drag a player onto the map, or tap them then tap a city. ✓ = on the map · ☑ = ticked by hand.",kpBrMove:"{n} is already placed ({k}). Move here?",kpBrReplace:"This city already holds {n}. Replace?",kpBrRemove:"Remove from the map",kpBrDone:"On the map",kpBrManual:"Tick / untick by hand",kpBrEdit:"Edit player",kpBrSaved:"Saved in Battle Roster",kpBrSum:"Summary",kpBrStarFree:"Starred players not placed yet",kpBrByTg:"Placed by level",kpBrMiss:"On the map but not in Battle Roster (deleted or different name)",kpBrWrong:"City clan differs from the Battle Roster alliance",kpBrOpen:"Open Battle Roster",kpBrNone:"None",kpBrPseudo:"Name",kpBrAlly:"Alliance",kpBrStar:"Star",kpBrGold:"Yellow",kpBrRed:"Red",kpBrBlue:"Blue",kpBrCity:"City",kpBrRow:"Row",kpBrCol:"Col.",kpBrGone:"This player was just changed or deleted in Battle Roster, try again",kpBrCancel:"Cancel",kpBrSaveBtn:"Save"});
+Object.assign(I18N.ko, {"admCode": "752 리더 코드 (한 번 입력하면 이 기기에서 30일 동안 기억됩니다).", "admWrong": "코드가 틀렸습니다", "hubAdmLock": "잠그기", "hubAdmUntil": "이 기기에서 {d}까지 잠금 해제됨", "admMoved": "데이터를 새 보안 공간으로 옮겼습니다","hubAdminSub": "집결 타이밍, KvK 계획, 로스터", "hubAdminTag": "752 리더 전용", "hubFunTag": "서버 전체", "hubBack": "뒤로", "hubLast": "최근 사용", "hubAdminNote": "각 도구는 자체 코드가 있습니다.", "hubUnlocked": "이 기기에서 이미 잠금 해제됨","kpBrLvl": "레벨", "kpBrAvail": "참여", "kpBrAvailL": "참여 시간", "kpBrClr": "필터 지우기", "kpBrGrip": "끌어서 넓히기 · 더블클릭 = 기본 크기",kpOnMap:"맵 위",kpBrLoading:"배틀 로스터 연결 중…",kpBrErr:"지금은 배틀 로스터에 연결할 수 없습니다",kpBrEmpty:"플레이어 없음",kpBrPool:"연맹 없음",kpBrFree:"미배치",kpBrAllTg:"전체",kpBrArm:"{n}을(를) 놓을 칸을 누르세요",kpBrDrag:"플레이어를 맵으로 끌어다 놓거나, 누른 뒤 칸을 누르세요. ✓ = 맵 위 · ☑ = 직접 체크.",kpBrMove:"{n}은(는) 이미 배치됨 ({k}). 여기로 옮길까요?",kpBrReplace:"이 칸에 이미 {n}이(가) 있습니다. 바꿀까요?",kpBrRemove:"맵에서 빼기",kpBrDone:"맵 위",kpBrManual:"직접 체크 / 해제",kpBrEdit:"플레이어 수정",kpBrSaved:"배틀 로스터에 저장됨",kpBrSum:"요약",kpBrStarFree:"아직 배치되지 않은 별표 플레이어",kpBrByTg:"레벨별 배치",kpBrMiss:"맵에는 있지만 배틀 로스터에 없음 (삭제 또는 다른 이름)",kpBrWrong:"칸의 클랜이 배틀 로스터 연맹과 다름",kpBrOpen:"배틀 로스터 열기",kpBrNone:"없음",kpBrPseudo:"닉네임",kpBrAlly:"연맹",kpBrStar:"별",kpBrGold:"노랑",kpBrRed:"빨강",kpBrBlue:"파랑",kpBrCity:"칸",kpBrRow:"행",kpBrCol:"열",kpBrGone:"이 플레이어가 배틀 로스터에서 방금 수정 또는 삭제되었습니다. 다시 시도하세요",kpBrCancel:"취소",kpBrSaveBtn:"저장"});
+Object.assign(I18N.tr, {"admCode": "752 liderleri kodu (bir kez sorulur, sonra bu cihazda 30 gün hatırlanır).", "admWrong": "Yanlış kod", "hubAdmLock": "Kilitle", "hubAdmUntil": "Bu cihazda {d} tarihine kadar açık", "admMoved": "Veriler yeni güvenli alana taşındı","hubAdminSub": "Ralli zamanlaması, KvK planı ve kadro", "hubAdminTag": "752 liderleri", "hubFunTag": "Tüm sunucu", "hubBack": "Geri", "hubLast": "Son kullanılan", "hubAdminNote": "Her aracın kendi kodu vardır.", "hubUnlocked": "Bu cihazda zaten açık","kpBrLvl": "Seviye", "kpBrAvail": "Katılım", "kpBrAvailL": "Katılım", "kpBrClr": "Filtreleri temizle", "kpBrGrip": "Genişletmek için sürükle · çift tık = varsayılan boyut",kpOnMap:"Haritada",kpBrLoading:"Battle Roster'a bağlanılıyor…",kpBrErr:"Battle Roster'a şu an ulaşılamıyor",kpBrEmpty:"Burada oyuncu yok",kpBrPool:"İttifaksız",kpBrFree:"Yerleşmemiş",kpBrAllTg:"Tümü",kpBrArm:"{n} için bir şehre dokun",kpBrDrag:"Bir oyuncuyu haritaya sürükle ya da ona dokunup bir şehre dokun. ✓ = haritada · ☑ = elle işaretli.",kpBrMove:"{n} zaten yerleşik ({k}). Buraya taşınsın mı?",kpBrReplace:"Bu şehirde zaten {n} var. Değiştirilsin mi?",kpBrRemove:"Haritadan kaldır",kpBrDone:"Haritada",kpBrManual:"Elle işaretle / kaldır",kpBrEdit:"Oyuncuyu düzenle",kpBrSaved:"Battle Roster'a kaydedildi",kpBrSum:"Özet",kpBrStarFree:"Henüz yerleşmemiş yıldızlı oyuncular",kpBrByTg:"Seviyeye göre yerleşenler",kpBrMiss:"Haritada ama Battle Roster'da yok (silinmiş veya farklı ad)",kpBrWrong:"Şehrin klanı Battle Roster ittifakından farklı",kpBrOpen:"Battle Roster'ı aç",kpBrNone:"Yok",kpBrPseudo:"Ad",kpBrAlly:"İttifak",kpBrStar:"Yıldız",kpBrGold:"Sarı",kpBrRed:"Kırmızı",kpBrBlue:"Mavi",kpBrCity:"Şehir",kpBrRow:"Satır",kpBrCol:"Süt.",kpBrGone:"Bu oyuncu Battle Roster'da az önce değişti veya silindi, tekrar dene",kpBrCancel:"İptal",kpBrSaveBtn:"Kaydet"});
 const COLORS = ["#f5b83d","#4aa3ff","#ff6b6b","#2ecc71","#b57bff","#ff9f43","#1dd1a1","#ff6bcb","#a3cb38","#48dbfb"];
 const KEY = "rallysync.v1", PREFS_KEY = "rallysync.prefs", LAYOUT_KEY = "rallysync.layout.";
 /* =====================================================================================
@@ -1806,7 +1807,7 @@ render();
 
 /* ================= sessions & live sharing ================= */
 var SESSION = null, STORE = null, pendingRemote = null, synced = {}, metaCache = {}, presenceCache = {}, unsubData = null, leavePresence = null;
-const ROOT = "rallysync";
+let ROOT = "";   // set to a/<key>/rs once 752 ADMIN is open
 const html = document.documentElement;
 const clean = v => JSON.parse(JSON.stringify(v ?? null));
 const encK = k => encodeURIComponent(k).replace(/\./g, "%2E");
@@ -1886,9 +1887,9 @@ async function FirebaseStore(cfg){
   D.onValue(D.ref(db, ".info/serverTimeOffset"), sn=>{ clock.offset = +sn.val() || 0; });
   const st = { mode:"online", connected:true };
   D.onValue(D.ref(db, ".info/connected"), sn=>{ const c = !!sn.val(); if(st.connected && !c && SESSION) toast(t("offline")); st.connected = c; updateSessUI(); });
-  // first read proves the database is reachable
+  // the database must answer within 9 s (connection check: nothing private is read here)
   await new Promise((res, rej)=>{ const timer = setTimeout(()=>rej(new Error("timeout")), 9000);
-    const off = D.onValue(R("meta"), ()=>{ clearTimeout(timer); setTimeout(()=>off(), 0); res(); }, e=>{ clearTimeout(timer); rej(e); }); });
+    const off = D.onValue(D.ref(db, ".info/connected"), sn=>{ if(sn.val()){ clearTimeout(timer); setTimeout(()=>off(), 0); res(); } }, e=>{ clearTimeout(timer); rej(e); }); });
   st.listSessions = cb => D.onValue(R("meta"), sn=>cb(sn.val() || {}), fail);
   st.presence = cb => D.onValue(R("presence"), sn=>cb(sn.val() || {}), ()=>{});
   st.create = async (name, data)=>{ const id = D.push(R("meta")).key;
@@ -1916,10 +1917,15 @@ const storeReady = (async ()=>{
       await STORE.create("My teams", {v:1, bench:old.bench || [], order:teams.map(x=>x.id), teams:Object.fromEntries(teams.map(x=>[x.id, x])), allyColors:{}});
       old.migrated = true; saveJSON(KEY, {migrated:true});
     } }catch(e){ console.error(e); }
-  STORE.listSessions(m=>{ metaCache = m || {}; renderSessions();
-    if(SESSION && metaCache[SESSION.id] && metaCache[SESSION.id].name !== SESSION.name){ SESSION.name = metaCache[SESSION.id].name; updateSessUI(); render(); } });
-  STORE.presence(p=>{ presenceCache = p || {}; renderSessions(); updateSessUI(); });
+  let offL = null, offP = null;
+  STORE.start = ()=>{   // (re)start listening once the admin place is known
+    try{ offL && offL(); offP && offP(); }catch(e){}
+    offL = STORE.listSessions(m=>{ metaCache = m || {}; renderSessions();
+      if(SESSION && metaCache[SESSION.id] && metaCache[SESSION.id].name !== SESSION.name){ SESSION.name = metaCache[SESSION.id].name; updateSessUI(); render(); } });
+    offP = STORE.presence(p=>{ presenceCache = p || {}; renderSessions(); updateSessUI(); });
+  };
   renderSessions();
+  if(admGet()) adminStart();
 })();
 
 function ago(ts){
@@ -2016,26 +2022,104 @@ document.getElementById("ssLock").addEventListener("click", ()=>document.getElem
 
 /* called when the password door opens (and on load if it is already open) */
 /* ================= menu with the 3 tools: RallySync, KvK PLAN, Battle Roster ================= */
-const RALLY_KEY = "rallysync.rally", RALLY_HASH = "264kutkgu4c";
-let rallyMem = false;
-function h53(str){   // fingerprint of a code: the code itself is not written in this file
-  let h1 = 0xdeadbeef ^ 752, h2 = 0x41c6ce57 ^ 752;
-  for(let i = 0, ch; i < str.length; i++){ ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }
-  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
+/* ---------- 752 ADMIN: one code for the 3 leader tools ----------
+   A slow PBKDF2 derivation (600 000 rounds) of the code gives "chk" (only value kept in this file, proves the code is right)
+   and "key": the secret place of all leader data in the database (a/<key>/rs = RallySync, /kvk = KvK PLAN, /br = Battle Roster).
+   The database rules only allow 64-character places and never allow listing them, so nothing can be read or changed without the code. */
+const sGet = (st, k)=>{ try{ return st.getItem(k); }catch(e){ return null; } }, sSet = (st, k, v)=>{ try{ v == null ? st.removeItem(k) : st.setItem(k, v); }catch(e){} };
+const norm752 = s=>String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
+async function derive752(app, code){
+  const E = new TextEncoder(), S = crypto.subtle;
+  const hex = b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2, "0")).join("");
+  const k = await S.importKey("raw", E.encode(norm752(code)), "PBKDF2", false, ["deriveBits"]);
+  const m = hex(await S.deriveBits({name:"PBKDF2", salt:E.encode("752home|" + app), iterations:600000, hash:"SHA-256"}, k, 256));
+  const h = async l=>hex(await S.digest("SHA-256", E.encode(l + "|" + m)));
+  return {chk:await h("chk"), key:await h("key")};
 }
-function rallyOk(){ if(rallyMem) return true; try{ return sessionStorage.getItem(RALLY_KEY) === RALLY_HASH; }catch(e){ return false; } }
+const ADM_KEY = "rallysync.admin", ADMIN_CHK = "b4ba55ee84ecd29be2a7fa6011e22b4206ae1fc88e44ae2897bdc13152f2dc69", ADM_DAYS = 30;
+let admMem = null;   // used when the browser refuses to store anything
+function admGet(){
+  let a = admMem; try{ a = JSON.parse(localStorage.getItem(ADM_KEY) || "null") || admMem; }catch(e){}
+  return a && /^[0-9a-f]{64}$/.test(a.k) && a.until > Date.now() ? a : null;
+}
+const admKey = ()=>(admGet() || {}).k || "";
+let admBusy = null;
+function adminUnlock(){   // asks the 752 ADMIN code once (then remembered 30 days on this device)
+  if(admGet()) return adminStart();
+  if(admBusy) return admBusy;
+  admBusy = (async ()=>{
+    let wrong = false;
+    for(;;){
+      const v = await ask("👑 752 ADMIN\n\n" + (wrong ? "❌ " + t("admWrong") + "\n\n" : "") + t("admCode"), "", "password");
+      if(v == null || !norm752(v)) return false;
+      toast("⏳");
+      let d = null; try{ d = await derive752("admin", v); }catch(e){ console.error(e); toast("⚠️ " + (e && e.message || e)); return false; }
+      if(d.chk === ADMIN_CHK){ admMem = {k:d.key, until:Date.now() + ADM_DAYS * 864e5}; sSet(localStorage, ADM_KEY, JSON.stringify(admMem)); break; }
+      wrong = true;
+    }
+    return adminStart();
+  })().finally(()=>{ admBusy = null; });
+  return admBusy;
+}
+function adminLock(){ admMem = null; sSet(localStorage, ADM_KEY, null); sSet(localStorage, "rallysync.moved", null); location.hash = ""; location.reload(); }
+// once per device: bring the data kept at the old places (before 752 ADMIN) to the new secret place
+const OLD_PLAN_KEY = "7072ea7ab4394930930f322289f3a854dbcd2fc7c3f3018332a40f068eaae672";
+const OLD_BR_CFG = {apiKey:"AIzaSyCecwHJgRcuvNrZBOjXja3swFMLZtd06f0", authDomain:"kingshot-kvk.firebaseapp.com", databaseURL:"https://kingshot-kvk-default-rtdb.firebaseio.com", projectId:"kingshot-kvk", storageBucket:"kingshot-kvk.firebasestorage.app", messagingSenderId:"762489973337", appId:"1:762489973337:web:1a4aa206302f9a88bc5f48"};
+function onceRaw(raw, path){ return new Promise(res=>{ let done = false, off = null; const fin = v=>{ if(done) return; done = true; res(v); setTimeout(()=>{ try{ off && off(); }catch(e){} }, 0); };
+  try{ off = raw.on(path, v=>fin(v), ()=>fin(null)); }catch(e){ fin(null); } setTimeout(()=>fin(undefined), 8000); }); }
+async function moveOld(key){
+  if(!STORE || STORE.mode !== "online" || !STORE.raw) return;
+  const raw = STORE.raw, B = "a/" + key, moved = []; let failed = false;
+  try{   // RallySync sessions
+    if(!await onceRaw(raw, B + "/rs/meta")){
+      const meta = await onceRaw(raw, "rallysync/meta"), ses = await onceRaw(raw, "rallysync/sessions");
+      if(meta && typeof meta === "object"){ await raw.update({[B + "/rs/meta"]:meta, [B + "/rs/sessions"]:ses || null});
+        if(await onceRaw(raw, B + "/rs/meta")){ moved.push("RallySync"); await raw.update({"rallysync/meta":null, "rallysync/sessions":null, "rallysync/presence":null}).catch(()=>{}); } }
+    } }catch(e){ console.error(e); failed = true; }
+  try{   // KvK PLAN map
+    if(!await onceRaw(raw, B + "/kvk/index")){
+      const old = await onceRaw(raw, "kvkplan/" + OLD_PLAN_KEY);
+      if(old && typeof old === "object"){ await raw.update({[B + "/kvk"]:old});
+        if(await onceRaw(raw, B + "/kvk/index")){ moved.push("KvK PLAN"); await raw.update({["kvkplan/" + OLD_PLAN_KEY]:null}).catch(()=>{}); } }
+    } }catch(e){ console.error(e); failed = true; }
+  try{   // Battle Roster (was in the separate "kingshot-kvk" database)
+    if(!await onceRaw(raw, B + "/br/pool")){
+      const base = "https://www.gstatic.com/firebasejs/13.2.0/";
+      const [Ap, D] = await Promise.all([import(base + "firebase-app.js"), import(base + "firebase-database.js")]);
+      const odb = D.getDatabase(Ap.getApps().find(x=>x.name === "oldroster") || Ap.initializeApp(OLD_BR_CFG, "oldroster"));
+      const oraw = {on:(path, cb, err)=>D.onValue(D.ref(odb, path), sn=>cb(sn.val()), err)};
+      const pool = await onceRaw(oraw, "roster/pool"), names = await onceRaw(oraw, "settings/allianceNames");
+      if(pool && typeof pool === "object"){ await raw.update({[B + "/br/pool"]:pool, [B + "/br/names"]:names || null}); if(await onceRaw(raw, B + "/br/pool")) moved.push("Battle Roster"); }
+    } }catch(e){ console.error(e); failed = true; }
+  if(moved.length) toast("✔ " + t("admMoved") + " (" + moved.join(", ") + ")", 5000);
+  return !failed;   // tried again next time if something could not be moved
+}
+let admStarted = "", admStarting = null;
+function adminStart(){   // the store points at the admin place; moves old data once
+  const key = admKey(); if(!key) return Promise.resolve(false);
+  if(admStarted === key) return Promise.resolve(true);
+  if(admStarting) return admStarting;
+  admStarting = (async ()=>{
+    await storeReady;
+    ROOT = "a/" + key + "/rs";
+    if(sGet(localStorage, "rallysync.moved") !== key && await moveOld(key)) sSet(localStorage, "rallysync.moved", key);
+    if(STORE && STORE.start) STORE.start();
+    admStarted = key; return true;
+  })().finally(()=>{ admStarting = null; });
+  return admStarting;
+}
+function rallyOk(){ return !!admGet(); }
 /* the home screen: "752 ADMIN" (the 3 leader tools, each with its own code) and "FUN" (whole server) */
 const HUBV_KEY = "rallysync.hubView", LAST_KEY = "rallysync.lastTool";
-const sGet = (st, k)=>{ try{ return st.getItem(k); }catch(e){ return null; } }, sSet = (st, k, v)=>{ try{ v == null ? st.removeItem(k) : st.setItem(k, v); }catch(e){} };
 function hubView(v){
   if(v) sSet(sessionStorage, HUBV_KEY, v); else v = sGet(sessionStorage, HUBV_KEY) || "main";
   const adm = v === "admin";
   document.getElementById("hubMain").hidden = adm; document.getElementById("hubAdminBox").hidden = !adm;
-  if(adm){   // lock state of each tool on this device + the last tool used
-    const open = {Rally:rallyOk(), Plan:!!sGet(sessionStorage, "rallysync.kpkey"), Roster:sGet(sessionStorage, "kvk_unlocked") === "1"};
-    for(const k in open){ const l = document.getElementById("hl" + k); l.textContent = open[k] ? "🔓" : "🔒"; l.classList.toggle("open", open[k]); l.title = open[k] ? t("hubUnlocked") : ""; }
+  document.getElementById("hubAdmIc").textContent = admGet() ? "🔓" : "🔒";
+  if(adm && !admGet()){ hubView("main"); return; }   // the admin list needs the code
+  if(adm){   // the last tool used + until when this device stays open
+    const a = admGet();
+    document.querySelector("#hubAdminBox .hub-note").textContent = "🔓 " + t("hubAdmUntil").replace("{d}", new Date(a.until).toLocaleDateString(S.lang));
     const last = sGet(localStorage, LAST_KEY);
     document.querySelectorAll("#hubAdminBox .hb-last").forEach(e=>e.remove());
     const lb = last && document.getElementById({rally:"hubRally", plan:"hubPlan", roster:"hubRoster"}[last]);
@@ -2050,16 +2134,7 @@ function showHub(){
   hubView();
 }
 async function enterRally(then){
-  if(!rallyOk()){
-    let wrong = false;
-    for(;;){   // a wrong code keeps the box open with a visible message
-      const v = await ask("⚔️ RallySync\n\n" + (wrong ? "❌ " + t("rallyWrong") + "\n\n" : "") + t("rallyCode"), "", "password");
-      if(v == null || !v.trim()) return false;
-      if(h53("rallysync-rally:" + v.replace(/\s+/g, "").toLowerCase()) === RALLY_HASH) break;
-      wrong = true;
-    }
-    rallyMem = true; try{ sessionStorage.setItem(RALLY_KEY, RALLY_HASH); }catch(e){}
-  }
+  if(!await adminUnlock()) return false;
   html.classList.remove("hub");
   if(then) then(); else showSessions();
   return true;
@@ -2067,7 +2142,8 @@ async function enterRally(then){
 document.getElementById("hubRally").addEventListener("click", ()=>{ sSet(localStorage, LAST_KEY, "rally"); enterRally(); });
 document.getElementById("hubRoster").addEventListener("click", ()=>{ sSet(localStorage, LAST_KEY, "roster"); location.href = "roster.html"; });
 document.getElementById("hubPlan").addEventListener("click", ()=>sSet(localStorage, LAST_KEY, "plan"), true);
-document.getElementById("hubAdmin").addEventListener("click", ()=>{ hubView("admin"); document.getElementById("hubBack").focus({preventScroll:true}); });
+document.getElementById("hubAdmin").addEventListener("click", async ()=>{ if(!await adminUnlock()) return; hubView("admin"); document.getElementById("hubBack").focus({preventScroll:true}); });
+document.getElementById("hubAdmLock").addEventListener("click", ()=>adminLock());
 document.getElementById("hubBack").addEventListener("click", ()=>{ hubView("main"); document.getElementById("hubAdmin").focus({preventScroll:true}); });
 addEventListener("keydown", e=>{   // Esc on the admin list = back to the 2 big buttons
   if(e.key !== "Escape" || !html.classList.contains("hub") || html.classList.contains("locked") || document.getElementById("hubAdminBox").hidden) return;
@@ -2114,11 +2190,8 @@ addEventListener("hashchange", ()=>{ const id = (location.hash.match(/s=([\w-]+)
 
 /* ================= KvK plan (code-protected area) =================
    A shared planning map modelled on the alliance's "PLAN KVK" spreadsheet tab.
-   Storage: kvkplan/<key>/…  where <key> is derived from the plan code. The database rules never
-   allow listing "kvkplan", so the data cannot be found without the code.
-   Only a verification hash of the code is kept in this file (PLAN_CHECK). */
+   Storage: a/<key>/kvk/…  where <key> comes from the 752 ADMIN code (see derive752). */
 const KP = (function(){
-  const PLAN_CHECK = "f64e4eec06c5fca2683baa3f328c46291e6b39cacdb14b29c4672f6af624422e";
   const TPL = {"0_0":{"c":"p"},"0_1":{"c":"p"},"1_0":{"c":"p"},"1_1":{"c":"p"},"1_4":{"t":"58s","g":"i18"},"1_5":{"t":"55s"},"1_6":{"t":"53s","g":"752"},"1_7":{"t":"53s","g":"752"},"1_8":{"t":"55s"},"1_9":{"t":"58s"},"1_10":{"t":"62s"},"1_11":{"t":"67s"},"1_12":{"t":"73s"},"2_0":{"c":"p"},"2_1":{"c":"p"},"2_2":{"c":"p"},"2_3":{"t":"47s","c":"y"},"2_4":{"t":"50s","g":"752","c":"y"},"2_5":{"t":"47s"},"2_6":{"t":"45s","g":"i18"},"2_7":{"t":"45s"},"2_8":{"t":"47s"},"2_9":{"t":"50s"},"2_10":{"t":"55s"},"2_11":{"t":"61s","c":"y"},"2_12":{"t":"67s"},"3_0":{"c":"p"},"3_1":{"c":"p"},"3_2":{"c":"p"},"3_3":{"c":"p"},"3_4":{"t":"43s","g":"PAN","c":"b"},"3_5":{"t":"39s","g":"i18","c":"b"},"3_6":{"t":"36s","c":"b"},"3_7":{"t":"36s","c":"b"},"3_8":{"t":"39s","c":"b"},"3_9":{"t":"43s","c":"b"},"3_10":{"t":"48s","c":"b"},"3_11":{"t":"55s","c":"y"},"3_12":{"t":"62s"},"4_0":{"c":"p"},"4_1":{"c":"p"},"4_2":{"c":"p"},"4_3":{"c":"p"},"4_10":{"t":"43s","c":"b"},"4_11":{"t":"50s","c":"y"},"4_12":{"t":"58s"},"5_0":{"c":"p"},"5_1":{"c":"p"},"5_2":{"c":"p"},"5_3":{"c":"p"},"5_10":{"t":"39s","c":"b"},"5_11":{"t":"47s"},"5_12":{"t":"55s"},"6_0":{"c":"p"},"6_1":{"c":"p"},"6_2":{"c":"p"},"6_3":{"c":"p"},"6_10":{"t":"36s","c":"b"},"6_11":{"t":"45s"},"6_12":{"t":"53s"},"7_0":{"c":"p"},"7_1":{"c":"p"},"7_2":{"c":"p"},"7_3":{"c":"p"},"7_10":{"t":"36s","c":"b"},"7_11":{"t":"45s"},"7_12":{"t":"53s"},"8_0":{"c":"p"},"8_1":{"c":"p"},"8_2":{"c":"p"},"8_3":{"c":"p"},"8_10":{"t":"39s","c":"b"},"8_11":{"t":"47s"},"8_12":{"t":"55s"},"9_0":{"c":"p"},"9_1":{"c":"p"},"9_2":{"c":"p"},"9_3":{"c":"p"},"9_10":{"t":"43s","c":"b"},"9_11":{"t":"50s","c":"y"},"9_12":{"c":"y"},"10_0":{"c":"p"},"10_1":{"c":"p"},"10_2":{"c":"p"},"10_3":{"c":"p"},"10_4":{"c":"p"},"10_5":{"c":"p"},"10_6":{"c":"p"},"10_7":{"c":"p"},"10_8":{"c":"p"},"10_9":{"c":"p"},"10_10":{"t":"48s","c":"b"},"10_11":{"t":"47s","c":"y"},"10_12":{"c":"y"},"11_0":{"c":"p"},"11_1":{"c":"p"},"11_2":{"c":"p"},"11_3":{"c":"p"},"11_4":{"c":"p"},"11_5":{"c":"p"},"11_6":{"c":"p"},"11_7":{"c":"p"},"11_8":{"c":"p"},"11_9":{"c":"p"},"11_10":{"c":"p"},"11_12":{"c":"y"},"12_0":{"c":"p"},"12_1":{"c":"p"},"12_2":{"c":"p"},"12_3":{"c":"p"},"12_4":{"c":"p"},"12_5":{"c":"p"},"12_6":{"c":"p"},"12_7":{"c":"p"},"12_8":{"c":"p"},"12_9":{"c":"p"},"12_10":{"c":"p"},"12_11":{"c":"p"},"13_0":{"c":"p"},"13_1":{"c":"p"},"13_2":{"c":"p"},"13_3":{"c":"p"},"13_4":{"c":"p"},"13_5":{"c":"p"},"13_6":{"c":"p"},"13_7":{"c":"p"},"13_8":{"c":"p"},"13_9":{"c":"p"},"13_10":{"c":"p"},"13_11":{"c":"p"},"13_12":{"c":"p"}};
   const N = 14, CA = 4, CB = 9, FS = [8, 9, 10, 11, 12, 14, 16, 18, 20, 24];
   const inCastle = (r, c)=>r >= CA && r <= CB && c >= CA && c <= CB;
@@ -2128,49 +2201,9 @@ const KP = (function(){
   const $ = id=>document.getElementById(id);
   const root = $("plan"), boardEl = $("kpBoard"), layer = $("kpLayer"), view = $("kpView"), wrap = $("kpWrap"), sheet = $("kpSheet");
   const coarse = matchMedia("(pointer:coarse)").matches;
-  const PREF = "rallysync.kp", KEYSTORE = "rallysync.kpkey";
+  const PREF = "rallysync.kp";
   const prefs = Object.assign({z:0, cc:false, last:""}, loadJSON(PREF) || {});
   const savePrefs = ()=>saveJSON(PREF, prefs);
-
-  /* ---------- small pure-JS SHA-256 (works everywhere, also without HTTPS) ---------- */
-  function sha256(ascii){
-    const rr = (v, a)=>(v >>> a) | (v << (32 - a)), maxWord = Math.pow(2, 32), words = [], bitLen = ascii.length * 8;
-    let hash = sha256.h = sha256.h || []; const k = sha256.k = sha256.k || []; let pc = k.length, result = "";
-    const comp = {};
-    for(let cand = 2; pc < 64; cand++){
-      if(!comp[cand]){
-        for(let i = 0; i < 313; i += cand) comp[i] = cand;
-        hash[pc] = (Math.pow(cand, .5) * maxWord) | 0;
-        k[pc++] = (Math.pow(cand, 1 / 3) * maxWord) | 0;
-      }
-    }
-    ascii += "\x80";
-    while(ascii.length % 64 - 56) ascii += "\x00";
-    for(let i = 0; i < ascii.length; i++){ const j = ascii.charCodeAt(i); words[i >> 2] |= j << ((3 - i) % 4) * 8; }
-    words[words.length] = (bitLen / maxWord) | 0;
-    words[words.length] = bitLen;
-    for(let j = 0; j < words.length;){
-      const w = words.slice(j, j += 16), old = hash;
-      hash = hash.slice(0, 8);
-      for(let i = 0; i < 64; i++){
-        const w15 = w[i - 15], w2 = w[i - 2], a = hash[0], e = hash[4];
-        const t1 = hash[7] + (rr(e, 6) ^ rr(e, 11) ^ rr(e, 25)) + ((e & hash[5]) ^ ((~e) & hash[6])) + k[i]
-          + (w[i] = (i < 16) ? w[i] : (w[i - 16] + (rr(w15, 7) ^ rr(w15, 18) ^ (w15 >>> 3)) + w[i - 7] + (rr(w2, 17) ^ rr(w2, 19) ^ (w2 >>> 10))) | 0);
-        const t2 = (rr(a, 2) ^ rr(a, 13) ^ rr(a, 22)) + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
-        hash = [(t1 + t2) | 0].concat(hash);
-        hash[4] = (hash[4] + t1) | 0;
-      }
-      for(let i = 0; i < 8; i++) hash[i] = (hash[i] + old[i]) | 0;
-    }
-    for(let i = 0; i < 8; i++) for(let j = 3; j + 1; j--){ const b = (hash[i] >> (j * 8)) & 255; result += (b < 16 ? "0" : "") + b.toString(16); }
-    return result;
-  }
-  /* slow-ish derivation: "chk" proves the code is right, "key" is the secret database path */
-  function kdf(label, code){
-    let h = unescape(encodeURIComponent("rallysync-kvk|" + label + "|" + String(code).trim().toLowerCase()));
-    for(let i = 0; i < 3000; i++) h = sha256(h + i);
-    return h;
-  }
 
   /* ---------- storage on this device (fallback when the online database is not available) ---------- */
   const localRaw = (function(){
@@ -3081,7 +3114,7 @@ const KP = (function(){
   $("kpRoster").addEventListener("input", ()=>{ clearTimeout(rosterT); rosterT = setTimeout(saveRoster, 800); });
   $("kpRoster").addEventListener("focusout", saveRoster);
   /* ---------- Battle Roster link: the players and teams of Battle Roster, live, to place them on the map ---------- */
-  const BR_CFG = {apiKey:"AIzaSyCecwHJgRcuvNrZBOjXja3swFMLZtd06f0", authDomain:"kingshot-kvk.firebaseapp.com", databaseURL:"https://kingshot-kvk-default-rtdb.firebaseio.com", projectId:"kingshot-kvk", storageBucket:"kingshot-kvk.firebasestorage.app", messagingSenderId:"762489973337", appId:"1:762489973337:web:1a4aa206302f9a88bc5f48"};
+  const BR_CFG = FIREBASE_CONFIG;   // Battle Roster now lives in the RallySync database
   const BR = {pool:[], names:{koe:"KOE", war:"WAR", pan:"PAN", off3:false}, ok:false, err:false, db:null, D:null, connecting:false};
   // same ranking as Battle Roster: star first, then power = TG level + 1 per T11 type, then TG, full battle, name
   const BR_TG = {TG8:8, TG7:7, TG6:6, TG5:5, TG4:4, TG3:3, TG2:2, TG1:1, "":0};
@@ -3115,12 +3148,13 @@ const KP = (function(){
       const b8 = "https://www.gstatic.com/firebasejs/13.2.0/";
       const [A, D] = await Promise.all([import(b8 + "firebase-app.js"), import(b8 + "firebase-database.js")]);
       BR.D = D; BR.db = D.getDatabase(A.initializeApp(BR_CFG, "battleroster"));
-      D.onValue(D.ref(BR.db, "roster/pool"), sn=>{
+      const BRB = "a/" + admKey() + "/br";
+      D.onValue(D.ref(BR.db, BRB + "/pool"), sn=>{
         const v = sn.val();
         BR.pool = !v ? [] : (Array.isArray(v) ? v.map((p, i)=>p && Object.assign({}, p, {_i:String(i)})) : Object.keys(v).map(k=>v[k] && Object.assign({}, v[k], {_i:k}))).filter(p=>p && p.pseudo).map(brClean);
         BR.ok = true; BR.err = false; paint();
       }, e=>{ console.warn(e); BR.err = true; paint(); });
-      D.onValue(D.ref(BR.db, "settings/allianceNames"), sn=>{ const v = sn.val() || {}; BR.names = {koe:brCName(v.koe) || "KOE", war:brCName(v.war) || "WAR", pan:brCName(v.pan) || "PAN", off3:!!v.off3}; paint(); }, ()=>{});
+      D.onValue(D.ref(BR.db, BRB + "/names"), sn=>{ const v = sn.val() || {}; BR.names = {koe:brCName(v.koe) || "KOE", war:brCName(v.war) || "WAR", pan:brCName(v.pan) || "PAN", off3:!!v.off3}; paint(); }, ()=>{});
     }catch(e){ console.warn("battle roster", e); BR.err = true; BR.connecting = false; paint(); }
   }
   // write a change back to Battle Roster (same rules as the Battle Roster page)
@@ -3132,7 +3166,7 @@ const KP = (function(){
     if("star" in n) n.rallyLead = !!n.star;
     if("t11s" in n) n.t11 = n.t11s.length > 0;
     if("alliance" in n && !n.alliance){ n.alliance = null; n.star = ""; n.rallyLead = false; }
-    try{ await BR.D.update(BR.D.ref(BR.db, "roster/pool/" + p._i), n); return true; }catch(e){ fail(e); return false; }
+    try{ await BR.D.update(BR.D.ref(BR.db, "a/" + admKey() + "/br/pool/" + p._i), n); return true; }catch(e){ fail(e); return false; }
   }
   // where is a player on the current map? (city key or "tur:x" for the castle turrets)
   function brWhere(name){
@@ -3423,21 +3457,12 @@ const KP = (function(){
     }, onStoreError);
   }
   async function enter(){
-    let key = null; try{ key = sessionStorage.getItem(KEYSTORE); }catch(e){}
-    if(!key){
-      let code, wrong = false;
-      for(;;){   // a wrong code keeps the box open with a visible message
-        code = await ask("🗺️ " + t("kpTitle") + "\n\n" + (wrong ? "❌ " + t("kpWrong") + "\n\n" : "") + t("kpCode"), "", "password");
-        if(code == null || !code.trim()) return false;
-        if(kdf("chk", code) === PLAN_CHECK) break;
-        wrong = true; toast("❌ " + t("kpWrong"));
-      }
-      key = kdf("key", code); try{ sessionStorage.setItem(KEYSTORE, key); }catch(e){}
-    }
+    if(!await adminUnlock()) return false;
+    const key = admKey(); if(!key) return false;
     await storeReady;
     build();
     RAW = (STORE && STORE.mode === "online" && STORE.raw) ? STORE.raw : localRaw;
-    base = "kvkplan/" + key;
+    base = "a/" + key + "/kvk";
     leaveSession();
     html.classList.remove("picking", "hub"); html.classList.add("planning"); active = true;
     try{ history.replaceState(null, "", "#plan"); }catch(e){}
@@ -3453,7 +3478,7 @@ const KP = (function(){
     html.classList.remove("planning");
     if(silent !== true) showHub();
   }
-  function lock(){ try{ sessionStorage.removeItem(KEYSTORE); }catch(e){} leave(); }
+  function lock(){ leave(true); adminLock(); }   // 🔒 = lock 752 ADMIN on this device
   $("kpBack").addEventListener("click", ()=>leave());
   $("kpLock").addEventListener("click", lock);
   document.getElementById("hubPlan").addEventListener("click", enter);
@@ -3551,7 +3576,7 @@ const KP = (function(){
   lever.addEventListener("pointermove", e=>{ if(ly!=null && e.clientY - ly > 40){ ly = null; spin(); } });
   lever.addEventListener("pointerup", ()=>{ if(ly!=null){ ly = null; spin(); } });
   function lockNow(){
-    try{ sessionStorage.removeItem(GATE_KEY); }catch(e){}
+    try{ sessionStorage.removeItem(GATE_KEY); localStorage.removeItem("rallysync.admin"); }catch(e){}
     document.getElementById("settings").open && document.getElementById("settings").close();
     pass.value = ""; msg.textContent = ""; msg.className = "g-msg"; document.documentElement.classList.add("locked"); focusPass();
   }

@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>/* Battle Roster lives inside RallySync: the casino door (752) must be open in this tab first */
-(function(){ try{ var g = JSON.parse(sessionStorage.getItem("rallysync.gate") || "null"); if(!(g && g.h === "poc0lvc0vl" && g.until > Date.now())) location.replace("index.html"); }catch(e){} })();</script>
+<script>/* Battle Roster lives inside RallySync / 752 ADMIN: the casino door must be open in this tab and 752 ADMIN unlocked on this device */
+var ADMK = "";
+(function(){ try{ var g = JSON.parse(sessionStorage.getItem("rallysync.gate") || "null"), a = JSON.parse(localStorage.getItem("rallysync.admin") || "null");
+  if(!(g && g.h === "poc0lvc0vl" && g.until > Date.now()) || !(a && /^[0-9a-f]{64}$/.test(a.k) && a.until > Date.now())){ location.replace("index.html"); return; }
+  ADMK = a.k; }catch(e){ location.replace("index.html"); } })();</script>
+<style>#lock-screen,#guest-banner{display:none!important}</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>752 KVK — Battle Roster</title>
@@ -1686,7 +1690,8 @@ function enterGuest(){
   sessionStorage.removeItem('kvk_unlocked');
 }
 
-function goHome(){
+function goHome(){ location.href = 'index.html'; return; }
+function goHomeOld(){
   document.getElementById('app').style.display='none';
   document.getElementById('lock-screen').style.display='flex';
   document.body.classList.remove('guest-mode');
@@ -2686,31 +2691,32 @@ function editRole(alliance){
   applyRoles();
 }
 // ══════════════════════════════════════════════════
-const firebaseConfig={
-  apiKey:"AIzaSyCecwHJgRcuvNrZBOjXja3swFMLZtd06f0",
-  authDomain:"kingshot-kvk.firebaseapp.com",
-  databaseURL:"https://kingshot-kvk-default-rtdb.firebaseio.com",
-  projectId:"kingshot-kvk",
-  storageBucket:"kingshot-kvk.firebasestorage.app",
-  messagingSenderId:"762489973337",
-  appId:"1:762489973337:web:1a4aa206302f9a88bc5f48"
+const firebaseConfig={   // RallySync database (the old "kingshot-kvk" one is not used any more)
+  apiKey:"AIzaSyButTPJ74DlFm2Drdz2ROyxQAJO_ZnA-M8",
+  authDomain:"rallysync-749b6.firebaseapp.com",
+  databaseURL:"https://rallysync-749b6-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId:"rallysync-749b6",
+  storageBucket:"rallysync-749b6.firebasestorage.app",
+  messagingSenderId:"136803970365",
+  appId:"1:136803970365:web:ffaea4a90dcb53796d2954"
 };
+const BR_BASE = 'a/' + ADMK + '/br';
 let db=null, rosterRef=null, ignoreNext=false;
-try{ firebase.initializeApp(firebaseConfig); db=firebase.database(); rosterRef=db.ref('roster/pool'); }
+try{ firebase.initializeApp(firebaseConfig); db=firebase.database(); rosterRef=db.ref(BR_BASE+'/pool'); }
 catch(e){ console.warn('Firebase unavailable', e); setTimeout(()=>showNotif('⚠ Offline — changes stay on this screen only', true), 900); }
-function saveNames(){ if(!db) return; const r = db.ref('settings/allianceNames'); r.set(allianceNames).catch(e=>showNotif('Sync error: '+e.message, true)); }
+function saveNames(){ if(!db) return; const r = db.ref(BR_BASE+'/names'); r.set(allianceNames).catch(e=>showNotif('Sync error: '+e.message, true)); }
 
 if(rosterRef) rosterRef.on('value',snapshot=>{
   if(ignoreNext){ ignoreNext=false; return; }
   const data=snapshot.val();
   pool=data?(Array.isArray(data)?data:Object.values(data)):[];
-  pool=pool.filter(p=>p && typeof p==='object').map(cleanPlayer).filter(Boolean);   // never trust what comes from the database
+  pool=pool.filter(p=>p && typeof p==='object').map(cleanPlayer);   // never trust what comes from the database
   pool.forEach(p=>{ if(!p.rallyLead) p.rallyLead=false; if(p.half===undefined) p.half=null; fixPlayer(p); });
   render();
 });
 
 // Listener Firebase pour les noms d'alliances (partagé sur tous les appareils)
-if(db) db.ref('settings/allianceNames').on('value', snapshot => {
+if(db) db.ref(BR_BASE+'/names').on('value', snapshot => {
   const data = snapshot.val();
   if(data){
     if(data.koe) allianceNames.koe = cleanName(data.koe) || 'KOE';
@@ -2753,16 +2759,11 @@ function render(){
   closeStarPop(); renderPool(); renderAlliances(); updateCounts(); renderTable();
 }
 
-// Restore session
-if(sessionStorage.getItem('kvk_unlocked')==='1'){
-  document.getElementById('lock-screen').style.display='none';
-  document.getElementById('app').style.display='block';
-} else if(sessionStorage.getItem('kvk_guest')==='1'){
-  document.getElementById('lock-screen').style.display='none';
-  document.getElementById('app').style.display='block';
-  document.body.classList.add('guest-mode');
-  document.getElementById('guest-banner').classList.add('visible');
-}
+// open straight away (752 ADMIN is the only code)
+document.getElementById('lock-screen').style.display='none';
+document.getElementById('app').style.display='block';
+document.body.classList.remove('guest-mode');
+sessionStorage.removeItem('kvk_guest'); sessionStorage.removeItem('kvk_unlocked');
 localStorage.removeItem('kvk_unlocked');
 // Restore theme
 if(localStorage.getItem('kvk_theme')==='light') toggleTheme();
